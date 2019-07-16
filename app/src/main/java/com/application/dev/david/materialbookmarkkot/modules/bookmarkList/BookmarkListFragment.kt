@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
@@ -51,7 +52,7 @@ class BookmarkListFragment : Fragment() {
     private fun initView() {
         navigateBookmarkSendButtonId.setOnClickListener { findNavController().navigate(R.id.addBookmarkFragment) }
 
-        list.add(Bookmark("bll", "Title", "Image", "", "URL"))
+        list.add(Bookmark("bll", "Instagram", "Image", "", "URL"))
         list.add(Bookmark("bll", "Title2", "Image", "", "URL"))
         list.add(Bookmark("bll", "Title3", "Image", "", "URL"))
         list.add(Bookmark("bll", "Title4", "Image", "", "URL"))
@@ -59,7 +60,7 @@ class BookmarkListFragment : Fragment() {
         list.add(Bookmark("bll", "Title6", "Image", "", "URL"))
         list.add(Bookmark("bll", "Title7", "Image", "", "URL"))
 
-        mbBookmarkRecyclerViewId.layoutManager = LinearLayoutManager(context)
+        mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
         mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list)
     }
 

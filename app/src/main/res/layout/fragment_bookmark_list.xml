@@ -1,55 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
 
-              tools:context=".modules.bookmarkList.BookmarkListFragment">
+    tools:context=".modules.bookmarkList.BookmarkListFragment">
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bookmarks"/>
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bookmarks"/>
-        </LinearLayout>
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bookmarks"/>
-        </LinearLayout>
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mbBookmarkRecyclerViewId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    <Button
-            android:id="@+id/navigateBookmarkSendButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SAVE"/>
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_16"
+            android:layout_weight="1"
+            android:fontFamily="@font/yantramanav_thin"
+            android:text="Bookmarks"
+            android:textColor="@color/colorAccent"
+            android:textSize="36sp" />
+        <include layout="@layout/bookmark_action_icon_item"/>
+        <include layout="@layout/bookmark_action_icon_item"/>
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mbBookmarkRecyclerViewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/navigateBookmarkSendButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVE"/>
 
 </LinearLayout>
