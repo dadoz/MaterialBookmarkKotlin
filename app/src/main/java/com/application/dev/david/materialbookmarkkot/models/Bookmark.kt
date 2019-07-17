@@ -1,6 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.models
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 
 data class Bookmark (@SerializedName("site_name")
@@ -12,4 +13,6 @@ data class Bookmark (@SerializedName("site_name")
         @SerializedName("app_id")
         var appId: String?,
         @SerializedName("url")
-        var url: String?)
+        var url: String?,
+        @SerializedName("timestamp")
+        var timestamp: Date?)

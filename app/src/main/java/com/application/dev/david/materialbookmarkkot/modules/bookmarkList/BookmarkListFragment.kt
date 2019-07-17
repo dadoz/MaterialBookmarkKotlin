@@ -13,7 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import khronos.toDate
+import khronos.toString
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
+import java.time.Instant
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 private const val ARG_PARAM1 = "param1"
@@ -50,15 +55,14 @@ class BookmarkListFragment : Fragment() {
     }
 
     private fun initView() {
-        navigateBookmarkSendButtonId.setOnClickListener { findNavController().navigate(R.id.addBookmarkFragment) }
-
-        list.add(Bookmark("bll", "Instagram", "Image", "", "URL"))
-        list.add(Bookmark("bll", "Title2", "Image", "", "URL"))
-        list.add(Bookmark("bll", "Title3", "Image", "", "URL"))
-        list.add(Bookmark("bll", "Title4", "Image", "", "URL"))
-        list.add(Bookmark("bll", "Title5", "Image", "", "URL"))
-        list.add(Bookmark("bll", "Title6", "Image", "", "URL"))
-        list.add(Bookmark("bll", "Title7", "Image", "", "URL"))
+//        navigateBookmarkSendButtonId.setOnClickListener { findNavController().navigate(R.id.addBookmarkFragment) }
+        list.add(Bookmark("bll", "Instagram", "Image", "", "www.instagram.com", "2019-06-19".toDate("yyyy-MM-dd")))
+        list.add(Bookmark("bll", "Facebook", "Image", "", "www.facebook.com", "2019-05-01".toDate("yyyy-MM-dd")))
+        list.add(Bookmark("bll", "Google", "Image", "", "www.google.com", "2019-02-11".toDate("yyyy-MM-dd")))
+        list.add(Bookmark("bll", "Vodafone", "Image", "", "www.vodafone.com", "2019-04-22".toDate("yyyy-MM-dd")))
+        list.add(Bookmark("bll", "Outlook", "Image", "", "www.outlook.it", "2019-04-30".toDate("yyyy-MM-dd")))
+        list.add(Bookmark("bll", "Gmail", "Image", "", "www.gmail.com", "2019-05-18".toDate("yyyy-MM-dd")))
+        list.add(Bookmark("bll", "Blablacar", "Image", "", "www.blablacar.com", "2019-05-12".toDate("yyyy-MM-dd")))
 
         mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
         mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list)

@@ -13,7 +13,7 @@
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_16"
@@ -21,20 +21,16 @@
             android:fontFamily="@font/yantramanav_thin"
             android:text="Bookmarks"
             android:textColor="@color/colorAccent"
-            android:textSize="36sp" />
+            android:textSize="42sp" />
         <include layout="@layout/bookmark_action_icon_item"/>
         <include layout="@layout/bookmark_action_icon_item"/>
 
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mbBookmarkRecyclerViewId"
+        android:paddingLeft="@dimen/margin_8"
+        android:paddingRight="@dimen/margin_8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/navigateBookmarkSendButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SAVE"/>
 
 </LinearLayout>
