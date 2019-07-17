@@ -3,11 +3,12 @@ package com.application.dev.david.materialbookmarkkot.ui
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 
-class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener {
+class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

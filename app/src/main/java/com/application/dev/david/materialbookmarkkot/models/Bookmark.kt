@@ -1,5 +1,6 @@
 package com.application.dev.david.materialbookmarkkot.models
 
+import androidx.lifecycle.ViewModel
 import com.google.gson.annotations.SerializedName
 import java.util.*
 

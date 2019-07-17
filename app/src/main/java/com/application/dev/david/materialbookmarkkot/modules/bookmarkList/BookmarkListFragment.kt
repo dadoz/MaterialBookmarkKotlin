@@ -7,29 +7,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
-import com.application.dev.david.materialbookmarkkot.models.Bookmark
-import khronos.toDate
-import khronos.toString
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
-import java.time.Instant
-import java.util.*
-import kotlin.collections.ArrayList
+import androidx.lifecycle.ViewModelProviders
+import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class BookmarkListFragment : Fragment() {
+class BookmarkListFragment : Fragment()  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    val list : ArrayList<Bookmark> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,16 +50,14 @@ class BookmarkListFragment : Fragment() {
 
     private fun initView() {
 //        navigateBookmarkSendButtonId.setOnClickListener { findNavController().navigate(R.id.addBookmarkFragment) }
-        list.add(Bookmark("bll", "Instagram", "Image", "", "www.instagram.com", "2019-06-19".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Facebook", "Image", "", "www.facebook.com", "2019-05-01".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Google", "Image", "", "www.google.com", "2019-02-11".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Vodafone", "Image", "", "www.vodafone.com", "2019-04-22".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Outlook", "Image", "", "www.outlook.it", "2019-04-30".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Gmail", "Image", "", "www.gmail.com", "2019-05-18".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Blablacar", "Image", "", "www.blablacar.com", "2019-05-12".toDate("yyyy-MM-dd")))
 
-        mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
-        mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list)
+        val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
+        bookmarkViewModel.retrieveBookmarkList()
+        bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
+            mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
+            mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list)
+        })
+
     }
 
     fun onButtonPressed(uri: Uri) {
