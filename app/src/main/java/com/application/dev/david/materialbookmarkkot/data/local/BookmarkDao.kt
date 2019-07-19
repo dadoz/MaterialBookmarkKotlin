@@ -4,7 +4,7 @@ import androidx.room.*
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 
 @Dao
-public interface ContactDAO {
+interface BookmarkDao {
     @Insert
     fun insert(bookmark: List<Bookmark>)
 

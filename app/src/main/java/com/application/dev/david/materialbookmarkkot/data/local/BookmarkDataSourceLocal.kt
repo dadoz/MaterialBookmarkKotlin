@@ -14,7 +14,7 @@ class BookmarkDataSourceLocal(var context: Context) {
      * get bookmarks
      */
     fun getBookmarks(): List<Bookmark> {
-        return database.contactDAO.getBookmarks()
+        return database.bookmarkDao.getBookmarks()
     }
 
 }

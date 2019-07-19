@@ -17,25 +17,17 @@ import khronos.toDate
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData = MutableLiveData<List<Bookmark>>()
-    private val list : ArrayList<Bookmark> = ArrayList()
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
 
     init {
         //mock data
-        list.add(Bookmark("bll", "Instagram", "Image", "", "www.instagram.com", "2019-06-19".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Facebook", "Image", "", "www.facebook.com", "2019-05-01".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Google", "Image", "", "www.google.com", "2019-02-11".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Vodafone", "Image", "", "www.vodafone.com", "2019-04-22".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Outlook", "Image", "", "www.outlook.it", "2019-04-30".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Gmail", "Image", "", "www.gmail.com", "2019-05-18".toDate("yyyy-MM-dd")))
-        list.add(Bookmark("bll", "Blablacar", "Image", "", "www.blablacar.com", "2019-05-12".toDate("yyyy-MM-dd")))
     }
 
     fun retrieveBookmarkList() {
         val disposable = Observable.just("")//fromArray(list)
-            .flatMap { obs -> bookmarkListaDataRepository.getBookmarks()}
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .flatMap { obs -> bookmarkListaDataRepository.getBookmarks()}
 //                .doOnSubscribe((d) -> responseLiveData.setValue(ApiResponse.loading()))
             .subscribe(
                 {result -> (bookmarksLiveData as MutableLiveData).value = result },
