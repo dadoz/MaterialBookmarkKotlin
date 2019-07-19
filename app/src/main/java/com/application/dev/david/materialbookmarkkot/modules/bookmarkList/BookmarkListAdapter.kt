@@ -13,11 +13,11 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.bumptech.glide.Glide
 import khronos.toString
 
-class BookmarkListAdapter(private val items: List<Bookmark>) : RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>()  {
+class BookmarkListAdapter(private val items: List<Bookmark>, val listener: OnBookmarkItemClickListener) : RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
         val inflatedView = parent.inflate(R.layout.bookmark_view_item, false)
-        return BookmarkViewHolder(inflatedView)
+        return BookmarkViewHolder(inflatedView, listener)
     }
 
     override fun getItemCount(): Int {
@@ -36,7 +36,10 @@ class BookmarkListAdapter(private val items: List<Bookmark>) : RecyclerView.Adap
     /**
      * view holder
      */
-    class BookmarkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class BookmarkViewHolder(
+        itemView: View,
+        val listener: OnBookmarkItemClickListener
+    ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val bookmarkTitle: TextView = itemView.findViewById(R.id.bookmarkTitleTextViewId)
         val bookmarkUrl: TextView = itemView.findViewById(R.id.bookmarkUrlTextViewId)
         val bookmarkTimestamp: TextView = itemView.findViewById(R.id.bookmarkTimestampTextViewId)
@@ -48,10 +51,14 @@ class BookmarkListAdapter(private val items: List<Bookmark>) : RecyclerView.Adap
 
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
+            listener.onBookmarkItemClicked(v)
         }
 
     }
 
+    interface OnBookmarkItemClickListener {
+        fun onBookmarkItemClicked(view: View)
+    }
 }
 
 /***

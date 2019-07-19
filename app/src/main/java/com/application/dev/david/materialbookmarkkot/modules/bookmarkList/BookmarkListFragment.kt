@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import androidx.lifecycle.ViewModelProviders
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 
 
@@ -49,13 +51,16 @@ class BookmarkListFragment : Fragment()  {
     }
 
     private fun initView() {
-//        navigateBookmarkSendButtonId.setOnClickListener { findNavController().navigate(R.id.addBookmarkFragment) }
 
         val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
-            mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list)
+            mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
+                override fun onBookmarkItemClicked(view: View) {
+                    Toast.makeText(context, "hey you clicked", Toast.LENGTH_LONG).show()
+                }
+            })
         })
 
     }

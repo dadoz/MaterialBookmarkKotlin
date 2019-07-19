@@ -22,7 +22,7 @@
             android:text="Bookmarks"
             android:textColor="@color/colorAccent"
             android:textSize="42sp" />
-        <include layout="@layout/bookmark_action_icon_item"/>
+        <include layout="@layout/clipboard_action_icon_item"/>
         <include layout="@layout/bookmark_action_icon_item"/>
 
     </LinearLayout>

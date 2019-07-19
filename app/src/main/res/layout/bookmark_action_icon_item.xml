@@ -16,6 +16,6 @@
         android:fontFamily="@font/yantramanav_thin"
         android:textSize="16sp"
         android:layout_marginTop="@dimen/margin_8"
-        android:text="Clipboard"
+        android:text="Bookmark"
         android:textColor="@color/colorAccent" />
 </LinearLayout>

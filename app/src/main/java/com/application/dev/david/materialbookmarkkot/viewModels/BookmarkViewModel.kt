@@ -1,20 +1,24 @@
 package com.application.dev.david.materialbookmarkkot.viewModels
 
+import android.app.Application
+import android.content.Context
 import android.nfc.Tag
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import khronos.toDate
 
-class BookmarkViewModel :ViewModel() {
-    var bookmarksLiveData: LiveData<List<Bookmark>> = MutableLiveData<List<Bookmark>>()
-    val list : ArrayList<Bookmark> = ArrayList()
-
+class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
+    var bookmarksLiveData = MutableLiveData<List<Bookmark>>()
+    private val list : ArrayList<Bookmark> = ArrayList()
+    private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
 
     init {
         //mock data
@@ -28,8 +32,8 @@ class BookmarkViewModel :ViewModel() {
     }
 
     fun retrieveBookmarkList() {
-        val disposable = Observable.fromArray(list)
-//                .flatMap({obs -> repository.executeLogin(mobileNumber, password)})
+        val disposable = Observable.just("")//fromArray(list)
+            .flatMap { obs -> bookmarkListaDataRepository.getBookmarks()}
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 //                .doOnSubscribe((d) -> responseLiveData.setValue(ApiResponse.loading()))
