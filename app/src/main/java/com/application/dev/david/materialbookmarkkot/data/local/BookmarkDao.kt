@@ -6,7 +6,10 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 @Dao
 interface BookmarkDao {
     @Insert
-    fun insert(bookmark: List<Bookmark>)
+    fun insertAll(bookmark: List<Bookmark>)
+
+    @Insert
+    fun insert(bookmark: Bookmark)
 
     @Update
     fun update(bookmark: List<Bookmark>)

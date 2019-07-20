@@ -17,4 +17,8 @@ class BookmarkDataSourceLocal(var context: Context) {
         return database.bookmarkDao.getBookmarks()
     }
 
+    fun insertBookmark(bookmark: Bookmark) {
+        database.bookmarkDao.insert(bookmark)
+    }
+
 }

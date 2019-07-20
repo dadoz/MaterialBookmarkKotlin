@@ -23,6 +23,9 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         //mock data
     }
 
+    /**
+     * retrieve bookamr list
+     */
     fun retrieveBookmarkList() {
         val disposable = Observable.just("")//fromArray(list)
             .subscribeOn(Schedulers.io())
@@ -30,9 +33,21 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .flatMap { obs -> bookmarkListaDataRepository.getBookmarks()}
 //                .doOnSubscribe((d) -> responseLiveData.setValue(ApiResponse.loading()))
             .subscribe(
-                {result -> (bookmarksLiveData as MutableLiveData).value = result },
+                {result -> bookmarksLiveData.value = result },
                 {error -> print(error.message)}
             )
+    }
+
+    /**
+     * add bookamrk on db
+     *
+     */
+    fun saveBookmark(bookmark : Bookmark) {
+        val disposable = Observable.just(bookmark)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.newThread())
+            .map(bookmarkListaDataRepository::addBookmark)
+            .subscribe({success -> print("INSERT SUCCESS")}, {error -> Log.e("bla", error.message)})
 
     }
 }

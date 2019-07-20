@@ -14,6 +14,7 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 
@@ -51,22 +52,18 @@ class BookmarkListFragment : Fragment()  {
     }
 
     private fun initView() {
-
         val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
-                override fun onBookmarkItemClicked(view: View) {
-                    Toast.makeText(context, "hey you clicked", Toast.LENGTH_LONG).show()
+                override fun onBookmarkItemClicked(position: Int) {
+                    Toast.makeText(context, "hey you clicked $position", Toast.LENGTH_LONG).show()
+                    findNavController().navigate(R.id.addBookmarkFragment)
                 }
             })
         })
 
-    }
-
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
     }
 
     override fun onAttach(context: Context) {

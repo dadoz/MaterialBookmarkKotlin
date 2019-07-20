@@ -12,4 +12,8 @@ class BookmarkListDataRepository(val context: Context) {
 //        if (local != 0) else remote
         return Observable.just(bookmarkDataSourceLocal.getBookmarks())
     }
+
+    fun addBookmark(bookmark: Bookmark) {
+        bookmarkDataSourceLocal.insertBookmark(bookmark)
+    }
 }
