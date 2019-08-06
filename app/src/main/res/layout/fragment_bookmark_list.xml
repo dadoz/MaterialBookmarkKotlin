@@ -1,36 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-
-    tools:context=".modules.bookmarkList.BookmarkListFragment">
-    <LinearLayout
-        android:orientation="horizontal"
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_16"
+        tools:context=".modules.bookmarkList.BookmarkListFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="0dp"
+    <TextView
+            android:id="@+id/mbBookmarkTitleTextViewId"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_16"
-            android:layout_weight="1"
             android:fontFamily="@font/yantramanav_thin"
             android:text="Bookmarks"
             android:textColor="@color/colorAccent"
             android:textSize="42sp" />
-        <include layout="@layout/clipboard_action_icon_item"/>
-        <include layout="@layout/bookmark_action_icon_item"/>
-
-    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mbBookmarkRecyclerViewId"
-        android:paddingLeft="@dimen/margin_8"
-        android:paddingRight="@dimen/margin_8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            android:id="@+id/mbBookmarkRecyclerViewId"
+            android:layout_below="@+id/mbBookmarkTitleTextViewId"
+            android:paddingLeft="@dimen/margin_8"
+            android:paddingRight="@dimen/margin_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <com.google.android.material.chip.Chip
+            android:id="@+id/mbBookmarkAddNewButtonId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_16"
+            android:text="Add new"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/yantramanav_light"
+            app:chipIcon="@drawable/ic_bookmark_icon_black_26"
+            app:chipIconTint="@color/colorPrimaryDark"
+            app:chipBackgroundColor="@color/colorPrimary"
+            app:chipCornerRadius="32dp"
+            app:chipMinHeight="56dp"
+            app:chipStrokeColor="@color/colorPrimaryMedium"
+            app:chipStrokeWidth="0.5dp"
+            app:chipEndPadding="@dimen/margin_16"
+            app:chipStartPadding="@dimen/margin_16"
+    />
 
-</LinearLayout>
+
+</RelativeLayout>

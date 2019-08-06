@@ -50,7 +50,6 @@ class AddBookmarkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addBookmarkSendButtonId.setOnClickListener { findNavController().navigate(R.id.addBookmarkFragment) }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

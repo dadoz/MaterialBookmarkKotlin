@@ -15,6 +15,7 @@ import com.application.dev.david.materialbookmarkkot.R
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.application.dev.david.materialbookmarkkot.R.id.mbBookmarkAddNewButtonId
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 
@@ -59,10 +60,12 @@ class BookmarkListFragment : Fragment()  {
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int) {
                     Toast.makeText(context, "hey you clicked $position", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(R.id.addBookmarkFragment)
                 }
             })
         })
+        mbBookmarkAddNewButtonId.setOnClickListener {
+            findNavController().navigate(R.id.addBookmarkFragment)
+        }
 
     }
 
@@ -71,7 +74,7 @@ class BookmarkListFragment : Fragment()  {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 

@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:padding="@dimen/margin_16"
-    android:orientation="vertical">
-    <ImageView
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_bookmark_icon_black_26"/>
-
-    <TextView
+<com.google.android.material.chip.Chip
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/yantramanav_thin"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/margin_8"
-        android:text="Bookmark"
-        android:textColor="@color/colorAccent" />
-</LinearLayout>
+        android:padding="@dimen/margin_16"
+        android:text="Bookmarks"
+        app:chipIcon="@drawable/ic_bookmark_icon_black_26"
+        app:chipBackgroundColor="@color/colorAccent"
+        app:chipCornerRadius="24dp"
+        app:chipEndPadding="@dimen/margin_8"
+        app:chipStartPadding="@dimen/margin_8"
+/>
+
