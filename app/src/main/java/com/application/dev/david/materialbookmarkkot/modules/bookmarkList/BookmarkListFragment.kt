@@ -1,6 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +16,7 @@ import com.application.dev.david.materialbookmarkkot.R
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.application.dev.david.materialbookmarkkot.R.id.mbBookmarkAddNewButtonId
+import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 
@@ -52,14 +53,19 @@ class BookmarkListFragment : Fragment()  {
         initView()
     }
 
+    /**
+     *
+     */
     private fun initView() {
         val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
-                override fun onBookmarkItemClicked(position: Int) {
-                    Toast.makeText(context, "hey you clicked $position", Toast.LENGTH_LONG).show()
+                override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
+                    Toast.makeText(context, "hey you clicked $position ${bookmark.url}", Toast.LENGTH_LONG).show()
+                    val action = BookmarkListFragmentDirections.setBookmarkUrlArgsActionId(bookmark.url)
+                    findNavController().navigate(action)
                 }
             })
         })

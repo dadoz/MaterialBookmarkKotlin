@@ -1,4 +1,4 @@
-package com.application.dev.david.materialbookmarkkot
+package com.application.dev.david.materialbookmarkkot.modules.addBookmark
 
 import android.content.Context
 import android.net.Uri
@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_add_bookmark.*
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
+import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
+import com.application.dev.david.materialbookmarkkot.R
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -62,7 +61,7 @@ class AddBookmarkFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
