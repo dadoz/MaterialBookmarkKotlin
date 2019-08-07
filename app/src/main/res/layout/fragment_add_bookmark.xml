@@ -76,6 +76,12 @@
                 android:textSize="32sp"
                 android:fontFamily="@font/yantramanav_thin"
                 android:text="Preview"/>
+        <Button
+                android:id="@+id/mbBookmarkSaveNewButtonId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="save"/>
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

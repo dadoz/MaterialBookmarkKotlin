@@ -6,6 +6,7 @@
     <fragment android:id="@+id/bookmarkListFragment"
               android:name="com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListFragment"
               android:label="fragment_bookmark_list" tools:layout="@layout/fragment_bookmark_list">
+        <argument android:name="BookmarkUrl" app:argType="android.os.Bundle"/>
         <action android:id="@+id/action_bookmarkListFragment2_to_addBookmarkFragment"
                 app:destination="@id/addBookmarkFragment"/>
         <action android:id="@+id/setBookmarkUrlArgsActionId"
@@ -15,8 +16,8 @@
     <fragment android:id="@+id/addBookmarkFragment"
               android:name="com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment"
               android:label="fragment_add_bookmark" tools:layout="@layout/fragment_add_bookmark">
-        <action android:id="@+id/action_addBookmarkFragment_to_previewBookmarkFragment"
-                app:destination="@id/previewBookmarkFragment"/>
+        <action android:id="@+id/addBookmarkArgsActionId"
+                app:destination="@id/bookmarkListFragment"/>
     </fragment>
     <fragment android:id="@+id/previewBookmarkFragment"
               android:name="com.application.dev.david.materialbookmarkkot.PreviewBookmarkFragment"

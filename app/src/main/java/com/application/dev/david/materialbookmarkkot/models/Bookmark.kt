@@ -7,12 +7,16 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 @Entity(tableName = "mb_bookmark")
-data class Bookmark (@SerializedName("site_name")
+data class Bookmark (
+        //TODO useless
+        @SerializedName("site_name")
         var siteName: String?,
         @SerializedName("title")
         var title: String?,
+        //TODO useless
         @SerializedName("image")
         var image: String?,
+        //TODO mv to uniqueID
         @SerializedName("app_id")
         var appId: String?,
         @PrimaryKey
@@ -20,4 +24,5 @@ data class Bookmark (@SerializedName("site_name")
         @SerializedName("url")
         var url: String,
         @SerializedName("timestamp")
-        var timestamp: Date?)
+        var timestamp: Date?
+)
