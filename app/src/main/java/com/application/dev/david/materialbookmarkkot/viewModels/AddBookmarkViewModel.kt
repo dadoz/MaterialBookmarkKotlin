@@ -9,6 +9,7 @@ import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataReposi
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -16,6 +17,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     val bookmarkInfoLiveData : MutableLiveData<Bookmark> = MutableLiveData()
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
 
     /**
      * add bookamrk on db
@@ -41,8 +43,11 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .map(bookmarkListaDataRepository::addBookmark)
-            .subscribe({success -> print("INSERT SUCCESS")},
-                { error -> Log.e(javaClass.name, error.message) })
+            .subscribe(
+                { success -> print("INSERT SUCCESS")
+                    saveBookmarkStatus.value = true },
+                { error -> Log.e(javaClass.name, error.message)
+                    saveBookmarkStatus.value = false })
         compositeDisposable.add(disposable)
     }
 

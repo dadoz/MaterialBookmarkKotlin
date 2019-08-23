@@ -20,9 +20,11 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.functions.Action
 import khronos.Dates
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
-
+import java.util.*
 
 
 /**
@@ -78,9 +80,24 @@ class AddBookmarkFragment : Fragment() {
         })
 
         mbBookmarkSaveNewButtonId.setOnClickListener {
-            val newBookmark = Bookmark("","BlaBla", "", "-1", "firebase.google.com", Dates.today)
+            val siteName = ""
+            val title = mbNewBookmarkTitleEditTextId.text.toString()
+            val iconPath = ""
+            val id = UUID.randomUUID().toString()
+            val url = mbNewBookmarkUrlEditTextId.text.toString()
+            val newBookmark = Bookmark(siteName,title, iconPath, id, url, Dates.today)
+            //saving cbs
             addBookmarkViewModel.saveBookmark(newBookmark)
-            findNavController().popBackStack()
+            addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
+                //success cb :)
+                if (status) {
+                    findNavController().popBackStack()
+                    return@Observer
+                }
+                //error cb
+                Snackbar.make(mbNewBookmarkMainViewId,
+                    "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
+            })
         }
     }
 

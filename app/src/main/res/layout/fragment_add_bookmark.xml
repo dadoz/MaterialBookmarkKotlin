@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mbNewBookmarkMainViewId"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -23,6 +24,7 @@
                 android:layout_marginLeft="@dimen/margin_8"
                 android:hint="slsslllslslslls">
             <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/mbNewBookmarkTitleEditTextId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
