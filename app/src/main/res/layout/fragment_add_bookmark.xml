@@ -57,6 +57,7 @@
                     android:fontFamily="@font/yantramanav_thin"
                     android:hint="slsslllslslslls">
                 <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/mbNewBookmarkUrlEditTextId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorAccent"
