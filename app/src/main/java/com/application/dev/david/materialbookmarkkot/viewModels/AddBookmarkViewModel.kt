@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
@@ -43,6 +44,8 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .map(bookmarkListaDataRepository::addBookmark)
+            .observeOn(AndroidSchedulers.mainThread()
+            )
             .subscribe(
                 { success -> print("INSERT SUCCESS")
                     saveBookmarkStatus.value = true },

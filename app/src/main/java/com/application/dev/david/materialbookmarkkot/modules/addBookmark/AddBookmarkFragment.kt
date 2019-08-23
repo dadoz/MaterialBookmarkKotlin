@@ -89,14 +89,13 @@ class AddBookmarkFragment : Fragment() {
             //saving cbs
             addBookmarkViewModel.saveBookmark(newBookmark)
             addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
-                //success cb :)
-                if (status) {
-                    findNavController().popBackStack()
-                    return@Observer
+                when (status) {
+                    //success cb :)
+                    true -> findNavController().popBackStack()
+                    //error cb :)
+                    false -> Snackbar.make(mbNewBookmarkMainViewId,
+                        "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
                 }
-                //error cb
-                Snackbar.make(mbNewBookmarkMainViewId,
-                    "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
             })
         }
     }
