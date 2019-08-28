@@ -19,6 +19,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
+    val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
 
     /**
      * add bookamrk on db
@@ -29,7 +30,10 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .debounce( 300, TimeUnit.MILLISECONDS)
-            .filter{ tempUrl -> tempUrl.isEmpty() }
+            .filter{ tempUrl -> tempUrl.isNotEmpty() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { url -> bookmarkSearchedUrlLiveData.value = "https://$url" }
+            .observeOn(Schedulers.newThread())
             .flatMap (bookmarkListaDataRepository::findBookmarkInfo)
             .subscribe({ bookmarkInfo -> bookmarkInfoLiveData.value = bookmarkInfo },
                 { error -> Log.e(javaClass.name, error.message) })

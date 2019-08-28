@@ -75,6 +75,11 @@ class AddBookmarkFragment : Fragment() {
             }
         })
 
+        addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
+            mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
+            mbBookmarkSearchedUrPlaceholderId.visibility = View.GONE
+        })
+
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmark ->
             Log.e(javaClass.name, "blalllala " + bookmark.title)
         })
