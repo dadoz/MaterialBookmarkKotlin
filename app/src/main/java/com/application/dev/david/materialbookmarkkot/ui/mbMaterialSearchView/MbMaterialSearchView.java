@@ -1814,7 +1814,7 @@ public class MbMaterialSearchView extends LinearLayout implements
         @Override
         public SuggestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_suggestion, parent, false);
+                    .inflate(R.layout.mb_list_item_suggestion, parent, false);
             return new SuggestionViewHolder(itemView);
         }
 
