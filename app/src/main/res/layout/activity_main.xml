@@ -20,7 +20,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorToolbar"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-        <com.michaelgarnerdev.materialsearchview.MaterialSearchView
+        <com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
                 android:id="@+id/material_search_view"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
