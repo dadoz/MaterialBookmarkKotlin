@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +41,7 @@ class AddBookmarkFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -54,9 +54,18 @@ class AddBookmarkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initActionBar()
         initView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_add_bookmark, menu)
+    }
+
+    private fun initActionBar() {
+//        (activity as AppCompatActivity).find= "bllalalala"
+    }
     /**
      *
      */
@@ -84,25 +93,25 @@ class AddBookmarkFragment : Fragment() {
             Log.e(javaClass.name, "blalllala " + bookmark.title)
         })
 
-        mbBookmarkSaveNewButtonId.setOnClickListener {
-            val siteName = ""
-            val title = mbNewBookmarkTitleEditTextId.text.toString()
-            val iconPath = ""
-            val id = UUID.randomUUID().toString()
-            val url = mbNewBookmarkUrlEditTextId.text.toString()
-            val newBookmark = Bookmark(siteName,title, iconPath, id, url, Dates.today)
-            //saving cbs
-            addBookmarkViewModel.saveBookmark(newBookmark)
-            addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
-                when (status) {
-                    //success cb :)
-                    true -> findNavController().popBackStack()
-                    //error cb :)
-                    false -> Snackbar.make(mbNewBookmarkMainViewId,
-                        "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
-                }
-            })
-        }
+//        mbBookmarkSaveNewButtonId.setOnClickListener {
+//            val siteName = ""
+//            val title = mbNewBookmarkTitleEditTextId.text.toString()
+//            val iconPath = ""
+//            val id = UUID.randomUUID().toString()
+//            val url = mbNewBookmarkUrlEditTextId.text.toString()
+//            val newBookmark = Bookmark(siteName,title, iconPath, id, url, Dates.today)
+//            //saving cbs
+//            addBookmarkViewModel.saveBookmark(newBookmark)
+//            addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
+//                when (status) {
+//                    //success cb :)
+//                    true -> findNavController().popBackStack()
+//                    //error cb :)
+//                    false -> Snackbar.make(mbNewBookmarkMainViewId,
+//                        "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
+//                }
+//            })
+//        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
