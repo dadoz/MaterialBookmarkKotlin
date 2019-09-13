@@ -20,6 +20,12 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
+    /**
+     *
+     */
+    fun updateWebviewByUrl(url: String) {
+        bookmarkSearchedUrlLiveData.value = "https://$url"
+    }
 
     /**
      * add bookamrk on db
@@ -29,12 +35,11 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
         val disposable = Observable.just(url)
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .debounce( 300, TimeUnit.MILLISECONDS)
+            .debounce( 700, TimeUnit.MILLISECONDS)
             .filter{ tempUrl -> tempUrl.isNotEmpty() }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { url -> bookmarkSearchedUrlLiveData.value = "https://$url" }
             .observeOn(Schedulers.newThread())
             .flatMap (bookmarkListaDataRepository::findBookmarkInfo)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ bookmarkInfo -> bookmarkInfoLiveData.value = bookmarkInfo },
                 { error -> Log.e(javaClass.name, error.message) })
         compositeDisposable.add(disposable)
@@ -48,8 +53,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .map(bookmarkListaDataRepository::addBookmark)
-            .observeOn(AndroidSchedulers.mainThread()
-            )
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { success -> print("INSERT SUCCESS")
                     saveBookmarkStatus.value = true },

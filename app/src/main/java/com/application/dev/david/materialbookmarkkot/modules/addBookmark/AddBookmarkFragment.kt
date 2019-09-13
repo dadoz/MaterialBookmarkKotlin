@@ -7,8 +7,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
 import androidx.fragment.app.Fragment
 import android.widget.EditText
+import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
@@ -18,11 +21,14 @@ import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.functions.Action
 import khronos.Dates
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
+import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import java.util.*
 
 
@@ -38,6 +44,9 @@ import java.util.*
 class AddBookmarkFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var listener: OnFragmentInteractionListener? = null
+    val addBookmarkViewModel: AddBookmarkViewModel by lazy {
+        ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,15 +72,26 @@ class AddBookmarkFragment : Fragment() {
         menuInflater.inflate(R.menu.menu_add_bookmark, menu)
     }
 
-    private fun initActionBar() {
-//        (activity as AppCompatActivity).find= "bllalalala"
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_search_bookmark -> {
+                addBookmarkViewModel.updateWebviewByUrl((mbNewBookmarkUrlEditTextId as EditText).text.toString())
+            }
+        }
+        return super.onOptionsItemSelected(item)
+
     }
+    /**
+     * init actionbar
+     */
+    private fun initActionBar() {
+        listener?.showActionBarView("Search new Bookmark")
+    }
+
     /**
      *
      */
     private fun initView() {
-        val addBookmarkViewModel = ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
-
         (mbNewBookmarkUrlEditTextId as EditText).addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
@@ -86,11 +106,13 @@ class AddBookmarkFragment : Fragment() {
 
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
-            mbBookmarkSearchedUrPlaceholderId.visibility = View.GONE
+            mbBookmarkSearchedUrPlaceholderId.visibility = GONE
+            Log.e(javaClass.name, "blalllala " + searchedUrl)
         })
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmark ->
-            Log.e(javaClass.name, "blalllala " + bookmark.title)
+            mbBookmarkTitleTextViewId.text = bookmark.title
+//            Log.e(javaClass.name, "blalllala " + bookmark.title)
         })
 
 //        mbBookmarkSaveNewButtonId.setOnClickListener {
