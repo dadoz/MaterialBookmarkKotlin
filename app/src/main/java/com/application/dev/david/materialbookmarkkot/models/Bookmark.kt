@@ -25,4 +25,12 @@ data class Bookmark (
         var url: String,
         @SerializedName("timestamp")
         var timestamp: Date?
-)
+) {
+        companion object {
+                fun getId(url: String): String {
+                        return UUID.fromString(url).toString()
+                }
+        }
+
+}
+

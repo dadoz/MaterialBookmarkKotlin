@@ -12,6 +12,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import khronos.Dates
 import java.util.concurrent.TimeUnit
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
@@ -38,9 +39,19 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .debounce( 700, TimeUnit.MILLISECONDS)
             .filter{ tempUrl -> tempUrl.isNotEmpty() }
             .observeOn(Schedulers.newThread())
-            .flatMap (bookmarkListaDataRepository::findBookmarkInfo)
+            .flatMap(bookmarkListaDataRepository::findBookmarkInfo)
+            .map{ bookmarkInfo ->
+                Bookmark(
+                    bookmarkInfo.title,
+                    bookmarkInfo.title,
+                    bookmarkInfo.icons[0].href,
+                    Bookmark.getId(url),
+                    url,
+                    Dates.today
+                )}
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ bookmarkInfo -> bookmarkInfoLiveData.value = bookmarkInfo },
+            .subscribe(
+                { bookmark -> bookmarkInfoLiveData.value = bookmark },
                 { error -> Log.e(javaClass.name, error.message) })
         compositeDisposable.add(disposable)
     }
