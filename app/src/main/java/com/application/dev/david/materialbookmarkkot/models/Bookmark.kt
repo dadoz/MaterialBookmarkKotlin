@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.net.URLEncoder
 import java.util.*
 
 @Entity(tableName = "mb_bookmark")
@@ -28,7 +29,7 @@ data class Bookmark (
 ) {
         companion object {
                 fun getId(url: String): String {
-                        return UUID.fromString(url).toString()
+                        return UUID.randomUUID().toString()
                 }
         }
 

@@ -14,6 +14,7 @@ import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import khronos.Dates
 import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<Bookmark> = MutableLiveData()
@@ -34,6 +35,8 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
      */
     fun findBookmarkInfoByUrl(url: String) {
         val disposable = Observable.just(url)
+            .map{ url -> "https://$url" }
+            .filter{ url -> isEmailValid(url) }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
             .debounce( 700, TimeUnit.MILLISECONDS)
@@ -76,5 +79,9 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.WEB_URL.matcher(email).matches()
     }
 }

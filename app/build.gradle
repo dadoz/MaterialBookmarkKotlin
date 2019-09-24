@@ -60,6 +60,7 @@ dependencies {
 
     implementation 'com.michaelgarnerdev.materialsearchview:materialsearchview:0.1.0@aar'
 
+    implementation "com.squareup.okhttp3:logging-interceptor:4.2.0"
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
     kapt 'android.arch.persistence.room:compiler:1.1.1'

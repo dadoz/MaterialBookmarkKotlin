@@ -111,7 +111,7 @@ class AddBookmarkFragment : Fragment() {
         })
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmark ->
-            mbBookmarkTitleTextViewId.text = bookmark.title
+            mbNewBookmarkTitleEditTextId.setText(bookmark.title)
 //            Log.e(javaClass.name, "blalllala " + bookmark.title)
         })
 
