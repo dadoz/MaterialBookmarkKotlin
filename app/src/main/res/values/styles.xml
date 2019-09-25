@@ -24,5 +24,9 @@
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">6dp</item>
     </style>
+    <style name="MBMaterialCardviewStyleBlue" parent="MBMaterialCardviewStyle" >
+        <item name="cardBackgroundColor">@color/colorAccentLight</item>
+        <item name="strokeColor">@color/colorAccent</item>
+    </style>
 
 </resources>

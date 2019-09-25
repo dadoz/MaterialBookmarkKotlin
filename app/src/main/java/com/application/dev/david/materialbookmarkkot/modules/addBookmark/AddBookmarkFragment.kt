@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import android.widget.EditText
 import android.widget.Toast
@@ -23,6 +24,9 @@ import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.functions.Action
 import khronos.Dates
@@ -92,17 +96,6 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun initView() {
-        (mbNewBookmarkUrlEditTextId as EditText).addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(textChanged: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                addBookmarkViewModel.findBookmarkInfoByUrl(textChanged.toString())
-            }
-        })
 
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
@@ -110,30 +103,33 @@ class AddBookmarkFragment : Fragment() {
             Log.e(javaClass.name, "blalllala " + searchedUrl)
         })
 
-        addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmark ->
-            mbNewBookmarkTitleEditTextId.setText(bookmark.title)
-//            Log.e(javaClass.name, "blalllala " + bookmark.title)
+        addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
+            mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.title)
+
+            Glide.with(mbNewBookmarkIconImageViewId.context)
+                .load(bookmarkInfo.icons[0].href)
+                .apply(RequestOptions.circleCropTransform())
+                .into(mbNewBookmarkIconImageViewId)
         })
 
-//        mbBookmarkSaveNewButtonId.setOnClickListener {
-//            val siteName = ""
-//            val title = mbNewBookmarkTitleEditTextId.text.toString()
-//            val iconPath = ""
-//            val id = UUID.randomUUID().toString()
-//            val url = mbNewBookmarkUrlEditTextId.text.toString()
-//            val newBookmark = Bookmark(siteName,title, iconPath, id, url, Dates.today)
-//            //saving cbs
-//            addBookmarkViewModel.saveBookmark(newBookmark)
-//            addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
-//                when (status) {
-//                    //success cb :)
+        addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
+            when (status) {
+                //success cb :)
 //                    true -> findNavController().popBackStack()
-//                    //error cb :)
-//                    false -> Snackbar.make(mbNewBookmarkMainViewId,
-//                        "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
-//                }
-//            })
-//        }
+                true -> Snackbar.make(mbNewBookmarkMainViewId,
+                    "SUCCESS", Snackbar.LENGTH_SHORT).show()
+                //error cb :)
+                false -> Snackbar.make(mbNewBookmarkMainViewId,
+                    "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+
+        mbBookmarkSaveNewButtonId.setOnClickListener {
+            mbNewBookmarkIconLayoutId.visibility = VISIBLE
+            addBookmarkViewModel.findBookmarkInfoByUrlAndSave(mbNewBookmarkUrlEditTextId.text.toString())
+        }
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

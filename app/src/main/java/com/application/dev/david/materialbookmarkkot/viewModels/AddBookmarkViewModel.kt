@@ -2,11 +2,14 @@ package com.application.dev.david.materialbookmarkkot.viewModels
 
 import android.app.Application
 import android.util.Log
+import android.util.Patterns
+import android.webkit.URLUtil
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.models.BookmarkInfo
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,10 +20,11 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
-    val bookmarkInfoLiveData : MutableLiveData<Bookmark> = MutableLiveData()
+    val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
+    val iconBookmarkUrl: MutableLiveData<String> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     /**
      *
@@ -33,16 +37,18 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
      * add bookamrk on db
      *
      */
-    fun findBookmarkInfoByUrl(url: String) {
+    fun findBookmarkInfoByUrlAndSave(url: String) {
         val disposable = Observable.just(url)
             .map{ url -> "https://$url" }
-            .filter{ url -> isEmailValid(url) }
+            .filter{ url -> Patterns.WEB_URL.matcher(url).matches() }
+            .doOnNext{ url -> Log.e(javaClass.name, "----->" + url)}
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .debounce( 700, TimeUnit.MILLISECONDS)
             .filter{ tempUrl -> tempUrl.isNotEmpty() }
             .observeOn(Schedulers.newThread())
             .flatMap(bookmarkListaDataRepository::findBookmarkInfo)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext{ bookmarkInfo -> bookmarkInfoLiveData.value = bookmarkInfo }
             .map{ bookmarkInfo ->
                 Bookmark(
                     bookmarkInfo.title,
@@ -52,10 +58,14 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                     url,
                     Dates.today
                 )}
+            .observeOn(Schedulers.newThread())
+            .map(bookmarkListaDataRepository::addBookmark)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { bookmark -> bookmarkInfoLiveData.value = bookmark },
-                { error -> Log.e(javaClass.name, error.message) })
+                { success -> print("INSERT SUCCESS")
+                    saveBookmarkStatus.value = true },
+                { error -> Log.e(javaClass.name, error.message)
+                    saveBookmarkStatus.value = false })
         compositeDisposable.add(disposable)
     }
     /**
@@ -81,7 +91,4 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
         compositeDisposable.clear()
     }
 
-    fun isEmailValid(email: String): Boolean {
-        return android.util.Patterns.WEB_URL.matcher(email).matches()
-    }
 }
