@@ -24,7 +24,6 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
-    val iconBookmarkUrl: MutableLiveData<String> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     /**
      *

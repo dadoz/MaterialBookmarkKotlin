@@ -6,7 +6,6 @@ import com.application.dev.david.materialbookmarkkot.data.remote.BookmarkDataSou
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkInfo
 import io.reactivex.Observable
-import java.util.*
 
 class BookmarkListDataRepository(val context: Context) {
     private val bookmarkDataSourceLocal : BookmarkDataSourceLocal = BookmarkDataSourceLocal(context)

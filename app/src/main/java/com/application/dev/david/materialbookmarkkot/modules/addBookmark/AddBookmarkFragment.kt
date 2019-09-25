@@ -79,6 +79,8 @@ class AddBookmarkFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search_bookmark -> {
+                mbBookmarkSaveNewCardviewId.visibility = VISIBLE
+                mbNewBookmarkIconLayoutId.visibility = VISIBLE
                 addBookmarkViewModel.updateWebviewByUrl((mbNewBookmarkUrlEditTextId as EditText).text.toString())
             }
         }
@@ -125,7 +127,6 @@ class AddBookmarkFragment : Fragment() {
         })
 
         mbBookmarkSaveNewButtonId.setOnClickListener {
-            mbNewBookmarkIconLayoutId.visibility = VISIBLE
             addBookmarkViewModel.findBookmarkInfoByUrlAndSave(mbNewBookmarkUrlEditTextId.text.toString())
         }
 

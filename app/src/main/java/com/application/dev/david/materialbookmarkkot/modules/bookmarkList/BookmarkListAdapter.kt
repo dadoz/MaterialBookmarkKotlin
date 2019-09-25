@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import khronos.toString
 
 class BookmarkListAdapter(private val items: List<Bookmark>, val listener: OnBookmarkItemClickListener) : RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>() {
@@ -29,7 +32,8 @@ class BookmarkListAdapter(private val items: List<Bookmark>, val listener: OnBoo
         holder.bookmarkUrl.text = items[position].url
         holder.bookmarkTimestamp.text = items[position].timestamp?.toString("dd MMM")
         Glide.with(holder.itemView.context)
-            .load("https://instagram-brand.com/wp-content/uploads/2016/11/Instagram_AppIcon_Aug2017.png?w=300")
+            .load(items[position].image)
+            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
             .into(holder.bookmarkIcon)
 
         holder.itemView.setOnClickListener { listener.onBookmarkItemClicked(position, items[position]) }
