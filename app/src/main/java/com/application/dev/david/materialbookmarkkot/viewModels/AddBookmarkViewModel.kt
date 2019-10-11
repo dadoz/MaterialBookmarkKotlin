@@ -3,6 +3,7 @@ package com.application.dev.david.materialbookmarkkot.viewModels
 import android.app.Application
 import android.util.Log
 import android.util.Patterns
+import android.util.Size
 import android.webkit.URLUtil
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,8 @@ import androidx.lifecycle.ViewModel
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkInfo
+import com.application.dev.david.materialbookmarkkot.models.Icon
+import com.application.dev.david.materialbookmarkkot.models.Og
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -48,11 +51,14 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .flatMap(bookmarkListaDataRepository::findBookmarkInfo)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext{ bookmarkInfo -> bookmarkInfoLiveData.value = bookmarkInfo }
+            .onErrorReturn{ error2 -> BookmarkInfo("", ArrayList(), Og("", "", "", ""), "") }
             .map{ bookmarkInfo ->
+                var iconUrl : String? = null
+                if (bookmarkInfo.icons.isNotEmpty()) iconUrl = bookmarkInfo.icons[0].href
                 Bookmark(
                     bookmarkInfo.title,
                     bookmarkInfo.title,
-                    bookmarkInfo.icons[0].href,
+                    iconUrl,
                     Bookmark.getId(url),
                     url,
                     Dates.today

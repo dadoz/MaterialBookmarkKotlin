@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.EditText
 import android.widget.Toast
@@ -22,11 +23,14 @@ import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.functions.Action
 import khronos.Dates
@@ -79,9 +83,15 @@ class AddBookmarkFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_search_bookmark -> {
+                val url = (mbNewBookmarkUrlEditTextId as EditText).text.toString()
+                mbNewBookmarkUrlTextId.text = url
+                addBookmarkViewModel.updateWebviewByUrl(url)
+
+                mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
                 mbBookmarkSaveNewCardviewId.visibility = VISIBLE
                 mbNewBookmarkIconLayoutId.visibility = VISIBLE
-                addBookmarkViewModel.updateWebviewByUrl((mbNewBookmarkUrlEditTextId as EditText).text.toString())
+                mbNewBookmarkUrlCardviewId.visibility = VISIBLE
+                mbNewBookmarkUrlEditCardviewId.visibility = GONE
             }
         }
         return super.onOptionsItemSelected(item)
@@ -98,10 +108,11 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun initView() {
+        val sheetBehavior = BottomSheetBehavior.from(mbBookmarkSaveNewCardviewId)
 
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
-            mbBookmarkSearchedUrPlaceholderId.visibility = GONE
+            sheetBehavior.state = STATE_EXPANDED
             Log.e(javaClass.name, "blalllala " + searchedUrl)
         })
 
@@ -127,9 +138,13 @@ class AddBookmarkFragment : Fragment() {
         })
 
         mbBookmarkSaveNewButtonId.setOnClickListener {
+            mbNewBookmarkUrlEditTextId.hideKeyboard()
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(mbNewBookmarkUrlEditTextId.windowToken, 0)
+
+            sheetBehavior.state = STATE_COLLAPSED
             addBookmarkViewModel.findBookmarkInfoByUrlAndSave(mbNewBookmarkUrlEditTextId.text.toString())
         }
-
 
     }
 
