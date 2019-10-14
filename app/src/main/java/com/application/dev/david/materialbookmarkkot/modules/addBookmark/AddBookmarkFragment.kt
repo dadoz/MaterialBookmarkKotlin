@@ -86,6 +86,7 @@ class AddBookmarkFragment : Fragment() {
                 val url = (mbNewBookmarkUrlEditTextId as EditText).text.toString()
                 mbNewBookmarkUrlTextId.text = url
                 addBookmarkViewModel.updateWebviewByUrl(url)
+                addBookmarkViewModel.findBookmarkInfoByUrl(url)
 
                 mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
                 mbBookmarkSaveNewCardviewId.visibility = VISIBLE
@@ -108,7 +109,12 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun initView() {
-        val sheetBehavior = BottomSheetBehavior.from(mbBookmarkSaveNewCardviewId)
+        val sheetBehavior = from(mbBookmarkSaveNewCardviewId)
+        mbNewBookmarkUrlCardviewId.setOnClickListener {
+            mbNewBookmarkUrlCardviewId.visibility = GONE
+            mbNewBookmarkUrlEditCardviewId.visibility = VISIBLE
+            sheetBehavior.state = STATE_COLLAPSED
+        }
 
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
@@ -117,10 +123,10 @@ class AddBookmarkFragment : Fragment() {
         })
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
-            mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.title)
+            mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.meta.title)
 
             Glide.with(mbNewBookmarkIconImageViewId.context)
-                .load(bookmarkInfo.icons[0].href)
+                .load(bookmarkInfo.meta.image)
                 .apply(RequestOptions.circleCropTransform())
                 .into(mbNewBookmarkIconImageViewId)
         })
@@ -143,7 +149,7 @@ class AddBookmarkFragment : Fragment() {
             imm.hideSoftInputFromWindow(mbNewBookmarkUrlEditTextId.windowToken, 0)
 
             sheetBehavior.state = STATE_COLLAPSED
-            addBookmarkViewModel.findBookmarkInfoByUrlAndSave(mbNewBookmarkUrlEditTextId.text.toString())
+//            addBookmarkViewModel.findBookmarkInfoByUrlAndSave(mbNewBookmarkUrlEditTextId.text.toString())
         }
 
     }

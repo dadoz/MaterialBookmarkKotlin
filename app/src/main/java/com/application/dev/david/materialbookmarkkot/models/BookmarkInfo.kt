@@ -1,26 +1,31 @@
 package com.application.dev.david.materialbookmarkkot.models
+import com.google.gson.annotations.SerializedName
 
-data class BookmarkInfo(
-    val description: String,
-    val icons: List<Icon>,
-    val og: Og,
-    val title: String
+data class BookmarkInfo (
+
+	@SerializedName("meta") val meta : Meta,
+	@SerializedName("result") val result : Result
 )
 
-data class Icon(
-    val href: String,
-    val sizes: List<Size>,
-    val type: String
+data class Meta (
+
+	@SerializedName("site") val site : Site,
+	@SerializedName("title") val title : String,
+	@SerializedName("image") var image : String,
+	@SerializedName("description") val description : String
 )
 
-data class Size(
-    val height: Int,
-    val width: Int
+data class Result (
+
+	@SerializedName("status") val status : String
 )
 
-data class Og(
-    val image: String,
-    val site_name: String,
-    val title: String,
-    val url: String
+data class Site (
+
+	@SerializedName("theme_color") val theme_color : String,
+	@SerializedName("name") val name : String,
+	@SerializedName("manifest") val manifest : String,
+	@SerializedName("logo") val logo : String,
+	@SerializedName("favicon") val favicon : String,
+	@SerializedName("canonical") val canonical : String
 )
