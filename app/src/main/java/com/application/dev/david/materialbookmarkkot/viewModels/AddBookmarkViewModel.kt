@@ -9,9 +9,14 @@ import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataReposi
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkInfo
 import io.reactivex.Observable
+import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.delay
+import java.util.concurrent.TimeUnit
+import javax.xml.transform.Transformer
+import kotlin.properties.Delegates.observable
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
@@ -19,6 +24,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
+    val loaderLiveStatus:  MutableLiveData<Boolean> = MutableLiveData()
     /**
      *
      */
@@ -62,6 +68,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
+            .compose(attachLoaderOnView())
             .subscribe(
                 { data ->
                     print("INSERT SUCCESS")
@@ -72,6 +79,19 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                 })
         compositeDisposable.add(disposable)
     }
+
+    /**
+     * please move it
+     */
+    private fun <T> attachLoaderOnView():  ObservableTransformer< T, T> {
+        return ObservableTransformer {
+            observable -> observable
+            .doOnSubscribe { loaderLiveStatus.value = true }
+            .doOnNext { loaderLiveStatus.value = false}
+            .doOnError { loaderLiveStatus.value = false}
+        }
+    }
+
     /**
      * add bookamrk on db
      *

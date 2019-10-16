@@ -116,6 +116,21 @@ class AddBookmarkFragment : Fragment() {
             sheetBehavior.state = STATE_COLLAPSED
         }
 
+        // loader cbs
+        addBookmarkViewModel.loaderLiveStatus.observe(this, Observer { isVisible ->
+            when (isVisible) {
+                true -> {
+                    mbNewBookmarkTitleLoaderId.visibility = VISIBLE
+                    mbNewBookmarkTitleTextInputId.visibility = GONE
+                    mbNewBookmarkIconImageViewId.visibility = GONE
+                }
+                false -> {
+                    mbNewBookmarkTitleLoaderId.visibility = GONE
+                    mbNewBookmarkTitleTextInputId.visibility = VISIBLE
+                    mbNewBookmarkIconImageViewId.visibility = VISIBLE
+                }
+            }
+        })
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
             sheetBehavior.state = STATE_EXPANDED
