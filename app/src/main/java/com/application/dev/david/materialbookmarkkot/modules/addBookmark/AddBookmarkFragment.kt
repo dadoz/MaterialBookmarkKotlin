@@ -1,6 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.modules.addBookmark
 
 import android.content.Context
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -12,32 +13,21 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.EditText
-import android.widget.Toast
-import androidx.annotation.NonNull
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
-import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
-import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.functions.Action
-import khronos.Dates
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
-import java.util.*
 
 
 /**
@@ -102,7 +92,7 @@ class AddBookmarkFragment : Fragment() {
      * init actionbar
      */
     private fun initActionBar() {
-        listener?.showActionBarView("Search new Bookmark")
+        listener?.showActionBarView(getString(R.string.new_bookmark_string))
     }
 
     /**
@@ -140,6 +130,9 @@ class AddBookmarkFragment : Fragment() {
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.meta.title)
 
+            //setting tag on view
+            mbNewBookmarkTitleEditTextId.tag = bookmarkInfo.meta.image
+
             Glide.with(mbNewBookmarkIconImageViewId.context)
                 .load(bookmarkInfo.meta.image)
                 .apply(RequestOptions.circleCropTransform())
@@ -149,22 +142,33 @@ class AddBookmarkFragment : Fragment() {
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
             when (status) {
                 //success cb :)
-//                    true -> findNavController().popBackStack()
-                true -> Snackbar.make(mbNewBookmarkMainViewId,
-                    "SUCCESS", Snackbar.LENGTH_SHORT).show()
+                true -> {
+                    val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
+                        "SUCCESS", Snackbar.LENGTH_SHORT)
+                    context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
+                        R.color.colorSuccess)) }
+                    snackbar.show()
+
+                }
                 //error cb :)
-                false -> Snackbar.make(mbNewBookmarkMainViewId,
-                    "error on saving bla bla bla", Snackbar.LENGTH_SHORT).show()
+                false -> {
+                    val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
+                        "Oh Snap! We got an error:", Snackbar.LENGTH_SHORT)
+                    context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
+                        R.color.colorError)) }
+                    snackbar.show()
+                }
             }
         })
 
         mbBookmarkSaveNewButtonId.setOnClickListener {
             mbNewBookmarkUrlEditTextId.hideKeyboard()
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(mbNewBookmarkUrlEditTextId.windowToken, 0)
-
             sheetBehavior.state = STATE_COLLAPSED
-//            addBookmarkViewModel.findBookmarkInfoByUrlAndSave(mbNewBookmarkUrlEditTextId.text.toString())
+            addBookmarkViewModel.saveBookmark(
+                mbNewBookmarkTitleEditTextId.text.toString(),
+                mbNewBookmarkTitleEditTextId.tag.toString(),
+                mbNewBookmarkUrlTextId.text.toString()
+            )
         }
 
     }

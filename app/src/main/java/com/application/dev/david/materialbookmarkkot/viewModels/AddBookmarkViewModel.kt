@@ -13,10 +13,7 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.delay
-import java.util.concurrent.TimeUnit
-import javax.xml.transform.Transformer
-import kotlin.properties.Delegates.observable
+import khronos.Dates
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
@@ -46,25 +43,9 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .filter{ tempUrl -> tempUrl.isNotEmpty() }
             .observeOn(Schedulers.newThread())
             .flatMap(bookmarkListaDataRepository::findBookmarkInfo)
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnNext{ bookmarkInfo -> bookmarkInfoLiveData.value = bookmarkInfo }
-//            .onErrorReturn{ error2 -> BookmarkInfo("", ArrayList(), Og("", "", "", ""), "") }
-//            .map{ bookmarkInfo ->
-//                var iconUrl : String? = null
-//                if (bookmarkInfo.icons.isNotEmpty()) iconUrl = bookmarkInfo.icons[0].href
-//                Bookmark(
-//                    bookmarkInfo.title,
-//                    bookmarkInfo.title,
-//                    iconUrl,
-//                    Bookmark.getId(url),
-//                    url,
-//                    Dates.today
-//                )}
-//            .observeOn(Schedulers.newThread())
-//            .map(bookmarkListaDataRepository::addBookmark)
             .doOnNext { bookmarksInfo ->
                 if (!bookmarksInfo.meta.image.contains("https")) {
-                bookmarksInfo.meta.image = "https://$url/" + bookmarksInfo.meta.image
+                    bookmarksInfo.meta.image = "https://$url/" + bookmarksInfo.meta.image
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
@@ -80,26 +61,24 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
         compositeDisposable.add(disposable)
     }
 
-    /**
-     * please move it
-     */
-    private fun <T> attachLoaderOnView():  ObservableTransformer< T, T> {
-        return ObservableTransformer {
-            observable -> observable
-            .doOnSubscribe { loaderLiveStatus.value = true }
-            .doOnNext { loaderLiveStatus.value = false}
-            .doOnError { loaderLiveStatus.value = false}
-        }
-    }
 
     /**
      * add bookamrk on db
      *
      */
-    fun saveBookmark(bookmark : Bookmark) {
-        val disposable = Observable.just(bookmark)
+    fun saveBookmark(title: String, iconUrl: String, url: String) {
+        val disposable = Observable.just("")
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
+            .map { res ->
+                Bookmark(
+                    title,
+                    title,
+                    iconUrl,
+                    Bookmark.getId(url),
+                    url,
+                    Dates.today
+            )}
             .map(bookmarkListaDataRepository::addBookmark)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -115,4 +94,16 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
         compositeDisposable.clear()
     }
 
+
+    /**
+     * please move it and generalize it
+     */
+    private fun <T> attachLoaderOnView():  ObservableTransformer< T, T> {
+        return ObservableTransformer {
+                observable -> observable
+            .doOnSubscribe { loaderLiveStatus.value = true }
+            .doOnNext { loaderLiveStatus.value = false}
+            .doOnError { loaderLiveStatus.value = false}
+        }
+    }
 }

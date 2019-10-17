@@ -8,4 +8,6 @@
     <color name="colorPrimaryDarkToolbar">#F5EEC2</color>
     <color name="colorAccent">#2C2F53</color>
     <color name="colorAccentLight">#F6F7FF</color>
+    <color name="colorError">#DB493C</color>
+    <color name="colorSuccess">#53C4B0</color>
 </resources>
