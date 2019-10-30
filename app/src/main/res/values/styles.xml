@@ -28,5 +28,9 @@
         <item name="cardBackgroundColor">@color/colorAccentLight</item>
         <item name="strokeColor">@color/colorAccent</item>
     </style>
+    <style name="MBMaterialCardviewStyleGreen" parent="MBMaterialCardviewStyle" >
+        <item name="cardBackgroundColor">@color/colorSuccessSecondary</item>
+        <item name="strokeColor">@color/colorSuccess</item>
+    </style>
 
 </resources>

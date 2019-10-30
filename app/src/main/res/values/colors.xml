@@ -9,5 +9,6 @@
     <color name="colorAccent">#2C2F53</color>
     <color name="colorAccentLight">#F6F7FF</color>
     <color name="colorError">#DB493C</color>
-    <color name="colorSuccess">#53C4B0</color>
+    <color name="colorSuccess">#3AD48D</color>
+    <color name="colorSuccessSecondary">#F9F9F9</color>
 </resources>

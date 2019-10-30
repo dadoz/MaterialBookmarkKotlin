@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -25,7 +26,9 @@ import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 
@@ -42,8 +45,11 @@ import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 class AddBookmarkFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var listener: OnFragmentInteractionListener? = null
-    val addBookmarkViewModel: AddBookmarkViewModel by lazy {
+    private val addBookmarkViewModel: AddBookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
+    }
+    private val saveNewSuccessCardviewBottomSheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
+        from(mbBookmarkSaveNewSuccessCardviewId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,6 +105,12 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun initView() {
+
+        //TODO debug
+        Handler().postDelayed({
+            onSaveWithSuccess()
+        }, 1000)
+
         val sheetBehavior = from(mbBookmarkSaveNewCardviewId)
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbNewBookmarkUrlCardviewId.visibility = GONE
@@ -141,23 +153,8 @@ class AddBookmarkFragment : Fragment() {
 
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
             when (status) {
-                //success cb :)
-                true -> {
-                    val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
-                        "SUCCESS", Snackbar.LENGTH_SHORT)
-                    context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
-                        R.color.colorSuccess)) }
-                    snackbar.show()
-
-                }
-                //error cb :)
-                false -> {
-                    val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
-                        "Oh Snap! We got an error:", Snackbar.LENGTH_SHORT)
-                    context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
-                        R.color.colorError)) }
-                    snackbar.show()
-                }
+                true -> onSaveWithSuccess()
+                false -> onSaveWithError()
             }
         })
 
@@ -173,6 +170,30 @@ class AddBookmarkFragment : Fragment() {
 
     }
 
+    /**
+     *
+     */
+    private fun onSaveWithSuccess() {
+        saveNewSuccessCardviewBottomSheetBehavior.state = STATE_EXPANDED
+//        val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
+//            "SUCCESS", Snackbar.LENGTH_SHORT)
+//        context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
+//            R.color.colorSuccess)) }
+//        snackbar.show()
+
+    }
+
+    /**
+     *
+     */
+    private fun onSaveWithError() {
+        val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
+            "Oh Snap! We got an error:", Snackbar.LENGTH_SHORT)
+        context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
+            R.color.colorError)) }
+        snackbar.show()
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
