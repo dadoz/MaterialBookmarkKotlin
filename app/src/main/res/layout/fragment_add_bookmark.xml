@@ -70,7 +70,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimaryMedium"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="24sp"
                         android:fontFamily="@font/yantramanav_thin"
                         android:text="Insert your Bookmark"/>
@@ -104,7 +104,7 @@
                         android:padding="@dimen/margin_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimaryMedium"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="24sp"
                         android:fontFamily="@font/yantramanav_thin"
                         tools:text="www.googgle.it"/>

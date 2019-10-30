@@ -18,11 +18,19 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
 import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.empty_view.*
+import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
+    val sheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
+        BottomSheetBehavior.from(mbBookmarkPreviewCardviewId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,19 +71,30 @@ class BookmarkListFragment : Fragment()  {
     private fun initView() {
         val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
+        //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
+
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
-                    Toast.makeText(context, "hey you clicked $position ${bookmark.url}", Toast.LENGTH_LONG).show()
-                    val action = BookmarkListFragmentDirections.setBookmarkUrlArgsActionId(bookmark.url)
-                    findNavController().navigate(action)
+                    sheetBehavior.state = STATE_EXPANDED
+//                    Toast.makeText(context, "hey you clicked $position ${bookmark.url}", Toast.LENGTH_LONG).show()
+//                    val action = BookmarkListFragmentDirections.setBookmarkUrlArgsActionId(bookmark.url)
+//                    findNavController().navigate(action)
                 }
             })
+
+            //please replace with basic manager
+            when (list.isNotEmpty()) {
+                true -> mbBookmarkEmptyViewId.visibility =  View.GONE
+                false -> mbBookmarkEmptyViewId.visibility =  View.VISIBLE
+            }
+
         })
         mbBookmarkAddNewButtonId.setOnClickListener {
             findNavController().navigate(R.id.addBookmarkFragment)
         }
+
 
     }
 

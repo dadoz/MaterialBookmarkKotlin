@@ -26,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yantramanav_thin"
-                    android:textColor="@color/colorPrimaryMedium"
+                    android:textColor="@color/colorPrimary"
                     tools:text="Bookmark title"
                     android:textSize="24sp" />
             <TextView
