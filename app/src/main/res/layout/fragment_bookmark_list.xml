@@ -56,62 +56,6 @@
 
         <include layout="@layout/empty_view" tools:visibility="gone"/>
     </RelativeLayout>
+    <include layout="@layout/preview_bookmark_view"/>
 
-    <com.google.android.material.card.MaterialCardView
-            tools:visibility="visible"
-            android:id="@+id/mbBookmarkPreviewCardviewId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            style="@style/MBMaterialCardviewStyleBlue"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="0dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            android:layout_marginTop="@dimen/margin_8">
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/margin_16">
-            <RelativeLayout
-                    android:id="@+id/mbBookmarkPreviewHeaderLayoutId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:layout_marginBottom="@dimen/margin_16"
-                    >
-                <TextView
-                        android:id="@+id/mbBookmarkPreviewHeaderTitleTextViewId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="36sp"
-                        android:fontFamily="@font/yantramanav_light"
-                        android:layout_centerVertical="true"
-                        android:text="Android Dev"
-                        tools:text="Android Dev"/>
-                <ImageView
-                        android:id="@+id/mbBookmarkPreviewHeaderEditImageViewId"
-                        android:layout_toStartOf="@+id/mbBookmarkPreviewHeaderDeleteImageViewId"
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_bookmark_icon"/>
-                <ImageView
-                        android:id="@+id/mbBookmarkPreviewHeaderDeleteImageViewId"
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_bookmark_icon"/>
-            </RelativeLayout>
-            <WebView
-                    android:id="@+id/mbBookmarkPreviewHeaderPreviewWebViewId"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/mbBookmarkPreviewHeaderLayoutId"
-                    tools:context=".modules.bookmarkWebView.BookmarkUrlWebViewFragment"/>
-
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

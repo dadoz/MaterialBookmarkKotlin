@@ -24,6 +24,7 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
+import kotlinx.android.synthetic.main.preview_bookmark_view.*
 
 
 class BookmarkListFragment : Fragment()  {

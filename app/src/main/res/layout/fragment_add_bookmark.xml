@@ -50,7 +50,7 @@
                     android:layout_centerInParent="true"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_bookmark_icon_black_26"/>
+                    android:src="@drawable/ic_bookmark"/>
 
         </RelativeLayout>
 

@@ -5,15 +5,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:visibility="visible"
         android:id="@+id/mbBookmarkSaveNewSuccessCardviewId"
+        android:layout_marginTop="@dimen/margin_8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         style="@style/MBMaterialCardviewStyleGreen"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:layout_marginTop="@dimen/margin_8"
-        >
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,44 +28,8 @@
                 android:text="Android Dev"
                 tools:text="Saved Bookmark"/>
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginBottom="@dimen/margin_16">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="36sp"
-                    android:fontFamily="@font/yantramanav_light"
-                    android:layout_centerVertical="true"
-                    android:text="Android Dev"
-                    tools:text="Android Dev"/>
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentEnd="true"
-                    android:orientation="horizontal">
+        <include layout="@layout/header_bookmark_view"/>
 
-                <ImageView
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_share_bookmark"/>
-                <ImageView
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_edit_pencil"/>
-                <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_delete_bin"/>
-            </LinearLayout>
-
-        </RelativeLayout>
         <com.google.android.material.card.MaterialCardView
                 tools:visibility="visible"
                 android:layout_width="match_parent"
@@ -91,8 +54,7 @@
                     android:layout_width="112dp"
                     android:layout_height="112dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_world_icon_26"/>
-
+                    android:src="@drawable/ic_bookmark"/>
         </RelativeLayout>
 
     </LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        tools:visibility="visible"
+        android:id="@+id/mbBookmarkPreviewCardviewId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        style="@style/MBMaterialCardviewStyle"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:layout_marginTop="@dimen/margin_8">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_16">
+        <include layout="@layout/header_bookmark_view"/>
+        <WebView
+                android:id="@+id/mbBookmarkPreviewHeaderPreviewWebViewId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/mbBookmarkPreviewHeaderLayoutId"
+                tools:context=".modules.bookmarkWebView.BookmarkUrlWebViewFragment"/>
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
