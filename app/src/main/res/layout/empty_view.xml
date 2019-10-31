@@ -41,7 +41,7 @@
             android:text="Add new"
             android:textColor="@color/colorAccentLight"
             android:fontFamily="@font/yantramanav_light"
-            app:chipIcon="@drawable/ic_bookmark_icon_black_26"
+            app:chipIcon="@drawable/ic_world_refresh"
             app:chipIconTint="@color/colorAccentLight"
             app:chipBackgroundColor="@color/colorPrimary"
             app:chipCornerRadius="32dp"

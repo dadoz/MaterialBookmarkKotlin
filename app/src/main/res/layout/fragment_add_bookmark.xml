@@ -68,6 +68,7 @@
                     android:padding="@dimen/margin_16"
                     android:orientation="vertical">
                 <TextView
+                        android:id="@+id/mbNewBookmarkUrlEditTitleId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorPrimary"
@@ -99,15 +100,15 @@
                 style="@style/MBMaterialCardviewStyle"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_8">
-                <TextView
-                        android:id="@+id/mbNewBookmarkUrlTextId"
-                        android:padding="@dimen/margin_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/yantramanav_thin"
-                        tools:text="www.googgle.it"/>
+            <TextView
+                    android:id="@+id/mbNewBookmarkUrlTextId"
+                    android:padding="@dimen/margin_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/yantramanav_thin"
+                    tools:text="www.googgle.it"/>
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
@@ -115,14 +116,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_8"
                 android:orientation="vertical">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginBottom="@dimen/margin_8"
-                    android:textSize="32sp"
-                    android:fontFamily="@font/yantramanav_light"
-                    android:text="Preview"/>
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -131,7 +124,17 @@
                         android:layout_centerInParent="true"
                         android:layout_width="94dp"
                         android:layout_height="94dp"
-                        android:src="@drawable/ic_world_icon_26"/>
+                        android:src="@drawable/ic_world_refresh"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:layout_below="@+id/mbBookmarkSearchedUrPlaceholderId"
+                        android:layout_marginBottom="@dimen/margin_8"
+                        android:textSize="18sp"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/yantramanav_light"
+                        android:text="Tap to refresh"/>
 
                 <WebView
                         tools:visibility="gone"
@@ -150,7 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            style="@style/MBMaterialCardviewStyleBlue"
+            style="@style/MBMaterialCardviewStyleYellow"
             app:behavior_hideable="true"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
@@ -167,14 +170,14 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="24sp"
                         android:fontFamily="@font/yantramanav_light"
                         android:text="Save your bookmark"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
                         android:fontFamily="@font/yantramanav_thin"
                         android:text="Save your bookmark"/>
@@ -182,7 +185,7 @@
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkSaveNewButtonId"
                     android:layout_width="wrap_content"
-                    app:backgroundTint="@android:color/white"
+                    app:backgroundTint="@color/colorPrimary"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
                     android:fontFamily="@font/yantramanav_light"
@@ -195,91 +198,8 @@
 
 
     <!--save with success-->
-    <com.google.android.material.card.MaterialCardView
-            tools:visibility="visible"
-            android:id="@+id/mbBookmarkSaveNewSuccessCardviewId"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            style="@style/MBMaterialCardviewStyleGreen"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="0dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            android:layout_marginTop="@dimen/margin_8">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/margin_16"
-                android:orientation="vertical">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="26sp"
-                    android:fontFamily="@font/yantramanav_light"
-                    android:layout_centerVertical="true"
-                    android:text="Android Dev"
-                    tools:text="Saved Bookmark"/>
 
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:layout_marginBottom="@dimen/margin_16"
-                    >
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="36sp"
-                        android:fontFamily="@font/yantramanav_light"
-                        android:layout_centerVertical="true"
-                        android:text="Android Dev"
-                        tools:text="Android Dev"/>
-                <ImageView
-                        android:layout_toStartOf="@+id/mbBookmarkPreviewHeaderDeleteImageViewId"
-                        android:layout_marginEnd="@dimen/margin_8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_bookmark_icon"/>
-                <ImageView
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_bookmark_icon"/>
-            </RelativeLayout>
-            <com.google.android.material.card.MaterialCardView
-                    tools:visibility="visible"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/MBMaterialCardviewStyleGreen"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:layout_marginBottom="@dimen/margin_8">
-                <TextView
-                        android:padding="@dimen/margin_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/yantramanav_thin"
-                        tools:text="www.googgle.it"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <ImageView
-                        android:layout_width="112dp"
-                        android:layout_height="112dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/ic_world_icon_26"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
+    <include layout="@layout/add_bookmark_success_view"/>
+    <include layout="@layout/add_bookmark_error_view"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

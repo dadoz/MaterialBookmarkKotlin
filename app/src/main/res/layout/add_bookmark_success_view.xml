@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:visibility="visible"
+        android:id="@+id/mbBookmarkSaveNewSuccessCardviewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        style="@style/MBMaterialCardviewStyleGreen"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:layout_marginTop="@dimen/margin_8"
+        >
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_16"
+            android:orientation="vertical">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textSize="26sp"
+                android:fontFamily="@font/yantramanav_light"
+                android:layout_centerVertical="true"
+                android:text="Android Dev"
+                tools:text="Saved Bookmark"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_16">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="36sp"
+                    android:fontFamily="@font/yantramanav_light"
+                    android:layout_centerVertical="true"
+                    android:text="Android Dev"
+                    tools:text="Android Dev"/>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_marginEnd="@dimen/margin_8"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_share_bookmark"/>
+                <ImageView
+                        android:layout_marginEnd="@dimen/margin_8"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_edit_pencil"/>
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_delete_bin"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+        <com.google.android.material.card.MaterialCardView
+                tools:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MBMaterialCardviewStyleGreen"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_8">
+            <TextView
+                    android:padding="@dimen/margin_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/yantramanav_thin"
+                    tools:text="www.googgle.it"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ImageView
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_world_icon_26"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -30,6 +30,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.add_bookmark_error_view.*
+import kotlinx.android.synthetic.main.add_bookmark_success_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 
 
@@ -50,6 +52,10 @@ class AddBookmarkFragment : Fragment() {
     }
     private val saveNewSuccessCardviewBottomSheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
         from(mbBookmarkSaveNewSuccessCardviewId)
+    }
+
+    private val saveNewErrorCardviewBottomSheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
+        from(mbBookmarkSaveNewErrorCardviewId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,12 +111,6 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun initView() {
-
-        //TODO debug
-        Handler().postDelayed({
-            onSaveWithSuccess()
-        }, 1000)
-
         val sheetBehavior = from(mbBookmarkSaveNewCardviewId)
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbNewBookmarkUrlCardviewId.visibility = GONE
@@ -175,25 +175,19 @@ class AddBookmarkFragment : Fragment() {
      */
     private fun onSaveWithSuccess() {
         saveNewSuccessCardviewBottomSheetBehavior.state = STATE_EXPANDED
-//        val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
-//            "SUCCESS", Snackbar.LENGTH_SHORT)
-//        context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
-//            R.color.colorSuccess)) }
-//        snackbar.show()
-
     }
 
     /**
      *
      */
     private fun onSaveWithError() {
-        val snackbar = Snackbar.make(mbNewBookmarkMainViewId,
-            "Oh Snap! We got an error:", Snackbar.LENGTH_SHORT)
-        context?.let { snackbar.view.setBackgroundColor(ContextCompat.getColor(it,
-            R.color.colorError)) }
-        snackbar.show()
-
+        mbBookmarkSaveNewErrorMessageId.text = "Oh Snap! We got an error:"
+        saveNewErrorCardviewBottomSheetBehavior.state = STATE_EXPANDED
+        mbNewBookmarkUrlEditCardviewId.strokeColor = ContextCompat.getColor(context!!, R.color.colorError)
+        mbNewBookmarkUrlEditCardviewId.setCardBackgroundColor(ContextCompat.getColor(context!!, android.R.color.white))
+        mbNewBookmarkUrlEditTitleId.setTextColor(ContextCompat.getColor(context!!, R.color.colorError))
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
