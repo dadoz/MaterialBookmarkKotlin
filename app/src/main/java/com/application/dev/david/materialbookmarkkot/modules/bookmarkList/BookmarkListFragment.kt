@@ -29,9 +29,7 @@ import kotlinx.android.synthetic.main.preview_bookmark_view.*
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
-    val sheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
-        BottomSheetBehavior.from(mbBookmarkPreviewCardviewId)
-    }
+    lateinit var sheetBehavior: BottomSheetBehavior<MaterialCardView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +76,9 @@ class BookmarkListFragment : Fragment()  {
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
+                    sheetBehavior = BottomSheetBehavior.from(mbBookmarkPreviewCardviewId)
                     sheetBehavior.state = STATE_EXPANDED
-//                    Toast.makeText(context, "hey you clicked $position ${bookmark.url}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "hey you clicked $position ${bookmark.url}", Toast.LENGTH_LONG).show()
 //                    val action = BookmarkListFragmentDirections.setBookmarkUrlArgsActionId(bookmark.url)
 //                    findNavController().navigate(action)
                 }

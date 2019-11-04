@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkToolbar</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="elevation">0dp</item>
 
@@ -19,7 +19,7 @@
     
     <style name="MBMaterialCardviewStyle" parent="Widget.MaterialComponents.CardView" >
         <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
-        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="strokeColor">@color/colorPrimaryDark</item>
         <item name="strokeWidth">1dp</item>
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">6dp</item>
@@ -39,6 +39,10 @@
     <style name="MBMaterialCardviewStyleRed" parent="MBMaterialCardviewStyle" >
         <item name="cardBackgroundColor">@color/colorErrorSecondary</item>
         <item name="strokeColor">@color/colorError</item>
+    </style>
+    <style name="MBMaterialButtonStyleYellow" parent="TextAppearance.MaterialComponents.Button" >
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
 </resources>

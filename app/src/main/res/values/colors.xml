@@ -4,9 +4,9 @@
     <color name="colorToolbar">#fefefe</color>
     <color name="colorAccentLightSecondary">#FFF7DD</color>
 <!--    <color name="colorPrimaryMedium">#A4940C</color>-->
-    <color name="colorPrimary">#D3A518</color>
-    <color name="colorPrimaryDark">#A8940A</color>
-    <color name="colorPrimaryDarkToolbar">#F5EEC2</color>
+    <color name="colorPrimary">#FFCE36</color>
+    <color name="colorPrimaryDark">#D3A518</color>
+    <color name="colorPrimaryDark2">#A8940A</color>
     <color name="colorAccent">#2C2F53</color>
     <color name="colorAccentLight">#F6F7FF</color>
     <color name="colorError">#A13532</color>

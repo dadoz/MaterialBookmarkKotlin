@@ -12,46 +12,121 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_16"
             tools:context=".modules.bookmarkList.BookmarkListFragment">
-
-        <TextView
-                android:id="@+id/mbBookmarkTitleTextViewId"
+        <RelativeLayout
+                android:id="@+id/mbBookmarkMainViewLayoutId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/margin_16"
-                android:fontFamily="@font/yantramanav_thin"
-                android:text="Bookmarks"
-                android:textColor="@color/colorAccent"
-                android:textSize="42sp" />
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_32"
+                android:layout_marginBottom="@dimen/margin_32"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                tools:context=".modules.bookmarkList.BookmarkListFragment">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkIconImageViewId"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_star_bookmark"/>
 
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/mbBookmarkIconImageViewId"
+                    android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbBookmarkTitleTextViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:fontFamily="@font/yantramanav_thin"
+                    android:text="Bookmarks"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="42sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbBookmarkSubtitleTextViewId"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/yantramanav_thin"
+                    android:text="on your list"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mbBookmarkHeaderLayoutId"
+                android:layout_below="@+id/mbBookmarkMainViewLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_16"
+                android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkHeaderListFilterIconId"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tint="@color/colorPrimaryDark"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_bookmark_list_filter"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkHeaderStarFilterIconId"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:tint="@color/colorPrimaryDark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderListFilterIconId"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:src="@drawable/ic_star_filter"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkHeaderSortFilterIconId"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/colorPrimaryDark"
+                    app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderStarFilterIconId"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:src="@drawable/ic_bookmark_sort"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbBookmarkHeaderBookmarkCounterTextViewId"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderSortFilterIconId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_8"
+                    android:fontFamily="@font/yantramanav_light"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="21 bookmarks"
+                    />
+            <com.google.android.material.button.MaterialButton
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/MBMaterialButtonStyleYellow"
+                    android:id="@+id/mbBookmarkAddNewButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:text="Add new"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mbBookmarkRecyclerViewId"
-                android:layout_below="@+id/mbBookmarkTitleTextViewId"
+                android:layout_below="@+id/mbBookmarkHeaderLayoutId"
                 android:paddingLeft="@dimen/margin_8"
                 android:paddingRight="@dimen/margin_8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkAddNewButtonId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/margin_16"
-                android:text="Add new"
-                android:textColor="@color/colorAccentLight"
-                android:fontFamily="@font/yantramanav_light"
-                app:chipIcon="@drawable/ic_world_refresh"
-                app:chipIconTint="@color/colorAccentLight"
-                app:chipBackgroundColor="@color/colorPrimary"
-                app:chipCornerRadius="32dp"
-                app:chipMinHeight="56dp"
-                app:chipStrokeColor="@color/colorPrimary"
-                app:chipStrokeWidth="0.5dp"
-                app:chipEndPadding="@dimen/margin_16"
-                app:chipStartPadding="@dimen/margin_16"/>
-
 
 
         <include layout="@layout/empty_view" tools:visibility="gone"/>
