@@ -10,7 +10,7 @@
             android:id="@+id/mbBookmarkPreviewHeaderTitleTextViewId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="36sp"
             android:fontFamily="@font/yantramanav_light"
             android:layout_centerVertical="true"

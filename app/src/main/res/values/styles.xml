@@ -25,7 +25,7 @@
         <item name="cardCornerRadius">6dp</item>
     </style>
     <style name="MBMaterialCardviewStyleYellow" parent="MBMaterialCardviewStyle" >
-        <item name="cardBackgroundColor">@color/colorAccentLightSecondary</item>
+        <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
     <style name="MBMaterialCardviewStyleBlue" parent="MBMaterialCardviewStyle" >

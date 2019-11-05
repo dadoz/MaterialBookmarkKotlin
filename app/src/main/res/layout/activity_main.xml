@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="@color/colorToolbar"
+            android:background="@color/colorPrimaryLight"
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -18,7 +18,6 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorToolbar"
                 app:titleTextColor="@color/colorAccent"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
         <com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
