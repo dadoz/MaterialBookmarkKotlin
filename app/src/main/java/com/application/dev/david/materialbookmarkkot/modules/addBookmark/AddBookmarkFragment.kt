@@ -82,7 +82,7 @@ class AddBookmarkFragment : Fragment() {
         menuInflater.inflate(R.menu.menu_add_bookmark, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             R.id.action_search_bookmark -> {
                 val url = (mbNewBookmarkUrlEditTextId as EditText).text.toString()

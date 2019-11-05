@@ -3,6 +3,7 @@ package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.View.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.*
+import timber.log.Timber
 
 
 class BookmarkListFragment : Fragment()  {
@@ -71,15 +73,6 @@ class BookmarkListFragment : Fragment()  {
         bookmarkViewModel.retrieveBookmarkList()
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
-            (list as ArrayList).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
-            (list).add(list.get(0))
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
@@ -91,7 +84,7 @@ class BookmarkListFragment : Fragment()  {
             //please replace with basic manager
             when (list.isNotEmpty()) {
                 true -> mbBookmarkEmptyViewId.visibility =  View.GONE
-                false -> mbBookmarkEmptyViewId.visibility =  View.VISIBLE
+                false -> mbBookmarkEmptyViewId.visibility =  VISIBLE
             }
 
         })
@@ -101,7 +94,16 @@ class BookmarkListFragment : Fragment()  {
         }
 
         mbBookmarkHeaderListFilterIconId.setOnClickListener {
-            Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+            (mbBookmarkRecyclerViewId.layoutManager as GridLayoutManager).spanCount = 1
+            mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
+            mbBookmarkHeaderCardFilterIconId.visibility = VISIBLE
+            it.visibility = INVISIBLE
+        }
+        mbBookmarkHeaderCardFilterIconId.setOnClickListener {
+            (mbBookmarkRecyclerViewId.layoutManager as GridLayoutManager).spanCount = 2
+            mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
+            mbBookmarkHeaderListFilterIconId.visibility = VISIBLE
+            it.visibility = GONE
         }
         mbBookmarkHeaderStarFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
