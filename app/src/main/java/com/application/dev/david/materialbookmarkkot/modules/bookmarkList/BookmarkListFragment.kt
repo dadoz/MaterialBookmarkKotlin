@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.preview_bookmark_view.*
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
-    lateinit var sheetBehavior: BottomSheetBehavior<MaterialCardView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,15 +71,20 @@ class BookmarkListFragment : Fragment()  {
         bookmarkViewModel.retrieveBookmarkList()
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
+            (list as ArrayList).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
+            (list).add(list.get(0))
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
-                    sheetBehavior = BottomSheetBehavior.from(mbBookmarkPreviewCardviewId)
-                    sheetBehavior.state = STATE_EXPANDED
-                    Toast.makeText(context, "hey you clicked $position ${bookmark.url}", Toast.LENGTH_LONG).show()
-//                    val action = BookmarkListFragmentDirections.setBookmarkUrlArgsActionId(bookmark.url)
-//                    findNavController().navigate(action)
+                    BottomSheetBehavior.from(mbBookmarkPreviewCardviewId).state = STATE_EXPANDED
                 }
             })
 
@@ -91,10 +95,20 @@ class BookmarkListFragment : Fragment()  {
             }
 
         })
+
         mbBookmarkAddNewButtonId.setOnClickListener {
             findNavController().navigate(R.id.addBookmarkFragment)
         }
 
+        mbBookmarkHeaderListFilterIconId.setOnClickListener {
+            Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+        }
+        mbBookmarkHeaderStarFilterIconId.setOnClickListener {
+            Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+        }
+        mbBookmarkHeaderSortFilterIconId.setOnClickListener {
+            Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+        }
 
     }
 

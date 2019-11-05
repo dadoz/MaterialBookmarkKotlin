@@ -16,7 +16,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import khronos.toString
 
-class BookmarkListAdapter(private val items: List<Bookmark>, val listener: OnBookmarkItemClickListener) : RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>() {
+class BookmarkListAdapter(private val items: List<Bookmark>, private val listener: OnBookmarkItemClickListener) :
+    RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
         val inflatedView = parent.inflate(R.layout.bookmark_view_item, false)
