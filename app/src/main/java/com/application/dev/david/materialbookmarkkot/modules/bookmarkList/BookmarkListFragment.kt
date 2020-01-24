@@ -78,27 +78,6 @@ class BookmarkListFragment : Fragment()  {
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-            (list as ArrayList).add(list[0])
-
-
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {

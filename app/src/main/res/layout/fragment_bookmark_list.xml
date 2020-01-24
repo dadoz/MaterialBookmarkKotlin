@@ -7,29 +7,32 @@
         android:fitsSystemWindows="true"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
                 android:id="@+id/mbMaterialSearchVIewId"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mbBookmarkRecyclerViewId"
-                app:layout_constraintTop_toBottomOf="@+id/mbBookmarkHeaderLayoutId"
-                android:paddingLeft="@dimen/margin_8"
-                android:paddingRight="@dimen/margin_8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
+        <TextView
+                android:id="@+id/mbTitleBookmarkListTextViewId"
+                android:layout_below="@+id/mbMaterialSearchVIewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bookmark list"
+                android:fontFamily="@font/yantramanav_thin"
+                android:textSize="36sp"
+                android:layout_margin="@dimen/margin_16"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                app:layout_constraintTop_toBottomOf="@+id/mbMaterialSearchVIewId"
                 android:id="@+id/mbBookmarkHeaderLayoutId"
+                android:layout_below="@+id/mbTitleBookmarkListTextViewId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -41,7 +44,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/colorPrimaryDark"
+                    app:tint="@color/colorPrimary"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/ic_bookmark_list_filter"/>
@@ -52,7 +55,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:tint="@color/colorPrimaryDark"
+                    app:tint="@color/colorPrimary"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/ic_bookmark_tab_filter"/>
@@ -60,7 +63,7 @@
                     android:id="@+id/mbBookmarkHeaderStarFilterIconId"
                     android:background="?attr/selectableItemBackground"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:tint="@color/colorPrimaryDark"
+                    app:tint="@color/colorPrimary"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderListFilterIconId"
                     android:layout_width="35dp"
@@ -73,7 +76,7 @@
                     android:background="?attr/selectableItemBackground"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/colorPrimaryDark"
+                    app:tint="@color/colorPrimary"
                     app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderStarFilterIconId"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
@@ -88,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8"
                     android:fontFamily="@font/yantramanav_light"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="invisible"
                     android:text="21 bookmarks"
                     />
             <com.google.android.material.button.MaterialButton
@@ -104,7 +108,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mbBookmarkRecyclerViewId"
+                android:layout_below="@+id/mbBookmarkHeaderLayoutId"
+                android:paddingLeft="@dimen/margin_8"
+                android:paddingRight="@dimen/margin_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
     <include layout="@layout/empty_view" tools:visibility="gone"/>
     <include layout="@layout/preview_bookmark_view"/>
 
