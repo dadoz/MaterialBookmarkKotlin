@@ -7,31 +7,10 @@
         android:layout_height="match_parent"
         tools:context=".ui.BookmarkListActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@color/colorPrimaryLight"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-                android:id="@+id/mbToolbarId"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:titleTextColor="@color/colorAccent"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-        <com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
-                android:id="@+id/mbMaterialSearchVIewId"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/activity_main"
             tools:context=".ui.BookmarkListActivity"/>
 

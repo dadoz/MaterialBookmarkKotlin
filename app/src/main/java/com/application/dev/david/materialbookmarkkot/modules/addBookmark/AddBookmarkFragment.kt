@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -22,6 +23,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
+import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
 import com.bumptech.glide.Glide
@@ -33,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.add_bookmark_error_view.*
 import kotlinx.android.synthetic.main.add_bookmark_success_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
+import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 
 /**
@@ -104,7 +107,11 @@ class AddBookmarkFragment : Fragment() {
      * init actionbar
      */
     private fun initActionBar() {
-        listener?.showActionBarView(getString(R.string.new_bookmark_string))
+        (activity as AppCompatActivity).setSupportActionBar(mbToolbarId)
+        mbToolbarId.changeToolbarFont()
+//        mbMaterialSearchVIewId?.visibility = GONE
+        mbToolbarId.title = getString(R.string.new_bookmark_string)
+        mbToolbarId.visibility = VISIBLE
     }
 
     /**
@@ -163,7 +170,7 @@ class AddBookmarkFragment : Fragment() {
             sheetBehavior.state = STATE_COLLAPSED
             addBookmarkViewModel.saveBookmark(
                 mbNewBookmarkTitleEditTextId.text.toString(),
-                mbNewBookmarkTitleEditTextId.tag.toString(),
+                mbNewBookmarkTitleEditTextId.tag.let { it?.toString() ?: "" },
                 mbNewBookmarkUrlTextId.text.toString()
             )
         }

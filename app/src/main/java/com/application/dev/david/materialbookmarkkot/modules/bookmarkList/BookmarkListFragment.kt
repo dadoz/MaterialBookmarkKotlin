@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
@@ -22,6 +23,7 @@ import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewMode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.card.MaterialCardView
+import com.michaelgarnerdev.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
@@ -62,7 +64,9 @@ class BookmarkListFragment : Fragment()  {
      * init actionbar
      */
     private fun initActionBar() {
-        listener?.showSearchView()
+//        (activity as AppCompatActivity).setSupportActionBar(mbToolbarListId)
+//        val view: View = MbMaterialSearchView(context)
+//        mbToolbarListId.addView(view)
     }
 
     /**
@@ -74,6 +78,27 @@ class BookmarkListFragment : Fragment()  {
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+            (list as ArrayList).add(list[0])
+
+
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
@@ -83,11 +108,21 @@ class BookmarkListFragment : Fragment()  {
 
             //please replace with basic manager
             when (list.isNotEmpty()) {
-                true -> mbBookmarkEmptyViewId.visibility =  View.GONE
-                false -> mbBookmarkEmptyViewId.visibility =  VISIBLE
+                true -> {
+                    mbBookmarkEmptyViewId.visibility =  GONE
+                    mbBookmarkHeaderLayoutId.visibility =  VISIBLE
+                }
+                false -> {
+                    mbBookmarkEmptyViewId.visibility =  VISIBLE
+                    mbBookmarkHeaderLayoutId.visibility =  GONE
+                }
             }
 
         })
+
+        mbBookmarkEmptyAddNewButtonId.setOnClickListener {
+            findNavController().navigate(R.id.addBookmarkFragment)
+        }
 
         mbBookmarkAddNewButtonId.setOnClickListener {
             findNavController().navigate(R.id.addBookmarkFragment)

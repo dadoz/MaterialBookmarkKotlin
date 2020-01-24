@@ -23,6 +23,7 @@ import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbM
 import kotlinx.android.synthetic.main.activity_main.*
 
 class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,23 +31,6 @@ class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener,
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, host).setPrimaryNavigationFragment(host).commit()
     }
 
-    override fun showActionBarView(title: String) {
-        setSupportActionBar(mbToolbarId)
-        mbToolbarId.changeToolbarFont()
-        mbMaterialSearchVIewId?.visibility = GONE
-        mbToolbarId.title = title
-        mbToolbarId.visibility = VISIBLE
-    }
-
-    override fun showSearchView() {
-        setSupportActionBar(mbToolbarId)
-        mbToolbarId.visibility = GONE
-        mbMaterialSearchVIewId?.addListener(MbMaterialSearchView.SearchViewSearchListener {
-            fun onSearch(@NonNull searchTerm: String) {
-                Toast.makeText(this, searchTerm, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
