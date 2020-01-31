@@ -23,12 +23,14 @@
                     android:id="@+id/bookmarkTitleTextViewId"
                     android:lines="1"
                     android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/bookmarkTimestampTextViewId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yantramanav_light"
-                    android:textColor="@color/colorPrimary"
-                    tools:text="Bookmark title"
-                    android:textSize="24sp" />
+                    android:textColor="@color/colorAccent"
+                    tools:text="Bookmark Title"
+                    android:textSize="32sp" />
             <TextView
                     android:id="@+id/bookmarkTimestampTextViewId"
                     android:layout_alignBaseline="@+id/bookmarkTitleTextViewId"
@@ -36,9 +38,9 @@
                     android:layout_marginStart="@dimen/margin_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorPrimary"
                     android:fontFamily="@font/yantramanav_thin"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:lines="1"
                     tools:text="06 Nov"
                     />
@@ -65,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yantramanav_thin"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorAccentLight2"
                     android:textSize="16sp"
                     android:ellipsize="end"
                     tools:text="www.instagram.com"

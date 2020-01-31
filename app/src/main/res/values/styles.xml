@@ -44,5 +44,10 @@
         <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
+    <style name="MBMaterialButtonStyleBrown" parent="TextAppearance.MaterialComponents.Button" >
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccentLight</item>
+        <item name="fontFamily">@font/yantramanav_light</item>
+    </style>
 
 </resources>
