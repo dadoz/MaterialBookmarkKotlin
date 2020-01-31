@@ -30,7 +30,7 @@
                     android:fontFamily="@font/yantramanav_light"
                     android:textColor="@color/colorAccent"
                     tools:text="No Title"
-                    android:textSize="32sp" />
+                    android:textSize="28sp" />
             <TextView
                     android:id="@+id/bookmarkTimestampTextViewId"
                     android:layout_alignBaseline="@+id/bookmarkTitleTextViewId"

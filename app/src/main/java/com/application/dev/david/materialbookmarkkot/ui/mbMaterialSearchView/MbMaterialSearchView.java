@@ -1574,7 +1574,7 @@ public class MbMaterialSearchView extends LinearLayout implements
                     cancelSuggestions();
                     emptySearchView();
                     setKeyboardActionListener();
-                    showRecentSearches();
+                    //showRecentSearches();
                     showMic();
                     hideClear();
 //                    requestSearchViewFocus();
