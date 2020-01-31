@@ -29,8 +29,17 @@ ext {
     glide_version = "4.10.0"
     timber_version = "4.7.1"
     firebase_version = "17.2.2"
+    crashlytics_version = "17.0.0-beta01"
+    materialsearchview_version = "0.1.0@aar"
+    glide_version = "4.10.0"
+    rxjava_version = "2.2.10"
+    rxandroid_version = "2.1.1"
 }
 
+def versionMajor = 1
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 0
 
 android {
     compileSdkVersion 29
@@ -39,8 +48,8 @@ android {
         applicationId "com.application.dev.david.materialbookmarkkot"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.1"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BOOKMARK_INFO_URL", '"https://api.urlmeta.org"'
@@ -77,9 +86,9 @@ dependencies {
 
     implementation "com.github.hotchemi:khronos:$khronos_version"
     implementation "com.github.salomonbrys.kotson:kotson:$kotson_version"
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
@@ -90,7 +99,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    implementation 'com.michaelgarnerdev.materialsearchview:materialsearchview:0.1.0@aar'
+    implementation "com.michaelgarnerdev.materialsearchview:materialsearchview:$materialsearchview_version"
 
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "android.arch.persistence.room:runtime:$room_version"
@@ -98,7 +107,6 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$room_version"
 
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation "com.jakewharton.timber:timber:$timber_version"
@@ -107,7 +115,7 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics:$firebase_version"
 
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+    implementation "com.google.firebase:firebase-crashlytics:$crashlytics_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
