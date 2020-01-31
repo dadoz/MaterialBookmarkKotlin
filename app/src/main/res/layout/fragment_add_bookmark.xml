@@ -211,10 +211,8 @@
                 <com.google.android.material.button.MaterialButton
                         android:id="@+id/mbBookmarkSaveNewButtonId"
                         android:layout_width="wrap_content"
-                        app:backgroundTint="@color/colorPrimary"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        android:fontFamily="@font/yantramanav_light"
+                        style="@style/MBMaterialButtonStyleBrown"
                         android:layout_below="@+id/mbBookmarkSaveNewBookmarkLayoutId"
                         android:layout_alignParentEnd="true"
                         android:text="SAVE"/>

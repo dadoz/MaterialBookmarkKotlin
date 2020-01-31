@@ -1,6 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView;
 
 import android.Manifest.permission;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -94,7 +95,6 @@ public class MbMaterialSearchView extends LinearLayout implements
     private static final boolean DEFAULT_VOICE_FEATURES_ENABLED = VERSION.SDK_INT < VERSION_CODES.M;
     private static final long CLEAR_TEXT_DELAY_TIME = 100;
 
-    private WeakReference<Context> mContext;
 
     private CardView mSearchCard;
     private ImageView mSearchIcon;
@@ -170,7 +170,6 @@ public class MbMaterialSearchView extends LinearLayout implements
                       @Nullable AttributeSet attrs,
                       int defStyle,
                       int defStyleRes) {
-        mContext = new WeakReference<>(context);
         Resources resources = context.getResources();
         mSuggestionRowHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, resources.getDisplayMetrics());
         mIconTintColor = ContextCompat.getColor(context, R.color.primary_text);
@@ -243,8 +242,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     protected void onFinishInflate() {
         super.onFinishInflate();
         Log.d(TAG, ".onFinishInflate()");
-        if (mContext != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null) {
+            Context context = this.getContext();
             if (context != null) {
                 inflate(context, R.layout.mb_material_search_view, this);
                 setupView(context);
@@ -277,28 +276,22 @@ public class MbMaterialSearchView extends LinearLayout implements
 
         setDefaultAttributes();
 
-        mClearButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mInteractionListeners != null) {
-                    for (SearchViewInteractionListener listener : mInteractionListeners) {
-                        listener.onClearButtonClick();
-                    }
+        mClearButton.setOnClickListener(view -> {
+            if (mInteractionListeners != null) {
+                for (SearchViewInteractionListener listener : mInteractionListeners) {
+                    listener.onClearButtonClick();
                 }
-                moveToState(STATE_FOCUSED_EMPTY);
             }
+            moveToState(STATE_FOCUSED_EMPTY);
         });
 
-        mVoiceButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mInteractionListeners != null) {
-                    for (SearchViewInteractionListener listener : mInteractionListeners) {
-                        listener.onVoiceButtonClick();
-                    }
+        mVoiceButton.setOnClickListener(view -> {
+            if (mInteractionListeners != null) {
+                for (SearchViewInteractionListener listener : mInteractionListeners) {
+                    listener.onVoiceButtonClick();
                 }
-                startVoiceSearch();
             }
+            startVoiceSearch();
         });
 
         mSearchTextChangedListener = new TextWatcher() {
@@ -331,48 +324,36 @@ public class MbMaterialSearchView extends LinearLayout implements
         mSearchInputEditText.removeTextChangedListener(mSearchTextChangedListener);
         mSearchInputEditText.addTextChangedListener(mSearchTextChangedListener);
 
-        mOnEditorActionListener = new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int imeActionId, KeyEvent keyEvent) {
-                return keyEvent != null
-                        && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER
-                        || imeActionId == EditorInfo.IME_ACTION_DONE
-                        || keyEvent.getKeyCode() == KeyEvent.KEYCODE_SEARCH)
-                        && search(getSearchText());
-            }
-        };
+        mOnEditorActionListener = (textView, imeActionId, keyEvent) -> keyEvent != null
+                && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                || imeActionId == EditorInfo.IME_ACTION_DONE
+                || keyEvent.getKeyCode() == KeyEvent.KEYCODE_SEARCH)
+                && search(getSearchText());
         mSearchInputEditText.setOnEditorActionListener(mOnEditorActionListener);
 
-        mSearchInputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-                String currentText = getSearchText();
-                if (mInteractionListeners != null) {
-                    for (SearchViewInteractionListener listener : mInteractionListeners) {
-                        listener.onSearchViewFocusChanged(focused);
-                    }
+        mSearchInputEditText.setOnFocusChangeListener((view, focused) -> {
+            String currentText = getSearchText();
+            if (mInteractionListeners != null) {
+                for (SearchViewInteractionListener listener : mInteractionListeners) {
+                    listener.onSearchViewFocusChanged(focused);
                 }
-                if (focused) {
-                    if (currentText.length() > 0) {
-                        moveToState(STATE_FOCUSED_TEXT_PRESENT);
-                    } else {
-                        moveToState(STATE_FOCUSED_EMPTY);
-                    }
-                    moveCursorToEnd();
+            }
+            if (focused) {
+                if (currentText.length() > 0) {
+                    moveToState(STATE_FOCUSED_TEXT_PRESENT);
+                } else {
+                    moveToState(STATE_FOCUSED_EMPTY);
                 }
+                moveCursorToEnd();
             }
         });
     }
 
     private Runnable getOrCreateEmptyTextRunnable() {
         if (mClearTextRunnable == null) {
-            mClearTextRunnable = new Runnable() {
-
-                @Override
-                public void run() {
-                    if (getSearchText().length() == 0) {
-                        moveToState(STATE_FOCUSED_EMPTY);
-                    }
+            mClearTextRunnable = () -> {
+                if (getSearchText().length() == 0) {
+                    moveToState(STATE_FOCUSED_EMPTY);
                 }
             };
         }
@@ -483,8 +464,8 @@ public class MbMaterialSearchView extends LinearLayout implements
         }
         if (enabled) {
             SearchDatabase.destroy();
-            if (mContext != null) {
-                Context context = mContext.get();
+            if (this.getContext() != null) {
+                Context context = this.getContext();
                 if (context != null) {
                     SearchDatabase.init(context);
                 }
@@ -589,8 +570,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     @SuppressWarnings("unused")
     public void setHintTextColor(int colorResId) {
         if (mSearchInputEditText != null) {
-            if (mContext != null) {
-                Context context = mContext.get();
+            if (this.getContext() != null) {
+                Context context = this.getContext();
                 if (context != null) {
                     int color = ContextCompat.getColor(context, colorResId);
                     mSearchInputEditText.setHintTextColor(color);
@@ -619,8 +600,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     @SuppressWarnings("unused")
     public void clearSearchHistory() {
         SearchDatabase.deleteDatabase(null);
-        if (mContext != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null) {
+            Context context = this.getContext();
             if (context != null) {
                 SearchDatabase.init(context);
             }
@@ -637,8 +618,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     @SuppressWarnings("unused")
     public void clearSearchHistory(@Nullable DatabaseTaskListener listener) {
         SearchDatabase.deleteDatabase(listener);
-        if (mContext != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null) {
+            Context context = this.getContext();
             if (context != null) {
                 SearchDatabase.init(context);
             }
@@ -913,8 +894,8 @@ public class MbMaterialSearchView extends LinearLayout implements
      */
     @SuppressWarnings("unused")
     public void setTextColor(int colorResId) {
-        if (mContext != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null) {
+            Context context = this.getContext();
             if (context != null && mSearchInputEditText != null) {
                 int resolvedColor = ContextCompat.getColor(context, colorResId);
                 mSearchInputEditText.setTextColor(resolvedColor);
@@ -930,8 +911,8 @@ public class MbMaterialSearchView extends LinearLayout implements
      */
     @SuppressWarnings("unused")
     public void setIconTint(int colorResId) {
-        if (mContext != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null) {
+            Context context = this.getContext();
             if (context != null) {
                 int resolvedColor = ContextCompat.getColor(context, colorResId);
                 setIconTintWithResolvedColor(resolvedColor);
@@ -1286,8 +1267,8 @@ public class MbMaterialSearchView extends LinearLayout implements
 
     private void startVoiceSearch() {
         if (VERSION.SDK_INT >= VERSION_CODES.M) {
-            if (mContext != null) {
-                Context context = mContext.get();
+            if (this.getContext() != null) {
+                Context context = this.getContext();
                 if (context != null) {
                     int permissionStatus = ContextCompat.checkSelfPermission(context, permission.RECORD_AUDIO);
                     if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
@@ -1310,8 +1291,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     }
 
     private void performVoiceSearch() {
-        if (mContext != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null) {
+            Context context = this.getContext();
             if (context != null) {
                 if (mSpeechRecognizer == null) {
                     if (SpeechRecognizer.isRecognitionAvailable(context)) {
@@ -1440,8 +1421,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     }
 
     private void closeKeyboard() {
-        if (mContext != null && mSearchInputEditText != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null && mSearchInputEditText != null) {
+            Context context = this.getContext();
             if (context != null) {
                 InputMethodManager inputManager = (InputMethodManager)
                         context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -1454,8 +1435,8 @@ public class MbMaterialSearchView extends LinearLayout implements
     }
 
     private void openKeyboard() {
-        if (mContext != null && mSearchInputEditText != null) {
-            Context context = mContext.get();
+        if (this.getContext() != null && mSearchInputEditText != null) {
+            Context context = this.getContext();
             if (context != null) {
                 InputMethodManager inputManager = (InputMethodManager)
                         context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -1596,7 +1577,7 @@ public class MbMaterialSearchView extends LinearLayout implements
                     showRecentSearches();
                     showMic();
                     hideClear();
-                    requestSearchViewFocus();
+//                    requestSearchViewFocus();
                     break;
                 case STATE_FOCUSED_TEXT_PRESENT:
                     stopVoiceRecognitionIfNecessary();
@@ -1653,21 +1634,10 @@ public class MbMaterialSearchView extends LinearLayout implements
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Log.d(TAG, ".onAttachedToWindow()");
-        restoreContextIfNeeded();
         if (mDatabaseSuggestionsEnabled) {
-            if (mContext != null) {
-                Context context = mContext.get();
-                if (context != null) {
-                    SearchDatabase.init(context);
-                }
+            if (this.getContext() != null) {
+                SearchDatabase.init(this.getContext());
             }
-        }
-    }
-
-    private void restoreContextIfNeeded() {
-        if ((mContext == null || mContext.get() == null) && mSearchCard != null) {
-            mContext = new WeakReference<>(mSearchCard.getContext());
-            Log.d(TAG, "CONTEXT RESTORED");
         }
     }
 
@@ -1675,7 +1645,6 @@ public class MbMaterialSearchView extends LinearLayout implements
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         Log.d(TAG, ".onDetachedFromWindow()");
-        mContext = null;
         if (mRecentSearchesTask != null) {
             mRecentSearchesTask.cancel();
         }

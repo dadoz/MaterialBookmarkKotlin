@@ -17,6 +17,7 @@ import khronos.toString
 
 class BookmarkListAdapter(private val items: List<Bookmark>, private val listener: OnBookmarkItemClickListener) :
     RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>() {
+    private val EMPTY_BOOKMARK_LABEL = "Title..."
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
         val inflatedView = parent.inflate(R.layout.bookmark_view_item, false)
@@ -28,12 +29,15 @@ class BookmarkListAdapter(private val items: List<Bookmark>, private val listene
     }
 
     override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
-        holder.bookmarkTitle.text = items[position].title
+        holder.bookmarkTitle.text = items[position].title.let {
+            if (it.isNullOrEmpty()) EMPTY_BOOKMARK_LABEL else it
+        }
         holder.bookmarkUrl.text = items[position].url
         holder.bookmarkTimestamp.text = items[position].timestamp?.toString("dd MMM")
         Glide.with(holder.itemView.context)
             .load(items[position].image)
             .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
+            .placeholder(R.drawable.ic_bookmark)
             .into(holder.bookmarkIcon)
 
         holder.itemView.setOnClickListener { listener.onBookmarkItemClicked(position, items[position]) }
