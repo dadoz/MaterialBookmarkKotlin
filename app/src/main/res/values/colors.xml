@@ -5,7 +5,7 @@
     <color name="colorAccentLight2">#9B9086</color>
     <color name="colorPrimary">#FFA600</color>
     <color name="colorPrimaryDark">#DE7903</color>
-    <color name="colorPrimaryLight">#FBF8F4</color>
+    <color name="colorPrimaryLight">#FDFCFB</color>
     <color name="colorError">#BE4C44</color>
     <color name="colorErrorSecondary">#A13532</color>
     <color name="colorSuccess">#3ED48F</color>

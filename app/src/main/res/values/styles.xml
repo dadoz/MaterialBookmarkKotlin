@@ -45,8 +45,10 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
     <style name="MBMaterialButtonStyleBrown" parent="TextAppearance.MaterialComponents.Button" >
-        <item name="android:backgroundTint">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorAccentLight</item>
+        <item name="backgroundTint">@android:color/background_light</item>
+        <item name="textColor">@color/colorAccent</item>
+        <item name="strokeColor">@color/colorAccent</item>
+        <item name="strokeWidth">1dp</item>
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
