@@ -21,10 +21,8 @@
                 android:lines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/yantramanav_light"
-                android:textColor="@color/colorAccent"
-                tools:text="No Title"
-                android:textSize="28sp" />
+                style="@style/MBMaterialTitleStyle"
+                tools:text="No Title" />
 
         <LinearLayout
                 android:layout_width="match_parent"
