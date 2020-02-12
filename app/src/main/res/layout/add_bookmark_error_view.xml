@@ -19,7 +19,7 @@
                 android:padding="@dimen/margin_16"
                 android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbBookmarkSaveNewErrorTitleId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                     android:fontFamily="@font/yantramanav_light"
                     android:text="Saving Bookmark..."
                     tools:text="Android Dev"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbBookmarkSaveNewErrorMessageId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

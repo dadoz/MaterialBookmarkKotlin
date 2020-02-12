@@ -17,31 +17,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mbTitleBookmarkListTextViewId"
                 android:layout_below="@+id/mbMaterialSearchVIewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bookmark list"
-                android:fontFamily="@font/yantramanav_light"
-                android:textSize="36sp"
                 android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginRight="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_16"
-                android:textColor="@color/colorAccent"
+                style="@style/MBMaterialDarkTitleStyle"
                 />
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mbSubtitleBookmarkListTextViewId"
                 android:layout_below="@+id/mbTitleBookmarkListTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stored on your list"
-                android:fontFamily="@font/yantramanav_thin"
-                android:textSize="18sp"
+                style="@style/MBMaterialDarkSubtitleStyle"
                 android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginRight="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_16"
-                android:textColor="@color/colorAccent"
                 />
 
         <androidx.constraintlayout.widget.ConstraintLayout

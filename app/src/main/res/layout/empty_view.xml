@@ -15,7 +15,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_empty_box"
         />
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mbBookmarkEmptyImageViewId"

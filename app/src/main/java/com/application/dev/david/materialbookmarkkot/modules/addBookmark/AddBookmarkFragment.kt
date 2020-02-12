@@ -16,9 +16,11 @@ import androidx.fragment.app.Fragment
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
@@ -85,32 +87,13 @@ class AddBookmarkFragment : Fragment() {
         menuInflater.inflate(R.menu.menu_add_bookmark, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            R.id.action_search_bookmark -> {
-                val url = (mbNewBookmarkUrlEditTextId as EditText).text.toString()
-                mbNewBookmarkUrlTextId.text = url
-                addBookmarkViewModel.updateWebviewByUrl(url)
-                addBookmarkViewModel.findBookmarkInfoByUrl(url)
-
-                mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
-                mbBookmarkSaveNewCardviewId.visibility = VISIBLE
-                mbNewBookmarkIconLayoutId.visibility = VISIBLE
-                mbNewBookmarkUrlCardviewId.visibility = VISIBLE
-                mbNewBookmarkUrlEditCardviewId.visibility = GONE
-            }
-        }
-        return super.onOptionsItemSelected(item)
-
-    }
     /**
      * init actionbar
      */
     private fun initActionBar() {
         (activity as AppCompatActivity).setSupportActionBar(mbToolbarId)
         mbToolbarId.changeToolbarFont()
-//        mbMaterialSearchVIewId?.visibility = GONE
-        mbToolbarId.title = getString(R.string.new_bookmark_string)
+        mbToolbarId.title = ""
         mbToolbarId.visibility = VISIBLE
     }
 
@@ -175,6 +158,23 @@ class AddBookmarkFragment : Fragment() {
             )
         }
 
+
+        mbsearchBookmarkButtonViewId.setOnClickListener {
+            val url = (mbNewBookmarkUrlEditTextId as AppCompatEditText).text.toString()
+            mbNewBookmarkUrlTextId.text = url
+            addBookmarkViewModel.updateWebviewByUrl(url)
+            addBookmarkViewModel.findBookmarkInfoByUrl(url)
+
+            mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
+            mbBookmarkSaveNewCardviewId.visibility = VISIBLE
+            mbNewBookmarkIconLayoutId.visibility = VISIBLE
+            mbNewBookmarkUrlCardviewId.visibility = VISIBLE
+            mbNewBookmarkUrlEditCardviewId.visibility = GONE
+        }
+
+        (mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener {
+
+        }
     }
 
     /**

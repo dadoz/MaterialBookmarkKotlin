@@ -5,5 +5,5 @@
             android:id="@+id/action_search_bookmark"
             android:icon="@drawable/ic_check_icon"
             android:title="ADD"
-            app:showAsAction="always"/>
+            app:showAsAction="never"/>
 </menu>

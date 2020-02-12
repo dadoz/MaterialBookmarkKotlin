@@ -12,7 +12,7 @@
             android:background="?attr/selectableItemBackground"
             android:orientation="vertical">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginRight="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_8"
@@ -37,7 +37,7 @@
                     android:layout_height="36dp"
                     android:src="@drawable/ic_world_refresh"
                     />
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bookmarkUrlTextViewId"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_16"
@@ -50,7 +50,7 @@
                     tools:text="www.instagram.com"
                     />
         </LinearLayout>
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_8"

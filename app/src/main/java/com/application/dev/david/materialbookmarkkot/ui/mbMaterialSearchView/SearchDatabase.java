@@ -205,7 +205,7 @@ public class SearchDatabase extends SQLiteOpenHelper {
         protected final Boolean doInBackground(SearchSuggestion... searchSuggestions) {
             boolean success = false;
             if (searchSuggestions != null) {
-                List<SearchSuggestion> searches = Arrays.asList(searchSuggestions);
+                SearchSuggestion[] searches = searchSuggestions;
                 success = true;
                 SQLiteDatabase database = editDatabase();
                 database.beginTransaction();
@@ -376,7 +376,7 @@ public class SearchDatabase extends SQLiteOpenHelper {
                     + SEARCHES_TABLE_NAME
                     + " WHERE LOWER(" + COLUMN_NAME_SEARCH_TERM + ")"
                     + " LIKE " + DatabaseUtils.sqlEscapeString(startsWith.toLowerCase() + "%")
-                    + " ORDER BY " + COLUMN_NAME_SEARCH_DATE + " DESC LIMIT " + String.valueOf(limit);
+                    + " ORDER BY " + COLUMN_NAME_SEARCH_DATE + " DESC LIMIT " + limit;
         }
 
         @Override

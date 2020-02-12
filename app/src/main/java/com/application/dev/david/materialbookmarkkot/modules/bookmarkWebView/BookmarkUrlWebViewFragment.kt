@@ -31,10 +31,6 @@ class BookmarkUrlWebViewFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     val args: BookmarkUrlWebViewFragmentArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,15 +42,6 @@ class BookmarkUrlWebViewFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-//        if (context is OnFragmentInteractionListener) {
-//            listener = context
-//        } else {
-//            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-//        }
     }
 
     override fun onDetach() {

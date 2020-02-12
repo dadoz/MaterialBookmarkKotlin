@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:padding="@dimen/margin_16"
             android:orientation="vertical">
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
@@ -37,7 +37,7 @@
                 style="@style/MBMaterialCardviewStyleGreen"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_8">
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:padding="@dimen/margin_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
