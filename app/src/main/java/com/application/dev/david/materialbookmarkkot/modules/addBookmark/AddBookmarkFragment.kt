@@ -1,26 +1,18 @@
 package com.application.dev.david.materialbookmarkkot.modules.addBookmark
 
 import android.content.Context
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
@@ -33,11 +25,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.add_bookmark_error_view.*
 import kotlinx.android.synthetic.main.add_bookmark_success_view.*
+import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 
 /**
@@ -101,11 +92,9 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun initView() {
-        val sheetBehavior = from(mbBookmarkSaveNewCardviewId)
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbNewBookmarkUrlCardviewId.visibility = GONE
             mbNewBookmarkUrlEditCardviewId.visibility = VISIBLE
-            sheetBehavior.state = STATE_COLLAPSED
         }
 
         // loader cbs
@@ -125,7 +114,6 @@ class AddBookmarkFragment : Fragment() {
         })
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
-            sheetBehavior.state = STATE_EXPANDED
             Log.e(javaClass.name, "blalllala " + searchedUrl)
         })
 
@@ -150,7 +138,6 @@ class AddBookmarkFragment : Fragment() {
 
         mbBookmarkSaveNewButtonId.setOnClickListener {
             mbNewBookmarkUrlEditTextId.hideKeyboard()
-            sheetBehavior.state = STATE_COLLAPSED
             addBookmarkViewModel.saveBookmark(
                 mbNewBookmarkTitleEditTextId.text.toString(),
                 mbNewBookmarkTitleEditTextId.tag.let { it?.toString() ?: "" },
@@ -166,15 +153,22 @@ class AddBookmarkFragment : Fragment() {
             addBookmarkViewModel.findBookmarkInfoByUrl(url)
 
             mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
-            mbBookmarkSaveNewCardviewId.visibility = VISIBLE
             mbNewBookmarkIconLayoutId.visibility = VISIBLE
+            mbNewBookmarkSearchIntroViewId.visibility = GONE
             mbNewBookmarkUrlCardviewId.visibility = VISIBLE
             mbNewBookmarkUrlEditCardviewId.visibility = GONE
         }
 
-        (mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener {
 
-        }
+        (mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged (text: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun afterTextChanged(text: Editable?) {
+                mbsearchBookmarkButtonViewId.visibility = if (text.isNullOrBlank()) GONE else VISIBLE
+            }
+        })
     }
 
     /**

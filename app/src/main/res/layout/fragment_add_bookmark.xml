@@ -32,6 +32,7 @@
                 android:orientation="vertical"
                 tools:context=".modules.addBookmark.AddBookmarkFragment">
             <RelativeLayout
+                    android:id="@+id/mbNewBookmarkSearchIntroViewId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -62,8 +63,10 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_check_icon"
+                        android:visibility="gone"
                         />
             </RelativeLayout>
+            <include layout="@layout/bookmark_title_icon_layout_view"/>
 
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mbNewBookmarkUrlEditCardviewId"
@@ -110,57 +113,35 @@
                     style="@style/MBMaterialCardviewStyle"
                     android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginBottom="@dimen/margin_8">
+                <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/mbNewBookmarkUrlTextId"
                         android:padding="@dimen/margin_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/yantramanav_thin"
-                        tools:text="www.googgle.it"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <RelativeLayout
-                    android:id="@+id/mbNewBookmarkIconLayoutId"
-                    tools:visibility="visible"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:layout_marginBottom="@dimen/margin_8"
-                    android:visibility="gone">
-                <ProgressBar
-                        android:id="@+id/mbNewBookmarkTitleLoaderId"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_height="wrap_content"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/mbNewBookmarkTitleTextInputId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
-                        android:layout_marginEnd="@dimen/margin_32"
-                        android:hint="Title insert...">
-                    <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/mbNewBookmarkTitleEditTextId"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/colorAccent"
-                            android:fontFamily="@font/yantramanav_light"
-                            android:textSize="28sp"
-                            />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:lines="1"
+                        android:textSize="24sp"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/yantramanav_thin"
+                        tools:text="www.googgle.it "/>
                 <ImageView
                         android:id="@+id/mbNewBookmarkIconImageViewId"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_margin="@dimen/margin_16"
                         android:src="@drawable/ic_bookmark"/>
+                </RelativeLayout>
 
-            </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
 
             <View
                     android:layout_width="match_parent"
@@ -203,53 +184,6 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-
-    <com.google.android.material.card.MaterialCardView
-            tools:visibility="visible"
-            android:id="@+id/mbBookmarkSaveNewCardviewId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            style="@style/MBMaterialCardviewStyleYellow"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="0dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            android:layout_marginTop="@dimen/margin_8">
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_16">
-            <LinearLayout
-                    android:id="@+id/mbBookmarkSaveNewBookmarkLayoutId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/yantramanav_light"
-                        android:text="Save your bookmark"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/yantramanav_thin"
-                        android:text="Save your bookmark"/>
-            </LinearLayout>
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mbBookmarkSaveNewButtonId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/MBMaterialButtonStyleBrown"
-                    android:layout_below="@+id/mbBookmarkSaveNewBookmarkLayoutId"
-                    android:layout_alignParentEnd="true"
-                    android:text="SAVE"/>
-
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
 
     <!--save with success-->
 

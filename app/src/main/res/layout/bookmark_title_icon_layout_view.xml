@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/mbNewBookmarkIconLayoutId"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:visibility="gone">
+        <ProgressBar
+                android:id="@+id/mbNewBookmarkTitleLoaderId"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mbNewBookmarkTitleTextInputId"
+                android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/colorAccent"
+                android:layout_marginEnd="@dimen/margin_32"
+                android:hint="Title insert...">
+            <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/mbNewBookmarkTitleEditTextId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/yantramanav_light"
+                    android:textSize="28sp"
+                    />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbBookmarkSaveNewButtonId"
+                android:layout_alignBaseline="@+id/mbNewBookmarkTitleTextInputId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/MBMaterialButtonStyleBrown"
+                android:layout_alignParentEnd="true"
+                android:text="SAVE"/>
+
+    </RelativeLayout>
