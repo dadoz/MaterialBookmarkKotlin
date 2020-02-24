@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -213,10 +214,15 @@ class AddBookmarkFragment : Fragment() {
      */
     private fun onSaveWithError() {
         mbBookmarkSaveNewErrorMessageId.text = "Oh Snap! We got an error:"
-        saveNewErrorCardviewBottomSheetBehavior.state = STATE_EXPANDED
         mbNewBookmarkUrlEditCardviewId.strokeColor = ContextCompat.getColor(context!!, R.color.colorError)
         mbNewBookmarkUrlEditCardviewId.setCardBackgroundColor(ContextCompat.getColor(context!!, android.R.color.white))
         mbNewBookmarkUrlEditTitleId.setTextColor(ContextCompat.getColor(context!!, R.color.colorError))
+        mbNewBookmarkUrlCardviewId.callOnClick()//trigger click
+
+        saveNewErrorCardviewBottomSheetBehavior.state = STATE_EXPANDED
+        Handler().postDelayed({
+            saveNewErrorCardviewBottomSheetBehavior.state = STATE_COLLAPSED
+        }, 2000)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
