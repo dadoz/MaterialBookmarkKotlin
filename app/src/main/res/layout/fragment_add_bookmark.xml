@@ -12,7 +12,8 @@
                 android:id="@+id/mbAddBookmarkAppBarLayoutId"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:background="@android:color/background_light"
+                android:background="@color/colorAccentLight"
+                android:colorControlNormal="@color/colorAccent"
                 android:theme="@style/AppTheme.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
@@ -94,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/yantramanav_thin"
                             android:hint="...">
-                        <androidx.appcompat.widget.AppCompatEditText
+                        <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/mbNewBookmarkUrlEditTextId"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -107,7 +108,7 @@
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mbNewBookmarkUrlCardviewId"
                     android:visibility="gone"
-                    tools:visibility="g"
+                    tools:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/MBMaterialCardviewStyle"
