@@ -1,6 +1,8 @@
 package com.application.dev.david.materialbookmarkkot.modules.addBookmark
 
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -13,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
@@ -103,12 +106,10 @@ class AddBookmarkFragment : Fragment() {
                 true -> {
                     mbNewBookmarkTitleLoaderId.visibility = VISIBLE
                     mbNewBookmarkTitleTextInputId.visibility = GONE
-                    mbNewBookmarkIconImageViewId.visibility = GONE
                 }
                 false -> {
                     mbNewBookmarkTitleLoaderId.visibility = GONE
                     mbNewBookmarkTitleTextInputId.visibility = VISIBLE
-                    mbNewBookmarkIconImageViewId.visibility = VISIBLE
                 }
             }
         })
@@ -116,6 +117,9 @@ class AddBookmarkFragment : Fragment() {
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
             Log.e(javaClass.name, "blalllala " + searchedUrl)
         })
+
+        //set placeholder
+        mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.meta.title)
@@ -169,6 +173,18 @@ class AddBookmarkFragment : Fragment() {
                 mbsearchBookmarkButtonViewId.visibility = if (text.isNullOrBlank()) GONE else VISIBLE
             }
         })
+    }
+
+    /**
+     * get placeholder
+     */
+    private fun getPlaceholder(): Drawable? {
+        return context?.let {ctx ->
+            ContextCompat.getDrawable(ctx, R.drawable.ic_bookmark)?.let {
+                DrawableCompat.setTint(it, ContextCompat.getColor(ctx, R.color.colorPrimary))
+                it
+            }
+        }
     }
 
     /**
