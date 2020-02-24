@@ -107,7 +107,7 @@
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mbNewBookmarkUrlCardviewId"
                     android:visibility="gone"
-                    tools:visibility="visible"
+                    tools:visibility="g"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/MBMaterialCardviewStyle"
@@ -140,8 +140,6 @@
                 </RelativeLayout>
 
             </com.google.android.material.card.MaterialCardView>
-
-
 
             <View
                     android:layout_width="match_parent"
@@ -187,7 +185,6 @@
 
     <!--save with success-->
 
-    <include layout="@layout/add_bookmark_success_view"/>
     <include layout="@layout/add_bookmark_error_view"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

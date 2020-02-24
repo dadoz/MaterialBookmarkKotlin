@@ -32,7 +32,7 @@
                     android:id="@+id/mbBookmarkSaveNewErrorMessageId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccentLight"
+                    android:textColor="@color/colorError"
                     android:textSize="18sp"
                     android:fontFamily="@font/yantramanav_light"
                     android:text="Android Dev"

@@ -1,7 +1,6 @@
 package com.application.dev.david.materialbookmarkkot.modules.addBookmark
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
@@ -29,7 +30,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.add_bookmark_error_view.*
-import kotlinx.android.synthetic.main.add_bookmark_success_view.*
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 
@@ -46,11 +46,12 @@ import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 class AddBookmarkFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var listener: OnFragmentInteractionListener? = null
+    private val navigation: NavController? by lazy {
+        view?.let { Navigation.findNavController(it) }
+    }
+
     private val addBookmarkViewModel: AddBookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
-    }
-    private val saveNewSuccessCardviewBottomSheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
-        from(mbBookmarkSaveNewSuccessCardviewId)
     }
 
     private val saveNewErrorCardviewBottomSheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
@@ -191,7 +192,7 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun onSaveWithSuccess() {
-        saveNewSuccessCardviewBottomSheetBehavior.state = STATE_EXPANDED
+        navigation?.popBackStack()
     }
 
     /**
