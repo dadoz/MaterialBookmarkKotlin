@@ -18,4 +18,5 @@
     <color name="primary_text">#FF212121</color>
     <color name="secondary_text">#FF727272</color>
     <color name="hint_base_color">@android:color/white</color>
+    <color name="color_accent">#4E4135</color>
 </resources>

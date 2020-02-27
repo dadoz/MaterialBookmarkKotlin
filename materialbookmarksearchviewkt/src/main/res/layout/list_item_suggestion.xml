@@ -15,67 +15,72 @@
     limitations under the License.
 -->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:orientation="horizontal">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/list_item_history_icon"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:contentDescription="@string/cd_recent_search_icon"
-        app:srcCompat="@drawable/ic_access_time_dark_24dp"/>
+            android:id="@+id/list_item_history_icon"
+            android:tint="@color/color_accent"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:contentDescription="@string/cd_recent_search_icon"
+            app:srcCompat="@drawable/ic_access_time_dark_24dp"/>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/list_item_suggestion"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:lines="2"
-                android:maxLines="2"
-                tools:text="recent search item this is going on another line to see whether it fits"/>
+                    android:id="@+id/list_item_suggestion"
+                    android:fontFamily="@font/heebo_thin"
+                    android:textColor="@color/color_accent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:lines="2"
+                    android:maxLines="2"
+                    tools:text="recent search item this is going on another line to see whether it fits"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/list_item_pointer_icon"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:contentDescription="@string/cd_recent_search_icon"
-                android:scaleX="-1"
-                app:srcCompat="@drawable/ic_search_again_dark_24dp"/>
+                    android:id="@+id/list_item_pointer_icon"
+                    android:tint="@color/color_accent"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:contentDescription="@string/cd_recent_search_icon"
+                    android:scaleX="-1"
+                    app:srcCompat="@drawable/ic_search_again_dark_24dp"/>
         </LinearLayout>
 
         <View
-            android:id="@+id/list_item_divider_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="@color/secondary_text"/>
+                android:id="@+id/list_item_divider_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:alpha="0.2"
+                android:background="@color/color_accent"/>
     </FrameLayout>
 
 </LinearLayout>
