@@ -1,4 +1,4 @@
-package com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView;
+package com.library.davidelmn.materailbookmarksearchviewkt;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,15 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringDef;
 
-
-import com.library.davidelmn.materailbookmarksearchviewkt.SearchSuggestion;
-
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import static com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.SearchDatabase.SearchEntry.COLUMN_NAME_ID;
-import static com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.SearchDatabase.SearchEntry.COLUMN_NAME_SEARCH_DATE;
-import static com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.SearchDatabase.SearchEntry.COLUMN_NAME_SEARCH_TERM;
+import static com.library.davidelmn.materailbookmarksearchviewkt.SearchDatabase.SearchEntry.*;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
@@ -40,7 +37,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  * limitations under the License.
  */
 
-public class SearchDatabase extends SQLiteOpenHelper {
+class SearchDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "msv_searches.db";
     private static final String TEXT_TYPE = " TEXT";
@@ -138,14 +135,14 @@ public class SearchDatabase extends SQLiteOpenHelper {
         return sReadableDatabase;
     }
 
-    static void addPerformedSearch(@Nullable SearchDatabase.DatabaseTaskListener listener,
+    static void addPerformedSearch(@Nullable DatabaseTaskListener listener,
                                    @NonNull SearchSuggestion... searchSuggestions) {
-        new SearchDatabase.AddPerformedSearchTask(listener).execute(searchSuggestions);
+        new AddPerformedSearchTask(listener).execute(searchSuggestions);
     }
 
     static void addPerformedSearches(@NonNull ArrayList<SearchSuggestion> searchSuggestions,
-                                     @Nullable SearchDatabase.DatabaseTaskListener listener) {
-        new SearchDatabase.AddPerformedSearchesTask(searchSuggestions, listener).execute();
+                                     @Nullable DatabaseTaskListener listener) {
+        new AddPerformedSearchesTask(searchSuggestions, listener).execute();
     }
 
     private static boolean addPerformedSearch(@NonNull SQLiteDatabase database,
@@ -158,27 +155,27 @@ public class SearchDatabase extends SQLiteOpenHelper {
         return database.rawQuery(insertQuery, null).getCount() != 0;
     }
 
-    static SearchDatabase.GetPerformedSearchesStartingWithTask filterSearchesBy(int limit, @NonNull String searchTerm,
-                                                                                                                        @NonNull SearchDatabase.DatabaseReadSearchesListener listener) {
-        SearchDatabase.GetPerformedSearchesStartingWithTask task = new SearchDatabase.GetPerformedSearchesStartingWithTask(searchTerm, limit, listener);
+    static GetPerformedSearchesStartingWithTask filterSearchesBy(int limit, @NonNull String searchTerm,
+                                                                 @NonNull DatabaseReadSearchesListener listener) {
+        GetPerformedSearchesStartingWithTask task = new GetPerformedSearchesStartingWithTask(searchTerm, limit, listener);
         task.execute();
         return task;
     }
 
-    static SearchDatabase.GetPerformedSearchesTask getPerformedSearches(@NonNull SearchDatabase.DatabaseReadSearchesListener listener) {
-        SearchDatabase.GetPerformedSearchesTask task = new SearchDatabase.GetPerformedSearchesTask(0, listener);
+    static GetPerformedSearchesTask getPerformedSearches(@NonNull DatabaseReadSearchesListener listener) {
+        GetPerformedSearchesTask task = new GetPerformedSearchesTask(0, listener);
         task.execute();
         return task;
     }
 
-    static SearchDatabase.GetPerformedSearchesTask getPerformedSearches(int limit, SearchDatabase.DatabaseReadSearchesListener listener) {
-        SearchDatabase.GetPerformedSearchesTask task = new SearchDatabase.GetPerformedSearchesTask(limit, listener);
+    static GetPerformedSearchesTask getPerformedSearches(int limit, DatabaseReadSearchesListener listener) {
+        GetPerformedSearchesTask task = new GetPerformedSearchesTask(limit, listener);
         task.execute();
         return task;
     }
 
-    static SearchDatabase.GetRecentSearchesTask getRecentSearches(int limit, @NonNull SearchDatabase.DatabaseReadSearchesListener listener) {
-        SearchDatabase.GetRecentSearchesTask task = new SearchDatabase.GetRecentSearchesTask(limit, listener);
+    static GetRecentSearchesTask getRecentSearches(int limit, @NonNull DatabaseReadSearchesListener listener) {
+        GetRecentSearchesTask task = new GetRecentSearchesTask(limit, listener);
         task.execute();
         return task;
     }
@@ -187,15 +184,15 @@ public class SearchDatabase extends SQLiteOpenHelper {
         return new SearchSuggestion(cursor.getString(1), cursor.getString(2));
     }
 
-    static void deleteDatabase(@Nullable SearchDatabase.DatabaseTaskListener listener) {
-        new SearchDatabase.DeleteDatabaseTask(listener).execute();
+    static void deleteDatabase(@Nullable DatabaseTaskListener listener) {
+        new DeleteDatabaseTask(listener).execute();
     }
 
     @SuppressWarnings("unused")
     private static class AddPerformedSearchTask extends AsyncTask<SearchSuggestion, Void, Boolean> {
-        private SearchDatabase.DatabaseTaskListener mListener = null;
+        private DatabaseTaskListener mListener = null;
 
-        private AddPerformedSearchTask(@Nullable SearchDatabase.DatabaseTaskListener listener) {
+        private AddPerformedSearchTask(@Nullable DatabaseTaskListener listener) {
             mListener = listener;
         }
 
@@ -203,7 +200,7 @@ public class SearchDatabase extends SQLiteOpenHelper {
         protected final Boolean doInBackground(SearchSuggestion... searchSuggestions) {
             boolean success = false;
             if (searchSuggestions != null) {
-                SearchSuggestion[] searches = searchSuggestions;
+                List<SearchSuggestion> searches = Arrays.asList(searchSuggestions);
                 success = true;
                 SQLiteDatabase database = editDatabase();
                 database.beginTransaction();
@@ -241,10 +238,10 @@ public class SearchDatabase extends SQLiteOpenHelper {
     @SuppressWarnings("unused")
     private static class AddPerformedSearchesTask extends AsyncTask<Void, Void, Boolean> {
         private ArrayList<SearchSuggestion> mSearchSuggestions;
-        private SearchDatabase.DatabaseTaskListener mListener = null;
+        private DatabaseTaskListener mListener = null;
 
         private AddPerformedSearchesTask(@NonNull ArrayList<SearchSuggestion> searchSuggestions,
-                                         @Nullable SearchDatabase.DatabaseTaskListener listener) {
+                                         @Nullable DatabaseTaskListener listener) {
             mSearchSuggestions = searchSuggestions;
             mListener = listener;
         }
@@ -289,9 +286,9 @@ public class SearchDatabase extends SQLiteOpenHelper {
     @SuppressWarnings("unused")
     static class GetPerformedSearchesTask extends AsyncTask<Void, Void, ArrayList<SearchSuggestion>> {
         private int mRowLimit = 0;
-        private SearchDatabase.DatabaseReadSearchesListener mListener = null;
+        private DatabaseReadSearchesListener mListener = null;
 
-        private GetPerformedSearchesTask(int limit, @Nullable SearchDatabase.DatabaseReadSearchesListener listener) {
+        private GetPerformedSearchesTask(int limit, @Nullable DatabaseReadSearchesListener listener) {
             mRowLimit = limit;
             mListener = listener;
         }
@@ -338,9 +335,9 @@ public class SearchDatabase extends SQLiteOpenHelper {
     static class GetPerformedSearchesStartingWithTask extends AsyncTask<Void, Void, ArrayList<SearchSuggestion>> {
         private final String mStartsWith;
         private int mLimit = 0;
-        private SearchDatabase.DatabaseReadSearchesListener mListener = null;
+        private DatabaseReadSearchesListener mListener = null;
 
-        private GetPerformedSearchesStartingWithTask(@NonNull String startsWith, int limit, @Nullable SearchDatabase.DatabaseReadSearchesListener listener) {
+        private GetPerformedSearchesStartingWithTask(@NonNull String startsWith, int limit, @Nullable DatabaseReadSearchesListener listener) {
             mStartsWith = startsWith;
             mLimit = limit;
             mListener = listener;
@@ -374,7 +371,7 @@ public class SearchDatabase extends SQLiteOpenHelper {
                     + SEARCHES_TABLE_NAME
                     + " WHERE LOWER(" + COLUMN_NAME_SEARCH_TERM + ")"
                     + " LIKE " + DatabaseUtils.sqlEscapeString(startsWith.toLowerCase() + "%")
-                    + " ORDER BY " + COLUMN_NAME_SEARCH_DATE + " DESC LIMIT " + limit;
+                    + " ORDER BY " + COLUMN_NAME_SEARCH_DATE + " DESC LIMIT " + String.valueOf(limit);
         }
 
         @Override
@@ -394,9 +391,9 @@ public class SearchDatabase extends SQLiteOpenHelper {
     static class GetRecentSearchesTask extends AsyncTask<Void, Void, ArrayList<SearchSuggestion>> {
 
         private int mLimit = DEFAULT_LIMIT;
-        private SearchDatabase.DatabaseReadSearchesListener mListener = null;
+        private DatabaseReadSearchesListener mListener = null;
 
-        private GetRecentSearchesTask(int limit, @Nullable SearchDatabase.DatabaseReadSearchesListener listener) {
+        private GetRecentSearchesTask(int limit, @Nullable DatabaseReadSearchesListener listener) {
             mLimit = limit;
             mListener = listener;
         }
@@ -444,9 +441,9 @@ public class SearchDatabase extends SQLiteOpenHelper {
     @SuppressWarnings("unused")
     private static class DeleteDatabaseTask extends AsyncTask<Void, Void, Boolean> {
 
-        private SearchDatabase.DatabaseTaskListener mListener = null;
+        private DatabaseTaskListener mListener = null;
 
-        private DeleteDatabaseTask(@Nullable SearchDatabase.DatabaseTaskListener listener) {
+        private DeleteDatabaseTask(@Nullable DatabaseTaskListener listener) {
             mListener = listener;
         }
 

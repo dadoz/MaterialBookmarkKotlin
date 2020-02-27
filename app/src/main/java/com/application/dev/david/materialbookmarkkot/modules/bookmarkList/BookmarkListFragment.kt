@@ -6,9 +6,6 @@ import android.view.*
 import android.view.View.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.annotation.NonNull
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
@@ -18,17 +15,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
-import com.application.dev.david.materialbookmarkkot.ui.mbMaterialSearchView.MbMaterialSearchView
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
-import com.google.android.material.card.MaterialCardView
-import com.michaelgarnerdev.materialsearchview.MaterialSearchView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_view.*
-import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.*
-import timber.log.Timber
 
 
 class BookmarkListFragment : Fragment()  {
