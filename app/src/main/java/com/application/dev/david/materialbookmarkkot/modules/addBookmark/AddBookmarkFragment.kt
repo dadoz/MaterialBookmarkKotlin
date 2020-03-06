@@ -186,6 +186,7 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkSearchIntroViewId.visibility = GONE
         mbNewBookmarkUrlCardviewId.visibility = VISIBLE
         mbNewBookmarkUrlEditLayoutId.visibility = GONE
+        mbsearchBookmarkButtonViewId.visibility = GONE
 
         //set placeholder
         mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())

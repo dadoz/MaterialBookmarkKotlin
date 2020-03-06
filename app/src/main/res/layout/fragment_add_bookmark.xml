@@ -67,7 +67,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@id/mbsearchBookmarkButtonViewId"
+                        android:layout_toStartOf="@id/mbNewBookmarkUrlClipboardLayoutId"
                         android:layout_marginEnd="@dimen/margin_16"
                         android:fontFamily="@font/yantramanav_thin"
                         android:hint="Search your bookmark">
@@ -82,37 +82,27 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mbsearchBookmarkButtonViewId"
+                        android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_check_icon"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        />
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:tint="@color/colorAccent"
+                        android:src="@drawable/ic_clipboard_paste"
+                        android:visibility="visible"
+                        tools:visibility="visible"/>
             </RelativeLayout>
 
-            <LinearLayout
-                    android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbsearchBookmarkButtonViewId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:textColor="@color/colorAccentLight"
                     android:layout_marginTop="@dimen/margin_8"
-                    android:layout_marginBottom="@dimen/margin_8"
-                    android:orientation="horizontal">
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_clipboard_paste"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/text_18"
-                        android:fontFamily="@font/yantramanav_light"
-                        android:text="PASTE CLIPBOARD "/>
-            </LinearLayout>
+                    style="@style/MBMaterialButtonStyleYellow"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:text="SEARCH"/>
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mbNewBookmarkUrlCardviewId"
                     android:visibility="gone"
@@ -126,26 +116,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/mbNewBookmarkUrlTextId"
-                        android:padding="@dimen/margin_16"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
-                        android:lines="1"
-                        android:textSize="24sp"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="@font/yantramanav_thin"
-                        tools:text="www.googgle.it "/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mbNewBookmarkIconImageViewId"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_margin="@dimen/margin_16"
-                        tools:src="@drawable/ic_bookmark"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/mbNewBookmarkUrlTextId"
+                            android:padding="@dimen/margin_16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
+                            android:lines="1"
+                            android:textSize="24sp"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/yantramanav_thin"
+                            tools:text="www.googgle.it "/>
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/mbNewBookmarkIconImageViewId"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="@dimen/margin_16"
+                            tools:src="@drawable/ic_bookmark"/>
                 </RelativeLayout>
 
             </com.google.android.material.card.MaterialCardView>
