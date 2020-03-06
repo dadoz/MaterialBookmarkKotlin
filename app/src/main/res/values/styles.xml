@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorAccentLight</item>
+        <item name="colorPrimaryDark">@color/colorAccentLight3</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="elevation">0dp</item>
 
@@ -27,6 +27,10 @@
     <style name="MBMaterialCardviewStyleYellow" parent="MBMaterialCardviewStyle" >
         <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
+    </style>
+    <style name="MBMaterialCardviewStyleBrown" parent="MBMaterialCardviewStyle" >
+        <item name="cardBackgroundColor">@color/colorAccentLight3</item>
+        <item name="strokeColor">@color/colorAccent</item>
     </style>
 
     <style name="MBMaterialCardviewStyleGreen" parent="MBMaterialCardviewStyle" >

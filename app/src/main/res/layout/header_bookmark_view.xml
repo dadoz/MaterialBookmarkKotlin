@@ -11,10 +11,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textSize="36sp"
+            android:textSize="@dimen/text_36"
             android:fontFamily="@font/yantramanav_light"
-            android:layout_centerVertical="true"
             android:text="Android Dev"
             tools:text="Android Dev"/>
-    <include layout="@layout/action_bookmark_view"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mbBookmarkPreviewHeaderSubtitleTextViewId"
+            android:layout_below="@+id/mbBookmarkPreviewHeaderTitleTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_18"
+            android:fontFamily="@font/yantramanav_light"
+            android:text="at 10 pm blala"
+            tools:text="at 10 pm blala"/>
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mbBookmarkPreviewHeaderIconImageViewId"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_bookmark"/>
+    <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_below="@+id/mbBookmarkPreviewHeaderSubtitleTextViewId"
+            android:background="@color/colorAccent"/>
 </RelativeLayout>

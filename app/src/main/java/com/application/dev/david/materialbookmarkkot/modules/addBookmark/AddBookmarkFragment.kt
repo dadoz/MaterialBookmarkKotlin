@@ -99,7 +99,7 @@ class AddBookmarkFragment : Fragment() {
     private fun initView() {
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbNewBookmarkUrlCardviewId.visibility = GONE
-            mbNewBookmarkUrlEditCardviewId.visibility = VISIBLE
+            mbNewBookmarkUrlEditLayoutId.visibility = VISIBLE
             mbBookmarkUpdateSearchNewButtonId.visibility = VISIBLE
             mbBookmarkSaveNewButtonId.visibility = GONE
         }
@@ -181,10 +181,11 @@ class AddBookmarkFragment : Fragment() {
         addBookmarkViewModel.findBookmarkInfoByUrl(url)
 
         mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
+        mbNewBookmarkUrlClipboardLayoutId.visibility = GONE
         mbNewBookmarkIconLayoutId.visibility = VISIBLE
         mbNewBookmarkSearchIntroViewId.visibility = GONE
         mbNewBookmarkUrlCardviewId.visibility = VISIBLE
-        mbNewBookmarkUrlEditCardviewId.visibility = GONE
+        mbNewBookmarkUrlEditLayoutId.visibility = GONE
 
         //set placeholder
         mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
@@ -214,9 +215,7 @@ class AddBookmarkFragment : Fragment() {
      */
     private fun onSaveWithError() {
         mbBookmarkSaveNewErrorMessageId.text = "Oh Snap! We got an error:"
-        mbNewBookmarkUrlEditCardviewId.strokeColor = ContextCompat.getColor(context!!, R.color.colorError)
-        mbNewBookmarkUrlEditCardviewId.setCardBackgroundColor(ContextCompat.getColor(context!!, android.R.color.white))
-        mbNewBookmarkUrlEditTitleId.setTextColor(ContextCompat.getColor(context!!, R.color.colorError))
+        mbNewBookmarkUrlTextInputLayoutId.error = mbBookmarkSaveNewErrorMessageId.text
         mbNewBookmarkUrlCardviewId.callOnClick()//trigger click
 
         saveNewErrorCardviewBottomSheetBehavior.state = STATE_EXPANDED

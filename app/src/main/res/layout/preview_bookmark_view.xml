@@ -9,22 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        style="@style/MBMaterialCardviewStyleYellow"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        style="@style/MBMaterialCardviewStyleBrown"
         android:layout_marginTop="@dimen/margin_8">
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/margin_16">
-        <include layout="@layout/header_bookmark_view"/>
-        <WebView
-                android:id="@+id/mbBookmarkPreviewHeaderPreviewWebViewId"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/mbBookmarkPreviewHeaderLayoutId"
-                tools:context=".modules.bookmarkWebView.BookmarkUrlWebViewFragment"/>
-
-    </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_16">
+                <com.application.dev.david.materialbookmarkkot.ui.BookmarkDetailsHeaderView
+                        android:id="@+id/mbBookmarkPreviewHeaderViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <com.google.android.material.button.MaterialButton
+                        android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/MBMaterialButtonStyleBrown"
+                        android:text="@string/delete_label_text"/>
+<!--                <include-->
+<!--                        android:id="@+id/blaId"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        layout="@layout/action_bookmark_view"-->
+<!--                        android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"-->
+<!--                        />-->
+        </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
