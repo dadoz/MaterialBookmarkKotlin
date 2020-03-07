@@ -101,7 +101,11 @@ class AddBookmarkFragment : Fragment() {
             mbNewBookmarkUrlCardviewId.visibility = GONE
             mbNewBookmarkUrlEditLayoutId.visibility = VISIBLE
             mbBookmarkUpdateSearchNewButtonId.visibility = VISIBLE
+            mbBookmarkUpdateSearchNewLayoutId.visibility = VISIBLE
             mbBookmarkSaveNewButtonId.visibility = GONE
+
+            //update color
+            setSearchNewBookmarkLabelColor()
         }
 
         // loader cbs
@@ -159,8 +163,11 @@ class AddBookmarkFragment : Fragment() {
 
         mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
             mbBookmarkUpdateSearchNewButtonId.visibility = GONE
+            mbBookmarkUpdateSearchNewLayoutId.visibility = GONE
             mbBookmarkSaveNewButtonId.visibility = VISIBLE
             searchBookmarkAction()
+            //update color
+            setSearchNewBookmarkLabelColor()
         }
 
         (mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener(object : TextWatcher {
@@ -169,7 +176,8 @@ class AddBookmarkFragment : Fragment() {
             override fun onTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
             }
             override fun afterTextChanged(text: Editable?) {
-                mbsearchBookmarkButtonViewId.visibility = if (text.isNullOrBlank()) GONE else VISIBLE
+                if (mbBookmarkUpdateSearchNewButtonId.visibility == GONE)
+                    mbsearchBookmarkButtonViewId.visibility = if (text.isNullOrBlank()) GONE else VISIBLE
             }
         })
     }
@@ -187,10 +195,21 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkUrlCardviewId.visibility = VISIBLE
         mbNewBookmarkUrlEditLayoutId.visibility = GONE
         mbsearchBookmarkButtonViewId.visibility = GONE
+        mbBookmarkSaveNewButtonId.visibility = VISIBLE
+        mbBookmarkUpdateSearchNewLayoutId.visibility = VISIBLE
 
         //set placeholder
         mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
+        //update color
+        setSearchNewBookmarkLabelColor()
     }
+
+    private fun setSearchNewBookmarkLabelColor() =
+        context?.let {
+            mbBookmarkUpdateSearchNewLabelTextId.setTextColor(ContextCompat.getColor(it,
+                if (mbBookmarkUpdateSearchNewButtonId.visibility == VISIBLE) R.color.colorAccent else R.color.colorPrimary))
+        }
+
 
     /**
      * get placeholder

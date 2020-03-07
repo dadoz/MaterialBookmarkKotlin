@@ -40,27 +40,14 @@
                 android:textSize="28sp"
                 />
     </com.google.android.material.textfield.TextInputLayout>
-    <RelativeLayout
+    <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mbBookmarkSaveNewLayoutId"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorAccentLight"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkSaveNewButtonId"
-                android:textColor="@color/colorAccentLight"
-                style="@style/MBMaterialButtonStyleYellow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SAVE"/>
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
-                android:visibility="gone"
-                style="@style/MBMaterialButtonStyleBrown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UPDATE"/>
-
-    </RelativeLayout>
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_bookmark_book"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
