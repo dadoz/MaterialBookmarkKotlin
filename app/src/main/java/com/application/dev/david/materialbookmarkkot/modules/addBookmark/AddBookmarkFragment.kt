@@ -102,8 +102,8 @@ class AddBookmarkFragment : Fragment() {
             mbNewBookmarkUrlEditLayoutId.visibility = VISIBLE
             mbBookmarkUpdateSearchNewButtonId.visibility = VISIBLE
             mbBookmarkUpdateSearchNewLayoutId.visibility = VISIBLE
+            mbBookmarkUpdateSearchNewSeparatortId.visibility = VISIBLE
             mbBookmarkSaveNewButtonId.visibility = GONE
-
             //update color
             setSearchNewBookmarkLabelColor()
         }
@@ -164,6 +164,7 @@ class AddBookmarkFragment : Fragment() {
         mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
             mbBookmarkUpdateSearchNewButtonId.visibility = GONE
             mbBookmarkUpdateSearchNewLayoutId.visibility = GONE
+            mbBookmarkUpdateSearchNewSeparatortId.visibility = GONE
             mbBookmarkSaveNewButtonId.visibility = VISIBLE
             searchBookmarkAction()
             //update color
@@ -197,6 +198,7 @@ class AddBookmarkFragment : Fragment() {
         mbsearchBookmarkButtonViewId.visibility = GONE
         mbBookmarkSaveNewButtonId.visibility = VISIBLE
         mbBookmarkUpdateSearchNewLayoutId.visibility = VISIBLE
+        mbBookmarkUpdateSearchNewSeparatortId.visibility = VISIBLE
 
         //set placeholder
         mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())

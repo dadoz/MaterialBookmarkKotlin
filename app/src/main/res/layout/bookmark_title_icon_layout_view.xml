@@ -45,9 +45,9 @@
             android:textColor="@color/colorAccentLight"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_bookmark_book"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_pen_writing"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
