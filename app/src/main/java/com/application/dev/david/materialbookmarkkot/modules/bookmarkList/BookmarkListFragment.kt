@@ -91,11 +91,11 @@ class BookmarkListFragment : Fragment()  {
         })
 
         mbBookmarkEmptyAddNewButtonId.setOnClickListener {
-            findNavController().navigate(R.id.addBookmarkFragment)
+            findNavController().navigate(R.id.searchBookmarkFragment)
         }
 
         mbBookmarkAddNewButtonId.setOnClickListener {
-            findNavController().navigate(R.id.addBookmarkFragment)
+            findNavController().navigate(R.id.searchBookmarkFragment)
         }
 
         mbBookmarkHeaderListFilterIconId.setOnClickListener {

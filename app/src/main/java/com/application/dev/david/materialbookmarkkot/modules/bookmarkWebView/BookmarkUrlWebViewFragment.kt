@@ -29,7 +29,7 @@ import android.webkit.WebView
  */
 class BookmarkUrlWebViewFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-    val args: BookmarkUrlWebViewFragmentArgs by navArgs()
+//    val args: BookmarkUrlWebViewFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +57,8 @@ class BookmarkUrlWebViewFragment : Fragment() {
             }
         }
         mbBookmarkUrlWebViewId.settings.javaScriptEnabled = true
-        val url = "https://${args.BookmarkUrl}"
-        mbBookmarkUrlWebViewId.loadUrl(url)
+//        val url = "https://${args.BookmarkUrl}"
+//        mbBookmarkUrlWebViewId.loadUrl(url)
     }
 
 

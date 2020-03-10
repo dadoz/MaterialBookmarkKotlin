@@ -62,8 +62,18 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_26</item>
     </style>
+    <style name="MBMaterialTextSmallSubtitleStyleYellow" parent="Widget.AppCompat.TextView" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_18</item>
+    </style>
     <style name="MBMaterialTextSubtitleStyleBrown" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_26</item>
+    </style>
+    <style name="MBMaterialTextSmallSubtitleStyleBrown" parent="Widget.AppCompat.TextView" >
+        <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_22</item>
     </style>
