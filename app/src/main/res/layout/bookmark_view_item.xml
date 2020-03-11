@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/MBMaterialTitleStyle"
-                tools:text="No Title" />
+                tools:text="Android developer" />
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -31,39 +31,35 @@
                 android:layout_marginLeft="@dimen/margin_16"
                 android:layout_marginRight="@dimen/margin_16"
                 android:orientation="horizontal">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/bookmarkIconImageViewId"
                     android:layout_gravity="center"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_world_refresh"
-                    />
+                    android:layout_width="@dimen/bookmark_icon_card_size"
+                    android:layout_height="@dimen/bookmark_icon_card_size"
+                    tools:src="@drawable/ic_bookmark"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bookmarkUrlTextViewId"
-                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:minLines="2"
                     android:layout_marginStart="@dimen/margin_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/yantramanav_thin"
-                    android:textColor="@color/colorAccentLight2"
-                    android:textSize="16sp"
+                    style="@style/MBMaterialTextDescrSmallBrown"
                     android:ellipsize="end"
-                    tools:text="www.instagram.com"
+                    tools:text="www.android.com"
                     />
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookmarkTimestampTextViewId"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_8"
                 android:layout_gravity="end"
-                android:id="@+id/bookmarkTimestampTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:fontFamily="@font/yantramanav_thin"
-                android:textSize="14sp"
+                style="@style/MBMaterialTextDescrSmallBoldBrown"
                 android:lines="1"
-                tools:text="06 Nov"
+                tools:text="06 Nov 10am"
                 />
 
     </LinearLayout>

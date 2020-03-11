@@ -79,6 +79,10 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="MBMaterialTextDescrSmallBoldBrown" parent="MBMaterialTextDescrSmallBrown" >
+        <item name="android:fontFamily">@font/yantramanav_light</item>
+    </style>
+
     <style name="MBMaterialTextSubtitleBrown" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
