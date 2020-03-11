@@ -2,8 +2,6 @@
 <resources>
     <color name="colorAccent">#4E4135</color>
     <color name="colorAccentLight">#F6F6F6</color>
-    <color name="colorAccentLight2">#9B9086</color>
-    <color name="colorAccentLight3">#F5F3EE</color>
     <color name="colorPrimary">#FFA600</color>
     <color name="colorPrimaryDark">#FF8400</color>
     <color name="colorPrimaryLight">#FDFCFB</color>
@@ -11,4 +9,5 @@
     <color name="colorErrorSecondary">#A13532</color>
     <color name="colorSuccess">#3ED48F</color>
     <color name="colorSuccessSecondary">#F9F9F9</color>
+    <color name="colorBackgroundCardLight">#F5F3EE</color>
 </resources>

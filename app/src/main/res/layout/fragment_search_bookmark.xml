@@ -45,13 +45,13 @@
                         android:text="Search \nBookmark"
                         android:layout_marginRight="@dimen/margin_16"
                         android:layout_marginTop="@dimen/margin_16"
-                        style="@style/MBMaterialDarkTitleStyle"/>
+                        style="@style/MBMaterialTextHeaderBrown"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_below="@+id/mbTitleSearchBookmarkTextViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="just type a bookmark "
-                        style="@style/MBMaterialDarkSubtitleStyle"
+                        style="@style/MBMaterialTextDescrSmallBrown"
                         android:layout_marginRight="@dimen/margin_16"
                         android:layout_marginBottom="@dimen/margin_16"/>
             </RelativeLayout>
