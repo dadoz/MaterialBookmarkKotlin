@@ -16,16 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
-import kotlinx.android.synthetic.main.fragment_add_bookmark.*
-import kotlinx.android.synthetic.main.fragment_add_bookmark.mbNewBookmarkUrlEditTextId
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
 import kotlinx.android.synthetic.main.fragment_search_bookmark.*
 
@@ -120,20 +114,12 @@ class SearchBookmarkFragment : Fragment() {
         })
 
         mbsearchBookmarkButtonViewId.setOnClickListener {
-            searchBookmarkAction()
+            val action = SearchBookmarkFragmentDirections
+                .actionSearchBookmarkFragmentToAddBookmarkFragment(mbNewBookmarkUrlEditTextId.text.toString())
+            navigation?.navigate(action)
         }
 
    }
-
-    private fun searchBookmarkAction() {
-        val url = (mbNewBookmarkUrlEditTextId as AppCompatEditText).text.toString()
-//        mbNewBookmarkUrlTextId.text = url
-        searchBookmarkViewModel.updateWebviewByUrl(url)
-        searchBookmarkViewModel.findBookmarkInfoByUrl(url)
-
-        //set placeholder
-//        mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
-    }
 
     /**
      * get placeholder

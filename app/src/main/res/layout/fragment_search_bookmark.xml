@@ -69,14 +69,15 @@
                         android:layout_toStartOf="@id/mbNewBookmarkUrlClipboardLayoutId"
                         android:fontFamily="@font/yantramanav_thin"
                         android:hint="Search your bookmark">
+
                     <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/mbNewBookmarkUrlEditTextId"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/text_22"
+                            android:fontFamily="@font/yantramanav_thin"
                             android:maxLines="5"
-                            android:fontFamily="@font/yantramanav_thin"/>
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/text_22" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView

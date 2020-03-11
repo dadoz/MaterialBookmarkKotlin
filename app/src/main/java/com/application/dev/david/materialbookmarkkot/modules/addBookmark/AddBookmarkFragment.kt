@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
@@ -31,8 +32,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.add_bookmark_error_view.*
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditLayoutId
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditTextId
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlTextInputLayoutId
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
+import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
+import kotlinx.android.synthetic.main.fragment_search_bookmark.*
 
 
 /**
@@ -50,6 +57,7 @@ class AddBookmarkFragment : Fragment() {
     private val navigation: NavController? by lazy {
         view?.let { Navigation.findNavController(it) }
     }
+    private val args: AddBookmarkFragmentArgs by navArgs()
 
     private val addBookmarkViewModel: AddBookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
@@ -76,6 +84,7 @@ class AddBookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initActionBar()
         initView()
+        searchBookmarkAction(args.bookmarkUrl)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -94,16 +103,20 @@ class AddBookmarkFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+
     /**
      *
      */
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
+        mbNewBookmarkUrlEditTextId.setText(args.bookmarkUrl)
+
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbNewBookmarkUrlCardviewId.visibility = GONE
             mbNewBookmarkUrlEditLayoutId.visibility = VISIBLE
             mbBookmarkUpdateSearchNewButtonId.visibility = VISIBLE
-            mbBookmarkUpdateSearchNewLayoutId.visibility = VISIBLE
+            mbBookmarkUpdateNewLayoutId.visibility = VISIBLE
+            mbBookmarkSaveNewLayoutId.visibility = GONE
             mbBookmarkSaveNewButtonId.visibility = GONE
         }
 
@@ -159,8 +172,13 @@ class AddBookmarkFragment : Fragment() {
 
         mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
             mbBookmarkUpdateSearchNewButtonId.visibility = GONE
-            mbBookmarkUpdateSearchNewLayoutId.visibility = GONE
+            mbBookmarkUpdateNewLayoutId.visibility = GONE
+            mbBookmarkSaveNewLayoutId.visibility = VISIBLE
             mbBookmarkSaveNewButtonId.visibility = VISIBLE
+            mbNewBookmarkUrlCardviewId.visibility = VISIBLE
+            mbNewBookmarkUrlEditLayoutId.visibility = GONE
+            //update
+            searchBookmarkAction(mbNewBookmarkUrlEditTextId.text.toString())
         }
 
         (mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener(object : TextWatcher {
@@ -185,25 +203,29 @@ class AddBookmarkFragment : Fragment() {
         }
     }
 
+    private fun searchBookmarkAction(url: String) {
+        mbNewBookmarkUrlTextId.text = url
+        addBookmarkViewModel.updateWebviewByUrl(url)
+        addBookmarkViewModel.findBookmarkInfoByUrl(url)
+
+        //set placeholder
+        mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
+    }
+
     /**
      *
      */
     private fun onSaveWithSuccess() {
-        navigation?.popBackStack()
+        val action = AddBookmarkFragmentDirections.actionAddBookmarkFragmentToBookmarkListFragment()
+        navigation?.navigate(action)
     }
 
     /**
      *
      */
     private fun onSaveWithError() {
-        mbBookmarkSaveNewErrorMessageId.text = "Oh Snap! We got an error:"
-        mbNewBookmarkUrlTextInputLayoutId.error = mbBookmarkSaveNewErrorMessageId.text
+        mbNewBookmarkUrlTextInputLayoutId.error = "Oh Snap! We got an error:"
         mbNewBookmarkUrlCardviewId.callOnClick()//trigger click
-
-        saveNewErrorCardviewBottomSheetBehavior.state = STATE_EXPANDED
-        Handler().postDelayed({
-            saveNewErrorCardviewBottomSheetBehavior.state = STATE_COLLAPSED
-        }, 2000)
     }
 
     // TODO: Rename method, update argument and hook method into UI event

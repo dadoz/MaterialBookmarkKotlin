@@ -21,44 +21,6 @@ class SearchBookmarkViewModel(application: Application) : AndroidViewModel(appli
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     val loaderLiveStatus:  MutableLiveData<Boolean> = MutableLiveData()
-    /**
-     *
-     */
-    fun updateWebviewByUrl(url: String) {
-        bookmarkSearchedUrlLiveData.value = "https://$url"
-    }
-
-    /**
-     * add bookamrk on db
-     *
-     */
-    fun findBookmarkInfoByUrl(url: String) {
-        val disposable = Observable.just(url)
-            .map{ url -> "https://$url" }
-            .filter{ url -> Patterns.WEB_URL.matcher(url).matches() }
-            .doOnNext{ url -> Log.e(javaClass.name, "----->" + url)}
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.newThread())
-            .filter{ tempUrl -> tempUrl.isNotEmpty() }
-            .observeOn(Schedulers.newThread())
-            .flatMap(bookmarkListaDataRepository::findBookmarkInfo)
-            .doOnNext { bookmarksInfo ->
-                if (!bookmarksInfo.meta.image.contains("https")) {
-                    bookmarksInfo.meta.image = "https://$url/" + bookmarksInfo.meta.image
-                }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(attachLoaderOnView())
-            .subscribe(
-                { data ->
-                    print("INSERT SUCCESS")
-                    bookmarkInfoLiveData.value = data
-                },
-                { error ->
-                    Log.e(javaClass.name, error.message)
-                })
-        compositeDisposable.add(disposable)
-    }
 
     override fun onCleared() {
         super.onCleared()

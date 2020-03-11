@@ -50,6 +50,57 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
         compositeDisposable.add(disposable)
     }
 
+    /**
+     *
+     */
+    fun updateWebviewByUrl(url: String) {
+        bookmarkSearchedUrlLiveData.value = "https://$url"
+    }
+
+    /**
+     * add bookamrk on db
+     *
+     */
+    fun findBookmarkInfoByUrl(url: String) {
+        val disposable = Observable.just(url)
+            .map{ url -> "https://$url" }
+            .filter{ url -> Patterns.WEB_URL.matcher(url).matches() }
+            .doOnNext{ url -> Log.e(javaClass.name, "----->" + url)}
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.newThread())
+            .filter{ tempUrl -> tempUrl.isNotEmpty() }
+            .observeOn(Schedulers.newThread())
+            .flatMap(bookmarkListaDataRepository::findBookmarkInfo)
+            .doOnNext { bookmarksInfo ->
+                if (!bookmarksInfo.meta.image.contains("https")) {
+                    bookmarksInfo.meta.image = "https://$url/" + bookmarksInfo.meta.image
+                }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(attachLoaderOnView())
+            .subscribe(
+                { data ->
+                    print("INSERT SUCCESS")
+                    bookmarkInfoLiveData.value = data
+                },
+                { error ->
+                    Log.e(javaClass.name, error.message)
+                })
+        compositeDisposable.add(disposable)
+    }
+
+    /**
+     * please move it and generalize it
+     */
+    private fun <T> attachLoaderOnView():  ObservableTransformer< T, T> {
+        return ObservableTransformer {
+                observable -> observable
+            .doOnSubscribe { loaderLiveStatus.value = true }
+            .doOnNext { loaderLiveStatus.value = false}
+            .doOnError { loaderLiveStatus.value = false}
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
