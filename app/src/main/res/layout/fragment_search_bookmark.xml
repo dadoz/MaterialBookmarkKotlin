@@ -29,7 +29,8 @@
                 android:layout_below="@+id/mbAddBookmarkAppBarLayoutId"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginStart="@dimen/margin_16"
                 android:orientation="vertical"
                 tools:context=".modules.addBookmark.AddBookmarkFragment">
 
@@ -44,7 +45,6 @@
                         android:layout_height="wrap_content"
                         android:text="Search \nBookmark"
                         android:layout_marginRight="@dimen/margin_16"
-                        android:layout_marginTop="@dimen/margin_16"
                         style="@style/MBMaterialTextHeaderBrown"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_below="@+id/mbTitleSearchBookmarkTextViewId"
@@ -66,7 +66,6 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@id/mbNewBookmarkUrlClipboardLayoutId"
                         android:fontFamily="@font/yantramanav_thin"
                         android:hint="Search your bookmark">
 
@@ -79,29 +78,34 @@
                             android:textColor="@color/colorAccent"
                             android:textSize="@dimen/text_22" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:tint="@color/colorAccent"
-                        android:layout_marginStart="@dimen/margin_16"
-                        android:src="@drawable/ic_clipboard_paste"
-                        android:visibility="visible"
-                        tools:visibility="visible"/>
             </RelativeLayout>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    app:tint="@color/colorAccent"
+                    android:src="@drawable/ic_clipboard_paste"
+                    tools:visibility="visible"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_toEndOf="@+id/mbNewBookmarkUrlClipboardLayoutId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/MBMaterialTextDescrSmallBrown"
+                    android:text="PASTE \n CLIPBOARD"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbsearchBookmarkButtonViewId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccentLight"
-                    android:layout_marginTop="@dimen/margin_8"                    style="@style/MBMaterialButtonStyleYellow"
-                    android:visibility="visible"
+                    style="@style/MBMaterialButtonStyleOutlineYellow"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     tools:visibility="visible"
                     android:text="SEARCH"/>
-
+            </RelativeLayout>
             <!-- search box -->
             <RelativeLayout
                     android:layout_width="match_parent"
