@@ -114,7 +114,6 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbNewBookmarkUrlCardviewId.visibility = GONE
             mbNewBookmarkUrlEditLayoutId.visibility = VISIBLE
-            mbBookmarkUpdateSearchNewButtonId.visibility = VISIBLE
             mbBookmarkUpdateNewLayoutId.visibility = VISIBLE
             mbBookmarkSaveNewLayoutId.visibility = GONE
             mbBookmarkSaveNewButtonId.visibility = GONE
@@ -134,8 +133,8 @@ class AddBookmarkFragment : Fragment() {
             }
         })
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
+            mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
-            Log.e(javaClass.name, "blalllala " + searchedUrl)
         })
 
         //set placeholder
@@ -170,8 +169,7 @@ class AddBookmarkFragment : Fragment() {
         }
 
 
-        mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
-            mbBookmarkUpdateSearchNewButtonId.visibility = GONE
+        mbBookmarkUpdateNewButtonId.setOnClickListener {
             mbBookmarkUpdateNewLayoutId.visibility = GONE
             mbBookmarkSaveNewLayoutId.visibility = VISIBLE
             mbBookmarkSaveNewButtonId.visibility = VISIBLE

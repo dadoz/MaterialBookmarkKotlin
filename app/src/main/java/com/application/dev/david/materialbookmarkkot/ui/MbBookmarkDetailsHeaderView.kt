@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 
-class BookmarkDetailsHeaderView : RelativeLayout {
+class MbBookmarkDetailsHeaderView : RelativeLayout {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {

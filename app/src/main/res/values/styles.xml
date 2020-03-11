@@ -57,25 +57,41 @@
         <item name="android:textColor">@color/colorAccentLight2</item>
         <item name="android:textSize">18sp</item>
     </style>
-    <style name="MBMaterialTextSubtitleStyleYellow" parent="Widget.AppCompat.TextView" >
+    
+    
+    
+    <style name="MBMaterialTextTitleYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_26</item>
     </style>
-    <style name="MBMaterialTextSmallSubtitleStyleYellow" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextTitleBrow" parent="MBMaterialTextTitleYellow" >
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="MBMaterialTextDescrSmallYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_18</item>
     </style>
-    <style name="MBMaterialTextSubtitleStyleBrown" parent="Widget.AppCompat.TextView" >
-        <item name="android:fontFamily">@font/yantramanav_thin</item>
+
+    <style name="MBMaterialTextDescrSmallBrown" parent="MBMaterialTextDescrSmallYellow" >
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/text_26</item>
     </style>
-    <style name="MBMaterialTextSmallSubtitleStyleBrown" parent="Widget.AppCompat.TextView" >
+
+    <style name="MBMaterialTextSubtitleBrown" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_22</item>
+    </style>
+    <style name="MBMaterialTextSubtitleYellow" parent="MBMaterialTextSubtitleBrown" >
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+    <style name="MBMaterialTextSubtitleThinYellow" parent="MBMaterialTextSubtitleYellow" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+    </style>
+    <style name="MBMaterialTextSubtitleThinBrown" parent="MBMaterialTextSubtitleBrown" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
 
     <style name="MBMaterialButtonStyleBrown" parent="TextAppearance.MaterialComponents.Button" >
@@ -94,4 +110,5 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
+    <dimen name="text_24">24sp</dimen>
 </resources>
