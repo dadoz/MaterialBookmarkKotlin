@@ -80,6 +80,10 @@
         <item name="android:fontFamily">@font/yantramanav_light</item>
     </style>
 
+    <style name="MBMaterialTextDescrUltraSmallBoldBrown" parent="MBMaterialTextDescrSmallBoldBrown" >
+        <item name="android:textSize">@dimen/text_14</item>
+    </style>
+
     <style name="MBMaterialTextSubtitleBrown" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
@@ -120,5 +124,8 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
-    <dimen name="text_24">24sp</dimen>
+
+    <style name="MBMaterialTextInputOutlinedYellow" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    </style>
+
 </resources>

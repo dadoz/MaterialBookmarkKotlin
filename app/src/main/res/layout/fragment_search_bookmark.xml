@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/MBMaterialTextInputOutlinedYellow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/yantramanav_thin"
@@ -83,28 +83,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_8">
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    app:tint="@color/colorAccent"
-                    android:src="@drawable/ic_clipboard_paste"
-                    tools:visibility="visible"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_toEndOf="@+id/mbNewBookmarkUrlClipboardLayoutId"
+                <RelativeLayout
+                        android:id="@+id/mbBookmarkSearchPasteClipboardButtonId"
+                        android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:tint="@color/colorAccent"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_clipboard_paste"
+                            tools:visibility="visible"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_toEndOf="@+id/mbNewBookmarkUrlClipboardLayoutId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_8"
+                            style="@style/MBMaterialTextDescrUltraSmallBoldBrown"
+                            android:layout_centerVertical="true"
+                            android:text="PASTE \nCLIPBOARD"/>
+                </RelativeLayout>
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mbsearchBookmarkButtonViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialTextDescrSmallBrown"
-                    android:text="PASTE \n CLIPBOARD"/>
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mbsearchBookmarkButtonViewId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/MBMaterialButtonStyleOutlineYellow"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    tools:visibility="visible"
-                    android:text="SEARCH"/>
+                        style="@style/MBMaterialButtonStyleOutlineYellow"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        tools:visibility="visible"
+                        android:text="SEARCH"/>
             </RelativeLayout>
             <!-- search box -->
             <RelativeLayout

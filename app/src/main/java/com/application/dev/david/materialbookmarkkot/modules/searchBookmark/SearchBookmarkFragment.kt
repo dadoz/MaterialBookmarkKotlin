@@ -82,35 +82,11 @@ class SearchBookmarkFragment : Fragment() {
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
 
-        // loader cbs
-        searchBookmarkViewModel.loaderLiveStatus.observe(this, Observer { isVisible ->
-            when (isVisible) {
-                true -> {
-//                    mbNewBookmarkTitleLoaderId.visibility = View.VISIBLE
-//                    mbNewBookmarkTitleTextInputId.visibility = View.INVISIBLE
-                }
-                false -> {
-//                    mbNewBookmarkTitleLoaderId.visibility = View.GONE
-//                    mbNewBookmarkTitleTextInputId.visibility = View.VISIBLE
-                }
-            }
-        })
-        searchBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
-//            mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
-            Log.e(javaClass.name, "blalllala " + searchedUrl)
-        })
+        mbBookmarkSearchPasteClipboardButtonId.setOnClickListener {
 
+        }
         searchBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             navigation?.navigate(R.id.addBookmarkFragment)
-//            mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.meta.title)
-
-            //setting tag on view
-//            mbNewBookmarkTitleEditTextId.tag = bookmarkInfo.meta.image
-
-//            Glide.with(mbNewBookmarkIconImageViewId.context)
-//                .load(bookmarkInfo.meta.image)
-//                .apply(RequestOptions.circleCropTransform())
-//                .into(mbNewBookmarkIconImageViewId)
         })
 
         mbsearchBookmarkButtonViewId.setOnClickListener {
