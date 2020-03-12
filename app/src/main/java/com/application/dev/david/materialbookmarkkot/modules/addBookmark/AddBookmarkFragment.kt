@@ -23,6 +23,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
+import com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView
+import com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView.MbPreviewStatus.SEARCH
+import com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView.MbPreviewStatus.UPDATE
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
@@ -111,11 +114,7 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkUrlEditTextId.setText(args.bookmarkUrl)
 
         mbNewBookmarkUrlCardviewId.setOnClickListener {
-            mbNewBookmarkUrlCardviewId.visibility = GONE
-            mbNewBookmarkUrlEditLayoutId.visibility = VISIBLE
-            mbBookmarkUpdateNewLayoutId.visibility = VISIBLE
-            mbBookmarkSaveNewLayoutId.visibility = GONE
-            mbBookmarkSaveNewButtonId.visibility = GONE
+            mbAddBookmarkPreviewId.setStatusVisibility(UPDATE)
         }
 
         // loader cbs
@@ -140,10 +139,7 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
-            mbNewBookmarkTitleEditTextId.setText(bookmarkInfo.meta.title)
-
-            //setting tag on view
-            mbNewBookmarkTitleEditTextId.tag = bookmarkInfo.meta.image
+            mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
 
             Glide.with(mbNewBookmarkIconImageViewId.context)
                 .load(bookmarkInfo.meta.image)
@@ -169,12 +165,7 @@ class AddBookmarkFragment : Fragment() {
 
 
         mbBookmarkUpdateNewButtonId.setOnClickListener {
-            mbBookmarkUpdateNewLayoutId.visibility = GONE
-            mbBookmarkSaveNewLayoutId.visibility = VISIBLE
-            mbBookmarkSaveNewButtonId.visibility = VISIBLE
-            mbNewBookmarkUrlCardviewId.visibility = VISIBLE
-            mbNewBookmarkUrlEditLayoutId.visibility = GONE
-            //update
+            mbAddBookmarkPreviewId.setStatusVisibility(SEARCH)
             searchBookmarkAction(mbNewBookmarkUrlEditTextId.text.toString())
         }
 
