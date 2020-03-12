@@ -103,7 +103,6 @@ class AddBookmarkFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-
     /**
      *
      */
@@ -185,6 +184,7 @@ class AddBookmarkFragment : Fragment() {
             override fun onTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
             }
             override fun afterTextChanged(text: Editable?) {
+                mbNewBookmarkUrlTextInputLayoutId.error = null
             }
         })
     }
