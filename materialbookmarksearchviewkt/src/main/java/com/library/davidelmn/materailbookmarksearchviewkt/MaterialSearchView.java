@@ -1594,10 +1594,10 @@ public class MaterialSearchView extends LinearLayout implements
                     cancelSuggestions();
                     emptySearchView();
                     setKeyboardActionListener();
-                    showRecentSearches();
+//                    showRecentSearches();
                     showMic();
                     hideClear();
-                    requestSearchViewFocus();
+//                    requestSearchViewFocus();
                     break;
                 case STATE_FOCUSED_TEXT_PRESENT:
                     stopVoiceRecognitionIfNecessary();
