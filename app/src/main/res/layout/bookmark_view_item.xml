@@ -39,9 +39,9 @@
                     tools:src="@drawable/ic_bookmark"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bookmarkUrlTextViewId"
-                    android:gravity="center_vertical"
-                    android:minLines="2"
-                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_gravity="center_vertical"
+                    android:maxLines="1"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/MBMaterialTextDescrSmallBrown"
