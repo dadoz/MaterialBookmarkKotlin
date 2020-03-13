@@ -1,6 +1,9 @@
 package com.application.dev.david.materialbookmarkkot.modules.searchBookmark
 
 import android.annotation.SuppressLint
+import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
+import android.content.ClipDescription.MIMETYPE_TEXT_URILIST
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -10,6 +13,7 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,7 +38,9 @@ import kotlinx.android.synthetic.main.fragment_search_bookmark.*
  */
 class SearchBookmarkFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-
+    val clipboard by lazy {
+        activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
     private val searchBookmarkViewModel: SearchBookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(SearchBookmarkViewModel::class.java)
     }
@@ -83,7 +89,19 @@ class SearchBookmarkFragment : Fragment() {
     private fun initView() {
 
         mbBookmarkSearchPasteClipboardButtonId.setOnClickListener {
-
+            when {
+                !clipboard.hasPrimaryClip() || clipboard.primaryClipDescription == null -> print("no obj")
+                else -> {
+                    clipboard.primaryClipDescription?.let {
+                        val res: String = when  {
+                            it.hasMimeType(MIMETYPE_TEXT_PLAIN) -> clipboard.primaryClip?.getItemAt(0)?.text.toString()
+                            it.hasMimeType(MIMETYPE_TEXT_URILIST) -> clipboard.primaryClip?.getItemAt(0)?.uri.toString()
+                            else -> ""
+                        }
+                        mbNewBookmarkUrlEditTextId.setText(res)
+                    }
+                }
+            }
         }
         searchBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             navigation?.navigate(R.id.addBookmarkFragment)
@@ -95,7 +113,7 @@ class SearchBookmarkFragment : Fragment() {
             navigation?.navigate(action)
         }
 
-   }
+    }
 
     /**
      * get placeholder
@@ -127,6 +145,4 @@ class SearchBookmarkFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
-
 }
