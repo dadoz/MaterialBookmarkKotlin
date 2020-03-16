@@ -53,8 +53,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:tint="@color/colorAccent"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
                     android:src="@drawable/ic_bookmark_list_filter"/>
             <androidx.appcompat.widget.AppCompatImageView
                     android:visibility="gone"
@@ -64,8 +64,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:tint="@color/colorAccent"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
                     android:src="@drawable/ic_bookmark_tab_filter"/>
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbBookmarkHeaderStarFilterIconId"
@@ -74,8 +74,8 @@
                     app:tint="@color/colorAccent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderListFilterIconId"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
                     android:layout_marginStart="@dimen/margin_8"
                     android:src="@drawable/ic_star_filter"/>
 
@@ -86,8 +86,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/colorAccent"
                     app:layout_constraintStart_toEndOf="@+id/mbBookmarkHeaderStarFilterIconId"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
                     android:layout_marginStart="@dimen/margin_8"
                     android:src="@drawable/ic_bookmark_sort"/>
             <androidx.appcompat.widget.AppCompatTextView

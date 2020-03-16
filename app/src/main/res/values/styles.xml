@@ -68,6 +68,9 @@
     <style name="MBMaterialTextHeaderThinBrown" parent="MBMaterialTextHeaderBrown" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
+    <style name="MBMaterialTextHeaderThinYellow" parent="MBMaterialTextHeaderThinBrown" >
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 
     <style name="MBMaterialTextDescrSmallYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
