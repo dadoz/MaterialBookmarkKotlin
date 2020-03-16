@@ -3,25 +3,25 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentEnd="true"
         android:orientation="horizontal">
-
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mbOpenPreviewBookmarkActionId"
             android:layout_marginEnd="@dimen/margin_8"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:tint="@color/colorPrimary"
-            android:src="@drawable/ic_share_bookmark"/>
-    <ImageView
+            android:tint="@color/colorAccent"
+            android:src="@drawable/ic_bookmark"/>
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mbEditBookmarkActionId"
             android:layout_marginEnd="@dimen/margin_8"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:tint="@color/colorPrimary"
+            android:tint="@color/colorAccent"
             android:src="@drawable/ic_edit_pencil"/>
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mbShareBookmarkActionId"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:tint="@color/colorPrimary"
-            android:src="@drawable/ic_delete_bin"/>
+            android:tint="@color/colorAccent"
+            android:src="@drawable/ic_share_bookmark"/>
 </LinearLayout>

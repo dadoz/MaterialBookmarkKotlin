@@ -29,7 +29,7 @@
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
     <style name="MBMaterialCardviewStyleBrown" parent="MBMaterialCardviewStyle" >
-        <item name="cardBackgroundColor">@color/colorBackgroundCardLight</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
         <item name="strokeColor">@color/colorAccent</item>
     </style>
 
@@ -65,6 +65,9 @@
     <style name="MBMaterialTextHeaderBrown" parent="MBMaterialTextHeaderYellow" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
+    <style name="MBMaterialTextHeaderThinBrown" parent="MBMaterialTextHeaderBrown" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+    </style>
 
     <style name="MBMaterialTextDescrSmallYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
@@ -81,6 +84,9 @@
     </style>
 
     <style name="MBMaterialTextDescrUltraSmallBoldBrown" parent="MBMaterialTextDescrSmallBoldBrown" >
+        <item name="android:textSize">@dimen/text_14</item>
+    </style>
+    <style name="MBMaterialTextDescrUltraSmallBrown" parent="MBMaterialTextDescrSmallBrown" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
 
@@ -106,6 +112,11 @@
         <item name="strokeColor">@color/colorAccent</item>
         <item name="strokeWidth">1dp</item>
         <item name="fontFamily">@font/yantramanav_light</item>
+    </style>
+    <style name="MBMaterialButtonStyleRed" parent="MBMaterialButtonStyleBrown" >
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="android:textColor">@color/colorError</item>
+        <item name="strokeColor">@color/colorErrorSecondary</item>
     </style>
 
     <style name="MBMaterialButtonStyleYellow" parent="TextAppearance.MaterialComponents.Button" >

@@ -5,10 +5,8 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import android.view.View.*
 import androidx.fragment.app.Fragment
@@ -23,9 +21,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
-import com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView
-import com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView.MbPreviewStatus.SEARCH
-import com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView.MbPreviewStatus.UPDATE
+import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
+import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
@@ -36,13 +33,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.add_bookmark_error_view.*
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
-import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditLayoutId
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditTextId
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlTextInputLayoutId
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
-import kotlinx.android.synthetic.main.fragment_search_bookmark.*
 
 
 /**

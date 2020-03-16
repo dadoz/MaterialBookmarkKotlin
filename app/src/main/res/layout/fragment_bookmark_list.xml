@@ -126,6 +126,13 @@
 
     </RelativeLayout>
     <include layout="@layout/empty_view" tools:visibility="gone"/>
-    <include layout="@layout/preview_bookmark_view"/>
+    <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView
+            android:id="@+id/mbBookmarkPreviewCardviewId"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            tools:behavior_peekHeight="300dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

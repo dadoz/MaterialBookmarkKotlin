@@ -1,5 +1,6 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -12,6 +13,7 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
@@ -19,7 +21,6 @@ import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewMode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import kotlinx.android.synthetic.main.empty_view.*
-import kotlinx.android.synthetic.main.preview_bookmark_view.*
 
 
 class BookmarkListFragment : Fragment()  {
@@ -63,6 +64,7 @@ class BookmarkListFragment : Fragment()  {
     /**
      *
      */
+    @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
         val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
@@ -72,6 +74,11 @@ class BookmarkListFragment : Fragment()  {
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
+                    mbBookmarkPreviewCardviewId.initData(bookmark)
+                    mbBookmarkPreviewCardviewId.actionEditBookmark { findNavController().navigate(R.id.addBookmarkFragment) }
+                    mbBookmarkPreviewCardviewId.actionShareBookmark { intent -> startActivity(intent)}
+                    mbBookmarkPreviewCardviewId.actionOpenPreviewBookmark { intent -> startActivity(intent)}
+
                     BottomSheetBehavior.from(mbBookmarkPreviewCardviewId).state = STATE_EXPANDED
                 }
             })
@@ -116,7 +123,6 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }
-
     }
 
     override fun onAttach(context: Context) {

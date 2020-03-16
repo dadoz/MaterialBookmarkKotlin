@@ -5,15 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         tools:visibility="visible"
-        android:id="@+id/mbBookmarkPreviewCardviewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        style="@style/MBMaterialCardviewStyleBrown"
-        android:layout_marginTop="@dimen/margin_8">
+        app:strokeColor="@color/colorAccent"
+        style="@style/MBMaterialCardviewStyleBrown">
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -22,18 +17,34 @@
                         android:id="@+id/mbBookmarkPreviewHeaderViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                <com.google.android.material.button.MaterialButton
+                <RelativeLayout
+                        android:id="@+id/mbBookmarkPreviewActionLayoutId"
+                        android:layout_marginTop="@dimen/margin_16"
                         android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/mbBookmarkPreviewActionsButtonId"
+                                style="@style/MBMaterialTextDescrUltraSmallBrown"
+                                android:text="Edit or share your bookmark with all your contacts"/>
+                        <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkActionView
+                                android:id="@+id/mbBookmarkPreviewActionsButtonId"
+                                tools:visibility="visible"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+                <com.google.android.material.button.MaterialButton
+                        android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialButtonStyleBrown"
+                        android:layout_marginTop="@dimen/margin_16"
+                        style="@style/MBMaterialButtonStyleRed"
                         android:text="@string/delete_label_text"/>
-<!--                <include-->
-<!--                        android:id="@+id/blaId"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        layout="@layout/action_bookmark_view"-->
-<!--                        android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"-->
-<!--                        />-->
         </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

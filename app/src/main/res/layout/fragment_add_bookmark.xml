@@ -26,7 +26,7 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView
+        <com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView
                 android:id="@+id/mbAddBookmarkPreviewId"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_16"
