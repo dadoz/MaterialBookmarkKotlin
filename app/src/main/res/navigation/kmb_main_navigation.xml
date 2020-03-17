@@ -9,6 +9,21 @@
         <action
                 android:id="@+id/action_bookmarkListFragment_to_searchBookmarkFragment"
                 app:destination="@id/searchBookmarkFragment" />
+        <action
+                android:id="@+id/action_bookmarkListFragment_to_addBookmarkFragment"
+                app:destination="@id/addBookmarkFragment" >
+            <argument
+                    android:name="actionType"
+                    app:argType="string" />
+
+            <argument
+                    android:name="bookmark"
+                    app:nullable="true"
+                    app:argType="android.os.Bundle"
+                    android:defaultValue="@null"
+                    />
+
+        </action>
     </fragment>
     <fragment android:id="@+id/searchBookmarkFragment"
               android:name="com.application.dev.david.materialbookmarkkot.modules.searchBookmark.SearchBookmarkFragment"
@@ -16,6 +31,9 @@
         <action
                 android:id="@+id/action_searchBookmarkFragment_to_addBookmarkFragment"
                 app:destination="@id/addBookmarkFragment" >
+            <argument
+                    android:name="actionType"
+                    app:argType="string" />
             <argument
                     android:name="bookmarkUrl"
                     app:argType="string" />
@@ -26,9 +44,18 @@
             android:label="fragment_add_bookmark" tools:layout="@layout/fragment_add_bookmark">
         <argument
                 android:name="bookmarkUrl"
+                app:nullable="true"
+                app:argType="string"
+                android:defaultValue="@null"
+                />
+        <argument
+                android:name="bookmark"
+                app:nullable="true"
+                app:argType="android.os.Bundle"
+                android:defaultValue="@null"
+                />
+        <argument
+                android:name="actionType"
                 app:argType="string" />
-        <action
-                android:id="@+id/action_addBookmarkFragment_to_bookmarkListFragment"
-                app:destination="@id/bookmarkListFragment" />
     </fragment>
 </navigation>

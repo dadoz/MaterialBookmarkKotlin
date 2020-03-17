@@ -22,7 +22,31 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     val loaderLiveStatus:  MutableLiveData<Boolean> = MutableLiveData()
+    val updateBookmarkStatus:  MutableLiveData<Boolean> = MutableLiveData()
 
+    /**
+     * add bookamrk on db
+     *
+     */
+    fun updateBookmark(title: String, iconUrl: String, url: String) {
+        val disposable = Observable.just(url)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.newThread())
+            .map(bookmarkListaDataRepository::findBookmarkById)
+            .doOnNext{ bookmark ->
+                bookmark.title = title
+                bookmark.image = iconUrl
+            }
+            .map(bookmarkListaDataRepository::updateBookmark)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { print("INSERT SUCCESS")
+                    updateBookmarkStatus.value = true },
+                { error -> Log.e(javaClass.name, error.message)
+                    updateBookmarkStatus.value = false })
+        compositeDisposable.add(disposable)
+
+    }
     /**
      * add bookamrk on db
      *
@@ -31,7 +55,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
         val disposable = Observable.just("")
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.newThread())
-            .map { res ->
+            .map {
                 Bookmark(
                     title,
                     title,
@@ -43,7 +67,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .map(bookmarkListaDataRepository::addBookmark)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { success -> print("INSERT SUCCESS")
+                { print("INSERT SUCCESS")
                     saveBookmarkStatus.value = true },
                 { error -> Log.e(javaClass.name, error.message)
                     saveBookmarkStatus.value = false })

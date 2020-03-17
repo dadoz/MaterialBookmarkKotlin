@@ -18,7 +18,13 @@ class BookmarkDataSourceLocal(var context: Context) {
     }
 
     fun insertBookmark(bookmark: Bookmark) {
-        database.bookmarkDao.insert(bookmark)
+        database.bookmarkDao.insertBookmark(bookmark)
     }
+
+    fun updateBookmark(bookmark: Bookmark) {
+        database.bookmarkDao.updateBookmark(bookmark)
+    }
+
+    fun findBookmarkById(id: String): Bookmark = database.bookmarkDao.findBookmarkById(id)
 
 }

@@ -6,17 +6,20 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 @Dao
 interface BookmarkDao {
     @Insert
-    fun insertAll(bookmark: List<Bookmark>)
+    fun insertAllBookmarks(bookmark: List<Bookmark>)
 
     @Insert
-    fun insert(bookmark: Bookmark)
+    fun insertBookmark(bookmark: Bookmark)
 
     @Update
-    fun update(bookmark: List<Bookmark>)
+    fun updateBookmark(bookmark: Bookmark)
 
     @Delete
-    fun delete(bookmark: Bookmark)
+    fun deleteBookmark(bookmark: Bookmark)
 
     @Query("SELECT * FROM mb_bookmark")
     fun getBookmarks(): List<Bookmark>
+
+    @Query("SELECT * FROM mb_bookmark WHERE url=:id")
+    fun findBookmarkById(id: String): Bookmark
 }

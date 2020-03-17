@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
                 android:layout_marginEnd="@dimen/margin_8"
@@ -103,7 +103,15 @@
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SAVE"/>
+                android:text="@string/save_label_button"/>
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbBookmarkUpdateNewButtonId"
+                android:textColor="@color/colorAccentLight"
+                style="@style/MBMaterialButtonStyleYellow"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_label_button"/>
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/mbBookmarkUpdateNewLayoutId"
@@ -113,15 +121,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/mbBookmarkUpdateNewButtonId"
+                android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
                 android:layout_marginEnd="@dimen/margin_8"
                 android:layout_centerVertical="true"
                 style="@style/MBMaterialTextDescrSmallBrown"
                 android:text="Update your bookmark"/>
         <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkUpdateNewButtonId"
+                android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
                 android:layout_alignParentEnd="true"
                 style="@style/MBMaterialButtonStyleBrown"
                 android:layout_width="wrap_content"

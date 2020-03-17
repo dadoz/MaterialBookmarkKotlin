@@ -4,6 +4,8 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.ContextualSerialization
+import kotlinx.serialization.Serializable
 import java.net.URLEncoder
 import java.util.*
 
@@ -25,6 +27,7 @@ data class Bookmark (
         @SerializedName("url")
         var url: String,
         @SerializedName("timestamp")
+        @ContextualSerialization
         var timestamp: Date?
 ) {
         companion object {

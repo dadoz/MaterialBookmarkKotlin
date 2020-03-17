@@ -7,6 +7,7 @@ import android.view.*
 import android.view.View.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
@@ -16,11 +17,17 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
+import com.application.dev.david.materialbookmarkkot.modules.searchBookmark.SearchBookmarkFragmentDirections
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
+import com.github.salomonbrys.kotson.jsonSerializer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import kotlinx.android.synthetic.main.empty_view.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.json.json
 
 
 class BookmarkListFragment : Fragment()  {
@@ -68,6 +75,7 @@ class BookmarkListFragment : Fragment()  {
     private fun initView() {
         val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
+
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
@@ -75,7 +83,17 @@ class BookmarkListFragment : Fragment()  {
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
                     mbBookmarkPreviewCardviewId.initData(bookmark)
-                    mbBookmarkPreviewCardviewId.actionEditBookmark { findNavController().navigate(R.id.addBookmarkFragment) }
+                    mbBookmarkPreviewCardviewId.actionEditBookmark {
+
+                        val action = BookmarkListFragmentDirections
+                            .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =
+                            bundleOf(
+                                "bookmark_url" to bookmark.url,
+                                "bookmark_title" to bookmark.title,
+                                "bookmark_icon_url" to bookmark.image
+                            ))
+                        findNavController().navigate(action)
+                    }
                     mbBookmarkPreviewCardviewId.actionShareBookmark { intent -> startActivity(intent)}
                     mbBookmarkPreviewCardviewId.actionOpenPreviewBookmark { intent -> startActivity(intent)}
 

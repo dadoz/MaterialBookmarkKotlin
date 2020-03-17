@@ -22,6 +22,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
+import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment
+import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
@@ -109,7 +111,8 @@ class SearchBookmarkFragment : Fragment() {
 
         mbsearchBookmarkButtonViewId.setOnClickListener {
             val action = SearchBookmarkFragmentDirections
-                .actionSearchBookmarkFragmentToAddBookmarkFragment(mbNewBookmarkUrlEditTextId.text.toString())
+                .actionSearchBookmarkFragmentToAddBookmarkFragment(
+                    actionType = SAVE_ACTION_BOOKMARK, bookmarkUrl = mbNewBookmarkUrlEditTextId.text.toString())
             navigation?.navigate(action)
         }
 

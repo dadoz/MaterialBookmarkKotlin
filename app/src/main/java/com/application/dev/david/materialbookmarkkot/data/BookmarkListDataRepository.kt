@@ -24,4 +24,11 @@ class BookmarkListDataRepository(val context: Context) {
     fun findBookmarkInfo(url: String): Observable<BookmarkInfo>? {
         return bookmarkDataSourceRemote.getBookmarkInfo(url)
     }
+
+    fun updateBookmark(bookmark: Bookmark) {
+        return bookmarkDataSourceLocal.updateBookmark(bookmark)
+    }
+    fun findBookmarkById(id: String): Bookmark {
+        return bookmarkDataSourceLocal.findBookmarkById(id)
+    }
 }

@@ -50,7 +50,6 @@ import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
  *
  */
 class AddBookmarkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var listener: OnFragmentInteractionListener? = null
     private val navigation: NavController? by lazy {
         view?.let { Navigation.findNavController(it) }
@@ -60,11 +59,6 @@ class AddBookmarkFragment : Fragment() {
     private val addBookmarkViewModel: AddBookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
     }
-
-    private val saveNewErrorCardviewBottomSheetBehavior: BottomSheetBehavior<MaterialCardView> by lazy {
-        from(mbBookmarkSaveNewErrorCardviewId)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -82,7 +76,15 @@ class AddBookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initActionBar()
         initView()
-        searchBookmarkAction(args.bookmarkUrl)
+        when (args.actionType) {
+            SAVE_ACTION_BOOKMARK -> args.bookmarkUrl?.let { searchBookmarkAction(it) }
+            UPDATE_ACTION_BOOKMARK -> args.bookmark?.let {
+                val url = it.getString("bookmark_url")
+                val title = it.getString("bookmark_title")
+                val iconUrl = it.getString("bookmark_icon_url")
+                updateBookmarkView(url, title, iconUrl)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -148,6 +150,20 @@ class AddBookmarkFragment : Fragment() {
                 false -> onSaveWithError()
             }
         })
+        addBookmarkViewModel.updateBookmarkStatus.observe(this, Observer { status ->
+            when (status) {
+                true -> onUpdateBookmarkWithSuccess()
+                false -> onUpdateBookmarkWithError()
+            }
+        })
+
+        mbBookmarkUpdateNewButtonId.setOnClickListener {
+            mbNewBookmarkUrlEditTextId.hideKeyboard()
+            addBookmarkViewModel.updateBookmark(
+                mbNewBookmarkTitleEditTextId.text.toString(),
+                mbNewBookmarkTitleEditTextId.tag.let { it?.toString() ?: "" },
+                mbNewBookmarkUrlTextId.text.toString())
+        }
 
         mbBookmarkSaveNewButtonId.setOnClickListener {
             mbNewBookmarkUrlEditTextId.hideKeyboard()
@@ -159,7 +175,7 @@ class AddBookmarkFragment : Fragment() {
         }
 
 
-        mbBookmarkUpdateNewButtonId.setOnClickListener {
+        mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
             mbAddBookmarkPreviewId.setStatusVisibility(SEARCH)
             searchBookmarkAction(mbNewBookmarkUrlEditTextId.text.toString())
         }
@@ -175,6 +191,15 @@ class AddBookmarkFragment : Fragment() {
         })
     }
 
+    private fun onUpdateBookmarkWithError() {
+        //TODO implement
+    }
+
+    private fun onUpdateBookmarkWithSuccess() {
+        navigation?.popBackStack()
+        navigation?.popBackStack()
+    }
+
     /**
      * get placeholder
      */
@@ -187,12 +212,32 @@ class AddBookmarkFragment : Fragment() {
         }
     }
 
+    /**
+     * update status
+     */
+    private fun updateBookmarkView(url: String?, title: String?, iconUrl: String?) {
+        mbBookmarkUpdateNewButtonId.visibility = VISIBLE
+        mbBookmarkSaveNewButtonId.visibility = GONE
+
+        mbNewBookmarkUrlTextId.text = url
+        mbNewBookmarkTitleEditTextId.setText(title)
+        mbNewBookmarkTitleLoaderId.visibility = GONE
+        iconUrl?.let { addBookmarkViewModel.updateWebviewByUrl(iconUrl) }
+        mbNewBookmarkUrlCardviewId.isClickable = false
+    }
+
+    /**
+     * search
+     */
     private fun searchBookmarkAction(url: String) {
+        mbBookmarkUpdateNewButtonId.visibility = GONE
+        mbBookmarkSaveNewButtonId.visibility = VISIBLE
+
         mbNewBookmarkUrlTextId.text = url
         addBookmarkViewModel.updateWebviewByUrl(url)
         addBookmarkViewModel.findBookmarkInfoByUrl(url)
 
-        //set placeholder
+        //set placeholder ????? TODO why this?????
         mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
     }
 
@@ -200,8 +245,8 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun onSaveWithSuccess() {
-        val action = AddBookmarkFragmentDirections.actionAddBookmarkFragmentToBookmarkListFragment()
-        navigation?.navigate(action)
+        navigation?.popBackStack()
+        navigation?.popBackStack()
     }
 
     /**
@@ -229,5 +274,10 @@ class AddBookmarkFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    companion object {
+        public final const val SAVE_ACTION_BOOKMARK = "SAVE_ACTION_BOOKMARK"
+        public final const val UPDATE_ACTION_BOOKMARK = "UPDATE_ACTION_BOOKMARK"
     }
 }
