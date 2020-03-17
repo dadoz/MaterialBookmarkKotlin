@@ -1,16 +1,12 @@
 package com.application.dev.david.materialbookmarkkot.ui
 
 import android.content.Context
-import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
-import com.application.dev.david.materialbookmarkkot.models.Bookmark
-import io.reactivex.functions.Action
 import khronos.Dates
 import khronos.toString
-import kotlinx.android.synthetic.main.action_bookmark_view.view.*
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.view.*
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.view.*
 

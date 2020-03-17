@@ -7,8 +7,7 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
-import io.reactivex.functions.Action
-import kotlinx.android.synthetic.main.action_bookmark_view.view.*
+import kotlinx.android.synthetic.main.header_bookmark_view.view.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.view.*
 
 class MbBookmarkPreviewView : RelativeLayout {
@@ -26,6 +25,7 @@ class MbBookmarkPreviewView : RelativeLayout {
         mbBookmarkPreviewHeaderViewId.setTitle(bookmark.title)
         mbBookmarkPreviewHeaderViewId.setDescription(bookmark.timestamp)
         mbBookmarkPreviewHeaderViewId.setIcon(bookmark.image)
+        mbBookmarkPreviewUrlTextId.text = bookmark.url
     }
 
     fun actionShareBookmark(callbackAction: (intent: Intent) -> Unit) {
@@ -41,17 +41,17 @@ class MbBookmarkPreviewView : RelativeLayout {
     }
 
     fun actionOpenPreviewBookmark(callbackAction: (intent: Intent) -> Unit) {
-        mbOpenPreviewBookmarkActionId.setOnClickListener {
+        mbBookmarkPreviewOpenInBrowserButtonId.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_VIEW
-                data = Uri.parse(bookmark?.url)
+                data = Uri.parse("https://${bookmark?.url}")
             }
             callbackAction.invoke(sendIntent)
         }
     }
 
     fun actionEditBookmark(callbackAction: () -> Unit) {
-        mbEditBookmarkActionId.setOnClickListener {
+        mbBookmarkPreviewEditButtonId.setOnClickListener {
             callbackAction.invoke()
         }
     }

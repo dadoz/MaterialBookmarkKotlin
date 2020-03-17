@@ -18,30 +18,57 @@
                 <RelativeLayout
                         android:id="@+id/mbBookmarkPreviewActionLayoutId"
                         android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_16"
                         android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/mbBookmarkPreviewUrlTextId"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_toStartOf="@+id/mbBookmarkPreviewActionsButtonId"
+                                android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
+                                style="@style/MBMaterialTextSubtitleBrown"
+                                tools:text="wwww.google.it"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_8"
+                                android:layout_below="@+id/mbBookmarkPreviewUrlTextId"
+                                android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
                                 style="@style/MBMaterialTextDescrUltraSmallBrown"
-                                android:text="Edit or share your bookmark with all your contacts"/>
-                        <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkActionView
-                                android:id="@+id/mbBookmarkPreviewActionsButtonId"
-                                tools:visibility="visible"
-                                android:layout_centerVertical="true"
+                                android:text="@string/tap_to_edit_label_string"/>
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/mbBookmarkPreviewEditButtonId"
                                 android:layout_alignParentEnd="true"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:layout_marginEnd="@dimen/margin_8"
+                                android:layout_width="@dimen/icon_filter_bookmark"
+                                android:layout_height="@dimen/icon_filter_bookmark"
+                                android:tint="@color/colorAccent"
+                                android:src="@drawable/ic_edit_pencil"/>
 
                 </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        style="@style/MBMaterialTextSubtitleBrown"
+                        android:text="@string/more_label_text"/>
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
+                        android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_alignParentEnd="true"
+                        style="@style/MBMaterialButtonStyleOutlineYellow"
+                        android:text="@string/open_in_browser_label_text"/>
                 <com.google.android.material.button.MaterialButton
                         android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16"
+                        android:visibility="gone"
                         style="@style/MBMaterialButtonStyleRed"
                         android:text="@string/delete_label_text"/>
         </RelativeLayout>
