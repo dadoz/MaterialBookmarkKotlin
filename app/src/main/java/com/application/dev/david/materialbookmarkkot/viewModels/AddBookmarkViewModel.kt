@@ -78,7 +78,10 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
      *
      */
     fun updateWebviewByUrl(url: String) {
-        bookmarkSearchedUrlLiveData.value = "https://$url"
+        bookmarkSearchedUrlLiveData.value = when {
+            url.contains("http") -> url
+            else -> "https://$url"
+        }
     }
 
     /**
