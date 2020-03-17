@@ -197,7 +197,6 @@ class AddBookmarkFragment : Fragment() {
 
     private fun onUpdateBookmarkWithSuccess() {
         navigation?.popBackStack()
-        navigation?.popBackStack()
     }
 
     /**
@@ -245,7 +244,6 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun onSaveWithSuccess() {
-        navigation?.popBackStack()
         navigation?.popBackStack()
     }
 
