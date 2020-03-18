@@ -31,12 +31,13 @@ ext {
     lifecycle_version = "1.1.1"
     glide_version = "4.10.0"
     timber_version = "4.7.1"
-    firebase_version = "17.2.2"
+    firebase_version = '17.2.3'
     crashlytics_version = "17.0.0-beta01"
     materialsearchview_version = "0.1.0@aar"
     glide_version = '4.11.0'
     rxjava_version = "2.2.10"
     rxandroid_version = "2.1.1"
+    ktserialization_version = "0.11.0"
 }
 
 def versionMajor = 1
@@ -119,7 +120,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics:$crashlytics_version"
 
     //serialization
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$ktserialization_version"
 
     implementation project(":materialbookmarksearchviewkt")
 
