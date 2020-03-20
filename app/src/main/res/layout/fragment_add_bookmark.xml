@@ -1,71 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="addBookmarkViewModel"
+                type="com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel" />
+    </data>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/mbAddBookmarkAppBarLayoutId"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:background="@android:color/background_light"
-                android:colorControlNormal="@color/colorAccent"
-                android:theme="@style/AppTheme.AppBarOverlay">
 
-            <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/mbToolbarId"
-                    android:visibility="visible"
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/mbAddBookmarkAppBarLayoutId"
+                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:titleTextColor="@color/colorAccent"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
-        </com.google.android.material.appbar.AppBarLayout>
+                    android:background="@android:color/background_light"
+                    android:colorControlNormal="@color/colorAccent"
+                    android:theme="@style/AppTheme.AppBarOverlay">
 
-        <com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView
-                android:id="@+id/mbAddBookmarkPreviewId"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:layout_below="@+id/mbAddBookmarkAppBarLayoutId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_below="@+id/mbAddBookmarkPreviewId"
-                android:orientation="vertical">
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mbBookmarkSearchedUrPlaceholderId"
-                        android:layout_centerInParent="true"
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:src="@drawable/ic_web_illustration"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        android:layout_below="@+id/mbBookmarkSearchedUrPlaceholderId"
-                        android:layout_marginBottom="@dimen/margin_8"
-                        android:textSize="18sp"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/yantramanav_light"
-                        android:text="Tap to refresh"/>
-                <WebView
-                        tools:visibility="gone"
-                        android:visibility="gone"
-                        android:id="@+id/mbBookmarkSearchedUrlWebViewId"
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/mbToolbarId"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-            </RelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                        android:layout_height="?attr/actionBarSize"
+                        app:titleTextColor="@color/colorAccent"
+                        app:popupTheme="@style/AppTheme.PopupOverlay" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView
+                    android:id="@+id/mbAddBookmarkPreviewId"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_below="@+id/mbAddBookmarkAppBarLayoutId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_below="@+id/mbAddBookmarkPreviewId"
+                    android:orientation="vertical">
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/mbBookmarkSearchedUrPlaceholderId"
+                            android:layout_centerInParent="true"
+                            android:layout_width="160dp"
+                            android:layout_height="160dp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorAccent"
+                            android:layout_below="@+id/mbBookmarkSearchedUrPlaceholderId"
+                            android:layout_marginBottom="@dimen/margin_8"
+                            android:textSize="18sp"
+                            android:layout_centerHorizontal="true"
+                            android:fontFamily="@font/yantramanav_light"
+                            android:text="tap to refresh"/>
+                    <WebView
+                            tools:visibility="gone"
+                            android:visibility="gone"
+                            android:id="@+id/mbBookmarkSearchedUrlWebViewId"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

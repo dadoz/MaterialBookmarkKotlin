@@ -1,12 +1,14 @@
 package com.application.dev.david.materialbookmarkkot.models
 
+import android.widget.ImageView
 import androidx.annotation.NonNull
+import androidx.databinding.BindingAdapter
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.ContextualSerialization
-import kotlinx.serialization.Serializable
-import java.net.URLEncoder
 import java.util.*
 
 @Entity(tableName = "mb_bookmark")
@@ -35,6 +37,12 @@ data class Bookmark (
                         return UUID.randomUUID().toString()
                 }
         }
-
 }
 
+@BindingAdapter("iconSrc")
+fun setImageViewResource(imageView: ImageView, url: String?) {
+        Glide.with(imageView.context)
+                .load(url)
+                .apply(RequestOptions.circleCropTransform())
+                .into(imageView)
+}

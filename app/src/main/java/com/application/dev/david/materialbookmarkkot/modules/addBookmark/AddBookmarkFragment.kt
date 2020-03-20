@@ -9,11 +9,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -21,17 +24,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
+import com.application.dev.david.materialbookmarkkot.databinding.FragmentAddBookmarkBinding
 import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.*
-import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.add_bookmark_error_view.*
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditTextId
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlTextInputLayoutId
@@ -55,10 +53,10 @@ class AddBookmarkFragment : Fragment() {
         view?.let { Navigation.findNavController(it) }
     }
     private val args: AddBookmarkFragmentArgs by navArgs()
-
     private val addBookmarkViewModel: AddBookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(AddBookmarkViewModel::class.java)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -69,11 +67,14 @@ class AddBookmarkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_bookmark, container, false)
+        val binding: FragmentAddBookmarkBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_bookmark, container, false)
+        binding.addBookmarkViewModel = addBookmarkViewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mbAddBookmarkPreviewId.setViewModel(addBookmarkViewModel)
         initActionBar()
         initView()
         when (args.actionType) {
@@ -137,12 +138,9 @@ class AddBookmarkFragment : Fragment() {
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
-
-            Glide.with(mbNewBookmarkIconImageViewId.context)
-                .load(bookmarkInfo.meta.image)
-                .apply(RequestOptions.circleCropTransform())
-                .into(mbNewBookmarkIconImageViewId)
-        })
+            addBookmarkViewModel.bookmarkIconUrl.set(bookmarkInfo.meta.image)
+            addBookmarkViewModel.wrapText.set(bookmarkInfo.meta.image)
+       })
 
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
             when (status) {

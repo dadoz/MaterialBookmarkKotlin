@@ -1,140 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
-
-    <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkEditTitleView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+                name="addBookmarkViewModel"
+                type="com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel" />
+    </data>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_8"
-            android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/MBMaterialTextSubtitleBrown"
-                android:text="Updated at: "/>
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/MBMaterialTextDescrSmallBrown"
-                android:text="--------"/>
-    </LinearLayout>
-    <RelativeLayout
-            android:id="@+id/mbNewBookmarkUrlEditLayoutId"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
-                style="@style/MBMaterialTextInputOutlinedYellow"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical">
+
+        <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkEditTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/yantramanav_thin"
-                android:hint="Search your bookmark">
-            <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mbNewBookmarkUrlEditTextId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="5"
-                    style="@style/MBMaterialTextSubtitleThinBrown"/>
-        </com.google.android.material.textfield.TextInputLayout>
-    </RelativeLayout>
-
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/mbNewBookmarkUrlCardviewId"
-            android:visibility="visible"
-            tools:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MBMaterialCardviewStyle"
-            android:layout_marginTop="@dimen/margin_8">
-        <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/mbNewBookmarkUrlTextId"
-                    android:padding="@dimen/margin_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/MBMaterialTextSubtitleBrown"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/MBMaterialTextDescrSmallBrown"
+                    android:text="--------"/>
+        </LinearLayout>
+        <RelativeLayout
+                android:id="@+id/mbNewBookmarkUrlEditLayoutId"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
+                    style="@style/MBMaterialTextInputOutlinedYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
-                    android:lines="1"
-                    android:layout_centerVertical="true"
-                    style="@style/MBMaterialTextSubtitleBrown"
-                    tools:text="www.googgle.it "/>
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/mbNewBookmarkIconImageViewId"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/margin_16"
-                    tools:src="@drawable/ic_bookmark"/>
+                    android:fontFamily="@font/yantramanav_thin"
+                    android:hint="Search your bookmark">
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/mbNewBookmarkUrlEditTextId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="5"
+                        style="@style/MBMaterialTextSubtitleThinBrown"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
-    <RelativeLayout
-            android:id="@+id/mbBookmarkSaveNewLayoutId"
-            android:visibility="visible"
-            tools:visibility="visible"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
-                android:layout_marginEnd="@dimen/margin_8"
-                android:layout_centerVertical="true"
-                style="@style/MBMaterialTextDescrSmallYellow"
-                android:text="Save your bookmark info"/>
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkSaveNewButtonId"
-                android:textColor="@color/colorAccentLight"
-                style="@style/MBMaterialButtonStyleYellow"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save_label_button"/>
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkUpdateNewButtonId"
-                android:textColor="@color/colorAccentLight"
-                style="@style/MBMaterialButtonStyleYellow"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/update_label_button"/>
-    </RelativeLayout>
-    <RelativeLayout
-            android:id="@+id/mbBookmarkUpdateNewLayoutId"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
-                android:layout_marginEnd="@dimen/margin_8"
-                android:layout_centerVertical="true"
-                style="@style/MBMaterialTextDescrSmallBrown"
-                android:text="Update your bookmark"/>
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
-                android:layout_alignParentEnd="true"
-                style="@style/MBMaterialButtonStyleBrown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="UPDATE"/>
 
-    </RelativeLayout>
-</LinearLayout>
+        <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mbNewBookmarkUrlCardviewId"
+                android:visibility="visible"
+                tools:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MBMaterialCardviewStyle"
+                android:layout_marginTop="@dimen/margin_8">
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/mbNewBookmarkUrlTextId"
+                        android:padding="@dimen/margin_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
+                        android:lines="1"
+                        android:layout_centerVertical="true"
+                        style="@style/MBMaterialTextSubtitleBrown"
+                        tools:text="www.googgle.it"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mbNewBookmarkIconImageViewId"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:iconSrc="@{addBookmarkViewModel.bookmarkIconUrl}"
+                        android:layout_margin="@dimen/margin_16"/>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <RelativeLayout
+                android:id="@+id/mbBookmarkSaveNewLayoutId"
+                android:visibility="visible"
+                tools:visibility="visible"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_centerVertical="true"
+                    style="@style/MBMaterialTextDescrSmallYellow"
+                    android:text="Save your bookmark info"/>
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbBookmarkSaveNewButtonId"
+                    android:textColor="@color/colorAccentLight"
+                    style="@style/MBMaterialButtonStyleYellow"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_label_button"/>
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbBookmarkUpdateNewButtonId"
+                    android:textColor="@color/colorAccentLight"
+                    style="@style/MBMaterialButtonStyleYellow"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_label_button"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/mbBookmarkUpdateNewLayoutId"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
+                    android:layout_marginEnd="@dimen/margin_8"
+                    android:layout_centerVertical="true"
+                    style="@style/MBMaterialTextDescrSmallBrown"
+                    android:text="Update your bookmark"/>
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
+                    android:layout_alignParentEnd="true"
+                    style="@style/MBMaterialButtonStyleBrown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UPDATE"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

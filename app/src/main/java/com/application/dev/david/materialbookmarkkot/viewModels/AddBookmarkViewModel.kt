@@ -3,6 +3,7 @@ package com.application.dev.david.materialbookmarkkot.viewModels
 import android.app.Application
 import android.util.Log
 import android.util.Patterns
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
@@ -15,6 +16,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import khronos.Dates
 
+
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
@@ -23,6 +25,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     val loaderLiveStatus:  MutableLiveData<Boolean> = MutableLiveData()
     val updateBookmarkStatus:  MutableLiveData<Boolean> = MutableLiveData()
+    var bookmarkIconUrl: ObservableField<String> = ObservableField<String>()
 
     /**
      * add bookamrk on db

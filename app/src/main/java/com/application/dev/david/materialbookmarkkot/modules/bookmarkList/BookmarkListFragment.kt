@@ -14,20 +14,14 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
-import com.application.dev.david.materialbookmarkkot.modules.searchBookmark.SearchBookmarkFragmentDirections
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
-import com.github.salomonbrys.kotson.jsonSerializer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import kotlinx.android.synthetic.main.empty_view.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.json.json
 
 
 class BookmarkListFragment : Fragment()  {
@@ -155,4 +149,5 @@ class BookmarkListFragment : Fragment()  {
         super.onDetach()
         listener = null
     }
+
 }
