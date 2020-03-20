@@ -86,15 +86,19 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Latest update at: "
                     style="@style/MBMaterialTextSubtitleBrown"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/MBMaterialTextDescrSmallBrown"
-                    android:text="Latest update at: "
                     tools:text="this is lates update label"/>
         </LinearLayout>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccentLight"/>
         <RelativeLayout
                 android:id="@+id/mbBookmarkSaveNewLayoutId"
                 android:visibility="visible"

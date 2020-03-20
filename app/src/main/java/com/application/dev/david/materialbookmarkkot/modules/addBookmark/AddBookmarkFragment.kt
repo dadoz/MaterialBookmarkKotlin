@@ -218,8 +218,13 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkUrlTextId.text = url
         mbNewBookmarkTitleEditTextId.setText(title)
         mbNewBookmarkTitleLoaderId.visibility = GONE
-        iconUrl?.let { addBookmarkViewModel.updateWebviewByUrl(iconUrl) }
+        iconUrl?.let {
+            mbNewBookmarkTitleEditTextId.tag = iconUrl
+            addBookmarkViewModel.bookmarkIconUrl.set(iconUrl)
+        }
+        url?.let { addBookmarkViewModel.updateWebviewByUrl(url) }
         mbNewBookmarkUrlCardviewId.isClickable = false
+
     }
 
     /**
