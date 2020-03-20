@@ -14,27 +14,24 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:orientation="vertical">
 
-        <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkEditTitleView
+        <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+            <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkEditTitleView
+                    android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbNewBookmarkIconImageViewId"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:iconSrc="@{addBookmarkViewModel.bookmarkIconUrl}"
+                    android:layout_margin="@dimen/margin_16"/>
+        </RelativeLayout>
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginBottom="@dimen/margin_8"
-                android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/MBMaterialTextSubtitleBrown"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/MBMaterialTextDescrSmallBrown"
-                    android:text="--------"/>
-        </LinearLayout>
+
         <RelativeLayout
                 android:id="@+id/mbNewBookmarkUrlEditLayoutId"
                 android:visibility="gone"
@@ -56,7 +53,6 @@
                         style="@style/MBMaterialTextSubtitleThinBrown"/>
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
-
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/mbNewBookmarkUrlCardviewId"
                 android:visibility="visible"
@@ -74,21 +70,31 @@
                         android:padding="@dimen/margin_16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
                         android:lines="1"
                         android:layout_centerVertical="true"
                         style="@style/MBMaterialTextSubtitleBrown"
                         tools:text="www.googgle.it"/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mbNewBookmarkIconImageViewId"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerInParent="true"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:iconSrc="@{addBookmarkViewModel.bookmarkIconUrl}"
-                        android:layout_margin="@dimen/margin_16"/>
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/MBMaterialTextSubtitleBrown"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/MBMaterialTextDescrSmallBrown"
+                    android:text="Latest update at: "
+                    tools:text="this is lates update label"/>
+        </LinearLayout>
         <RelativeLayout
                 android:id="@+id/mbBookmarkSaveNewLayoutId"
                 android:visibility="visible"

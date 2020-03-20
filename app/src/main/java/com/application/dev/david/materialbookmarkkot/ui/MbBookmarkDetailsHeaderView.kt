@@ -7,7 +7,6 @@ import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.databinding.HeaderBookmarkViewBinding
-import com.application.dev.david.materialbookmarkkot.databinding.HeaderBookmarkViewBindingImpl
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import khronos.toString
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
@@ -39,10 +38,5 @@ class MbBookmarkDetailsHeaderView : RelativeLayout {
 
     fun setIcon(iconUrl: String?) {
         viewModel?.bookmarkIconUrl?.set(iconUrl)
-//        Glide.with(mbBookmarkPreviewHeaderIconImageViewId.context)
-//            .load(iconUrl)
-//            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-//            .placeholder(R.drawable.ic_bookmark)
-//            .into(mbBookmarkPreviewHeaderIconImageViewId)
     }
 }

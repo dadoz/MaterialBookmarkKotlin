@@ -25,11 +25,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/mbBookmarkSaveNewIconViewId"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColorHint="@color/colorAccent"
-            android:layout_marginEnd="@dimen/margin_32"
             android:hint="Title insert...">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mbNewBookmarkTitleEditTextId"
@@ -40,15 +39,5 @@
                 android:textSize="28sp"
                 />
     </com.google.android.material.textfield.TextInputLayout>
-    <androidx.appcompat.widget.AppCompatImageView
-            android:visibility="invisible"
-            android:id="@+id/mbBookmarkSaveNewIconViewId"
-            android:textColor="@color/colorAccentLight"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_pen_writing"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
