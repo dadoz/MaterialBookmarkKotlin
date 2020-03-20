@@ -76,7 +76,7 @@ class BookmarkListFragment : Fragment()  {
 
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
-                    mbBookmarkPreviewCardviewId.initData(bookmark)
+                    mbBookmarkPreviewCardviewId.initData(bookmark, bookmarkViewModel)
                     mbBookmarkPreviewCardviewId.actionEditBookmark {
                         val action = BookmarkListFragmentDirections
                             .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =

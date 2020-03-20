@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.view.*
 
@@ -19,9 +20,10 @@ class MbBookmarkPreviewView : RelativeLayout {
         inflate(context, R.layout.preview_bookmark_view, this)
     }
 
-    fun initData(bookmark: Bookmark) {
+    fun initData(bookmark: Bookmark, bookmarkViewModel: BookmarkViewModel ) {
         this.bookmark = bookmark
         //set title and icon
+        mbBookmarkPreviewHeaderViewId.setViewModel(bookmarkViewModel)
         mbBookmarkPreviewHeaderViewId.setTitle(bookmark.title)
         mbBookmarkPreviewHeaderViewId.setDescription(bookmark.timestamp)
         mbBookmarkPreviewHeaderViewId.setIcon(bookmark.image)

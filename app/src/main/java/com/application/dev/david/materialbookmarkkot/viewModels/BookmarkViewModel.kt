@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.nfc.Tag
 import android.util.Log
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,10 +19,7 @@ import khronos.toDate
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData = MutableLiveData<List<Bookmark>>()
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
-
-    init {
-        //mock data
-    }
+    val bookmarkIconUrl: ObservableField<String> = ObservableField()
 
     /**
      * retrieve bookamr list

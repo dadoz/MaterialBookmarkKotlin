@@ -5,6 +5,7 @@ import androidx.annotation.NonNull
 import androidx.databinding.BindingAdapter
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.application.dev.david.materialbookmarkkot.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
@@ -44,5 +45,6 @@ fun setImageViewResource(imageView: ImageView, url: String?) {
         Glide.with(imageView.context)
                 .load(url)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.ic_bookmark)
                 .into(imageView)
 }

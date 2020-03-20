@@ -34,6 +34,7 @@ class BookmarkListAdapter(private val items: List<Bookmark>, private val listene
         }
         holder.bookmarkUrl.text = items[position].url
         holder.bookmarkTimestamp.text = items[position].timestamp?.toString("dd MMM")
+        //TODO handle how to move this
         Glide.with(holder.itemView.context)
             .load(items[position].image)
             .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))

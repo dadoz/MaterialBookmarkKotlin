@@ -139,7 +139,6 @@ class AddBookmarkFragment : Fragment() {
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
             addBookmarkViewModel.bookmarkIconUrl.set(bookmarkInfo.meta.image)
-            addBookmarkViewModel.wrapText.set(bookmarkInfo.meta.image)
        })
 
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->

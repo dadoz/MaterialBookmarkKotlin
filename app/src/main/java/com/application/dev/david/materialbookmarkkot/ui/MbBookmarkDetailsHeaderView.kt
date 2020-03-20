@@ -2,23 +2,25 @@ package com.application.dev.david.materialbookmarkkot.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import androidx.databinding.DataBindingUtil
 import com.application.dev.david.materialbookmarkkot.R
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import khronos.isFriday
+import com.application.dev.david.materialbookmarkkot.databinding.HeaderBookmarkViewBinding
+import com.application.dev.david.materialbookmarkkot.databinding.HeaderBookmarkViewBindingImpl
+import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import khronos.toString
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
-import java.sql.Timestamp
 import java.util.*
 
 class MbBookmarkDetailsHeaderView : RelativeLayout {
+    private var viewModel: BookmarkViewModel? = null
+    private var binding: HeaderBookmarkViewBinding
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        inflate(context, R.layout.header_bookmark_view, this)
+         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.header_bookmark_view, this, true)
     }
 
     fun setTitle(title: String?) {
@@ -30,11 +32,17 @@ class MbBookmarkDetailsHeaderView : RelativeLayout {
                 timestamp?.toString("HH:mm")
     }
 
+    fun setViewModel(bookmarkViewModel: BookmarkViewModel) {
+        viewModel = bookmarkViewModel
+        binding.bookmarkViewModel = viewModel
+    }
+
     fun setIcon(iconUrl: String?) {
-        Glide.with(mbBookmarkPreviewHeaderIconImageViewId.context)
-            .load(iconUrl)
-            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-            .placeholder(R.drawable.ic_bookmark)
-            .into(mbBookmarkPreviewHeaderIconImageViewId)
+        viewModel?.bookmarkIconUrl?.set(iconUrl)
+//        Glide.with(mbBookmarkPreviewHeaderIconImageViewId.context)
+//            .load(iconUrl)
+//            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
+//            .placeholder(R.drawable.ic_bookmark)
+//            .into(mbBookmarkPreviewHeaderIconImageViewId)
     }
 }
