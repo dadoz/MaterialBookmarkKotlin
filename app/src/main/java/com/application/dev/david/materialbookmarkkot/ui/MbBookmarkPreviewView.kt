@@ -8,6 +8,7 @@ import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.view.*
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.view.*
 
@@ -57,4 +58,11 @@ class MbBookmarkPreviewView : RelativeLayout {
             callbackAction.invoke()
         }
     }
+
+//    fun updateBookmarkIconAction(callbackAction: () -> Unit) {
+//        mbNewBookmarkIconImageViewId.setOnClickListener {
+//            callbackAction.invoke()
+//        }
+//    }
+
 }

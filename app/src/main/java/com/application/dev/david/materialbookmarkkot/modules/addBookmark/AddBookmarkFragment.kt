@@ -1,7 +1,9 @@
 package com.application.dev.david.materialbookmarkkot.modules.addBookmark
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.View.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -30,12 +33,15 @@ import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditTextId
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlTextInputLayoutId
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
+import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 
 /**
@@ -133,9 +139,6 @@ class AddBookmarkFragment : Fragment() {
             mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
         })
 
-        //set placeholder
-        mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
-
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
             addBookmarkViewModel.bookmarkIconUrl.set(bookmarkInfo.meta.image)
@@ -186,6 +189,14 @@ class AddBookmarkFragment : Fragment() {
                 mbNewBookmarkUrlTextInputLayoutId.error = null
             }
         })
+
+        mbNewBookmarkIconImageViewId.setOnClickListener {
+            context?.let {
+                CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(it, this)
+            }
+        }
     }
 
     private fun onUpdateBookmarkWithError() {
@@ -237,9 +248,6 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkUrlTextId.text = url
         addBookmarkViewModel.updateWebviewByUrl(url)
         addBookmarkViewModel.findBookmarkInfoByUrl(url)
-
-        //set placeholder ????? TODO why this?????
-        mbNewBookmarkIconImageViewId.setImageDrawable(getPlaceholder())
     }
 
     /**
@@ -262,6 +270,25 @@ class AddBookmarkFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
+                val result = CropImage.getActivityResult(data)
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+//                        Toast.makeText(context, result.uri.toString(), Toast.LENGTH_LONG).show()
+                        result.uri.toString().let {
+                            mbNewBookmarkTitleEditTextId.tag = it
+                            addBookmarkViewModel.bookmarkIconUrl.set(it)
+                        }
+                    }
+                    CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE -> { val error = result.error }
+                }
+            }
+        }
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {

@@ -95,6 +95,9 @@ dependencies {
     //serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$versions.ktserialization_version"
 
+    //image cropper
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
     implementation project(":materialbookmarksearchviewkt")
 
     testImplementation 'junit:junit:4.13'

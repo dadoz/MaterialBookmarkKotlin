@@ -1,7 +1,9 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.View.*
@@ -77,6 +79,7 @@ class BookmarkListFragment : Fragment()  {
             mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
                     mbBookmarkPreviewCardviewId.initData(bookmark, bookmarkViewModel)
+
                     mbBookmarkPreviewCardviewId.actionEditBookmark {
                         val action = BookmarkListFragmentDirections
                             .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =
