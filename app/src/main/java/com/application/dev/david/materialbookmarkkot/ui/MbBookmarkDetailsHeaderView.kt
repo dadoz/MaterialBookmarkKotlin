@@ -27,7 +27,7 @@ class MbBookmarkDetailsHeaderView : RelativeLayout {
     }
 
     fun setDescription(timestamp: Date?) {
-        mbBookmarkPreviewHeaderSubtitleTextViewId.text = "on " + timestamp?.toString("dd MMMM   ") + " at " +
+        mbBookmarkPreviewHeaderSubtitleTextViewId.text = "updated " + timestamp?.toString("dd MMMM ") + " at " +
                 timestamp?.toString("HH:mm")
     }
 

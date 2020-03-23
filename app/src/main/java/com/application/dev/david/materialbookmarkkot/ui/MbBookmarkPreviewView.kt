@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.View
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
@@ -28,17 +29,20 @@ class MbBookmarkPreviewView : RelativeLayout {
         mbBookmarkPreviewHeaderViewId.setTitle(bookmark.title)
         mbBookmarkPreviewHeaderViewId.setDescription(bookmark.timestamp)
         mbBookmarkPreviewHeaderViewId.setIcon(bookmark.image)
-        mbBookmarkPreviewUrlTextId.text = bookmark.url
+        mbBookmarkPreviewUrlTextId.text = "https://${bookmark.url}"
+
     }
 
     fun actionShareBookmark(callbackAction: (intent: Intent) -> Unit) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, bookmark.toString())
+            type = "text/plain"
+        }
+        mbBookmarkPreviewHeaderCardViewId.setOnClickListener {
+            callbackAction.invoke(sendIntent)
+        }
         mbShareBookmarkActionId.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, bookmark.toString())
-                type = "text/plain"
-            }
-
             callbackAction.invoke(sendIntent)
         }
     }
@@ -54,15 +58,17 @@ class MbBookmarkPreviewView : RelativeLayout {
     }
 
     fun actionEditBookmark(callbackAction: () -> Unit) {
-        mbBookmarkPreviewEditButtonId.setOnClickListener {
+        mbBookmarkPreviewActionLayoutId.setOnClickListener {
             callbackAction.invoke()
         }
     }
 
-//    fun updateBookmarkIconAction(callbackAction: () -> Unit) {
-//        mbNewBookmarkIconImageViewId.setOnClickListener {
-//            callbackAction.invoke()
-//        }
-//    }
+    fun setMoreButtonAction(callbackAction: () -> Unit) {
+        mbBookmarkPreviewMoreButtonId.setOnClickListener {
+            mbBookmarkPreviewDeleteLayoutId.visibility = View.VISIBLE
+            mbBookmarkPreviewHeaderEditUrlLayoutId.visibility = View.GONE
+            callbackAction.invoke()
+        }
+    }
 
 }

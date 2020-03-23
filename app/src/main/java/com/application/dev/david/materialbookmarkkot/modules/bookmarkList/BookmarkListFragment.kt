@@ -80,6 +80,9 @@ class BookmarkListFragment : Fragment()  {
                 override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
                     mbBookmarkPreviewCardviewId.initData(bookmark, bookmarkViewModel)
 
+                    mbBookmarkPreviewCardviewId.setMoreButtonAction {
+                    }
+
                     mbBookmarkPreviewCardviewId.actionEditBookmark {
                         val action = BookmarkListFragmentDirections
                             .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =
@@ -137,6 +140,8 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }
+
+
     }
 
     override fun onAttach(context: Context) {
