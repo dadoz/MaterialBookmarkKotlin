@@ -41,16 +41,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/margin_16"
             android:text="Add new"
-            android:textColor="@color/colorAccentLight"
             android:fontFamily="@font/yantramanav_light"
-            app:chipIcon="@drawable/ic_world_refresh"
-            app:chipIconTint="@color/colorAccentLight"
-            app:chipBackgroundColor="@color/colorPrimary"
-            app:chipCornerRadius="32dp"
-            app:chipMinHeight="56dp"
-            app:chipStrokeColor="@color/colorPrimary"
-            app:chipStrokeWidth="0.5dp"
-            app:chipEndPadding="@dimen/margin_16"
-            app:chipStartPadding="@dimen/margin_16"/>
+            app:chipIcon="@drawable/ic_world_refresh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#4E4135</color>
-    <color name="colorAccentLight">#F6F6F6</color>
-    <color name="colorPrimary">#FFA600</color>
-    <color name="colorPrimaryDark">#FF8400</color>
-    <color name="colorPrimaryLight">#FDFCFB</color>
-    <color name="colorError">#BE4C44</color>
+    <color name="colorAccent">#413c69</color>
+    <color name="colorPrimary">#cc0066</color>
+    <color name="colorPrimaryDark">#cc0066</color>
+    <color name="colorPrimaryLight">#f3f3f3</color>
+    <color name="colorError">#ff7272</color>
     <color name="colorErrorSecondary">#A13532</color>
     <color name="colorSuccess">#3ED48F</color>
-    <color name="colorSuccessSecondary">#F9F9F9</color>
-    <color name="colorBackgroundCardLight">#F5F3EE</color>
 </resources>

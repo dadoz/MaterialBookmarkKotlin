@@ -83,6 +83,7 @@
                         style="@style/MBMaterialTextSubtitleThinBrown"/>
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
+
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/mbNewBookmarkUrlCardviewId"
                 android:visibility="visible"
@@ -91,27 +92,24 @@
                 android:layout_height="wrap_content"
                 style="@style/MBMaterialCardviewStyle"
                 android:layout_marginTop="@dimen/margin_8">
-            <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/mbNewBookmarkUrlTextId"
+                        android:layout_gravity="center_vertical"
                         android:padding="@dimen/margin_16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lines="1"
                         android:layout_centerVertical="true"
-                        style="@style/MBMaterialTextSubtitleBrown"
+                        style="@style/MBMaterialTextTitleYellow"
                         tools:text="www.googgle.it"/>
-            </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
 
         <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorAccentLight"/>
+                android:background="@color/colorPrimary"/>
         <RelativeLayout
                 android:id="@+id/mbBookmarkSaveNewLayoutId"
                 android:visibility="visible"
