@@ -129,7 +129,6 @@
                     android:text="Save your bookmark"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkSaveNewButtonId"
-                    android:textColor="@color/colorAccentLight"
                     style="@style/MBMaterialButtonStyleYellow"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
@@ -137,8 +136,7 @@
                     android:text="@string/save_label_button"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkUpdateNewButtonId"
-                    android:textColor="@color/colorAccentLight"
-                    style="@style/MBMaterialButtonStyleYellow"
+                    style="@style/MBMaterialButtonStyleOutlineYellow"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
