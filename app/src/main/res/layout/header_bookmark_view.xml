@@ -34,7 +34,7 @@
                     android:id="@+id/mbBookmarkPreviewHeaderTitleTextViewId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/MBMaterialTextHeaderThinYellow"
+                    style="@style/MBMaterialTextHeaderThinPurple"
                     android:text="Android Dev"
                     tools:text="Android Dev"/>
             <androidx.appcompat.widget.AppCompatTextView

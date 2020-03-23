@@ -30,7 +30,7 @@
             tools:text="Title..."/>
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/MBMaterialTextInputOutlinedYellow"
+            style="@style/MBMaterialTextInputOutlinedPurple"
             android:id="@+id/mbNewBookmarkTitleTextInputId"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

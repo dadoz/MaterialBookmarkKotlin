@@ -27,7 +27,7 @@
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">6dp</item>
     </style>
-    <style name="MBMaterialCardviewStyleYellow" parent="MBMaterialCardviewStyle" >
+    <style name="MBMaterialCardviewStylePurple" parent="MBMaterialCardviewStyle" >
         <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
@@ -45,33 +45,33 @@
         <item name="strokeColor">@color/colorError</item>
     </style>
 
-    <style name="MBMaterialTextTitleThinYellow" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextTitleThinPurple" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_26</item>
     </style>
-    <style name="MBMaterialTextTitleThinBrown" parent="MBMaterialTextTitleThinYellow" >
+    <style name="MBMaterialTextTitleThinBrown" parent="MBMaterialTextTitleThinPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextTitleYellow" parent="MBMaterialTextTitleThinYellow" >
+    <style name="MBMaterialTextTitlePurple" parent="MBMaterialTextTitleThinPurple" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialTextTitleBrown" parent="MBMaterialTextTitleYellow" >
+    <style name="MBMaterialTextTitleBrown" parent="MBMaterialTextTitlePurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="MBMaterialTextHeaderYellow" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextHeaderPurple" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_36</item>
     </style>
-    <style name="MBMaterialTextHeaderBrown" parent="MBMaterialTextHeaderYellow" >
+    <style name="MBMaterialTextHeaderBrown" parent="MBMaterialTextHeaderPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
     <style name="MBMaterialTextHeaderThinBrown" parent="MBMaterialTextHeaderBrown" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextHeaderThinYellow" parent="MBMaterialTextHeaderThinBrown" >
+    <style name="MBMaterialTextHeaderThinPurple" parent="MBMaterialTextHeaderThinBrown" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
@@ -81,13 +81,13 @@
     </style>
 
 
-    <style name="MBMaterialTextDescrSmallYellow" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextDescrSmallPurple" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_18</item>
     </style>
 
-    <style name="MBMaterialTextDescrSmallBrown" parent="MBMaterialTextDescrSmallYellow" >
+    <style name="MBMaterialTextDescrSmallBrown" parent="MBMaterialTextDescrSmallPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
@@ -110,10 +110,10 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_22</item>
     </style>
-    <style name="MBMaterialTextSubtitleYellow" parent="MBMaterialTextSubtitleBrown" >
+    <style name="MBMaterialTextSubtitlePurple" parent="MBMaterialTextSubtitleBrown" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextSubtitleThinYellow" parent="MBMaterialTextSubtitleYellow" >
+    <style name="MBMaterialTextSubtitleThinPurple" parent="MBMaterialTextSubtitlePurple" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
     <style name="MBMaterialTextSubtitleThinBrown" parent="MBMaterialTextSubtitleBrown" >
@@ -134,7 +134,7 @@
         <item name="strokeColor">@color/colorErrorSecondary</item>
     </style>
 
-    <style name="MBMaterialButtonStyleYellow" parent="TextAppearance.MaterialComponents.Button" >
+    <style name="MBMaterialButtonStylePurple" parent="TextAppearance.MaterialComponents.Button" >
         <item name="backgroundTint">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="strokeColor">@color/colorPrimaryDark</item>
@@ -142,15 +142,15 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
-    <style name="MBMaterialButtonStyleOutlineYellow" parent="TextAppearance.MaterialComponents.Button" >
-        <item name="backgroundTint">@android:color/background_light</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="strokeColor">@color/colorPrimaryDark</item>
+    <style name="MBMaterialButtonStyleOutlinePurple" parent="TextAppearance.MaterialComponents.Button" >
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="strokeColor">@color/colorPrimary</item>
         <item name="strokeWidth">1dp</item>
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
 
-    <style name="MBMaterialTextInputOutlinedYellow" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="MBMaterialTextInputOutlinedPurple" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
     </style>
 </resources>

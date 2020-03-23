@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_16"
                         android:layout_alignParentEnd="true"
-                        style="@style/MBMaterialButtonStyleOutlineYellow"
+                        style="@style/MBMaterialButtonStyleOutlinePurple"
                         android:text="@string/open_in_browser_label_text"/>
                 <com.google.android.material.button.MaterialButton
                         android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
