@@ -75,13 +75,20 @@ class SearchBookmarkFragment : Fragment() {
         menuInflater.inflate(R.menu.menu_add_bookmark, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> navigation?.popBackStack()
+        }
+        return true
+    }
+
     /**
      * init actionbar
      */
     private fun initActionBar() {
         (activity as AppCompatActivity).setSupportActionBar(mbToolbarId)
         mbToolbarId.changeToolbarFont()
-        mbToolbarId.title = "Search"
+        mbToolbarId.title = getString(R.string.search_actionbar_string)
         mbToolbarId.visibility = View.VISIBLE
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
