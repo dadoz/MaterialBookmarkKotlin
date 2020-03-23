@@ -32,18 +32,22 @@
                     android:layout_margin="@dimen/margin_16"/>
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_8"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/margin_8">
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbNewBookmarkAddUpdatedTimestampLabelId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="Update: "
                     style="@style/MBMaterialTextSubtitleBrown"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
+                    android:layout_toEndOf="@+id/mbNewBookmarkAddUpdatedTimestampLabelId"
+                    android:layout_toStartOf="@+id/mbNewBookmarkAddEditButtonId"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/MBMaterialTextDescrSmallBrown"
@@ -53,9 +57,10 @@
                     android:id="@+id/mbNewBookmarkAddEditButtonId"
                     android:layout_width="@dimen/icon_filter_bookmark"
                     android:layout_height="@dimen/icon_filter_bookmark"
-                    android:layout_gravity="end"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/ic_edit_pencil"/>
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
                 android:id="@+id/mbNewBookmarkUrlEditLayoutId"

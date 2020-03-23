@@ -208,18 +208,6 @@ class AddBookmarkFragment : Fragment() {
     }
 
     /**
-     * get placeholder
-     */
-    private fun getPlaceholder(): Drawable? {
-        return context?.let {ctx ->
-            ContextCompat.getDrawable(ctx, R.drawable.ic_bookmark)?.let {
-                DrawableCompat.setTint(it, ContextCompat.getColor(ctx, R.color.colorPrimary))
-                it
-            }
-        }
-    }
-
-    /**
      * update status
      */
     private fun updateBookmarkView(url: String?, title: String?, iconUrl: String?) {
@@ -227,6 +215,7 @@ class AddBookmarkFragment : Fragment() {
         mbBookmarkSaveNewButtonId.visibility = GONE
 
         mbNewBookmarkUrlTextId.text = url
+        mbNewBookmarkTitleTextViewId.text = title
         mbNewBookmarkTitleEditTextId.setText(title)
         mbNewBookmarkTitleLoaderId.visibility = GONE
         iconUrl?.let {
@@ -235,7 +224,6 @@ class AddBookmarkFragment : Fragment() {
         }
         url?.let { addBookmarkViewModel.updateWebviewByUrl(url) }
         mbNewBookmarkUrlCardviewId.isClickable = false
-
     }
 
     /**
