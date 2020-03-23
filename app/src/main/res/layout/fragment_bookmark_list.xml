@@ -99,8 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_8"
-                    android:fontFamily="@font/yantramanav_light"
-                    android:textColor="@color/colorPrimary"
+                    style="@style/MBMaterialTextDescrSmallBrown"
                     android:visibility="invisible"
                     android:text="21 bookmarks"
                     />

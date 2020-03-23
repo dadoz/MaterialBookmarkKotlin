@@ -72,6 +72,12 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="MBMaterialTextHeaderBigBrown" parent="MBMaterialTextHeaderBrown" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+        <item name="android:textSize">@dimen/text_48</item>
+    </style>
+
+
     <style name="MBMaterialTextDescrSmallYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
@@ -91,6 +97,9 @@
     </style>
     <style name="MBMaterialTextDescrUltraSmallBrown" parent="MBMaterialTextDescrSmallBrown" >
         <item name="android:textSize">@dimen/text_14</item>
+    </style>
+    <style name="MBMaterialTextDescrSmallRed" parent="MBMaterialTextDescrSmallBrown" >
+        <item name="android:textColor">@color/colorError</item>
     </style>
 
     <style name="MBMaterialTextSubtitleBrown" parent="Widget.AppCompat.TextView" >
@@ -141,5 +150,4 @@
 
     <style name="MBMaterialTextInputOutlinedYellow" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
     </style>
-
 </resources>

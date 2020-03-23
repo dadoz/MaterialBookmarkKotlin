@@ -62,6 +62,7 @@ class MbAddBookmarkPreviewView : RelativeLayout {
     fun setTitleAndIconImage(title: String, iconUrl: String) {
         mbNewBookmarkTitleEditTextId.setText(title)
         mbNewBookmarkTitleEditTextId.tag = iconUrl
+        mbNewBookmarkTitleTextViewId.text = title
     }
 
     /**

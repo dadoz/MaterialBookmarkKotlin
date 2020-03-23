@@ -128,12 +128,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
+                        style="@style/MBMaterialTextDescrSmallBrown"
                         android:layout_below="@+id/mbBookmarkSearchedUrPlaceholderId"
                         android:layout_marginBottom="@dimen/margin_8"
-                        android:textSize="18sp"
                         android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/yantramanav_light"
                         android:text="Tap to refresh"/>
             </RelativeLayout>
         </LinearLayout>

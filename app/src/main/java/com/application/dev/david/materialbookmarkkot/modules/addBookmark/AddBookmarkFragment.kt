@@ -11,15 +11,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.View.*
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -36,12 +33,8 @@ import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewM
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
-import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditTextId
-import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlTextInputLayoutId
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
-import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 
 /**
@@ -126,11 +119,13 @@ class AddBookmarkFragment : Fragment() {
             when (isVisible) {
                 true -> {
                     mbNewBookmarkTitleLoaderId.visibility = VISIBLE
-                    mbNewBookmarkTitleTextInputId.visibility = INVISIBLE
+                    mbNewBookmarkTitleTextInputId.visibility = GONE
+                    mbNewBookmarkTitleTextViewId.visibility = GONE
                 }
                 false -> {
                     mbNewBookmarkTitleLoaderId.visibility = GONE
-                    mbNewBookmarkTitleTextInputId.visibility = VISIBLE
+                    mbNewBookmarkTitleTextInputId.visibility = GONE
+                    mbNewBookmarkTitleTextViewId.visibility = VISIBLE
                 }
             }
         })
@@ -197,6 +192,11 @@ class AddBookmarkFragment : Fragment() {
                     .start(it, this)
             }
         }
+
+        mbNewBookmarkAddEditButtonId.setOnClickListener {
+            mbNewBookmarkTitleTextInputId.visibility = VISIBLE
+            mbNewBookmarkTitleTextViewId.visibility = GONE
+        }
     }
 
     private fun onUpdateBookmarkWithError() {
@@ -254,6 +254,7 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun onSaveWithSuccess() {
+        navigation?.popBackStack()
         navigation?.popBackStack()
     }
 

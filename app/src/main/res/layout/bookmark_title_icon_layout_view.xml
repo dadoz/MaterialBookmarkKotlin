@@ -18,6 +18,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mbNewBookmarkTitleTextViewId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MBMaterialTextHeaderBigBrown"
+            tools:text="Title..."/>
 
     <com.google.android.material.textfield.TextInputLayout
             style="@style/MBMaterialTextInputOutlinedYellow"
@@ -29,6 +39,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColorHint="@color/colorAccent"
+            tools:visibility="gone"
+            android:visibility="gone"
             android:hint="Title insert...">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mbNewBookmarkTitleEditTextId"
@@ -36,8 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
                 android:fontFamily="@font/yantramanav_light"
-                android:textSize="28sp"
-                />
+                android:textSize="28sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

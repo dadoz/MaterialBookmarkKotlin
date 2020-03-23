@@ -19,8 +19,6 @@
             android:id="@+id/mbBookmarkSaveNewErrorMessageId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorError"
-            android:textSize="18sp"
-            android:fontFamily="@font/yantramanav_light"
+            style="@style/MBMaterialTextDescrSmallRed"
             tools:text="Oh snap we got an error"/>
 </com.google.android.material.card.MaterialCardView>
