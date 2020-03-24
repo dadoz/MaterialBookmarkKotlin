@@ -40,7 +40,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bookmarkUrlTextViewId"
                     android:layout_gravity="center_vertical"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:layout_marginStart="@dimen/margin_8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -18,7 +18,7 @@ interface BookmarkDao {
     fun deleteBookmark(bookmark: Bookmark)
 
     @Query("SELECT * FROM mb_bookmark")
-    fun getBookmarks(): List<Bookmark>
+    fun getBookmarks(): MutableList<Bookmark>
 
     @Query("SELECT * FROM mb_bookmark WHERE url=:id")
     fun findBookmarkById(id: String): Bookmark

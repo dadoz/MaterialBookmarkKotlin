@@ -12,7 +12,7 @@ class BookmarkListDataRepository(val context: Context) {
     private val bookmarkDataSourceRemote : BookmarkDataSourceRemote = BookmarkDataSourceRemote(context,
         BookmarkInfoService.create())
 
-    fun getBookmarks(): Observable<List<Bookmark>> {
+    fun getBookmarks(): Observable<MutableList<Bookmark>> {
 //        if (local != 0) else remote
         return Observable.just(bookmarkDataSourceLocal.getBookmarks())
     }
@@ -30,5 +30,9 @@ class BookmarkListDataRepository(val context: Context) {
     }
     fun findBookmarkById(id: String): Bookmark {
         return bookmarkDataSourceLocal.findBookmarkById(id)
+    }
+
+    fun deleteBookmark(bookmark: Bookmark) {
+        return bookmarkDataSourceLocal.deleteBookmark(bookmark)
     }
 }

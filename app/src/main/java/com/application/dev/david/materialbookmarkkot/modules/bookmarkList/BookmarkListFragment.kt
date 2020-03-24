@@ -1,33 +1,33 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.view.View.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
-import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.*
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import kotlinx.android.synthetic.main.empty_view.*
+import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
+    private val bookmarkViewModel by lazy {
+        ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,6 @@ class BookmarkListFragment : Fragment()  {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initActionBar()
         initView()
     }
 
@@ -56,51 +55,20 @@ class BookmarkListFragment : Fragment()  {
     }
 
     /**
-     * init actionbar
-     */
-    private fun initActionBar() {
-//        (activity as AppCompatActivity).setSupportActionBar(mbToolbarListId)
-//        val view: View = MbMaterialSearchView(context)
-//        mbToolbarListId.addView(view)
-    }
-
-    /**
      *
      */
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
-        val bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
         bookmarkViewModel.retrieveBookmarkList()
 
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
-            mbBookmarkRecyclerViewId.layoutManager = GridLayoutManager(context, 2)
+            mbBookmarkRecyclerViewId.apply {
+                layoutManager = GridLayoutManager(context, 2)
+                adapter = BookmarkListAdapter(list, ::openPreviewView)
+            }
 
-            mbBookmarkRecyclerViewId.adapter = BookmarkListAdapter(list, object : OnBookmarkItemClickListener {
-                override fun onBookmarkItemClicked(position: Int, bookmark : Bookmark) {
-                    mbBookmarkPreviewCardviewId.initData(bookmark, bookmarkViewModel)
-
-                    mbBookmarkPreviewCardviewId.setMoreButtonAction {
-                    }
-
-                    mbBookmarkPreviewCardviewId.actionEditBookmark {
-                        val action = BookmarkListFragmentDirections
-                            .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =
-                            bundleOf(
-                                "bookmark_url" to bookmark.url,
-                                "bookmark_title" to bookmark.title,
-                                "bookmark_icon_url" to bookmark.image
-                            ))
-                        findNavController().navigate(action)
-                    }
-                    mbBookmarkPreviewCardviewId.actionShareBookmark { intent -> startActivity(intent)}
-                    mbBookmarkPreviewCardviewId.actionOpenPreviewBookmark { intent -> startActivity(intent)}
-
-                    BottomSheetBehavior.from(mbBookmarkPreviewCardviewId).state = STATE_EXPANDED
-                }
-            })
-
-            //please replace with basic manager
+            //please replace with viewModel isEmptyDataList
             when (list.isNotEmpty()) {
                 true -> {
                     mbBookmarkEmptyViewId.visibility =  GONE
@@ -140,9 +108,40 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }
-
-
     }
+
+    /**
+     *
+     */
+    private fun openPreviewView(position: Int, bookmark: Bookmark) =
+        mbBookmarkPreviewCardviewId.apply {
+            initView(BottomSheetBehavior.from(mbBookmarkPreviewCardviewId))
+            initData(bookmark, bookmarkViewModel)
+            setMoreButtonAction { }
+
+            setDeleteButtonAction {
+                bookmarkViewModel.deleteBookmark(bookmark)
+                mbBookmarkRecyclerViewId.adapter?.notifyItemRemoved(position)
+                Handler().postDelayed({
+                    bookmarkViewModel.removeBookmarkAt(position)
+                }, 350)
+            }
+
+            actionEditBookmark {
+                val action = BookmarkListFragmentDirections
+                    .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =
+                    bundleOf(
+                        "bookmark_url" to bookmark.url,
+                        "bookmark_title" to bookmark.title,
+                        "bookmark_icon_url" to bookmark.image
+                    ))
+                findNavController().navigate(action)
+            }
+
+            actionShareBookmark { intent -> startActivity(intent)}
+
+            actionOpenPreviewBookmark { intent -> startActivity(intent)}
+        }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

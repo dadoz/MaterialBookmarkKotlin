@@ -15,21 +15,23 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import khronos.toDate
+import okhttp3.internal.notify
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
-    var bookmarksLiveData = MutableLiveData<List<Bookmark>>()
-    private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
+    var bookmarksLiveData: MutableLiveData<MutableList<Bookmark>> = MutableLiveData()
+    private val bookmarkListaDataRepository: BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
-
+    val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    var isEmptyDataList: MutableLiveData<Boolean> = MutableLiveData(false)
     /**
      * retrieve bookamr list
      */
     fun retrieveBookmarkList() {
-        val disposable = Observable.just("")//fromArray(list)
+        val disposable = Observable.just("")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .flatMap { obs -> bookmarkListaDataRepository.getBookmarks()}
-//                .doOnSubscribe((d) -> responseLiveData.setValue(ApiResponse.loading()))
+            .flatMap { bookmarkListaDataRepository.getBookmarks() }
+            .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error -> print(error.message)}
@@ -40,12 +42,18 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      * add bookamrk on db
      *
      */
-    fun saveBookmark(bookmark : Bookmark) {
+    fun deleteBookmark(bookmark : Bookmark) {
         val disposable = Observable.just(bookmark)
             .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.newThread())
-            .map(bookmarkListaDataRepository::addBookmark)
-            .subscribe({success -> print("INSERT SUCCESS")}, {error -> Log.e("bla", error.message)})
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(bookmarkListaDataRepository::deleteBookmark)
+            .subscribe({ success -> bookmarkDeletionSuccess.value = true },
+                { error -> bookmarkDeletionSuccess.value = false; Log.e("bla", error.message) })
+    }
 
+    fun removeBookmarkAt(position: Int) {
+        val list = bookmarksLiveData.value
+        list?.removeAt(position)
+        bookmarksLiveData.value = list
     }
 }

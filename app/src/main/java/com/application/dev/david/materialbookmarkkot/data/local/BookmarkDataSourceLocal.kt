@@ -13,7 +13,7 @@ class BookmarkDataSourceLocal(var context: Context) {
     /**
      * get bookmarks
      */
-    fun getBookmarks(): List<Bookmark> {
+    fun getBookmarks(): MutableList<Bookmark> {
         return database.bookmarkDao.getBookmarks()
     }
 
@@ -26,5 +26,9 @@ class BookmarkDataSourceLocal(var context: Context) {
     }
 
     fun findBookmarkById(id: String): Bookmark = database.bookmarkDao.findBookmarkById(id)
+
+    fun deleteBookmark(bookmark: Bookmark) {
+        database.bookmarkDao.deleteBookmark(bookmark)
+    }
 
 }

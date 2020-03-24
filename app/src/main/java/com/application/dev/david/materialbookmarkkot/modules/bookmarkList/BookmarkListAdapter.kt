@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import khronos.toString
 
-class BookmarkListAdapter(private val items: List<Bookmark>, private val listener: OnBookmarkItemClickListener) :
+class BookmarkListAdapter(private val items: List<Bookmark>, private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit) :
     RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>() {
     private val EMPTY_BOOKMARK_LABEL = "Title..."
 
@@ -32,7 +32,7 @@ class BookmarkListAdapter(private val items: List<Bookmark>, private val listene
         holder.bookmarkTitle.text = items[position].title.let {
             if (it.isNullOrEmpty()) EMPTY_BOOKMARK_LABEL else it
         }
-        holder.bookmarkUrl.text = items[position].url
+        holder.bookmarkUrl.text = "https://${items[position].url}"
         holder.bookmarkTimestamp.text = items[position].timestamp?.toString("dd MMM")
         //TODO handle how to move this
         Glide.with(holder.itemView.context)
@@ -41,9 +41,10 @@ class BookmarkListAdapter(private val items: List<Bookmark>, private val listene
             .placeholder(R.drawable.ic_bookmark)
             .into(holder.bookmarkIcon)
 
-        holder.itemView.setOnClickListener { listener.onBookmarkItemClicked(position, items[position]) }
+        holder.itemView.setOnClickListener {
+            onBookmarkItemClicked(position, items[position])
+        }
     }
-
 
     /**
      * view holder
@@ -55,9 +56,6 @@ class BookmarkListAdapter(private val items: List<Bookmark>, private val listene
         val bookmarkIcon: ImageView = itemView.findViewById(R.id.bookmarkIconImageViewId)
     }
 
-    interface OnBookmarkItemClickListener {
-        fun onBookmarkItemClicked(position: Int, bookmark: Bookmark)
-    }
 }
 
 /***
