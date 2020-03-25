@@ -19,6 +19,7 @@ import okhttp3.internal.notify
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData: MutableLiveData<MutableList<Bookmark>> = MutableLiveData()
+    var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<Int, MutableList<Bookmark>?>> = MutableLiveData()
     private val bookmarkListaDataRepository: BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
     val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()
@@ -51,9 +52,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 { error -> bookmarkDeletionSuccess.value = false; Log.e("bla", error.message) })
     }
 
-    fun removeBookmarkAt(position: Int) {
-        val list = bookmarksLiveData.value
-        list?.removeAt(position)
-        bookmarksLiveData.value = list
+    fun deleteBookmarkFromList(position: Int) {
+        bookmarksLiveData.value?.removeAt(position)
+        bookmarksRemovedBookmarkPairData.value = Pair(position, bookmarksLiveData.value)
     }
 }

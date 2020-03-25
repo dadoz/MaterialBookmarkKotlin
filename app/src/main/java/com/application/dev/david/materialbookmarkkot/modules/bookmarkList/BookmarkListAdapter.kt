@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import khronos.toString
 
-class BookmarkListAdapter(private val items: List<Bookmark>, private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit) :
+class BookmarkListAdapter(private var items: MutableList<Bookmark>, private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit) :
     RecyclerView.Adapter<BookmarkListAdapter.BookmarkViewHolder>() {
     private val EMPTY_BOOKMARK_LABEL = "Title..."
 
@@ -44,6 +44,10 @@ class BookmarkListAdapter(private val items: List<Bookmark>, private val onBookm
         holder.itemView.setOnClickListener {
             onBookmarkItemClicked(position, items[position])
         }
+    }
+
+    fun setItems(list: MutableList<Bookmark>) {
+        items = list
     }
 
     /**

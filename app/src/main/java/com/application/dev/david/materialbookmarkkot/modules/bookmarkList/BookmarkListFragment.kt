@@ -62,10 +62,23 @@ class BookmarkListFragment : Fragment()  {
         bookmarkViewModel.retrieveBookmarkList()
 
         //event retrieve list
+        bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(this, Observer { pairData ->
+            val position = pairData.first
+            pairData.second?.let { list ->
+                mbBookmarkRecyclerViewId.apply {
+                    adapter?.let {
+                        (it as BookmarkListAdapter).setItems(list)
+                        it.notifyItemRemoved(position)
+                        it.notifyItemRangeChanged(position, list.size - position)
+                    }
+                }
+            }
+        })
+
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
-                adapter = BookmarkListAdapter(list, ::openPreviewView)
+                adapter = BookmarkListAdapter(list, { position, bookmark ->  openPreviewView(position, bookmark) })
             }
 
             //please replace with viewModel isEmptyDataList
@@ -121,10 +134,7 @@ class BookmarkListFragment : Fragment()  {
 
             setDeleteButtonAction {
                 bookmarkViewModel.deleteBookmark(bookmark)
-                mbBookmarkRecyclerViewId.adapter?.notifyItemRemoved(position)
-                Handler().postDelayed({
-                    bookmarkViewModel.removeBookmarkAt(position)
-                }, 350)
+                bookmarkViewModel.deleteBookmarkFromList(position)
             }
 
             actionEditBookmark {

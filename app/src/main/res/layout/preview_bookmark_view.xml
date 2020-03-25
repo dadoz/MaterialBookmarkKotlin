@@ -83,16 +83,16 @@
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/margin_8"
+                                android:layout_marginTop="@dimen/margin_16"
                                 android:layout_marginBottom="@dimen/margin_8"
                                 style="@style/MBMaterialTextDescrSmallBrown"
-                                android:text="Sure you want delete your bookmark permanently?"/>
+                                android:text="@string/delete_fulle_descr_label_text"/>
                         <com.google.android.material.button.MaterialButton
                                 android:id="@+id/mbBookmarkPreviewDeleteButtonId"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:visibility="visible"
-                                style="@style/MBMaterialButtonStyleBrown"
+                                style="@style/MBMaterialButtonStylePurple"
                                 android:text="@string/delete_label_text"/>
                 </LinearLayout>
 
