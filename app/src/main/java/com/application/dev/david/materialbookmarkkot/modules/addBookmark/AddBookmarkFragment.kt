@@ -4,17 +4,17 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -137,8 +137,19 @@ class AddBookmarkFragment : Fragment() {
             }
         })
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
-            mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
-            mbBookmarkSearchedUrlWebViewId.loadUrl(searchedUrl)
+            mbBookmarkSearchedUrlWebViewId.apply {
+                visibility = VISIBLE
+                webViewClient = object : WebViewClient() {
+                    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                        view?.loadUrl(url)
+                        println("hello")
+                        return true
+                    }
+                }
+                loadUrl(searchedUrl)
+                settings.javaScriptCanOpenWindowsAutomatically = true
+                settings.javaScriptEnabled = true
+            }
         })
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->

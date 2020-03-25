@@ -61,7 +61,7 @@ class BookmarkListFragment : Fragment()  {
     private fun initView() {
         bookmarkViewModel.retrieveBookmarkList()
 
-        //event retrieve list
+        //event update list
         bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(this, Observer { pairData ->
             val position = pairData.first
             pairData.second?.let { list ->
@@ -75,6 +75,7 @@ class BookmarkListFragment : Fragment()  {
             }
         })
 
+        //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
