@@ -67,7 +67,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .flatMap { list -> Observable.fromIterable(list) }
             .sorted { o1, o2 ->
                 if (o1.title != null && o2.title != null) {
-                    o1.title!![0].minus(o2.title!![0])
+                    o1.title!!.toLowerCase()[0].minus(o2.title!!.toLowerCase()[0])
                 } else 0
             }
             .toList()
