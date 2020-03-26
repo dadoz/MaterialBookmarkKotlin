@@ -11,6 +11,7 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkInfo
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,6 +20,7 @@ import khronos.Dates
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
+    val bookmarkInfoLiveError : MutableLiveData<String> = MutableLiveData()
     private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
@@ -117,7 +119,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                     bookmarkInfoLiveData.value = data
                 },
                 { error ->
-                    Log.e(javaClass.name, error.message)
+                    bookmarkInfoLiveError.value = error.message
                 })
         compositeDisposable.add(disposable)
     }

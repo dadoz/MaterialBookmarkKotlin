@@ -55,7 +55,8 @@
                             android:id="@+id/mbBookmarkSearchedUrPlaceholderId"
                             android:layout_centerInParent="true"
                             android:layout_width="160dp"
-                            android:layout_height="160dp"/>
+                            android:layout_height="160dp"
+                            android:src="@drawable/ic_web_illustration"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

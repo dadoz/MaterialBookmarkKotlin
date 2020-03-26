@@ -11,6 +11,8 @@ import android.text.TextWatcher
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -144,16 +146,27 @@ class AddBookmarkFragment : Fragment() {
                         view?.loadUrl(url)
                         return true
                     }
+
+                    override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                        super.onReceivedError(view, request, error)
+                        view?.visibility = GONE
+                        mbBookmarkSearchedUrPlaceholderId.visibility = VISIBLE
+                    }
                 }
+
                 loadUrl(searchedUrl)
                 settings.javaScriptCanOpenWindowsAutomatically = true
                 settings.javaScriptEnabled = true
             }
         })
 
+        addBookmarkViewModel.bookmarkInfoLiveError.observe(this, Observer { error ->
+            mbAddBookmarkPreviewId.setEditTitleVisible(true)
+        })
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
        })
+
 
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
             when (status) {
