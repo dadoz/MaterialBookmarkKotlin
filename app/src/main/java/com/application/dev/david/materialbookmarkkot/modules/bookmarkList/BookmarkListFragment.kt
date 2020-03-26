@@ -107,7 +107,6 @@ class BookmarkListFragment : Fragment()  {
                     mbBookmarkHeaderLayoutId.visibility =  GONE
                 }
             }
-
         })
 
         mbBookmarkEmptyAddNewButtonId.setOnClickListener {

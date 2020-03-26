@@ -37,10 +37,11 @@ class BookmarkListAdapter(private var items: MutableList<Any>, private val onBoo
     }
 
     override fun getItemViewType(position: Int): Int {
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-//        if (position == 0) BOOKMARK_HEADER_TYPE.ordinal else
-        return BOOKMARK_VIEW_TYPE.ordinal
+        return when (items[position]) {
+            is BookmarkHeader -> BOOKMARK_HEADER_TYPE.ordinal
+            is Bookmark -> BOOKMARK_VIEW_TYPE.ordinal
+            else -> BOOKMARK_VIEW_TYPE.ordinal
+        }
     }
 
     override fun getItemCount(): Int {
@@ -73,11 +74,11 @@ class BookmarkListAdapter(private var items: MutableList<Any>, private val onBoo
                 }
                 //BookmarkHeaderViewHolder
                 is BookmarkHeaderViewHolder -> {
-//                    (item as BookmarkHeader).let {
+                    (item as BookmarkHeader).let {
                         holder.apply {
-                            bookmarkLabelHeader.text = "blalal"
+                            bookmarkLabelHeader.text = item.label
                         }
-//                    }
+                    }
                 }
                 else -> null
             }
