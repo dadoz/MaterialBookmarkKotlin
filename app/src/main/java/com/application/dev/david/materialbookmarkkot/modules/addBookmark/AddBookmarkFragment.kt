@@ -142,7 +142,6 @@ class AddBookmarkFragment : Fragment() {
                 webViewClient = object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                         view?.loadUrl(url)
-                        println("hello")
                         return true
                     }
                 }
@@ -154,7 +153,6 @@ class AddBookmarkFragment : Fragment() {
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
-            addBookmarkViewModel.bookmarkIconUrl.set(bookmarkInfo.meta.image)
        })
 
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->

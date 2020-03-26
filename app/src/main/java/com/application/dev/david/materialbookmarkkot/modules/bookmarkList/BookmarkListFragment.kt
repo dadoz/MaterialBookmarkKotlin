@@ -3,7 +3,6 @@ package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.view.*
 import android.view.View.*
 import android.widget.Toast
@@ -13,10 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.empty_view.*
@@ -67,7 +69,7 @@ class BookmarkListFragment : Fragment()  {
             pairData.second?.let { list ->
                 mbBookmarkRecyclerViewId.apply {
                     adapter?.let {
-                        (it as BookmarkListAdapter).setItems(list)
+                        (it as BookmarkListAdapter).setItems(list as MutableList<Any>)
                         it.notifyItemRemoved(position)
                         it.notifyItemRangeChanged(position, list.size - position)
                     }
@@ -78,8 +80,20 @@ class BookmarkListFragment : Fragment()  {
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.apply {
-                layoutManager = GridLayoutManager(context, 2)
-                adapter = BookmarkListAdapter(list, { position, bookmark ->  openPreviewView(position, bookmark) })
+                val lm: GridLayoutManager = GridLayoutManager(context, 2).apply {
+                    spanSizeLookup = object : SpanSizeLookup() {
+                        override fun getSpanSize(position: Int): Int {
+                            return when ((adapter as BookmarkListAdapter).getItemViewType(position)) {
+                                BOOKMARK_VIEW_TYPE.ordinal -> 1
+                                BOOKMARK_HEADER_TYPE.ordinal -> 2
+                                else -> -1
+                            }
+                        }
+                    }
+                }
+
+                layoutManager = lm
+                adapter = BookmarkListAdapter(list as MutableList<Any>, { position, bookmark ->  openPreviewView(position, bookmark) })
             }
 
             //please replace with viewModel isEmptyDataList

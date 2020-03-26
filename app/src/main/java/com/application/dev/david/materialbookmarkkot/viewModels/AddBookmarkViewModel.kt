@@ -110,7 +110,10 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .compose(attachLoaderOnView())
             .subscribe(
                 { data ->
-                    print("INSERT SUCCESS")
+                    data.meta.apply {
+                        image = image.replace("//", "/").replace("https:/", "https://")
+                        bookmarkIconUrl.set(image)
+                    }
                     bookmarkInfoLiveData.value = data
                 },
                 { error ->

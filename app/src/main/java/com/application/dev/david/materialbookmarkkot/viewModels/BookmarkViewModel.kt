@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import io.reactivex.Observable
+import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import khronos.toDate
@@ -33,6 +34,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListaDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
+            .compose(sortListByTitleFirstCharComposable())
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error -> print(error.message)}
@@ -55,5 +57,20 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     fun deleteBookmarkFromList(position: Int) {
         bookmarksLiveData.value?.removeAt(position)
         bookmarksRemovedBookmarkPairData.value = Pair(position, bookmarksLiveData.value)
+    }
+
+    /***
+     * compsable with filter on first char title
+     */
+    private fun sortListByTitleFirstCharComposable() = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+        it
+            .flatMap { list -> Observable.fromIterable(list) }
+            .sorted { o1, o2 ->
+                if (o1.title != null && o2.title != null) {
+                    o1.title!![0].minus(o2.title!![0])
+                } else 0
+            }
+            .toList()
+            .toObservable()
     }
 }

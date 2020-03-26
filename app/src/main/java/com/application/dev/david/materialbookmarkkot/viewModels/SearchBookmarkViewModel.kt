@@ -17,9 +17,7 @@ import khronos.Dates
 
 class SearchBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
-    private val bookmarkListaDataRepository : BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     val loaderLiveStatus:  MutableLiveData<Boolean> = MutableLiveData()
 
     override fun onCleared() {
