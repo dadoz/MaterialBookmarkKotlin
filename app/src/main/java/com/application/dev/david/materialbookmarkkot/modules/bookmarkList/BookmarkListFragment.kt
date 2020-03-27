@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
@@ -118,17 +119,17 @@ class BookmarkListFragment : Fragment()  {
         }
 
         mbBookmarkHeaderListFilterIconId.setOnClickListener {
-            (mbBookmarkRecyclerViewId.layoutManager as GridLayoutManager).spanCount = 1
-            mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
+            setGridOrListLayout(0, 1)
             mbBookmarkHeaderCardFilterIconId.visibility = VISIBLE
             it.visibility = INVISIBLE
         }
+
         mbBookmarkHeaderCardFilterIconId.setOnClickListener {
-            (mbBookmarkRecyclerViewId.layoutManager as GridLayoutManager).spanCount = 2
-            mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
+            setGridOrListLayout(1, 2)
             mbBookmarkHeaderListFilterIconId.visibility = VISIBLE
             it.visibility = GONE
         }
+
         mbBookmarkHeaderStarFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }
@@ -166,6 +167,31 @@ class BookmarkListFragment : Fragment()  {
 
             actionOpenPreviewBookmark { intent -> startActivity(intent)}
         }
+
+
+    /**
+     * todo refactor this fx
+     */
+    private fun setGridOrListLayout(viewType: Int, newSpanCount: Int) {
+        mbBookmarkRecyclerViewId.apply {
+            (layoutManager as GridLayoutManager).apply {
+                this.spanSizeLookup = object : SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when ((adapter as BookmarkListAdapter).getSpanSizeByPosition(position)) {
+                            BOOKMARK_HEADER_TYPE.ordinal -> when(viewType)  {
+                                0 -> 1
+                                else -> 2
+                            }
+                            else -> 1
+                        }
+                    }
+                }
+                //set span
+                this.spanCount = newSpanCount
+            }
+            adapter?.notifyDataSetChanged()
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

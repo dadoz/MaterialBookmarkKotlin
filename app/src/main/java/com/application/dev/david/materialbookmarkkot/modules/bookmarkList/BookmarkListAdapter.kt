@@ -36,13 +36,7 @@ class BookmarkListAdapter(private var items: MutableList<Any>, private val onBoo
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (items[position]) {
-            is BookmarkHeader -> BOOKMARK_HEADER_TYPE.ordinal
-            is Bookmark -> BOOKMARK_VIEW_TYPE.ordinal
-            else -> BOOKMARK_VIEW_TYPE.ordinal
-        }
-    }
+    override fun getItemViewType(position: Int): Int = getSpanSizeByPosition(position)
 
     override fun getItemCount(): Int {
         return items.size
@@ -90,6 +84,14 @@ class BookmarkListAdapter(private var items: MutableList<Any>, private val onBoo
      */
     fun setItems(list: MutableList<Any>) {
         items = list
+    }
+
+    fun getSpanSizeByPosition(position: Int): Int {
+        return when (items[position]) {
+            is BookmarkHeader -> BOOKMARK_HEADER_TYPE.ordinal
+            is Bookmark -> BOOKMARK_VIEW_TYPE.ordinal
+            else -> BOOKMARK_VIEW_TYPE.ordinal
+        }
     }
 
     /**
