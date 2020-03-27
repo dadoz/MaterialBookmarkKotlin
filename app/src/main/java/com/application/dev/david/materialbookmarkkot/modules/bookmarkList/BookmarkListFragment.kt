@@ -49,6 +49,7 @@ class BookmarkListFragment : Fragment()  {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onInitAppBarMenu()
         initView()
     }
 
@@ -57,6 +58,27 @@ class BookmarkListFragment : Fragment()  {
         menuInflater.inflate(R.menu.menu_main, menu)
     }
 
+    private fun onInitAppBarMenu() {
+        mbBookmarkBottomBarLayoutId.apply {
+            replaceMenu(R.menu.menu_bookmark_list)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.mbBookmarkHeaderListFilterIconId ->  {
+                        setGridOrListLayout(0, 1)
+                        replaceMenu(R.menu.menu_bookmark_list_with_cards)
+                    }
+                    R.id.mbBookmarkHeaderCardFilterIconId -> {
+                        setGridOrListLayout(1, 2)
+                        replaceMenu(R.menu.menu_bookmark_list)
+                    }
+                    R.id.mbBookmarkHeaderStarFilterIconId -> {
+                        Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+                    }
+                }
+                true
+            }
+        }
+    }
     /**
      *
      */
@@ -101,11 +123,11 @@ class BookmarkListFragment : Fragment()  {
             when (list.isNotEmpty()) {
                 true -> {
                     mbBookmarkEmptyViewId.visibility =  GONE
-                    mbBookmarkHeaderLayoutId.visibility =  VISIBLE
+//                    mbBookmarkHeaderLayoutId.visibility =  VISIBLE
                 }
                 false -> {
                     mbBookmarkEmptyViewId.visibility =  VISIBLE
-                    mbBookmarkHeaderLayoutId.visibility =  GONE
+//                    mbBookmarkHeaderLayoutId.visibility =  GONE
                 }
             }
         })
@@ -118,21 +140,6 @@ class BookmarkListFragment : Fragment()  {
             findNavController().navigate(R.id.searchBookmarkFragment)
         }
 
-        mbBookmarkHeaderListFilterIconId.setOnClickListener {
-            setGridOrListLayout(0, 1)
-            mbBookmarkHeaderCardFilterIconId.visibility = VISIBLE
-            it.visibility = INVISIBLE
-        }
-
-        mbBookmarkHeaderCardFilterIconId.setOnClickListener {
-            setGridOrListLayout(1, 2)
-            mbBookmarkHeaderListFilterIconId.visibility = VISIBLE
-            it.visibility = GONE
-        }
-
-        mbBookmarkHeaderStarFilterIconId.setOnClickListener {
-            Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
-        }
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }

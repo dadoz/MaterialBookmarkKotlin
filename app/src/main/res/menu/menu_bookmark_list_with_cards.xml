@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/mbBookmarkHeaderListFilterIconId"
+            android:icon="@drawable/ic_bookmark_list_filter"
+            android:visible="false"
+            android:tint="@color/colorPrimaryLight"
+            android:title="LIST"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/mbBookmarkHeaderCardFilterIconId"
+            android:icon="@drawable/ic_bookmark_tab_filter"
+            android:tint="@color/colorPrimaryLight"
+            android:title="CARD"
+            app:showAsAction="always"/>
+    <item
+            android:id="@+id/mbBookmarkHeaderStarFilterIconId"
+            android:icon="@drawable/ic_star_filter"
+            android:tint="@color/colorPrimaryLight"
+            android:title="STAR"
+            app:showAsAction="always"/>
+
+</menu>
