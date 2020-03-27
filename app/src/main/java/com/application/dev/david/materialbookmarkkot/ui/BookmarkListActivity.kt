@@ -1,6 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.ui
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
+import com.application.dev.david.materialbookmarkkot.preferences.booleanPreference
 
 class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {
 

@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
-import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
-import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListFragment.BookmarkListViewTpeEnum.MB_CARD_VIEW_TYPE
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListFragment.BookmarkListViewTpeEnum.MB_LIST_VIEW_TYPE
+import com.application.dev.david.materialbookmarkkot.preferences.booleanPreference
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.empty_view.*
@@ -28,6 +29,9 @@ import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
+    var isBookmarkCardViewType: Boolean by booleanPreference("MB_IS_CARD_VIEw_TYPE", true)
+    enum class BookmarkListViewTpeEnum { MB_LIST_VIEW_TYPE, MB_CARD_VIEW_TYPE }
+
     private val bookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
     }
@@ -49,6 +53,7 @@ class BookmarkListFragment : Fragment()  {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         onInitAppBarMenu()
         initView()
     }
@@ -60,19 +65,25 @@ class BookmarkListFragment : Fragment()  {
 
     private fun onInitAppBarMenu() {
         mbBookmarkBottomBarLayoutId.apply {
-            replaceMenu(R.menu.menu_bookmark_list)
+            when (isBookmarkCardViewType) {
+                true -> replaceMenu(R.menu.menu_bookmark_list)
+                false -> replaceMenu(R.menu.menu_bookmark_list_with_cards)
+            }
+
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderListFilterIconId ->  {
-                        setGridOrListLayout(0, 1)
+                        setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
+                        isBookmarkCardViewType = false
                         replaceMenu(R.menu.menu_bookmark_list_with_cards)
                     }
                     R.id.mbBookmarkHeaderCardFilterIconId -> {
-                        setGridOrListLayout(1, 2)
+                        setGridOrListLayout(MB_CARD_VIEW_TYPE.ordinal, 2)
+                        isBookmarkCardViewType = true
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
-                        Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+
                     }
                 }
                 true
@@ -103,19 +114,12 @@ class BookmarkListFragment : Fragment()  {
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.apply {
-                val lm: GridLayoutManager = GridLayoutManager(context, 2).apply {
-                    spanSizeLookup = object : SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when ((adapter as BookmarkListAdapter).getItemViewType(position)) {
-                                BOOKMARK_VIEW_TYPE.ordinal -> 1
-                                BOOKMARK_HEADER_TYPE.ordinal -> 2
-                                else -> -1
-                            }
-                        }
-                    }
+                layoutManager = GridLayoutManager(context, 2)
+                when (isBookmarkCardViewType) {
+                    true -> setGridOrListLayout(MB_CARD_VIEW_TYPE.ordinal, 2)
+                    false -> setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
                 }
 
-                layoutManager = lm
                 adapter = BookmarkListAdapter(list as MutableList<Any>, { position, bookmark ->  openPreviewView(position, bookmark) })
             }
 
@@ -123,11 +127,9 @@ class BookmarkListFragment : Fragment()  {
             when (list.isNotEmpty()) {
                 true -> {
                     mbBookmarkEmptyViewId.visibility =  GONE
-//                    mbBookmarkHeaderLayoutId.visibility =  VISIBLE
                 }
                 false -> {
                     mbBookmarkEmptyViewId.visibility =  VISIBLE
-//                    mbBookmarkHeaderLayoutId.visibility =  GONE
                 }
             }
         })
