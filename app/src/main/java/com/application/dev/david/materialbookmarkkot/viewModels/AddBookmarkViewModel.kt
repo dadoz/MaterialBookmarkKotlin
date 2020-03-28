@@ -67,7 +67,8 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                     iconUrl,
                     Bookmark.getId(url),
                     url,
-                    Dates.today
+                    Dates.today,
+                    false
             )}
             .map(bookmarkListaDataRepository::addBookmark)
             .observeOn(AndroidSchedulers.mainThread())

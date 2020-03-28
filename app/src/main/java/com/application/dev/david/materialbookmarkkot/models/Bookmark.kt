@@ -31,7 +31,10 @@ data class Bookmark (
         var url: String,
         @SerializedName("timestamp")
         @ContextualSerialization
-        var timestamp: Date?
+        var timestamp: Date?,
+        @SerializedName("is_star")
+        @ContextualSerialization
+        var isStar: Boolean = false
 ) {
         companion object {
                 fun getId(url: String): String {
