@@ -23,6 +23,7 @@ import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.Bookma
 import com.application.dev.david.materialbookmarkkot.preferences.booleanPreference
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.bookmark_view_item.*
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
@@ -120,7 +121,14 @@ class BookmarkListFragment : Fragment()  {
                     false -> setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
                 }
 
-                adapter = BookmarkListAdapter(list as MutableList<Any>, { position, bookmark ->  openPreviewView(position, bookmark) })
+                adapter = BookmarkListAdapter(list as MutableList<Any>,
+                    { position, bookmark ->  openPreviewView(position, bookmark) },
+                    { position, bookmark ->
+                        bookmark.isStar = !bookmark.isStar //toggling status
+                        bookmarkViewModel.setStarBookmark(bookmark)
+                        adapter?.notifyDataSetChanged()
+                    }
+                )
             }
 
             //please replace with viewModel isEmptyDataList
@@ -145,6 +153,7 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }
+
     }
 
     /**

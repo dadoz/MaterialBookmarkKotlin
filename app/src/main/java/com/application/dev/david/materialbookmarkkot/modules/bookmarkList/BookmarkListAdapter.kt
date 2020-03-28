@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
@@ -17,8 +18,11 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import khronos.toString
+import kotlinx.android.synthetic.main.bookmark_view_item.*
 
-class BookmarkListAdapter(private var items: MutableList<Any>, private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit) :
+class BookmarkListAdapter(private var items: MutableList<Any>,
+                          private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
+                          private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val EMPTY_BOOKMARK_LABEL = "Title..."
     public enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
@@ -56,6 +60,14 @@ class BookmarkListAdapter(private var items: MutableList<Any>, private val onBoo
                             bookmarkTimestamp.text = item.timestamp?.toString("dd MMM")
                             itemView.setOnClickListener {
                                 onBookmarkItemClicked(position, item)
+                            }
+
+                            when (item.isStar) {
+                                true -> bookmarkStarButton.setColorFilter(ContextCompat.getColor(bookmarkStarButton.context, R.color.colorPrimary))
+                                else -> bookmarkStarButton.setColorFilter(ContextCompat.getColor(bookmarkStarButton.context, R.color.colorAccent))
+                            }
+                            bookmarkStarButton.setOnClickListener {
+                                onBookmarkStarlicked(position, item)
                             }
                         }
                         //TODO handle how to move this
@@ -102,6 +114,7 @@ class BookmarkListAdapter(private var items: MutableList<Any>, private val onBoo
         val bookmarkUrl: TextView = itemView.findViewById(R.id.bookmarkUrlTextViewId)
         val bookmarkTimestamp: TextView = itemView.findViewById(R.id.bookmarkTimestampTextViewId)
         val bookmarkIcon: ImageView = itemView.findViewById(R.id.bookmarkIconImageViewId)
+        val bookmarkStarButton: ImageView = itemView.findViewById(R.id.mbBookmarkStarButtonId)
     }
     /**
      * view holder

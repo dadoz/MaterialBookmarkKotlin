@@ -97,4 +97,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             }
         }
     }
+
+    fun setStarBookmark(bookmark: Bookmark) {
+        val disposable = Observable.just(bookmark)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(bookmarkListDataRepository::updateBookmark)
+            .subscribe({ success -> bookmarkDeletionSuccess.value = true },
+                { error -> bookmarkDeletionSuccess.value = false; })
+    }
 }
