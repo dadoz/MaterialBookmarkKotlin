@@ -23,7 +23,6 @@ import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.Bookma
 import com.application.dev.david.materialbookmarkkot.preferences.booleanPreference
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.bookmark_view_item.*
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
@@ -84,7 +83,11 @@ class BookmarkListFragment : Fragment()  {
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
-
+                        val isStarFilterView = true
+                        bookmarkViewModel.retrieveBookmarkList(isStarFilterView)
+                    }
+                    R.id.mbBookmarkHeaderHomeFilterIconId -> {
+                        bookmarkViewModel.retrieveBookmarkList()
                     }
                 }
                 true

@@ -1,14 +1,9 @@
 package com.application.dev.david.materialbookmarkkot.viewModels
 
 import android.app.Application
-import android.content.Context
-import android.nfc.Tag
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
@@ -16,8 +11,6 @@ import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import khronos.toDate
-import okhttp3.internal.notify
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData: MutableLiveData<MutableList<Any>> = MutableLiveData()
@@ -29,11 +22,14 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * retrieve bookamr list
      */
-    fun retrieveBookmarkList() {
+    fun retrieveBookmarkList(isStarFilterView: Boolean = false) {
         val disposable = Observable.just("")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
+            .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
+            .filter { bookmark -> if (isStarFilterView) bookmark.isStar else true }
+            .toList().toObservable()
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
             .compose(sortListByTitleFirstCharComposable())
             .compose(getBookmarkWithHeadersListComposable())
