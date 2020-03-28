@@ -62,10 +62,12 @@ class BookmarkListAdapter(private var items: MutableList<Any>,
                                 onBookmarkItemClicked(position, item)
                             }
 
-                            when (item.isStar) {
-                                true -> bookmarkStarButton.setColorFilter(ContextCompat.getColor(bookmarkStarButton.context, R.color.colorPrimary))
-                                else -> bookmarkStarButton.setColorFilter(ContextCompat.getColor(bookmarkStarButton.context, R.color.colorAccent))
+                            val starColor = when (item.isStar) {
+                                true -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorYellow)
+                                else -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorPrimary)
                             }
+                            bookmarkStarButton.setColorFilter(starColor)
+
                             bookmarkStarButton.setOnClickListener {
                                 onBookmarkStarlicked(position, item)
                             }
