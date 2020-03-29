@@ -53,8 +53,9 @@ class BookmarkListAdapter(private var items: MutableList<Any>,
                 is BookmarkViewHolder -> {
                     (item as Bookmark).let {
                         holder.apply {
-                            bookmarkTitle.text = item.title
-                            bookmarkTitle.text?.let { EMPTY_BOOKMARK_LABEL }
+                            bookmarkTitle.apply {
+                                text = item.title.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
+                            }
 
                             bookmarkUrl.text = "https://${item.url}"
                             bookmarkTimestamp.text = item.timestamp?.toString("dd MMM")
