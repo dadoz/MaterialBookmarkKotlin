@@ -11,6 +11,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData: MutableLiveData<MutableList<Any>> = MutableLiveData()
@@ -27,17 +28,18 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
-            .filter { bookmark -> if (isStarFilterView) bookmark.isStar else true }
-            .toList().toObservable()
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
+                .compose(filterByStarTypeComposable(isStarFilterView))
             .compose(sortListByTitleFirstCharComposable())
             .compose(getBookmarkWithHeadersListComposable())
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
-                {error -> print(error.message)}
+                {error ->
+                    Timber.e(error)
+                }
             )
     }
+
 
 
     /**
@@ -68,9 +70,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         it
             .flatMap { list -> Observable.fromIterable(list) }
             .sorted { bookmark1, bookmark2 ->
-                if (bookmark1.title != null && bookmark2.title != null) {
-                    bookmark1.title!!.toLowerCase()[0].minus(bookmark2.title!!.toLowerCase()[0])
-                } else 0
+                (bookmark1.title?: "").compareTo(bookmark2.title?: "")
             }
             .toList()
             .toObservable()
@@ -83,7 +83,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         it.flatMap { bookmarkList -> Observable.just(ArrayList<Any>())
             .flatMap { list -> Observable.fromIterable(bookmarkList)
                 .doOnNext{ bookmark -> list.add(bookmark) }
-                .map { bookmark -> bookmark.title?.let { it[0].toLowerCase() } }
+                .map { bookmark -> bookmark.title?.let { if (it.isNullOrBlank()) "" else it.toLowerCase()[0] }?: "" }
                 .distinct()
                 .map { charRes -> charRes.toString().toUpperCase() }
                 .map { label -> BookmarkHeader(label) }
@@ -92,6 +92,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 .map{ list }
             }
         }
+    }
+
+    private fun filterByStarTypeComposable(isStarFilterView: Boolean) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+        it
+            .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
+            .filter { bookmark -> if (isStarFilterView) bookmark.isStar else true }
+            .toList().toObservable()
     }
 
     fun setStarBookmark(bookmark: Bookmark) {
