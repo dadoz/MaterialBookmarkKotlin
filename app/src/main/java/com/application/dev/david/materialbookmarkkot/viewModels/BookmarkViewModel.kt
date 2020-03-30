@@ -12,6 +12,7 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData: MutableLiveData<MutableList<Any>> = MutableLiveData()
@@ -29,7 +30,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
-                .compose(filterByStarTypeComposable(isStarFilterView))
+            .compose(filterByStarTypeComposable(isStarFilterView))
             .compose(sortListByTitleFirstCharComposable())
             .compose(getBookmarkWithHeadersListComposable())
             .subscribe(
@@ -101,6 +102,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .toList().toObservable()
     }
 
+    private fun filterByTitleComposable(query: String) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+        it
+            .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
+            .filter { bookmark -> (bookmark.title?: "").contains(query, true) }
+            .toList().toObservable()
+    }
+
     fun setStarBookmark(bookmark: Bookmark) {
         val disposable = Observable.just(bookmark)
             .subscribeOn(Schedulers.io())
@@ -108,5 +116,23 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .map(bookmarkListDataRepository::updateBookmark)
             .subscribe({ success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
+    }
+
+    fun searchBookmarkByTitle(query: String) {
+        val disposable = Observable.just("")
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .flatMap { bookmarkListDataRepository.getBookmarks() }
+            .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
+            .compose(filterByTitleComposable(query))
+            .compose(sortListByTitleFirstCharComposable())
+            .compose(getBookmarkWithHeadersListComposable())
+            .subscribe(
+                {result -> bookmarksLiveData.value = result },
+                {error ->
+                    Timber.e(error)
+                }
+            )
     }
 }

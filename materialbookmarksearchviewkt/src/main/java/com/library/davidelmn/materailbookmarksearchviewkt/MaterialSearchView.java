@@ -332,37 +332,49 @@ public class MaterialSearchView extends LinearLayout implements
         mSearchInputEditText.removeTextChangedListener(mSearchTextChangedListener);
         mSearchInputEditText.addTextChangedListener(mSearchTextChangedListener);
 
-        mOnEditorActionListener = new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int imeActionId, KeyEvent keyEvent) {
-                return keyEvent != null
-                        && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER
-                        || imeActionId == EditorInfo.IME_ACTION_DONE
-                        || keyEvent.getKeyCode() == KeyEvent.KEYCODE_SEARCH)
-                        && search(getSearchText());
-            }
-        };
+        mOnEditorActionListener = (textView, imeActionId, keyEvent) -> keyEvent != null
+                && (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                || imeActionId == EditorInfo.IME_ACTION_DONE
+                || keyEvent.getKeyCode() == KeyEvent.KEYCODE_SEARCH)
+                && search(getSearchText());
         mSearchInputEditText.setOnEditorActionListener(mOnEditorActionListener);
 
-        mSearchInputEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean focused) {
-                String currentText = getSearchText();
-                if (mInteractionListeners != null) {
-                    for (SearchViewInteractionListener listener : mInteractionListeners) {
-                        listener.onSearchViewFocusChanged(focused);
-                    }
+        mSearchInputEditText.setOnFocusChangeListener((view, focused) -> {
+            String currentText = getSearchText();
+
+            //run all listener
+            if (mInteractionListeners != null) {
+                for (SearchViewInteractionListener listener : mInteractionListeners) {
+                    listener.onSearchViewFocusChanged(focused);
                 }
-                if (focused) {
-                    if (currentText.length() > 0) {
-                        moveToState(STATE_FOCUSED_TEXT_PRESENT);
-                    } else {
-                        moveToState(STATE_FOCUSED_EMPTY);
+            }
+            //if focused
+            if (focused) {
+                moveToState(currentText.length() > 0 ? STATE_FOCUSED_TEXT_PRESENT : STATE_FOCUSED_EMPTY);
+                moveCursorToEnd();
+            }
+        });
+
+        mSearchInputEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //run all listener
+                if (mSearchListeners != null) {
+                    for (SearchViewSearchListener listener : mSearchListeners) {
+                        listener.onSearch(s.toString());
                     }
-                    moveCursorToEnd();
                 }
             }
         });
+
     }
 
     private Runnable getOrCreateEmptyTextRunnable() {

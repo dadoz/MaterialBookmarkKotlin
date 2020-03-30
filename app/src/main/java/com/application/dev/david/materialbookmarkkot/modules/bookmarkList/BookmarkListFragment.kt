@@ -3,8 +3,10 @@ package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.Bookma
 import com.application.dev.david.materialbookmarkkot.preferences.booleanPreference
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
@@ -53,11 +56,21 @@ class BookmarkListFragment : Fragment()  {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onInitSearchView()
         onInitAppBarMenu()
         initView()
     }
 
+    /**
+     *
+     */
+    private fun onInitSearchView() {
+        mbMaterialSearchVIewId.addListener(MaterialSearchView.SearchViewSearchListener {
+            Log.e("tag", it)
+            bookmarkViewModel.searchBookmarkByTitle(it)
+        })
+
+    }
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
