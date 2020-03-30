@@ -21,11 +21,12 @@ import khronos.toString
 import kotlinx.android.synthetic.main.bookmark_view_item.*
 
 class BookmarkListAdapter(private var items: MutableList<Any>,
+                          private val isBookmarkCardViewType: Boolean,
                           private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
                           private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val EMPTY_BOOKMARK_LABEL = "Title..."
-    public enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
+    enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -55,9 +56,11 @@ class BookmarkListAdapter(private var items: MutableList<Any>,
                         holder.apply {
                             bookmarkTitle.apply {
                                 text = item.title.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
+                                setLines( if (isBookmarkCardViewType) 1 else 2)
                             }
 
                             bookmarkUrl.text = "https://${item.url}"
+
                             bookmarkTimestamp.text = item.timestamp?.toString("dd MMM")
                             itemView.setOnClickListener {
                                 onBookmarkItemClicked(position, item)

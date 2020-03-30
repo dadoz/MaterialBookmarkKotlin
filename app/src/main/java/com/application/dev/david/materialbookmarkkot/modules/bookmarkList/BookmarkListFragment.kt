@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
@@ -28,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
+import okhttp3.internal.notifyAll
 
 
 class BookmarkListFragment : Fragment()  {
@@ -86,12 +88,14 @@ class BookmarkListFragment : Fragment()  {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderListFilterIconId ->  {
-                        setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
+                        mbBookmarkRecyclerViewId.setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
+                        //update isBookmarkCardViewType
                         isBookmarkCardViewType = false
                         replaceMenu(R.menu.menu_bookmark_list_with_cards)
                     }
                     R.id.mbBookmarkHeaderCardFilterIconId -> {
-                        setGridOrListLayout(MB_CARD_VIEW_TYPE.ordinal, 2)
+                        mbBookmarkRecyclerViewId.setGridOrListLayout(MB_CARD_VIEW_TYPE.ordinal, 2)
+                        //update isBookmarkCardViewType
                         isBookmarkCardViewType = true
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
@@ -138,6 +142,7 @@ class BookmarkListFragment : Fragment()  {
                 }
 
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
+                    isBookmarkCardViewType,
                     { position, bookmark ->  openPreviewView(position, bookmark) },
                     { position, bookmark ->
                         bookmark.isStar = !bookmark.isStar //toggling status
@@ -211,30 +216,6 @@ class BookmarkListFragment : Fragment()  {
         }
 
 
-    /**
-     * todo refactor this fx
-     */
-    private fun setGridOrListLayout(viewType: Int, newSpanCount: Int) {
-        mbBookmarkRecyclerViewId.apply {
-            (layoutManager as GridLayoutManager).apply {
-                this.spanSizeLookup = object : SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when ((adapter as BookmarkListAdapter).getSpanSizeByPosition(position)) {
-                            BOOKMARK_HEADER_TYPE.ordinal -> when(viewType)  {
-                                0 -> 1
-                                else -> 2
-                            }
-                            else -> 1
-                        }
-                    }
-                }
-                //set span
-                this.spanCount = newSpanCount
-            }
-            adapter?.notifyDataSetChanged()
-        }
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -249,4 +230,28 @@ class BookmarkListFragment : Fragment()  {
         listener = null
     }
 
+}
+
+/***
+ * extension class :P
+ */
+fun RecyclerView.setGridOrListLayout(viewType: Int, newSpanCount: Int) {
+    this.apply {
+        (layoutManager as GridLayoutManager).apply {
+            this.spanSizeLookup = object : SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when ((adapter as BookmarkListAdapter).getSpanSizeByPosition(position)) {
+                        BOOKMARK_HEADER_TYPE.ordinal -> when(viewType)  {
+                            0 -> 1
+                            else -> 2
+                        }
+                        else -> 1
+                    }
+                }
+            }
+            //set span
+            this.spanCount = newSpanCount
+        }
+        adapter?.notifyDataSetChanged()
+    }
 }
