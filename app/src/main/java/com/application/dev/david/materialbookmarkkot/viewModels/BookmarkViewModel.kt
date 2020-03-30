@@ -19,6 +19,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<Int, MutableList<Any>?>> = MutableLiveData()
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
     var isEmptyDataList: MutableLiveData<Boolean> = MutableLiveData(false)
+    var bookmarkListSize: MutableLiveData<String> = MutableLiveData()
     private val bookmarkListDataRepository: BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     private val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()
     /**
@@ -31,8 +32,9 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
             .compose(filterByStarTypeComposable(isStarFilterView))
+            .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
             .compose(sortListByTitleFirstCharComposable())
-            .compose(getBookmarkWithHeadersListComposable())
+            .compose(getBookmarkWithHeadersListComposable(isStarFilterView))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error ->
@@ -52,6 +54,9 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(bookmarkListDataRepository::deleteBookmark)
+            .doOnNext { _ -> bookmarkListSize.value =
+                bookmarkListSize.value?.toInt()?.minus(1).toString()
+            }
             .subscribe({ success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
     }
@@ -80,19 +85,28 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * composable to add Header on bookmark
      */
-    private fun getBookmarkWithHeadersListComposable() = ObservableTransformer<MutableList<Bookmark>, MutableList<Any>> {
-        it.flatMap { bookmarkList -> Observable.just(ArrayList<Any>())
-            .flatMap { list -> Observable.fromIterable(bookmarkList)
-                .doOnNext{ bookmark -> list.add(bookmark) }
-                .map { bookmark -> bookmark.title?.let { if (it.isNullOrBlank()) "" else it.toLowerCase()[0] }?: "" }
-                .distinct()
-                .map { charRes -> charRes.toString().toUpperCase() }
-                .map { label -> BookmarkHeader(label) }
-                .doOnNext{ bookmarkHeader -> list.add(list.size -1, bookmarkHeader) }
-                .toList().toObservable()
-                .map{ list }
+    private fun getBookmarkWithHeadersListComposable(isStarFilterView: Boolean) = ObservableTransformer<MutableList<Bookmark>, MutableList<Any>> {
+        it
+            .flatMap { bookmarkList ->
+                if (!isStarFilterView) {
+                    Observable.just(ArrayList<Any>())
+                        .flatMap { list ->
+                            Observable.fromIterable(bookmarkList)
+                                .doOnNext { bookmark -> list.add(bookmark) }
+                                .map { bookmark ->
+                                    bookmark.title?.let { if (it.isNullOrBlank()) "" else it.toLowerCase()[0] }
+                                        ?: ""
+                                }
+                                .distinct()
+                                .map { charRes -> charRes.toString().toUpperCase() }
+                                .map { label -> BookmarkHeader(label) }
+                                .doOnNext { bookmarkHeader -> list.add(list.size - 1, bookmarkHeader) }
+                                .toList().toObservable()
+                                .map { list }
+                        }
+                } else
+                    Observable.just(bookmarkList as MutableList<Any>)
             }
-        }
     }
 
     private fun filterByStarTypeComposable(isStarFilterView: Boolean) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
@@ -127,7 +141,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
             .compose(filterByTitleComposable(query))
             .compose(sortListByTitleFirstCharComposable())
-            .compose(getBookmarkWithHeadersListComposable())
+            .compose(getBookmarkWithHeadersListComposable(false))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error ->

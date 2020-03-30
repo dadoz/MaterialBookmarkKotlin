@@ -158,6 +158,15 @@ class BookmarkListFragment : Fragment()  {
             }
         })
 
+        bookmarkViewModel.bookmarkListSize.observe(this, Observer {
+            //update label tot
+            mbBookmarkHeaderTotBookmarkLabelId.apply {
+                text = it
+            }
+
+        })
+
+
         mbBookmarkEmptyAddNewButtonId.setOnClickListener {
             findNavController().navigate(R.id.searchBookmarkFragment)
         }
@@ -169,7 +178,6 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
         }
-
     }
 
     /**

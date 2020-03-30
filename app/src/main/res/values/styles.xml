@@ -79,6 +79,12 @@
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textSize">@dimen/text_48</item>
     </style>
+    <style name="MBMaterialTextHeaderBigThinPurple" parent="MBMaterialTextHeaderBigBrown" >
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="MBMaterialTextHeaderBigThinBlue" parent="MBMaterialTextHeaderBigThinPurple" >
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 
 
     <style name="MBMaterialTextDescrSmallPurple" parent="Widget.AppCompat.TextView" >
@@ -89,6 +95,12 @@
 
     <style name="MBMaterialTextDescrSmallBrown" parent="MBMaterialTextDescrSmallPurple" >
         <item name="android:textColor">@color/colorAccent</item>
+    </style>
+    <style name="MBMaterialTextDescrSmallThinBrown" parent="MBMaterialTextDescrSmallBrown" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+    </style>
+    <style name="MBMaterialTextDescrSmallThinPurple" parent="MBMaterialTextDescrSmallThinBrown" >
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="MBMaterialTextDescrSmallBoldBrown" parent="MBMaterialTextDescrSmallBrown" >
@@ -115,6 +127,7 @@
     </style>
     <style name="MBMaterialTextSubtitleThinPurple" parent="MBMaterialTextSubtitlePurple" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <style name="MBMaterialTextSubtitleThinBrown" parent="MBMaterialTextSubtitleBrown" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>

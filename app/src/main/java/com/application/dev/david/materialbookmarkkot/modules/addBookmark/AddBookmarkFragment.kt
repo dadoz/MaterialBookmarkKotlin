@@ -150,7 +150,8 @@ class AddBookmarkFragment : Fragment() {
                     override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                         super.onReceivedError(view, request, error)
                         view?.visibility = GONE
-                        mbBookmarkSearchedUrPlaceholderId.visibility = VISIBLE
+                        if (mbBookmarkSearchedUrPlaceholderId != null)
+                            mbBookmarkSearchedUrPlaceholderId.visibility = VISIBLE
                     }
                 }
 
