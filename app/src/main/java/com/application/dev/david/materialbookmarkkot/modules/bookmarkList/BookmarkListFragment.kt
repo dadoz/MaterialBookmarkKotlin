@@ -177,7 +177,7 @@ class BookmarkListFragment : Fragment()  {
      */
     private fun openPreviewView(position: Int, bookmark: Bookmark) =
         mbBookmarkPreviewCardviewId.apply {
-            initView(BottomSheetBehavior.from(mbBookmarkPreviewCardviewId))
+            initView(BottomSheetBehavior.from(mbBookmarkPreviewCardviewId), fab = mbBookmarkAddNewButtonId)
             initData(bookmark, bookmarkViewModel)
             setMoreButtonAction { }
 

@@ -10,6 +10,7 @@ import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.view.*
@@ -26,14 +27,21 @@ class MbBookmarkPreviewView : RelativeLayout {
     }
     private var previewBehaviourView: BottomSheetBehavior<View>? = null
 
-    fun initView(previewBehaviourView: BottomSheetBehavior<View>) {
+    fun initView(previewBehaviourView: BottomSheetBehavior<View>, fab: FloatingActionButton) {
         this.previewBehaviourView = previewBehaviourView
         previewBehaviourView.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when(newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> mbBookmarkPreviewCardviewId.setPreviewVisible(true)
-                    else -> mbBookmarkPreviewCardviewId.setPreviewVisible(true)
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        fab.animate().scaleX(0F).scaleY(0F).setDuration(300).start()
+                        mbBookmarkPreviewCardviewId.setPreviewVisible(true)
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        fab.animate().scaleX(1F).scaleY(1F).setDuration(300).start()
+                        mbBookmarkPreviewCardviewId.setPreviewVisible(true)
+                    }
+                    else -> {}
                 }
             }
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -60,9 +68,7 @@ class MbBookmarkPreviewView : RelativeLayout {
             putExtra(Intent.EXTRA_TEXT, bookmark.toString())
             type = "text/plain"
         }
-        mbBookmarkPreviewHeaderCardViewId.setOnClickListener {
-            callbackAction.invoke(sendIntent)
-        }
+
         mbShareBookmarkActionId.setOnClickListener {
             callbackAction.invoke(sendIntent)
         }
