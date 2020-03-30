@@ -119,8 +119,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun searchBookmarkByTitle(query: String) {
-        val disposable = Observable.just("")
-            .debounce(300, TimeUnit.MILLISECONDS)
+        val disposable = Observable.just(query)
+            .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
