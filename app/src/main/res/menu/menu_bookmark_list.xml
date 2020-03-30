@@ -5,26 +5,26 @@
             android:id="@+id/mbBookmarkHeaderHomeFilterIconId"
             android:icon="@drawable/ic_home"
             android:visible="true"
-            android:tint="@color/colorPrimaryLight"
+            app:iconTint="@color/colorPrimaryLight"
             android:title="HOME"
             app:showAsAction="always"/>
     <item
             android:id="@+id/mbBookmarkHeaderStarFilterIconId"
             android:icon="@drawable/ic_star_filter"
-            android:tint="@color/colorPrimaryLight"
+            app:iconTint="@color/colorPrimaryLight"
             android:title="STAR"
             app:showAsAction="always"/>
 
     <item
             android:id="@+id/mbBookmarkHeaderListFilterIconId"
             android:icon="@drawable/ic_bookmark_list_filter"
-            android:tint="@color/colorPrimaryLight"
+            app:iconTint="@color/colorPrimaryLight"
             android:title="LIST"
             app:showAsAction="always"/>
     <item
             android:id="@+id/mbBookmarkHeaderCardFilterIconId"
             android:icon="@drawable/ic_bookmark_tab_filter"
-            android:tint="@color/colorPrimaryLight"
+            app:iconTint="@color/colorPrimaryLight"
             android:visible="false"
             android:title="CARD"
             app:showAsAction="always"/>
