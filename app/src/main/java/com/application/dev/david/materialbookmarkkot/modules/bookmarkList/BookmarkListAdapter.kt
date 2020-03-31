@@ -21,7 +21,7 @@ import khronos.toString
 import kotlinx.android.synthetic.main.bookmark_view_item.*
 
 class BookmarkListAdapter(private var items: MutableList<Any>,
-                          private val isBookmarkCardViewType: Boolean,
+                          private var isBookmarkCardViewType: Boolean,
                           private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
                           private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -110,6 +110,11 @@ class BookmarkListAdapter(private var items: MutableList<Any>,
             is Bookmark -> BOOKMARK_VIEW_TYPE.ordinal
             else -> BOOKMARK_VIEW_TYPE.ordinal
         }
+    }
+
+    fun setIsBookmarkCardViewType(isBookmarkCardViewType: Boolean) {
+        this.isBookmarkCardViewType = isBookmarkCardViewType
+        notifyDataSetChanged()
     }
 
     /**

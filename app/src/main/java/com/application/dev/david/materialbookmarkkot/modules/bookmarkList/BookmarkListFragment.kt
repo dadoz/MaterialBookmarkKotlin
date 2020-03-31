@@ -89,14 +89,16 @@ class BookmarkListFragment : Fragment()  {
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderListFilterIconId ->  {
                         mbBookmarkRecyclerViewId.setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
-                        //update isBookmarkCardViewType
                         isBookmarkCardViewType = false
+                        //update isBookmarkCardViewType
+                        mbBookmarkRecyclerViewId.adapter?.let { (it as BookmarkListAdapter).setIsBookmarkCardViewType(isBookmarkCardViewType) }
                         replaceMenu(R.menu.menu_bookmark_list_with_cards)
                     }
                     R.id.mbBookmarkHeaderCardFilterIconId -> {
                         mbBookmarkRecyclerViewId.setGridOrListLayout(MB_CARD_VIEW_TYPE.ordinal, 2)
-                        //update isBookmarkCardViewType
                         isBookmarkCardViewType = true
+                        //update isBookmarkCardViewType
+                        mbBookmarkRecyclerViewId.adapter?.let { (it as BookmarkListAdapter).setIsBookmarkCardViewType(isBookmarkCardViewType) }
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
