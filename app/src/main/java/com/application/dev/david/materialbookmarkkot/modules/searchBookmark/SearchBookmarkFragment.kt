@@ -87,7 +87,7 @@ class SearchBookmarkFragment : Fragment() {
      */
     private fun initActionBar() {
         (activity as AppCompatActivity).setSupportActionBar(mbToolbarId)
-//        mbToolbarId.changeToolbarFont()
+        mbToolbarId.changeToolbarFont()
         mbToolbarId.title = getString(R.string.search_actionbar_string)
         mbToolbarId.visibility = View.VISIBLE
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)

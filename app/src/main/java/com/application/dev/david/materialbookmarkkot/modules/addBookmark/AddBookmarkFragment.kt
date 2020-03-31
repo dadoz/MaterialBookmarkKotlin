@@ -106,7 +106,7 @@ class AddBookmarkFragment : Fragment() {
      */
     private fun initActionBar() {
         (activity as AppCompatActivity).setSupportActionBar(mbToolbarId)
-//        mbToolbarId.changeToolbarFont()
+        mbToolbarId.changeToolbarFont()
         mbToolbarId.title = getString(R.string.add_actionbar_string)
         mbToolbarId.visibility = VISIBLE
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
