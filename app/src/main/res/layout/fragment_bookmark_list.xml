@@ -53,25 +53,53 @@
                     android:id="@+id/mbBookmarkHeaderSortFilterLabelId"
                     style="@style/MBMaterialTextDescrSmallPurple"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toStartOf="@+id/mbBookmarkHeaderSortFilterIconId"
+                    app:layout_constraintEnd_toStartOf="@+id/mbBookmarkHeaderSortFilterActionsLayoutId"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="by date"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/mbBookmarkHeaderSortFilterIconId"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_alignParentEnd="true"
-                    app:tint="@color/colorPrimary"
+            <LinearLayout
+                    android:id="@+id/mbBookmarkHeaderSortFilterActionsLayoutId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="@dimen/icon_filter_bookmark"
-                    android:layout_height="@dimen/icon_filter_bookmark"
-                    android:layout_margin="@dimen/margin_8"
-                    android:src="@drawable/ic_bookmark_sort"/>
+                    app:layout_constraintBottom_toBottomOf="parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mbBookmarkHeaderSortFilterByDateIconId"
+                        android:background="?attr/selectableItemBackground"
+                        app:tint="@color/colorPrimary"
+                        android:layout_width="@dimen/icon_filter_bookmark"
+                        android:layout_height="@dimen/icon_filter_bookmark"
+                        android:layout_margin="@dimen/margin_8"
+                        android:src="@drawable/ic_time_clock_circle"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mbBookmarkHeaderSortFilterByTitleIconId"
+                        android:background="?attr/selectableItemBackground"
+                        app:tint="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="@dimen/icon_filter_bookmark"
+                        android:layout_height="@dimen/icon_filter_bookmark"
+                        android:layout_margin="@dimen/margin_8"
+                        android:src="@drawable/ic_font_size"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mbBookmarkHeaderSortFilterIconId"
+                        android:background="?attr/selectableItemBackground"
+                        app:tint="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="@dimen/icon_filter_bookmark"
+                        android:layout_height="@dimen/icon_filter_bookmark"
+                        android:layout_margin="@dimen/margin_8"
+                        android:src="@drawable/ic_reorder_down"/>
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

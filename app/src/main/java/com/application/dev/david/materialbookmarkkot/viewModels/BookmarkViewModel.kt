@@ -69,6 +69,56 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         bookmarksRemovedBookmarkPairData.value = Pair(position, bookmarksLiveData.value)
     }
 
+    /**
+     * composable to add Header on bookmark
+     */
+    fun setStarBookmark(bookmark: Bookmark) {
+        val disposable = Observable.just(bookmark)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(bookmarkListDataRepository::updateBookmark)
+            .subscribe({ success -> bookmarkDeletionSuccess.value = true },
+                { error -> bookmarkDeletionSuccess.value = false; })
+    }
+
+    /**
+     * composable to add Header on bookmark
+     */
+    fun searchBookmarkByTitle(query: String) {
+        val disposable = Observable.just(query)
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .flatMap { bookmarkListDataRepository.getBookmarks() }
+            .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
+            .compose(filterByTitleComposable(query))
+            .compose(sortListByTitleFirstCharComposable())
+            .compose(getBookmarkWithHeadersListComposable(false))
+            .subscribe(
+                {result -> bookmarksLiveData.value = result },
+                {error ->
+                    Timber.e(error)
+                }
+            )
+    }
+
+    /**
+     * composable to add Header on bookmark
+     */
+    fun sortBookmarkAscending(isSortAscending: Boolean) {
+        val disposable = Observable.just(bookmarksLiveData.value)
+            .map { res -> res }
+            .compose(sortListByTitleGenericComposable(isSortAscending))
+            .subscribe(
+                {result -> bookmarksLiveData.value = result },
+                {error ->
+                    Timber.e(error)
+                }
+            )
+
+    }
+
+
     /***
      * compsable with filter on first char title
      */
@@ -80,6 +130,25 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             }
             .toList()
             .toObservable()
+    }
+
+    /***
+     * compsable with filter on first char title
+     */
+    private fun sortListByTitleGenericComposable(isAscending: Boolean) = ObservableTransformer<MutableList<Any>, MutableList<Any>> {
+        it
+            .flatMap { list -> Observable.fromIterable(list) }
+            .filter { item -> item is Bookmark }
+            .map { item -> item as Bookmark }
+            .sorted { item1, item2 ->
+                when (isAscending) {
+                    true -> (item1.title ?: "").compareTo(item2.title ?: "")
+                    false -> (item2.title ?: "").compareTo(item1.title ?: "")
+                }
+            }
+            .toList()
+            .toObservable()
+            .compose(getBookmarkWithHeadersListComposable(false))
     }
 
     /**
@@ -109,6 +178,9 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             }
     }
 
+    /**
+     * composable to add Header on bookmark
+     */
     private fun filterByStarTypeComposable(isStarFilterView: Boolean) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
         it
             .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
@@ -116,37 +188,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .toList().toObservable()
     }
 
+    /**
+     * composable to add Header on bookmark
+     */
     private fun filterByTitleComposable(query: String) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
         it
             .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
             .filter { bookmark -> (bookmark.title?: "").contains(query, true) }
             .toList().toObservable()
-    }
-
-    fun setStarBookmark(bookmark: Bookmark) {
-        val disposable = Observable.just(bookmark)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map(bookmarkListDataRepository::updateBookmark)
-            .subscribe({ success -> bookmarkDeletionSuccess.value = true },
-                { error -> bookmarkDeletionSuccess.value = false; })
-    }
-
-    fun searchBookmarkByTitle(query: String) {
-        val disposable = Observable.just(query)
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
-            .compose(filterByTitleComposable(query))
-            .compose(sortListByTitleFirstCharComposable())
-            .compose(getBookmarkWithHeadersListComposable(false))
-            .subscribe(
-                {result -> bookmarksLiveData.value = result },
-                {error ->
-                    Timber.e(error)
-                }
-            )
     }
 }

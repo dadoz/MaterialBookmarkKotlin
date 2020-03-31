@@ -35,6 +35,7 @@ import okhttp3.internal.notifyAll
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
     var isBookmarkCardViewType: Boolean by booleanPreference("MB_IS_CARD_VIEw_TYPE", true)
+    var isSortAscending: Boolean by booleanPreference("MB_IS_SORT_ASCENDING", true)
     enum class BookmarkListViewTpeEnum { MB_LIST_VIEW_TYPE, MB_CARD_VIEW_TYPE }
 
     private val bookmarkViewModel by lazy {
@@ -90,14 +91,12 @@ class BookmarkListFragment : Fragment()  {
                     R.id.mbBookmarkHeaderListFilterIconId ->  {
                         mbBookmarkRecyclerViewId.setGridOrListLayout(MB_LIST_VIEW_TYPE.ordinal, 1)
                         isBookmarkCardViewType = false
-                        //update isBookmarkCardViewType
                         mbBookmarkRecyclerViewId.adapter?.let { (it as BookmarkListAdapter).setIsBookmarkCardViewType(isBookmarkCardViewType) }
                         replaceMenu(R.menu.menu_bookmark_list_with_cards)
                     }
                     R.id.mbBookmarkHeaderCardFilterIconId -> {
                         mbBookmarkRecyclerViewId.setGridOrListLayout(MB_CARD_VIEW_TYPE.ordinal, 2)
                         isBookmarkCardViewType = true
-                        //update isBookmarkCardViewType
                         mbBookmarkRecyclerViewId.adapter?.let { (it as BookmarkListAdapter).setIsBookmarkCardViewType(isBookmarkCardViewType) }
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
@@ -183,7 +182,14 @@ class BookmarkListFragment : Fragment()  {
         }
 
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
-            Toast.makeText(context, "hey you clicked Bla", Toast.LENGTH_LONG).show()
+            isSortAscending = !isSortAscending
+            bookmarkViewModel.sortBookmarkAscending(isSortAscending)
+        }
+        mbBookmarkHeaderSortFilterByTitleIconId.setOnClickListener {
+//            bookmarkViewModel.sortBookmarkByTitle()
+        }
+        mbBookmarkHeaderSortFilterByDateIconId.setOnClickListener {
+//            bookmarkViewModel.sortBookmarkByDate()
         }
     }
 
