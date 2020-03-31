@@ -25,7 +25,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * retrieve bookamr list
      */
-    fun retrieveBookmarkList(isStarFilterView: Boolean = false) {
+    fun retrieveBookmarkList(isStarFilterView: Boolean = false, isSortAscending: Boolean = true) {
         val disposable = Observable.just("")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -34,6 +34,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .compose(filterByStarTypeComposable(isStarFilterView))
             .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
             .compose(sortListByTitleFirstCharComposable())
+            .compose(sortListByTitleGenericComposable(isSortAscending))
             .compose(getBookmarkWithHeadersListComposable(isStarFilterView))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
@@ -107,8 +108,12 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      */
     fun sortBookmarkAscending(isSortAscending: Boolean) {
         val disposable = Observable.just(bookmarksLiveData.value)
-            .map { res -> res }
+            .flatMap { list -> Observable.fromIterable(list) }
+            .filter { item -> item is Bookmark }
+            .map { item -> item as Bookmark }
+            .toList().toObservable()
             .compose(sortListByTitleGenericComposable(isSortAscending))
+            .compose(getBookmarkWithHeadersListComposable(false))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error ->
@@ -135,11 +140,9 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /***
      * compsable with filter on first char title
      */
-    private fun sortListByTitleGenericComposable(isAscending: Boolean) = ObservableTransformer<MutableList<Any>, MutableList<Any>> {
+    private fun sortListByTitleGenericComposable(isAscending: Boolean) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
         it
             .flatMap { list -> Observable.fromIterable(list) }
-            .filter { item -> item is Bookmark }
-            .map { item -> item as Bookmark }
             .sorted { item1, item2 ->
                 when (isAscending) {
                     true -> (item1.title ?: "").compareTo(item2.title ?: "")
@@ -148,7 +151,6 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             }
             .toList()
             .toObservable()
-            .compose(getBookmarkWithHeadersListComposable(false))
     }
 
     /**

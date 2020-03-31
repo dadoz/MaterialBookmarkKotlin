@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -69,7 +70,6 @@ class BookmarkListFragment : Fragment()  {
      */
     private fun onInitSearchView() {
         mbMaterialSearchVIewId.addListener(MaterialSearchView.SearchViewSearchListener {
-            Log.e("tag", it)
             bookmarkViewModel.searchBookmarkByTitle(it)
         })
 
@@ -105,7 +105,7 @@ class BookmarkListFragment : Fragment()  {
                         bookmarkViewModel.retrieveBookmarkList(isStarFilterView)
                     }
                     R.id.mbBookmarkHeaderHomeFilterIconId -> {
-                        bookmarkViewModel.retrieveBookmarkList()
+                        bookmarkViewModel.retrieveBookmarkList(isSortAscending = isSortAscending)
                     }
                 }
                 true
@@ -117,7 +117,7 @@ class BookmarkListFragment : Fragment()  {
      */
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
-        bookmarkViewModel.retrieveBookmarkList()
+        bookmarkViewModel.retrieveBookmarkList(isSortAscending = isSortAscending)
 
         //event update list
         bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(this, Observer { pairData ->
@@ -184,13 +184,16 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             isSortAscending = !isSortAscending
             bookmarkViewModel.sortBookmarkAscending(isSortAscending)
+            mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(isSortAscending)
         }
+            
         mbBookmarkHeaderSortFilterByTitleIconId.setOnClickListener {
 //            bookmarkViewModel.sortBookmarkByTitle()
         }
         mbBookmarkHeaderSortFilterByDateIconId.setOnClickListener {
 //            bookmarkViewModel.sortBookmarkByDate()
         }
+        mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(isSortAscending)
     }
 
     /**
@@ -238,6 +241,13 @@ class BookmarkListFragment : Fragment()  {
         listener = null
     }
 
+}
+
+fun ImageView.setIconDependingOnSortAscending(isSortAscending: Boolean) {
+    when (isSortAscending) {
+        true -> setImageResource(R.drawable.ic_reorder_up)
+        false -> setImageResource(R.drawable.ic_reorder_down)
+    }
 }
 
 /***
