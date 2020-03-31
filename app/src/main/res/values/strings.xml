@@ -10,6 +10,7 @@
     <string name="search_actionbar_string">Search Bookmarks</string>
     <string name="add_actionbar_string">Add new Bookmark</string>
     <string name="delete_fulle_descr_label_text">Sure you want delete\nyour bookmark permanently?</string>
+    <string name="settings_actionbar_string">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

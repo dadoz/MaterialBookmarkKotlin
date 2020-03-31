@@ -5,6 +5,7 @@ import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipDescription.MIMETYPE_TEXT_URILIST
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
+import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
@@ -78,6 +80,7 @@ class SearchBookmarkFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> navigation?.popBackStack()
+            R.id.menuSettingsActionId -> startActivity(Intent(context, SettingsActivity::class.java))
         }
         return true
     }

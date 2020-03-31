@@ -27,8 +27,9 @@ import androidx.navigation.fragment.navArgs
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.databinding.FragmentAddBookmarkBinding
-import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
-import com.application.dev.david.materialbookmarkkot.ui.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
+import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
+import com.application.dev.david.materialbookmarkkot.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
+import com.application.dev.david.materialbookmarkkot.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
@@ -97,6 +98,7 @@ class AddBookmarkFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> navigation?.popBackStack()
+            R.id.menuSettingsActionId -> startActivity(Intent(context, SettingsActivity::class.java))
         }
         return true
     }

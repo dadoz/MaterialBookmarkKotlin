@@ -100,7 +100,7 @@
             app:layout_anchor="@id/mbBookmarkBottomBarLayoutId" />
 
     <!-- preivew view-->
-    <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkPreviewView
+    <com.application.dev.david.materialbookmarkkot.ui.views.MbBookmarkPreviewView
             android:id="@+id/mbBookmarkPreviewCardviewId"
             app:behavior_hideable="true"
             app:behavior_peekHeight="0dp"

@@ -28,5 +28,4 @@
             android:visible="false"
             android:title="CARD"
             app:showAsAction="always"/>
-
 </menu>

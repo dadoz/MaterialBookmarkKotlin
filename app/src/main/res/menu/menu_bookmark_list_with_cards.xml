@@ -28,5 +28,4 @@
             app:iconTint="@color/colorPrimaryLight"
             android:title="CARD"
             app:showAsAction="always"/>
-
 </menu>

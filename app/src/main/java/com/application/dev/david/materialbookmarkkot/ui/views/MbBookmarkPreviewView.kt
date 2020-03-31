@@ -1,4 +1,4 @@
-package com.application.dev.david.materialbookmarkkot.ui
+package com.application.dev.david.materialbookmarkkot.ui.views
 
 import android.content.Context
 import android.content.Intent
@@ -11,8 +11,6 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.add_bookmark_preview_view.view.*
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.view.*
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.view.*

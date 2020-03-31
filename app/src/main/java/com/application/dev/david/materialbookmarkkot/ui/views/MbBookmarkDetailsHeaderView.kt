@@ -1,4 +1,4 @@
-package com.application.dev.david.materialbookmarkkot.ui
+package com.application.dev.david.materialbookmarkkot.ui.views
 
 import android.content.Context
 import android.util.AttributeSet

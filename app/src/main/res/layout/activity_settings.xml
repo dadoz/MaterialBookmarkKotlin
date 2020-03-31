@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_16"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/mbSettingsAppBarLayoutId"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@android:color/background_light"
+            android:colorControlNormal="@color/colorAccent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/mbSettingsToolbarId"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/colorAccent"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mbSettingsTitleTextViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/mbSettingsAppBarLayoutId"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/MBMaterialTextHeaderBrown"
+            android:text="Settings"
+            />
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mbSettingsRecyeclerViewId"
+            app:layout_constraintTop_toBottomOf="@+id/mbSettingsTitleTextViewId"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

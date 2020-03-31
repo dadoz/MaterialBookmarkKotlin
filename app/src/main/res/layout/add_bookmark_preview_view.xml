@@ -17,7 +17,7 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <com.application.dev.david.materialbookmarkkot.ui.MbBookmarkEditTitleView
+            <com.application.dev.david.materialbookmarkkot.ui.views.MbBookmarkEditTitleView
                     android:id="@+id/mbNewBookmarkEditTitleViewId"
                     android:layout_toStartOf="@+id/mbNewBookmarkIconImageViewId"
                     android:layout_centerInParent="true"
