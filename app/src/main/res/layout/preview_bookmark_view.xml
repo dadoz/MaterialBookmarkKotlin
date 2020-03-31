@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         tools:visibility="visible"
@@ -53,22 +52,26 @@
                                         android:tint="@color/colorAccent"
                                         android:src="@drawable/ic_edit_pencil"/>
                         </RelativeLayout>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/mbBookmarkPreviewMoreButtonId"
-                                android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
+                        <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignBaseline="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
-                                style="@style/MBMaterialTextSubtitleBrown"
-                                android:text="@string/more_label_text"/>
-                        <com.google.android.material.button.MaterialButton
-                                android:id="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
-                                android:layout_below="@+id/mbBookmarkPreviewActionLayoutId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                style="@style/MBMaterialButtonStyleOutlinePurple"
-                                android:text="@string/open_in_browser_label_text"/>
+                                android:layout_below="@+id/mbBookmarkPreviewActionLayoutId">
+                                <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/mbBookmarkPreviewMoreButtonId"
+                                        android:layout_width="@dimen/icon_size"
+                                        android:layout_height="@dimen/icon_size"
+                                        android:layout_centerVertical="true"
+                                        style="@style/MBMaterialTextSubtitleBrown"
+                                        android:src="@drawable/ic_arrow_down"/>
+                                <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        style="@style/MBMaterialButtonStylePurple"
+                                        android:text="@string/open_in_browser_label_text"/>
+                        </RelativeLayout>
+
                 </RelativeLayout>
 
                 <LinearLayout

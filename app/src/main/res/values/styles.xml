@@ -81,6 +81,7 @@
     </style>
     <style name="MBMaterialTextHeaderBigThinPurple" parent="MBMaterialTextHeaderBigBrown" >
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">52sp</item>
     </style>
     <style name="MBMaterialTextHeaderBigThinBlue" parent="MBMaterialTextHeaderBigThinPurple" >
         <item name="android:textColor">@color/colorAccent</item>
