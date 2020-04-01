@@ -114,10 +114,6 @@ class BookmarkListAdapter(
         }
     }
 
-    fun setIsBookmarkCardViewType(bookmarkFilter: BookmarkFilter) {
-        notifyDataSetChanged()
-    }
-
     /**
      * view holder
      */

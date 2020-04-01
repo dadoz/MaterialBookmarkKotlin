@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
-    val bookmarkFilters: BookmarkFilter = BookmarkFilter(IS_GRID, IS_ASCENDING, IS_BY_TITLE, context)
+    private val bookmarkFilters: BookmarkFilter = BookmarkFilter(IS_GRID, IS_ASCENDING, IS_BY_TITLE, context)
     private val bookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
     }
@@ -79,23 +79,21 @@ class BookmarkListFragment : Fragment()  {
      */
     private fun onInitAppBarMenu() {
         mbBookmarkBottomBarLayoutId.apply {
-            when (bookmarkFilters.isGridViewType()) {
-                true -> replaceMenu(R.menu.menu_bookmark_list)
-                false -> replaceMenu(R.menu.menu_bookmark_list_with_cards)
+            when (bookmarkFilters.listViewType) {
+                IS_GRID.ordinal -> replaceMenu(R.menu.menu_bookmark_list)
+                IS_LIST.ordinal -> replaceMenu(R.menu.menu_bookmark_list_with_cards)
             }
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderListFilterIconId ->  {
-                        mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST.ordinal, 1)
                         bookmarkFilters.setListViewType()
-                        mbBookmarkRecyclerViewId.adapter?.let { (it as BookmarkListAdapter).setIsBookmarkCardViewType(bookmarkFilter = bookmarkFilters) }//isBookmarkCardViewType) }
+                        mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST, 1)
                         replaceMenu(R.menu.menu_bookmark_list_with_cards)
                     }
                     R.id.mbBookmarkHeaderCardFilterIconId -> {
-                        mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID.ordinal, 2)
                         bookmarkFilters.setGridViewType()
-                        mbBookmarkRecyclerViewId.adapter?.let { (it as BookmarkListAdapter).setIsBookmarkCardViewType(bookmarkFilter = bookmarkFilters) }
+                        mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID, 2)
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
@@ -136,8 +134,8 @@ class BookmarkListFragment : Fragment()  {
             mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
                 when (bookmarkFilters.listViewType) {
-                    IS_GRID.ordinal -> setGridOrListLayout(IS_GRID.ordinal, 2)
-                    IS_LIST.ordinal -> setGridOrListLayout(IS_LIST.ordinal, 1)
+                    IS_GRID.ordinal -> setGridOrListLayout(IS_GRID, 2)
+                    IS_LIST.ordinal -> setGridOrListLayout(IS_LIST, 1)
                 }
 
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
@@ -154,23 +152,14 @@ class BookmarkListFragment : Fragment()  {
 
             //please replace with viewModel isEmptyDataList
             when (list.isNotEmpty()) {
-                true -> {
-                    mbBookmarkEmptyViewId.visibility =  GONE
-                }
-                false -> {
-                    mbBookmarkEmptyViewId.visibility =  VISIBLE
-                }
+                true -> mbBookmarkEmptyViewId.visibility =  GONE
+                false -> mbBookmarkEmptyViewId.visibility =  VISIBLE
             }
         })
 
         bookmarkViewModel.bookmarkListSize.observe(this, Observer {
-            //update label tot
-            mbBookmarkHeaderTotBookmarkLabelId.apply {
-                text = it
-            }
-
+            mbBookmarkHeaderTotBookmarkLabelId.apply { text = it }
         })
-
 
         mbBookmarkEmptyAddNewButtonId.setOnClickListener {
             findNavController().navigate(R.id.searchBookmarkFragment)
@@ -202,7 +191,6 @@ class BookmarkListFragment : Fragment()  {
                 bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
                 it.toggleIconFilterByDateOrTitle(mbBookmarkHeaderSortFilterByTitleIconId)
             }
-            mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
         }
     }
 
@@ -267,15 +255,18 @@ fun View.toggleIconFilterByDateOrTitle(view: View) {
 /***
  * extension class :P
  */
-fun RecyclerView.setGridOrListLayout(viewType: Int, newSpanCount: Int) {
+fun RecyclerView.setGridOrListLayout(
+    listViewType: BookmarkFilter.ListViewTypeEnum,
+    newSpanCount: Int
+) {
     this.apply {
         (layoutManager as GridLayoutManager).apply {
             this.spanSizeLookup = object : SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when ((adapter as BookmarkListAdapter).getSpanSizeByPosition(position)) {
-                        BOOKMARK_HEADER_TYPE.ordinal -> when(viewType)  {
-                            0 -> 1
-                            else -> 2
+                        BOOKMARK_HEADER_TYPE.ordinal -> when(listViewType)  {
+                            IS_LIST -> 1
+                            IS_GRID -> 2
                         }
                         else -> 1
                     }
