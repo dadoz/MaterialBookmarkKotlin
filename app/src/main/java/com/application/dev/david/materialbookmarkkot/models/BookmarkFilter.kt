@@ -50,10 +50,9 @@ class BookmarkFilter(var listViewTypeDefVal: ListViewTypeEnum, var sortOrderList
     fun isSortAscending(): Boolean =
         sortOrderList == IS_ASCENDING.ordinal
 
-    fun getVisibilityBySortType(): Int =
-        when (sortTypeList) {
-            IS_BY_TITLE.ordinal -> View.GONE
-            IS_BY_DATE.ordinal -> View.VISIBLE
+    fun getVisibilityBySortType(viewRequestType: SortTypeListEnum): Int =
+        when (viewRequestType.ordinal == sortTypeList) {
+            true -> View.GONE
             else -> View.VISIBLE
         }
 

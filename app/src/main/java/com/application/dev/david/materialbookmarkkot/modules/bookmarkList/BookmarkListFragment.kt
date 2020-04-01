@@ -176,7 +176,7 @@ class BookmarkListFragment : Fragment()  {
         }
 
         mbBookmarkHeaderSortFilterByTitleIconId.apply {
-            visibility = bookmarkFilters.getVisibilityBySortType()
+            visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_TITLE)
             setOnClickListener {
                 bookmarkFilters.setSortByTitle()
                 bookmarkViewModel.sortBookmarkByTitle(bookmarkFilters = bookmarkFilters)
@@ -185,7 +185,7 @@ class BookmarkListFragment : Fragment()  {
         }
 
         mbBookmarkHeaderSortFilterByDateIconId.apply {
-            visibility = bookmarkFilters.getVisibilityBySortType()
+            visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_DATE)
             setOnClickListener {
                 bookmarkFilters.setSortByDate()
                 bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
