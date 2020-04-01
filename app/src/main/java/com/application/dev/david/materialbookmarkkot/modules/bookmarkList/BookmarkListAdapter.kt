@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
@@ -18,12 +19,13 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import khronos.toString
-import kotlinx.android.synthetic.main.bookmark_view_item.*
 
-class BookmarkListAdapter(private var items: MutableList<Any>,
-                          private var isBookmarkCardViewType: Boolean,
-                          private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
-                          private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit) :
+class BookmarkListAdapter(
+    private var items: MutableList<Any>,
+    val bookmarkFilter: BookmarkFilter,
+    private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
+    private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val EMPTY_BOOKMARK_LABEL = "Title..."
     enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
@@ -55,8 +57,8 @@ class BookmarkListAdapter(private var items: MutableList<Any>,
                     (item as Bookmark).let {
                         holder.apply {
                             bookmarkTitle.apply {
-                                text = item.title.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
-                                setLines( if (isBookmarkCardViewType) 1 else 2)
+                                text = item.title?.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
+                                setLines(if (bookmarkFilter.isGridViewType()) 1 else 2)
                             }
 
                             bookmarkUrl.text = "https://${item.url}"
@@ -112,8 +114,7 @@ class BookmarkListAdapter(private var items: MutableList<Any>,
         }
     }
 
-    fun setIsBookmarkCardViewType(isBookmarkCardViewType: Boolean) {
-        this.isBookmarkCardViewType = isBookmarkCardViewType
+    fun setIsBookmarkCardViewType(bookmarkFilter: BookmarkFilter) {
         notifyDataSetChanged()
     }
 

@@ -6,48 +6,47 @@ import kotlin.reflect.KProperty
 
 
 import android.content.Context
-import androidx.fragment.app.Fragment
+import com.application.dev.david.materialbookmarkkot.preferences.PreferenceProperty.SharedPrefProvider
 
 /**
  * @author krzysztof.kosobudzki
  */
-private const val APP_PREF_NAME = "APP_PREF_NAME"
-
-private class PreferenceProperty<T>(
+class PreferenceProperty<T>(
     private val key: String,
     private val defaultValue: T,
     private val getter: SharedPreferences.(String, T) -> T,
     private val setter: SharedPreferences.Editor.(String, T) -> SharedPreferences.Editor
-) : ReadWriteProperty<Fragment, T> {
+) : ReadWriteProperty<SharedPrefProvider, T> {
 
-    override fun getValue(thisRef: Fragment, property: KProperty<*>): T =
-        thisRef.context!!.getPreferences()
-            .getter(key, defaultValue)
+    override fun getValue(thisRef: SharedPrefProvider, property: KProperty<*>): T =
+        thisRef.getPreferences()
+            ?.getter(key, defaultValue)?: defaultValue
 
-    override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) =
-        thisRef.context!!.getPreferences()
-            .edit()
-            .setter(key, value)
-            .apply()
+    override fun setValue(thisRef: SharedPrefProvider, property: KProperty<*>, value: T) =
+        thisRef.getPreferences()
+            ?.edit()
+            ?.setter(key, value)
+            ?.apply()?: Unit
 
-    private fun Context.getPreferences(): SharedPreferences =
-        getSharedPreferences(APP_PREF_NAME, Context.MODE_PRIVATE)
+    interface SharedPrefProvider {
+        fun getPreferences() : SharedPreferences?
+    }
 
     companion object {
-        public const val SHARED_PREF_NAME = "MATERIAL_BOOKMARK_SHARED_PREF_NAME"
+        const val SHARED_PREF_NAME = "MATERIAL_BOOKMARK_SHARED_PREF_NAME"
     }
 
 }
 
-fun intPreference(key: String, defaultValue: Int = 0) : ReadWriteProperty<Fragment, Int> =
-    PreferenceProperty(
-        key = key,
-        defaultValue = defaultValue,
-        getter = SharedPreferences::getInt,
-        setter = SharedPreferences.Editor::putInt
-    )
+fun intPreference(key: String, defaultValue: Int = 0) : ReadWriteProperty<SharedPrefProvider, Int> =
+        PreferenceProperty(
+            key = key,
+            defaultValue = defaultValue,
+            getter = SharedPreferences::getInt,
+            setter = SharedPreferences.Editor::putInt
+        )
 
-fun booleanPreference(key: String, defaultValue: Boolean = false) : ReadWriteProperty<Fragment, Boolean> =
+fun booleanPreference(key: String, defaultValue: Boolean = false) : ReadWriteProperty<SharedPrefProvider, Boolean> =
     PreferenceProperty(
         key = key,
         defaultValue = defaultValue,
@@ -55,10 +54,13 @@ fun booleanPreference(key: String, defaultValue: Boolean = false) : ReadWritePro
         setter = SharedPreferences.Editor::putBoolean
     )
 
-fun stringPreference(key: String, defaultValue: String? = null) : ReadWriteProperty<Fragment, String?> =
+fun stringPreference(key: String, defaultValue: String? = null) : ReadWriteProperty<SharedPrefProvider, String?> =
     PreferenceProperty(
         key = key,
         defaultValue = defaultValue,
         getter = SharedPreferences::getString,
         setter = SharedPreferences.Editor::putString
     )
+
+fun Context.getPreferences(): SharedPreferences =
+    getSharedPreferences(PreferenceProperty.SHARED_PREF_NAME, Context.MODE_PRIVATE)

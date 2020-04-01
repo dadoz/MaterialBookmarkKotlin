@@ -6,12 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import khronos.minus
 import khronos.toString
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -27,7 +27,10 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * retrieve bookamr list
      */
-    fun retrieveBookmarkList(isStarFilterView: Boolean = false, isSortAscending: Boolean = true) {
+    fun retrieveBookmarkList(
+        isStarFilterView: Boolean = false,
+        bookmarkFilter: BookmarkFilter
+    ) {
         val disposable = Observable.just("")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -36,7 +39,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .compose(filterByStarTypeComposable(isStarFilterView))
             .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
             .compose(sortListByTitleFirstCharComposable())
-            .compose(sortListByTitleGenericComposable(isSortAscending))
+            .compose(sortListByTitleGenericComposable(isAscending = bookmarkFilter.isSortAscending()))
             .compose(getBookmarkWithHeadersListComposable(isStarFilterView = isStarFilterView))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
@@ -106,14 +109,14 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * sort
      */
-    fun sortBookmarkAscending(isSortAscending: Boolean, isSortByTitle: Boolean = true) {
+    fun sortBookmarkAscending(bookmarkFilters: BookmarkFilter) {
         val disposable = Observable.just(bookmarksLiveData.value)
             .flatMap { list -> Observable.fromIterable(list) }
             .filter { item -> item is Bookmark }
             .map { item -> item as Bookmark }
             .toList().toObservable()
-            .compose(sortListBySortViewType(isSortAscending, isSortByTitle))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, isHeaderByTitle = isSortByTitle))
+            .compose(sortListBySortViewType(bookmarkFilters.isSortAscending(), bookmarkFilters.isSortByTitle()))
+            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, isHeaderByTitle = bookmarkFilters.isSortByTitle()))
             .subscribe(
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
@@ -123,13 +126,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      *
      */
-    fun sortBookmarkByTitle() {
+    fun sortBookmarkByTitle(bookmarkFilters: BookmarkFilter) {
         val disposable = Observable.just(bookmarksLiveData.value)
             .flatMap { list -> Observable.fromIterable(list) }
             .filter { item -> item is Bookmark }
             .map { item -> item as Bookmark }
             .toList().toObservable()
-            .compose(sortListByTitleGenericComposable(isAscending = true))
+            .compose(sortListByTitleGenericComposable(isAscending = bookmarkFilters.isSortAscending()))
             .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, isHeaderByTitle = true))
             .subscribe(
                 { result -> bookmarksLiveData.value = result },
@@ -140,13 +143,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      *
      */
-    fun sortBookmarkByDate() {
+    fun sortBookmarkByDate(bookmarkFilters: BookmarkFilter) {
         val disposable = Observable.just(bookmarksLiveData.value)
             .flatMap { list -> Observable.fromIterable(list) }
             .filter { item -> item is Bookmark }
             .map { item -> item as Bookmark }
             .toList().toObservable()
-            .compose(sortListByDateGenericComposable(isAscending = true))
+            .compose(sortListByDateGenericComposable(isAscending = bookmarkFilters.isSortAscending()))
             .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, isHeaderByTitle = false))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
