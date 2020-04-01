@@ -37,6 +37,8 @@ class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
     var isBookmarkCardViewType: Boolean by booleanPreference("MB_IS_CARD_VIEw_TYPE", true)
     var isSortAscending: Boolean by booleanPreference("MB_IS_SORT_ASCENDING", true)
+    var isSortByTitle: Boolean by booleanPreference("MB_IS_SORT_BY_TITLE", true)
+    //TODO move all to BookmarkFilter
     enum class BookmarkListViewTpeEnum { MB_LIST_VIEW_TYPE, MB_CARD_VIEW_TYPE }
 
     private val bookmarkViewModel by lazy {
@@ -79,6 +81,9 @@ class BookmarkListFragment : Fragment()  {
         menuInflater.inflate(R.menu.menu_main, menu)
     }
 
+    /**
+     *
+     */
     private fun onInitAppBarMenu() {
         mbBookmarkBottomBarLayoutId.apply {
             when (isBookmarkCardViewType) {
@@ -101,8 +106,7 @@ class BookmarkListFragment : Fragment()  {
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
-                        val isStarFilterView = true
-                        bookmarkViewModel.retrieveBookmarkList(isStarFilterView)
+                        bookmarkViewModel.retrieveBookmarkList(isStarFilterView = true)
                     }
                     R.id.mbBookmarkHeaderHomeFilterIconId -> {
                         bookmarkViewModel.retrieveBookmarkList(isSortAscending = isSortAscending)
@@ -112,6 +116,7 @@ class BookmarkListFragment : Fragment()  {
             }
         }
     }
+
     /**
      *
      */
@@ -145,7 +150,7 @@ class BookmarkListFragment : Fragment()  {
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
                     isBookmarkCardViewType,
                     { position, bookmark ->  openPreviewView(position, bookmark) },
-                    { position, bookmark ->
+                    { _, bookmark ->
                         bookmark.isStar = !bookmark.isStar //toggling status
                         bookmarkViewModel.setStarBookmark(bookmark)
                         adapter?.notifyDataSetChanged()
@@ -183,17 +188,34 @@ class BookmarkListFragment : Fragment()  {
 
         mbBookmarkHeaderSortFilterIconId.setOnClickListener {
             isSortAscending = !isSortAscending
-            bookmarkViewModel.sortBookmarkAscending(isSortAscending)
+            bookmarkViewModel.sortBookmarkAscending(isSortAscending, isSortByTitle)
             mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(isSortAscending)
         }
-            
-        mbBookmarkHeaderSortFilterByTitleIconId.setOnClickListener {
-//            bookmarkViewModel.sortBookmarkByTitle()
+
+        mbBookmarkHeaderSortFilterByTitleIconId.apply {
+            visibility = when (isSortByTitle) {
+                true -> GONE
+                else -> VISIBLE
+            }
+            setOnClickListener {
+                isSortByTitle = true
+                bookmarkViewModel.sortBookmarkByTitle()
+                it.toggleIconFilterByDateOrTitle(mbBookmarkHeaderSortFilterByDateIconId)
+            }
         }
-        mbBookmarkHeaderSortFilterByDateIconId.setOnClickListener {
-//            bookmarkViewModel.sortBookmarkByDate()
+
+        mbBookmarkHeaderSortFilterByDateIconId.apply {
+            visibility = when (isSortByTitle) {
+                false -> GONE
+                else -> VISIBLE
+            }
+            setOnClickListener {
+                isSortByTitle = false
+                bookmarkViewModel.sortBookmarkByDate()
+                it.toggleIconFilterByDateOrTitle(mbBookmarkHeaderSortFilterByTitleIconId)
+            }
+            mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(isSortAscending)
         }
-        mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(isSortAscending)
     }
 
     /**
@@ -250,6 +272,10 @@ fun ImageView.setIconDependingOnSortAscending(isSortAscending: Boolean) {
     }
 }
 
+fun View.toggleIconFilterByDateOrTitle(view: View) {
+    visibility = GONE
+    view.visibility = VISIBLE
+}
 /***
  * extension class :P
  */
