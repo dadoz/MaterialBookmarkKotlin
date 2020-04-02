@@ -19,6 +19,8 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.GRID_SPAN_COUNT
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.LIST_SPAN_COUNT
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.*
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.*
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.*
@@ -33,7 +35,9 @@ import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 class BookmarkListFragment : Fragment()  {
     private var listener: OnFragmentInteractionListener? = null
-    private val bookmarkFilters: BookmarkFilter = BookmarkFilter(IS_GRID, IS_ASCENDING, IS_BY_TITLE, context)
+    private val bookmarkFilters: BookmarkFilter by lazy {
+        BookmarkFilter(IS_GRID, IS_ASCENDING, IS_BY_TITLE, context)
+    }
     private val bookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
     }
@@ -43,10 +47,8 @@ class BookmarkListFragment : Fragment()  {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bookmark_list, container, false)
     }
 
@@ -65,7 +67,7 @@ class BookmarkListFragment : Fragment()  {
      */
     private fun onInitSearchView() {
         mbMaterialSearchVIewId.addListener(MaterialSearchView.SearchViewSearchListener {
-            bookmarkViewModel.searchBookmarkByTitle(it)
+            bookmarkViewModel.searchBookmarkByTitle(bookmarkFilter= bookmarkFilters, query= it)
         })
 
     }
@@ -134,8 +136,8 @@ class BookmarkListFragment : Fragment()  {
             mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
                 when (bookmarkFilters.listViewType) {
-                    IS_GRID.ordinal -> setGridOrListLayout(IS_GRID, 2)
-                    IS_LIST.ordinal -> setGridOrListLayout(IS_LIST, 1)
+                    IS_GRID.ordinal -> setGridOrListLayout(IS_GRID, GRID_SPAN_COUNT)
+                    IS_LIST.ordinal -> setGridOrListLayout(IS_LIST, LIST_SPAN_COUNT)
                 }
 
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
@@ -255,10 +257,8 @@ fun View.toggleIconFilterByDateOrTitle(view: View) {
 /***
  * extension class :P
  */
-fun RecyclerView.setGridOrListLayout(
-    listViewType: BookmarkFilter.ListViewTypeEnum,
-    newSpanCount: Int
-) {
+fun RecyclerView.setGridOrListLayout(listViewType: BookmarkFilter.ListViewTypeEnum,
+    newSpanCount: Int) {
     this.apply {
         (layoutManager as GridLayoutManager).apply {
             this.spanSizeLookup = object : SpanSizeLookup() {

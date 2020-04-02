@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.TypeConverters
 import com.application.dev.david.materialbookmarkkot.data.local.BookmarkDao
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import java.util.*
 
 
 @Database(entities = [Bookmark::class], version = 2)

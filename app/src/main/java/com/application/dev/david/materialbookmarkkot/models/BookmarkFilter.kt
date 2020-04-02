@@ -9,8 +9,8 @@ import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortT
 import com.application.dev.david.materialbookmarkkot.preferences.SharedPrefProv
 import com.application.dev.david.materialbookmarkkot.preferences.intPreference
 
-class BookmarkFilter(var listViewTypeDefVal: ListViewTypeEnum, var sortOrderListDefVal: SortOrderListEnum,
-                     var sortTypeListDefVal: SortTypeListEnum, context: Context?) :
+class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: SortOrderListEnum,
+    sortTypeListDefVal: SortTypeListEnum, context: Context?) :
     SharedPrefProv(context) {
 
     var listViewType: Int by intPreference(MB_LIST_VIEW_TYPE_PREF, listViewTypeDefVal.ordinal)
@@ -59,6 +59,8 @@ class BookmarkFilter(var listViewTypeDefVal: ListViewTypeEnum, var sortOrderList
     fun isSortByTitle(): Boolean = sortTypeList == IS_BY_TITLE.ordinal
 
     companion object {
+        const val GRID_SPAN_COUNT: Int = 2
+        const val LIST_SPAN_COUNT: Int = 1
         const val MB_LIST_VIEW_TYPE_PREF: String = "MB_LIST_VIEW_TYPE_PREF"
         const val MB_SORT_ORDER_LIST_PREF: String = "MB_SORT_ORDER_LIST_PREF"
         const val MB_SORT_TYPE_LIST_PREF: String = "MB_SORT_TYPE_LIST_PREF"
