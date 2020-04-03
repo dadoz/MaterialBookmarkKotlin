@@ -7,12 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import com.application.dev.david.materialbookmarkkot.data.BookmarkListDataRepository
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.*
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.IS_ASCENDING
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.IS_DESCENDING
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.IS_BY_DATE
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.IS_BY_TITLE
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -42,11 +43,11 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
-            .compose(filterByStarTypeComposable(bookmarkFilter.isStarFilterView()))
+            .compose(filterByStarTypeComposable(bookmarkFilter.starFilterType))
             .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
             .compose(sortListBySortViewType(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = bookmarkFilter.isStarFilterView(), sortTypeList = bookmarkFilter.sortTypeList))
+            .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilter.starFilterType, sortTypeList = bookmarkFilter.sortTypeList))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error ->
@@ -103,9 +104,10 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
-            .compose(filterByTitleComposable(query))
+            .compose(filterByStarTypeComposable(starFilterType = bookmarkFilter.starFilterType))
+            .compose(filterSearchByTitleComposable(query))
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, sortTypeList = bookmarkFilter.sortTypeList))
+            .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilter.starFilterType, sortTypeList = bookmarkFilter.sortTypeList))
             .subscribe(
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
@@ -122,7 +124,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .map { item -> item as Bookmark }
             .toList().toObservable()
             .compose(sortListBySortViewType(bookmarkFilters.sortOrderList, bookmarkFilters.sortTypeList))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, sortTypeList = bookmarkFilters.sortTypeList))
+            .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilters.starFilterType, sortTypeList = bookmarkFilters.sortTypeList))
             .subscribe(
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
@@ -139,7 +141,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .map { item -> item as Bookmark }
             .toList().toObservable()
             .compose(sortListByTitleGenericComposable(sortOrderList = bookmarkFilters.sortOrderList))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, sortTypeList = bookmarkFilters.sortTypeList))
+            .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilters.starFilterType, sortTypeList = bookmarkFilters.sortTypeList))
             .subscribe(
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
@@ -156,7 +158,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .map { item -> item as Bookmark }
             .toList().toObservable()
             .compose(sortListByDateGenericComposable(sortOrderList= bookmarkFilters.sortOrderList))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = false, sortTypeList = bookmarkFilters.sortTypeList))
+            .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilters.starFilterType, sortTypeList = bookmarkFilters.sortTypeList))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error ->
@@ -247,23 +249,25 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * composable to add Header on bookmark
      */
-    private fun getBookmarkWithHeadersListComposable(isStarFilterView: Boolean, sortTypeList: Int) = ObservableTransformer<MutableList<Bookmark>, MutableList<Any>> {
+    private fun getBookmarkWithHeadersListComposable(starFilterType: StarFilterTypeEnum, sortTypeList: Int) = ObservableTransformer<MutableList<Bookmark>, MutableList<Any>> {
         it
             .flatMap { bookmarkList ->
-                if (!isStarFilterView) {
-                    Observable.just(ArrayList<Any>())
-                        .flatMap { list ->
-                            Observable.fromIterable(bookmarkList)
-                                .doOnNext { bookmark -> list.add(bookmark) }
-                                .compose(setHeaderLabelBySortType(sortTypeList))
-                                .map { charRes -> charRes.toUpperCase() }
-                                .map { label -> BookmarkHeader(label) }
-                                .doOnNext { bookmarkHeader -> list.add(list.size - 1, bookmarkHeader) }
-                                .toList().toObservable()
-                                .map { list }
-                        }
-                } else
-                    Observable.just(bookmarkList as MutableList<Any>)
+                when (starFilterType) {
+                    IS_DEFAULT_VIEW -> {
+                        Observable.just(ArrayList<Any>())
+                            .flatMap { list ->
+                                Observable.fromIterable(bookmarkList)
+                                    .doOnNext { bookmark -> list.add(bookmark) }
+                                    .compose(setHeaderLabelBySortType(sortTypeList))
+                                    .map { charRes -> charRes.toUpperCase() }
+                                    .map { label -> BookmarkHeader(label) }
+                                    .doOnNext { bookmarkHeader -> list.add(list.size - 1, bookmarkHeader) }
+                                    .toList().toObservable()
+                                    .map { list }
+                            }
+                    }
+                    IS_STAR_VIEW -> Observable.just(bookmarkList as MutableList<Any>)
+                }
             }
     }
 
@@ -289,17 +293,21 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     /**
      * composable to add Header on bookmark
      */
-    private fun filterByStarTypeComposable(isStarFilterView: Boolean) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+    private fun filterByStarTypeComposable(starFilterType: StarFilterTypeEnum) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
         it
             .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
-            .filter { bookmark -> if (isStarFilterView) bookmark.isStar else true }
+            .filter { bookmark -> when (starFilterType) {
+                    IS_STAR_VIEW -> bookmark.isStar
+                    else -> true
+                }
+            }
             .toList().toObservable()
     }
 
     /**
      * composable to add Header on bookmark
      */
-    private fun filterByTitleComposable(query: String) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+    private fun filterSearchByTitleComposable(query: String) = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
         it
             .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
             .filter { bookmark -> (bookmark.title?: "").contains(query, true) }
