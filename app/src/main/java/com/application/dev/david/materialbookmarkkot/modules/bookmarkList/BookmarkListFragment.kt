@@ -99,9 +99,11 @@ class BookmarkListFragment : Fragment()  {
                         replaceMenu(R.menu.menu_bookmark_list)
                     }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
+                        bookmarkFilters.starFilterType = BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                     }
                     R.id.mbBookmarkHeaderHomeFilterIconId -> {
+                        bookmarkFilters.starFilterType = BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                     }
                 }

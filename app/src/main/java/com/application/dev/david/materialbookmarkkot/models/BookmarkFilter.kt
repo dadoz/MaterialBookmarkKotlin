@@ -16,10 +16,12 @@ class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: 
     var listViewType: Int by intPreference(MB_LIST_VIEW_TYPE_PREF, listViewTypeDefVal.ordinal)
     var sortOrderList: Int by intPreference(MB_SORT_ORDER_LIST_PREF, sortOrderListDefVal.ordinal)
     var sortTypeList: Int by intPreference(MB_SORT_TYPE_LIST_PREF, sortTypeListDefVal.ordinal)
+    var starFilterType: StarFilterTypeEnum = StarFilterTypeEnum.IS_DEFAULT_VIEW
 
     enum class ListViewTypeEnum { IS_GRID, IS_LIST }
     enum class SortOrderListEnum { IS_ASCENDING, IS_DESCENDING }
     enum class SortTypeListEnum { IS_BY_TITLE, IS_BY_DATE }
+    enum class StarFilterTypeEnum { IS_STAR_VIEW, IS_DEFAULT_VIEW }
 
 
     fun isGridViewType(): Boolean = listViewType == ListViewTypeEnum.IS_GRID.ordinal
@@ -57,6 +59,8 @@ class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: 
         }
 
     fun isSortByTitle(): Boolean = sortTypeList == IS_BY_TITLE.ordinal
+
+    fun isStarFilterView(): Boolean = starFilterType == StarFilterTypeEnum.IS_STAR_VIEW
 
     companion object {
         const val GRID_SPAN_COUNT: Int = 2

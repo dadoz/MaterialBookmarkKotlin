@@ -35,7 +35,6 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      * retrieve bookamr list
      */
     fun retrieveBookmarkList(
-        isStarFilterView: Boolean = false,
         bookmarkFilter: BookmarkFilter
     ) {
         val disposable = Observable.just("")
@@ -43,11 +42,11 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
-            .compose(filterByStarTypeComposable(isStarFilterView))
+            .compose(filterByStarTypeComposable(bookmarkFilter.isStarFilterView()))
             .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
             .compose(sortListBySortViewType(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
-            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = isStarFilterView, sortTypeList = bookmarkFilter.sortTypeList))
+            .compose(getBookmarkWithHeadersListComposable(isStarFilterView = bookmarkFilter.isStarFilterView(), sortTypeList = bookmarkFilter.sortTypeList))
             .subscribe(
                 {result -> bookmarksLiveData.value = result },
                 {error ->
