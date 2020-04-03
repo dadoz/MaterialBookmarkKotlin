@@ -44,7 +44,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
             .compose(filterByStarTypeComposable(bookmarkFilter.starFilterType))
-            .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
+            .compose(updatedBookmarkListSizeComposable())
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
             .compose(sortListBySortViewType(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
             .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilter.starFilterType, sortTypeList = bookmarkFilter.sortTypeList))
@@ -302,6 +302,14 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 }
             }
             .toList().toObservable()
+    }
+
+    /**
+     * composable to add Header on bookmark
+     */
+    private fun updatedBookmarkListSizeComposable() = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+        it
+        .doOnNext { bookList -> bookmarkListSize.value = bookList.size.toString() }
     }
 
     /**

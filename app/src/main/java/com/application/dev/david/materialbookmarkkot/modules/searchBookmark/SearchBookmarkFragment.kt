@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBook
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
+import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
 import kotlinx.android.synthetic.main.fragment_search_bookmark.*
@@ -90,7 +92,7 @@ class SearchBookmarkFragment : Fragment() {
      */
     private fun initActionBar() {
         (activity as AppCompatActivity).setSupportActionBar(mbToolbarId)
-//        mbToolbarId.changeToolbarFont()
+        mbToolbarId.changeToolbarFont()
         mbToolbarId.title = getString(R.string.search_actionbar_string)
         mbToolbarId.visibility = View.VISIBLE
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -120,10 +122,15 @@ class SearchBookmarkFragment : Fragment() {
         })
 
         mbsearchBookmarkButtonViewId.setOnClickListener {
-            val action = SearchBookmarkFragmentDirections
-                .actionSearchBookmarkFragmentToAddBookmarkFragment(
-                    actionType = SAVE_ACTION_BOOKMARK, bookmarkUrl = mbNewBookmarkUrlEditTextId.text.toString())
-            navigation?.navigate(action)
+            mbNewBookmarkUrlEditTextId.hideKeyboard()
+            Handler().postDelayed(
+                {
+                    val action = SearchBookmarkFragmentDirections
+                        .actionSearchBookmarkFragmentToAddBookmarkFragment(
+                            actionType = SAVE_ACTION_BOOKMARK, bookmarkUrl = mbNewBookmarkUrlEditTextId.text.toString())
+                    navigation?.navigate(action)
+
+                }, 200)
         }
 
     }
@@ -131,14 +138,14 @@ class SearchBookmarkFragment : Fragment() {
     /**
      * get placeholder
      */
-    private fun getPlaceholder(): Drawable? {
-        return context?.let {ctx ->
-            ContextCompat.getDrawable(ctx, R.drawable.ic_bookmark)?.let {
-                DrawableCompat.setTint(it, ContextCompat.getColor(ctx, R.color.colorPrimary))
-                it
-            }
-        }
-    }
+//    private fun getPlaceholder(): Drawable? {
+//        return context?.let {ctx ->
+//            ContextCompat.getDrawable(ctx, R.drawable.ic_bookmark)?.let {
+//                DrawableCompat.setTint(it, ContextCompat.getColor(ctx, R.color.colorPrimary))
+//                it
+//            }
+//        }
+//    }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
