@@ -171,10 +171,13 @@ class BookmarkListFragment : Fragment()  {
             findNavController().navigate(R.id.searchBookmarkFragment)
         }
 
-        mbBookmarkHeaderSortFilterIconId.setOnClickListener {
-            bookmarkFilters.toggleSortAscending()
-            bookmarkViewModel.sortBookmarkAscending(bookmarkFilters = bookmarkFilters)
-            mbBookmarkHeaderSortFilterIconId.setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
+        mbBookmarkHeaderSortFilterIconId.apply {
+            setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
+            setOnClickListener {
+                bookmarkFilters.toggleSortAscending()
+                bookmarkViewModel.sortBookmarkAscending(bookmarkFilters = bookmarkFilters)
+                this.setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
+            }
         }
 
         mbBookmarkHeaderSortFilterByTitleIconId.apply {
