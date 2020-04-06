@@ -7,68 +7,69 @@
         android:layout_margin="@dimen/margin_8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/mbBookmarkStarButtonId"
-            android:layout_width="@dimen/icon_filter_bookmark"
-            android:layout_height="@dimen/icon_filter_bookmark"
-            android:layout_gravity="end"
-            android:layout_margin="@dimen/margin_8"
-            app:tint="@color/colorPrimary"
-            android:src="@drawable/ic_star_filter"/>
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_16"
+            tools:layout_height="180dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_32"
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mbBookmarkStarButtonId"
+                android:layout_alignParentEnd="true"
+                android:layout_width="@dimen/icon_filter_bookmark"
+                android:layout_height="@dimen/icon_filter_bookmark"
                 android:layout_marginTop="@dimen/margin_16"
-                android:layout_marginBottom="@dimen/margin_8"
-                android:id="@+id/bookmarkTitleTextViewId"
-                android:lines="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/MBMaterialTextTitleThinPurple"
-                tools:text="Android developer" />
-
+                android:layout_marginEnd="@dimen/margin_8"
+                app:tint="@color/colorPrimary"
+                android:src="@drawable/ic_star"/>
         <LinearLayout
+                android:id="@+id/mbBookmarkMainCardLayoutId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_16"
-                android:layout_marginRight="@dimen/margin_16"
-                android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/bookmarkIconImageViewId"
-                    android:layout_gravity="center"
-                    android:layout_width="@dimen/bookmark_icon_card_size"
-                    android:layout_height="@dimen/bookmark_icon_card_size"
-                    tools:src="@drawable/ic_bookmark"/>
+                android:padding="@dimen/margin_16"
+                android:orientation="vertical">
+
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/bookmarkUrlTextViewId"
-                    android:layout_gravity="center_vertical"
-                    android:maxLines="2"
-                    android:layout_marginStart="@dimen/margin_8"
+                    android:id="@+id/bookmarkTitleTextViewId"
+                    android:lines="1"
+                    android:layout_marginEnd="@dimen/margin_32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/MBMaterialTextDescrSmallBrown"
-                    android:ellipsize="end"
-                    tools:text="www.android.com"
-                    />
+                    style="@style/MBMaterialTextTitleThinPurple"
+                    tools:text="Android developer bla bla blab" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bookmarkUrlTextViewId"
+                        android:layout_gravity="center_vertical"
+                        android:minLines="2"
+                        android:maxLines="2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/MBMaterialTextDescrSmallBrown"
+                        android:ellipsize="end"
+                        tools:text="www.android.com"
+                        />
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bookmarkTimestampTextViewId"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:layout_marginBottom="@dimen/margin_8"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/MBMaterialTextDescrSmallBoldBrown"
+                style="@style/MBMaterialTextDescrSmallBoldPurple"
+                android:layout_below="@+id/mbBookmarkMainCardLayoutId"
                 android:lines="1"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginStart="@dimen/margin_16"
                 tools:text="06 Nov 10am"
                 />
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/bookmarkIconImageViewId"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin_16"
+                android:layout_width="@dimen/bookmark_icon_card_size"
+                android:layout_height="@dimen/bookmark_icon_card_size"
+                tools:src="@drawable/ic_bookmark"/>
+    </RelativeLayout>
+
 </com.google.android.material.card.MaterialCardView>

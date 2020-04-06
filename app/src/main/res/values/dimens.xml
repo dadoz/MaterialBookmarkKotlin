@@ -5,12 +5,12 @@
     <dimen name="text_36">36sp</dimen>
     <dimen name="text_22">22sp</dimen>
     <dimen name="text_18">18sp</dimen>
-    <dimen name="text_26">26sp</dimen>
+    <dimen name="text_30">30sp</dimen>
     <dimen name="text_24">24sp</dimen>
     <dimen name="text_14">14sp</dimen>
     <dimen name="text_48">48sp</dimen>
 
-    <dimen name="bookmark_icon_card_size">36dp</dimen>
+    <dimen name="bookmark_icon_card_size">42dp</dimen>
     <dimen name="bookmark_icon_preview_size">48dp</dimen>
     <dimen name="icon_filter_bookmark">36dp</dimen>
     <dimen name="empty_icon_size">200dp</dimen>

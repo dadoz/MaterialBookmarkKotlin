@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin_8"
-        android:layout_marginStart="@dimen/margin_8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/bookmarkSubtitleHeaderViewId"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    <com.google.android.material.card.MaterialCardView
+            style="@style/MBMaterialCardviewStyleGrey"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            android:minWidth="60dp"
+            android:layout_margin="@dimen/margin_8"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/MBMaterialTextDescrSmallBrown"
-            tools:text="bookmark with:"
-            android:text="with"
-            />
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/bookmarkLabelHeaderViewId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8"
-            style="@style/MBMaterialTextHeaderThinBrown"
-            tools:text="G"
-            />
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookmarkSubtitleHeaderViewId"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/MBMaterialTextDescrSmallBrown"
+                tools:text="bookmark with:"
+                android:text="with"
+                />
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookmarkLabelHeaderViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_8"
+                android:gravity="center_horizontal"
+                style="@style/MBMaterialTextSubtitleThinBrown"
+                tools:text="G"
+                />
+
+    </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>

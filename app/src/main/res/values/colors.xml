@@ -8,4 +8,5 @@
     <color name="colorError">#ff7272</color>
     <color name="colorErrorSecondary">#A13532</color>
     <color name="colorSuccess">#3ED48F</color>
+    <color name="colorGrey">#ECECEC</color>
 </resources>
