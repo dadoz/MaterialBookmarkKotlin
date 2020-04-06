@@ -142,7 +142,7 @@ class AddBookmarkFragment : Fragment() {
         })
         addBookmarkViewModel.bookmarkSearchedUrlLiveData.observe(this, Observer{ searchedUrl ->
             mbBookmarkSearchedUrlWebViewId.apply {
-                visibility = VISIBLE
+                visibility = GONE
                 webViewClient = object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                         view?.loadUrl(url)

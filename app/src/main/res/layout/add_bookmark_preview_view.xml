@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="android.view.View"/>
@@ -11,9 +12,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:orientation="vertical">
-
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -29,6 +28,7 @@
                     android:layout_centerInParent="true"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    tools:src="@drawable/ic_bookmark"
                     app:iconSrc="@{addBookmarkViewModel.bookmarkIconUrl}"
                     android:layout_margin="@dimen/margin_16"/>
         </RelativeLayout>
@@ -42,25 +42,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Update: "
+                    android:text="Last update: "
                     style="@style/MBMaterialTextSubtitleBrown"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
                     android:layout_toEndOf="@+id/mbNewBookmarkAddUpdatedTimestampLabelId"
-                    android:layout_toStartOf="@+id/mbNewBookmarkAddEditButtonId"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/MBMaterialTextDescrSmallBrown"
                     tools:text="this is lates update label"/>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/mbNewBookmarkAddEditButtonId"
-                    android:layout_width="@dimen/icon_filter_bookmark"
-                    android:layout_height="@dimen/icon_filter_bookmark"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_edit_pencil"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -93,24 +84,35 @@
                 android:layout_height="wrap_content"
                 style="@style/MBMaterialCardviewStyle"
                 android:layout_marginTop="@dimen/margin_8">
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/mbNewBookmarkUrlTextId"
-                        android:layout_gravity="center_vertical"
-                        android:padding="@dimen/margin_16"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:layout_centerVertical="true"
-                        style="@style/MBMaterialTextTitlePurple"
-                        tools:text="www.googgle.it"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbNewBookmarkUrlTextId"
+                    android:layout_gravity="center_vertical"
+                    android:padding="@dimen/margin_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_centerVertical="true"
+                    style="@style/MBMaterialTextTitlePurple"
+                    tools:text="www.googgle.it"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbNewBookmarkAddEditButtonId"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
+                    android:layout_gravity="end|center"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    app:tint="@color/colorPrimary"
+                    android:src="@drawable/ic_edit_pencil"/>
         </com.google.android.material.card.MaterialCardView>
-
 
         <View
                 android:visibility="gone"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_16"
                 android:layout_height="1dp"
-                android:background="@color/colorPrimary"/>
+                android:alpha="0.1"
+                android:background="@color/colorAccent"/>
         <RelativeLayout
                 android:id="@+id/mbBookmarkSaveNewLayoutId"
                 android:visibility="visible"
@@ -163,7 +165,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UPDATE"/>
-
         </RelativeLayout>
     </LinearLayout>
 </layout>

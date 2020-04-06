@@ -115,24 +115,18 @@
                         tools:visibility="visible"
                         android:text="SEARCH"/>
             </RelativeLayout>
-            <!-- search box -->
+
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/mbBookmarkSearchedUrPlaceholderId"
+                        android:layout_gravity="center_horizontal"
                         android:layout_centerInParent="true"
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:src="@drawable/ic_web_illustration"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/MBMaterialTextDescrSmallBrown"
-                        android:layout_below="@+id/mbBookmarkSearchedUrPlaceholderId"
-                        android:layout_marginBottom="@dimen/margin_8"
-                        android:layout_centerHorizontal="true"
-                        android:text="Tap to refresh"/>
+                        android:layout_width="220dp"
+                        android:layout_height="220dp"
+                        android:src="@drawable/ic_search_illustration"/>
+
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
