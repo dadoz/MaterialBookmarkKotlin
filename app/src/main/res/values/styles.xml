@@ -31,6 +31,10 @@
         <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
+    <style name="MBMaterialCardviewStyleFilledPurple" parent="MBMaterialCardviewStylePurple" >
+        <item name="cardBackgroundColor">@color/colorPrimary</item>
+        <item name="strokeColor">@color/colorPrimaryDark</item>
+    </style>
     <style name="MBMaterialCardviewStyleBrown" parent="MBMaterialCardviewStyle" >
         <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorAccent</item>
@@ -88,6 +92,9 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">52sp</item>
     </style>
+    <style name="MBMaterialTextHeaderBigThinWhite" parent="MBMaterialTextHeaderBigThinPurple" >
+        <item name="android:textColor">@color/colorPrimaryLight</item>
+    </style>
     <style name="MBMaterialTextHeaderBigThinBlue" parent="MBMaterialTextHeaderBigThinPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
@@ -104,6 +111,9 @@
     </style>
     <style name="MBMaterialTextDescrSmallThinBrown" parent="MBMaterialTextDescrSmallBrown" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
+    </style>
+    <style name="MBMaterialTextDescrSmallThinWhite" parent="MBMaterialTextDescrSmallThinBrown" >
+        <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
     <style name="MBMaterialTextDescrSmallThinPurple" parent="MBMaterialTextDescrSmallThinBrown" >
         <item name="android:textColor">@color/colorPrimary</item>
@@ -140,6 +150,9 @@
     </style>
     <style name="MBMaterialTextSubtitleThinBrown" parent="MBMaterialTextSubtitleBrown" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
+    </style>
+    <style name="MBMaterialTextSubtitleThinWhite" parent="MBMaterialTextSubtitleThinBrown" >
+        <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
 
 

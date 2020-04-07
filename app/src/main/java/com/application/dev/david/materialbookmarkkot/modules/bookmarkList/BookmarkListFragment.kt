@@ -1,5 +1,6 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
+import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import androidx.core.animation.doOnStart
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,16 +23,21 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.GRID_SPAN_COUNT
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.LIST_SPAN_COUNT
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.*
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.*
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.*
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.IS_ASCENDING
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.IS_BY_DATE
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.IS_BY_TITLE
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
+import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.addOnScrollListenerWithViews
+import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.setGridOrListLayout
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
+import java.util.Arrays.asList
 
 
 class BookmarkListFragment : Fragment()  {
@@ -48,7 +55,7 @@ class BookmarkListFragment : Fragment()  {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bookmark_list, container, false)
     }
 
@@ -144,7 +151,7 @@ class BookmarkListFragment : Fragment()  {
 
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
                     bookmarkFilters,
-                    { position, bookmark ->  openPreviewView(position, bookmark) },
+                    { position, bookmark -> openPreviewView(position, bookmark) },
                     { _, bookmark ->
                         bookmark.isStar = !bookmark.isStar
                         //toggling status
@@ -156,8 +163,8 @@ class BookmarkListFragment : Fragment()  {
 
             //please replace with viewModel isEmptyDataList
             when (list.isNotEmpty()) {
-                true -> mbBookmarkEmptyViewId.visibility =  GONE
-                false -> mbBookmarkEmptyViewId.visibility =  VISIBLE
+                true -> mbBookmarkEmptyViewId.visibility = GONE
+                false -> mbBookmarkEmptyViewId.visibility = VISIBLE
             }
         })
 
@@ -199,8 +206,15 @@ class BookmarkListFragment : Fragment()  {
                 it.toggleIconFilterByDateOrTitle(mbBookmarkHeaderSortFilterByTitleIconId)
             }
         }
-    }
 
+        mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
+            views = listOf(
+                mbBookmarkAppBarLayoutId, mbBookmarkHeaderTitleTextViewId,
+                mbBookmarkHeaderTitleLabelTextViewId
+            )
+        )
+
+    }
     /**
      *
      */
@@ -258,28 +272,4 @@ fun ImageView.setIconDependingOnSortAscending(isSortAscending: Boolean) {
 fun View.toggleIconFilterByDateOrTitle(view: View) {
     visibility = GONE
     view.visibility = VISIBLE
-}
-/***
- * extension class :P
- */
-fun RecyclerView.setGridOrListLayout(listViewType: BookmarkFilter.ListViewTypeEnum,
-    newSpanCount: Int) {
-    this.apply {
-        (layoutManager as GridLayoutManager).apply {
-            this.spanSizeLookup = object : SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when ((adapter as BookmarkListAdapter).getSpanSizeByPosition(position)) {
-                        BOOKMARK_HEADER_TYPE.ordinal -> when(listViewType)  {
-                            IS_LIST -> 1
-                            IS_GRID -> 2
-                        }
-                        else -> 1
-                    }
-                }
-            }
-            //set span
-            this.spanCount = newSpanCount
-        }
-        adapter?.notifyDataSetChanged()
-    }
 }
