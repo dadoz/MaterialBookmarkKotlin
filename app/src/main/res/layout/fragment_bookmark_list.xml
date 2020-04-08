@@ -112,6 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16"
             android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <!-- button layout -->
         <LinearLayout
@@ -122,9 +123,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
             <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkHeaderListFilterIconId"
+                    android:background="?attr/selectableItemBackground"
+                    app:tint="@color/colorPrimary"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
+                    android:layout_margin="@dimen/margin_8"
+                    android:src="@drawable/ic_bookmark_list_filter"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkHeaderCardFilterIconId"
+                    android:background="?attr/selectableItemBackground"
+                    app:tint="@color/colorPrimary"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
+                    android:layout_margin="@dimen/margin_8"
+                    android:src="@drawable/ic_bookmark_tab_filter"/>
+            <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbBookmarkHeaderSortFilterByDateIconId"
                     android:background="?attr/selectableItemBackground"
                     app:tint="@color/colorPrimary"
+                    android:visibility="gone"
                     android:layout_width="@dimen/icon_filter_bookmark"
                     android:layout_height="@dimen/icon_filter_bookmark"
                     android:layout_margin="@dimen/margin_8"
@@ -134,7 +152,7 @@
                     android:background="?attr/selectableItemBackground"
                     app:tint="@color/colorPrimary"
                     android:visibility="gone"
-                    tools:visibility="visible"
+                    tools:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -158,7 +176,7 @@
                 android:id="@+id/mbBookmarkHeaderSortFilterLabelId"
                 style="@style/MBMaterialTextDescrSmallPurple"
                 tools:visibility="visible"
-                app:layout_constraintEnd_toStartOf="@+id/mbBookmarkHeaderSortFilterChipId"
+                app:layout_constraintEnd_toStartOf="@+id/mbBookmarkHeaderSortFilterByDateChipId"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="@dimen/margin_8"
@@ -166,8 +184,9 @@
                 android:layout_height="wrap_content"
                 android:text="group by"/>
         <com.google.android.material.chip.Chip
-                android:id="@+id/mbBookmarkHeaderSortFilterChipId"
+                android:id="@+id/mbBookmarkHeaderSortFilterByDateChipId"
                 style="@style/MBMaterialChipDescrSmallThinWhite"
+                tools:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -177,19 +196,34 @@
                 app:chipIconTint="@color/colorPrimaryLight"
                 app:chipBackgroundColor="@color/colorPrimary"
                 app:chipStrokeColor="@color/colorPrimaryDark"
+                app:chipStrokeWidth="1dp"
                 android:text="Date"/>
+        <com.google.android.material.chip.Chip
+                android:id="@+id/mbBookmarkHeaderSortFilterByTitleChipId"
+                style="@style/MBMaterialChipDescrSmallThinPurple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:chipIcon="@drawable/ic_font_size"
+                app:chipIconTint="@color/colorPrimary"
+                app:chipBackgroundColor="@android:color/white"
+                app:chipStrokeColor="@color/colorPrimary"
+                app:chipStrokeWidth="1dp"
+                android:text="Title"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--main view-->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mbBookmarkRecyclerViewId"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_marginBottom="?android:attr/actionBarSize"
+            android:layout_marginBottom="?attr/actionBarSize"
             android:layout_marginTop="?attr/actionBarSize"
             android:paddingLeft="@dimen/margin_8"
             android:paddingRight="@dimen/margin_8"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mbBookmarkBottomBarLayoutId"

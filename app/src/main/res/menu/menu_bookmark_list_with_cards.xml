@@ -14,18 +14,4 @@
             app:iconTint="@color/colorPrimaryLight"
             android:title="STAR"
             app:showAsAction="always"/>
-
-    <item
-            android:id="@+id/mbBookmarkHeaderListFilterIconId"
-            android:icon="@drawable/ic_bookmark_list_filter"
-            android:visible="false"
-            app:iconTint="@color/colorPrimaryLight"
-            android:title="LIST"
-            app:showAsAction="always"/>
-    <item
-            android:id="@+id/mbBookmarkHeaderCardFilterIconId"
-            android:icon="@drawable/ic_bookmark_tab_filter"
-            app:iconTint="@color/colorPrimaryLight"
-            android:title="CARD"
-            app:showAsAction="always"/>
 </menu>

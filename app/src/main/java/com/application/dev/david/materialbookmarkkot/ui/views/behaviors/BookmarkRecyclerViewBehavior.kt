@@ -10,7 +10,12 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.GRID_SPAN_COUNT
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.LIST_SPAN_COUNT
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 
 
 class BookmarkRecyclerViewBehavior {
@@ -116,16 +121,20 @@ fun RecyclerView.addOnScrollListenerWithViews(views: List<View>) {
     })
 }
 
-fun RecyclerView.setGridOrListLayout(listViewType: BookmarkFilter.ListViewTypeEnum,
-                                     newSpanCount: Int) {
+fun RecyclerView.setGridOrListLayout(listViewType: BookmarkFilter.ListViewTypeEnum) {
+    val newSpanCount: Int = when (listViewType) {
+        IS_LIST -> LIST_SPAN_COUNT
+        IS_GRID -> GRID_SPAN_COUNT
+    }
+
     this.apply {
         (layoutManager as GridLayoutManager).apply {
             this.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when ((adapter as BookmarkListAdapter).getSpanSizeByPosition(position)) {
-                        BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE.ordinal -> when(listViewType)  {
-                            BookmarkFilter.ListViewTypeEnum.IS_LIST -> 1
-                            BookmarkFilter.ListViewTypeEnum.IS_GRID -> 2
+                        BOOKMARK_HEADER_TYPE.ordinal -> when(listViewType)  {
+                            IS_LIST -> 1
+                            IS_GRID -> 2
                         }
                         else -> 1
                     }

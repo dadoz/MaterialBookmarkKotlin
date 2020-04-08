@@ -58,9 +58,11 @@ class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: 
             else -> View.VISIBLE
         }
 
-    fun isSortByTitle(): Boolean = sortTypeList == IS_BY_TITLE.ordinal
-
-    fun isStarFilterView(): Boolean = starFilterType == StarFilterTypeEnum.IS_STAR_VIEW
+    fun getVisibilityByViewType(viewType: ListViewTypeEnum): Int =
+        when (viewType.ordinal == listViewType) {
+            true -> View.GONE
+            else -> View.VISIBLE
+        }
 
     companion object {
         const val GRID_SPAN_COUNT: Int = 2

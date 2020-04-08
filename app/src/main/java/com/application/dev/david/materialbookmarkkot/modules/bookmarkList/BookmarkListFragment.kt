@@ -23,6 +23,7 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.GRID_SPAN_COUNT
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.Companion.LIST_SPAN_COUNT
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.IS_ASCENDING
@@ -95,16 +96,6 @@ class BookmarkListFragment : Fragment()  {
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.mbBookmarkHeaderListFilterIconId ->  {
-                        bookmarkFilters.setListViewType()
-                        mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST, 1)
-                        replaceMenu(R.menu.menu_bookmark_list_with_cards)
-                    }
-                    R.id.mbBookmarkHeaderCardFilterIconId -> {
-                        bookmarkFilters.setGridViewType()
-                        mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID, 2)
-                        replaceMenu(R.menu.menu_bookmark_list)
-                    }
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
                         bookmarkFilters.starFilterType = BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
@@ -144,10 +135,7 @@ class BookmarkListFragment : Fragment()  {
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
-                when (bookmarkFilters.listViewType) {
-                    IS_GRID.ordinal -> setGridOrListLayout(IS_GRID, GRID_SPAN_COUNT)
-                    IS_LIST.ordinal -> setGridOrListLayout(IS_LIST, LIST_SPAN_COUNT)
-                }
+                setGridOrListLayout(ListViewTypeEnum.values()[bookmarkFilters.listViewType])
 
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
                     bookmarkFilters,
@@ -189,23 +177,43 @@ class BookmarkListFragment : Fragment()  {
             }
         }
 
-        mbBookmarkHeaderSortFilterByTitleIconId.apply {
+        mbBookmarkHeaderSortFilterByTitleChipId.apply {
             visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_TITLE)
             setOnClickListener {
                 bookmarkFilters.setSortByTitle()
                 bookmarkViewModel.sortBookmarkByTitle(bookmarkFilters = bookmarkFilters)
-                it.toggleIconFilterByDateOrTitle(mbBookmarkHeaderSortFilterByDateIconId)
+                it.togglieVisibiltyWithView(mbBookmarkHeaderSortFilterByDateChipId)
             }
         }
 
-        mbBookmarkHeaderSortFilterByDateIconId.apply {
+        mbBookmarkHeaderSortFilterByDateChipId.apply {
             visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_DATE)
             setOnClickListener {
                 bookmarkFilters.setSortByDate()
                 bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
-                it.toggleIconFilterByDateOrTitle(mbBookmarkHeaderSortFilterByTitleIconId)
+                it.togglieVisibiltyWithView(mbBookmarkHeaderSortFilterByTitleChipId)
             }
         }
+
+        mbBookmarkHeaderListFilterIconId.apply  {
+            visibility = bookmarkFilters.getVisibilityByViewType(IS_LIST)
+            setOnClickListener {
+                bookmarkFilters.setListViewType()
+                mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST)
+                it.togglieVisibiltyWithView(mbBookmarkHeaderCardFilterIconId)
+            }
+
+        }
+        mbBookmarkHeaderCardFilterIconId.apply {
+            visibility = bookmarkFilters.getVisibilityByViewType(IS_GRID)
+            setOnClickListener {
+                bookmarkFilters.setGridViewType()
+                mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID)
+                it.togglieVisibiltyWithView(mbBookmarkHeaderListFilterIconId)
+            }
+        }
+
+
 
         mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
             views = listOf(
@@ -271,7 +279,7 @@ fun ImageView.setIconDependingOnSortAscending(isSortAscending: Boolean) {
     }
 }
 
-fun View.toggleIconFilterByDateOrTitle(view: View) {
+fun View.togglieVisibiltyWithView(view: View) {
     visibility = GONE
     view.visibility = VISIBLE
 }

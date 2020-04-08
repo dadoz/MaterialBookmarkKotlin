@@ -160,6 +160,11 @@
         <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
     </style>
 
+    <style name="MBMaterialChipDescrSmallThinPurple" parent="Widget.MaterialComponents.ChipGroup" >
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
+    </style>
+
     <style name="MBMaterialChipTextApparence" parent="TextAppearance.MaterialComponents.Chip" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textSize">@dimen/text_22</item>
