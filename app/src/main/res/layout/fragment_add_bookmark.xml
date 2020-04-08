@@ -62,7 +62,7 @@
                             android:layout_below="@+id/mbBookmarkSearchedUrPlaceholderId"
                             android:layout_marginBottom="@dimen/margin_8"
                             android:layout_centerHorizontal="true"
-                            style="@style/MBMaterialButtonStyleBrown"
+                            style="@style/MBMaterialButtonStyleBlue"
                             android:text="OPEN PREVIEW"/>
                     <WebView
                             android:id="@+id/mbBookmarkSearchedUrlWebViewId"

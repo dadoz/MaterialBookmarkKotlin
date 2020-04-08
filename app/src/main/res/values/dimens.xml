@@ -4,6 +4,7 @@
     <dimen name="margin_32">32dp</dimen>
     <dimen name="text_36">36sp</dimen>
     <dimen name="text_22">22sp</dimen>
+    <dimen name="text_26">26sp</dimen>
     <dimen name="text_18">18sp</dimen>
     <dimen name="text_30">30sp</dimen>
     <dimen name="text_24">24sp</dimen>

@@ -27,7 +27,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_16"
             android:text="still no bla bla bla"
-            style="@style/MBMaterialTextSubtitleBrown"
+            style="@style/MBMaterialTextSubtitleBlue"
             />
     <com.google.android.material.button.MaterialButton
             android:id="@+id/mbBookmarkEmptyAddNewButtonId"

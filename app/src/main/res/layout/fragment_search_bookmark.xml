@@ -45,13 +45,13 @@
                         android:layout_height="wrap_content"
                         android:text="Search \nBookmark"
                         android:layout_marginRight="@dimen/margin_16"
-                        style="@style/MBMaterialTextHeaderBrown"/>
+                        style="@style/MBMaterialTextHeaderBlue"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_below="@+id/mbTitleSearchBookmarkTextViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="just type a bookmark "
-                        style="@style/MBMaterialTextDescrSmallBrown"
+                        style="@style/MBMaterialTextDescrSmallBlue"
                         android:layout_marginRight="@dimen/margin_16"
                         android:layout_marginBottom="@dimen/margin_16"/>
             </RelativeLayout>
@@ -101,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_8"
-                            style="@style/MBMaterialTextDescrUltraSmallBoldBrown"
+                            style="@style/MBMaterialTextDescrUltraSmallBoldBlue"
                             android:layout_centerVertical="true"
                             android:text="PASTE \nCLIPBOARD"/>
                 </RelativeLayout>

@@ -35,8 +35,8 @@
         <item name="cardBackgroundColor">@color/colorPrimary</item>
         <item name="strokeColor">@color/colorPrimaryDark</item>
     </style>
-    <style name="MBMaterialCardviewStyleBrown" parent="MBMaterialCardviewStyle" >
-        <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
+    <style name="MBMaterialCardviewStyleBlue" parent="MBMaterialCardviewStyle" >
+        <item name="cardBackgroundColor">@android:color/white</item>
         <item name="strokeColor">@color/colorAccent</item>
     </style>
 
@@ -59,13 +59,13 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_30</item>
     </style>
-    <style name="MBMaterialTextTitleThinBrown" parent="MBMaterialTextTitleThinPurple" >
+    <style name="MBMaterialTextTitleThinBlue" parent="MBMaterialTextTitleThinPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
     <style name="MBMaterialTextTitlePurple" parent="MBMaterialTextTitleThinPurple" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialTextTitleBrown" parent="MBMaterialTextTitlePurple" >
+    <style name="MBMaterialTextTitleBlue" parent="MBMaterialTextTitlePurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
@@ -74,21 +74,21 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_36</item>
     </style>
-    <style name="MBMaterialTextHeaderBrown" parent="MBMaterialTextHeaderPurple" >
+    <style name="MBMaterialTextHeaderBlue" parent="MBMaterialTextHeaderPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextHeaderThinBrown" parent="MBMaterialTextHeaderBrown" >
+    <style name="MBMaterialTextHeaderThinBlue" parent="MBMaterialTextHeaderBlue" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextHeaderThinPurple" parent="MBMaterialTextHeaderThinBrown" >
+    <style name="MBMaterialTextHeaderThinPurple" parent="MBMaterialTextHeaderThinBlue" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextHeaderBigBrown" parent="MBMaterialTextHeaderBrown" >
+    <style name="MBMaterialTextHeaderBigBlue" parent="MBMaterialTextHeaderBlue" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textSize">@dimen/text_48</item>
     </style>
-    <style name="MBMaterialTextHeaderBigThinPurple" parent="MBMaterialTextHeaderBigBrown" >
+    <style name="MBMaterialTextHeaderBigThinPurple" parent="MBMaterialTextHeaderBigBlue" >
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">52sp</item>
     </style>
@@ -106,64 +106,74 @@
         <item name="android:textSize">@dimen/text_18</item>
     </style>
 
-    <style name="MBMaterialTextDescrSmallBrown" parent="MBMaterialTextDescrSmallPurple" >
+    <style name="MBMaterialTextDescrSmallBlue" parent="MBMaterialTextDescrSmallPurple" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextDescrSmallThinBrown" parent="MBMaterialTextDescrSmallBrown" >
+    <style name="MBMaterialTextDescrSmallThinBlue" parent="MBMaterialTextDescrSmallBlue" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextDescrSmallThinWhite" parent="MBMaterialTextDescrSmallThinBrown" >
+    <style name="MBMaterialTextDescrSmallThinWhite" parent="MBMaterialTextDescrSmallThinBlue" >
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
-    <style name="MBMaterialTextDescrSmallThinPurple" parent="MBMaterialTextDescrSmallThinBrown" >
+    <style name="MBMaterialTextDescrSmallThinPurple" parent="MBMaterialTextDescrSmallThinBlue" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextDescrSmallBoldBrown" parent="MBMaterialTextDescrSmallBrown" >
+    <style name="MBMaterialTextDescrSmallBoldBlue" parent="MBMaterialTextDescrSmallBlue" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialTextDescrSmallBoldPurple" parent="MBMaterialTextDescrSmallBoldBrown" >
+    <style name="MBMaterialTextDescrSmallBoldPurple" parent="MBMaterialTextDescrSmallBoldBlue" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextDescrUltraSmallBoldBrown" parent="MBMaterialTextDescrSmallBoldBrown" >
+    <style name="MBMaterialTextDescrUltraSmallBoldBlue" parent="MBMaterialTextDescrSmallBoldBlue" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
-    <style name="MBMaterialTextDescrUltraSmallBrown" parent="MBMaterialTextDescrSmallBrown" >
+    <style name="MBMaterialTextDescrUltraSmallBlue" parent="MBMaterialTextDescrSmallBlue" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
-    <style name="MBMaterialTextDescrSmallRed" parent="MBMaterialTextDescrSmallBrown" >
+    <style name="MBMaterialTextDescrSmallRed" parent="MBMaterialTextDescrSmallBlue" >
         <item name="android:textColor">@color/colorError</item>
     </style>
 
-    <style name="MBMaterialTextSubtitleBrown" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextSubtitleBlue" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/text_22</item>
+        <item name="android:textSize">@dimen/text_26</item>
     </style>
-    <style name="MBMaterialTextSubtitlePurple" parent="MBMaterialTextSubtitleBrown" >
+    <style name="MBMaterialTextSubtitlePurple" parent="MBMaterialTextSubtitleBlue" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
     <style name="MBMaterialTextSubtitleThinPurple" parent="MBMaterialTextSubtitlePurple" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
-    <style name="MBMaterialTextSubtitleThinBrown" parent="MBMaterialTextSubtitleBrown" >
+    <style name="MBMaterialTextSubtitleThinBlue" parent="MBMaterialTextSubtitleBlue" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextSubtitleThinWhite" parent="MBMaterialTextSubtitleThinBrown" >
+    <style name="MBMaterialTextSubtitleThinWhite" parent="MBMaterialTextSubtitleThinBlue" >
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
 
+    <style name="MBMaterialChipDescrSmallThinWhite" parent="Widget.MaterialComponents.ChipGroup" >
+        <item name="android:textColor">@color/colorPrimaryLight</item>
+        <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
+    </style>
 
-    <style name="MBMaterialButtonStyleBrown" parent="TextAppearance.MaterialComponents.Button" >
+    <style name="MBMaterialChipTextApparence" parent="TextAppearance.MaterialComponents.Chip" >
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+        <item name="android:textSize">@dimen/text_22</item>
+    </style>
+
+
+    <style name="MBMaterialButtonStyleBlue" parent="TextAppearance.MaterialComponents.Button" >
         <item name="backgroundTint">@android:color/background_light</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="strokeColor">@color/colorAccent</item>
         <item name="strokeWidth">1dp</item>
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialButtonStyleRed" parent="MBMaterialButtonStyleBrown" >
+    <style name="MBMaterialButtonStyleRed" parent="MBMaterialButtonStyleBlue" >
         <item name="backgroundTint">@android:color/white</item>
         <item name="android:textColor">@color/colorError</item>
         <item name="strokeColor">@color/colorErrorSecondary</item>

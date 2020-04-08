@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/MBMaterialTextHeaderBigBrown"
+            style="@style/MBMaterialTextHeaderBigBlue"
             tools:text="Title..."/>
 
     <com.google.android.material.textfield.TextInputLayout

@@ -45,7 +45,7 @@
                         android:maxLines="2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialTextDescrSmallBrown"
+                        style="@style/MBMaterialTextDescrSmallBlue"
                         android:ellipsize="end"
                         tools:text="www.android.com"
                         />

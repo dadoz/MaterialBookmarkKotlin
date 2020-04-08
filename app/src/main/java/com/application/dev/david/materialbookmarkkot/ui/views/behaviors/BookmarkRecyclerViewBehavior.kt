@@ -81,12 +81,13 @@ fun RecyclerView.addOnScrollListenerWithViews(views: List<View>) {
                 newState == RecyclerView.SCROLL_STATE_IDLE) {
                 isAnimating = false
                 AnimatorSet().apply {
-                    duration = 500
+//                    duration = 500
                     BookmarkAnimator().apply {
                         playTogether(
                             expandAnimator(views[0]),
                             alphaAnimator(views[1], 1f),
-                            alphaAnimator(views[2], 1f)
+                            alphaAnimator(views[2], 1f),
+                            alphaAnimator(views[3], 1f)
                         )
                     }
                     start()
@@ -98,13 +99,14 @@ fun RecyclerView.addOnScrollListenerWithViews(views: List<View>) {
             if (dy > 10 && !isAnimating) {
                 isAnimating = true
                 AnimatorSet().apply {
-                    duration = 500
+//                    duration = 500
                     BookmarkAnimator().apply {
                         playTogether(
                             collapseAnimator(views[0]),
                             alphaAnimator(views[1], 0f),
-                            alphaAnimator(views[2], 0f)
-                        )
+                            alphaAnimator(views[2], 0f),
+                            alphaAnimator(views[3], 0f)
+                            )
                     }
                     start()
                 }

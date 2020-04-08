@@ -12,7 +12,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mbSettingsItemValueTextId"
-            style="@style/MBMaterialTextSubtitleBrown"
+            style="@style/MBMaterialTextSubtitleBlue"
             android:text="Description"
             />
     <androidx.appcompat.widget.AppCompatTextView
@@ -22,6 +22,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/MBMaterialTextDescrSmallBrown"
+            style="@style/MBMaterialTextDescrSmallBlue"
             android:text="value"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,14 +43,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Last update: "
-                    style="@style/MBMaterialTextSubtitleBrown"/>
+                    style="@style/MBMaterialTextSubtitleBlue"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
                     android:layout_toEndOf="@+id/mbNewBookmarkAddUpdatedTimestampLabelId"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/MBMaterialTextDescrSmallBrown"
+                    style="@style/MBMaterialTextDescrSmallBlue"
                     tools:text="this is lates update label"/>
         </RelativeLayout>
 
@@ -72,7 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="5"
-                        style="@style/MBMaterialTextSubtitleThinBrown"/>
+                        style="@style/MBMaterialTextSubtitleThinBlue"/>
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
@@ -156,12 +156,12 @@
                     android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:layout_centerVertical="true"
-                    style="@style/MBMaterialTextDescrSmallBrown"
+                    style="@style/MBMaterialTextDescrSmallBlue"
                     android:text="Update your bookmark"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
                     android:layout_alignParentEnd="true"
-                    style="@style/MBMaterialButtonStyleBrown"
+                    style="@style/MBMaterialButtonStyleBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UPDATE"/>

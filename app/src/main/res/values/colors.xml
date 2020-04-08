@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorAccent">#413c69</color>
-    <color name="colorPrimary">#f82656</color>
+    <color name="colorAccent">#283149</color>
+    <color name="colorPrimary">#29a19c</color>
     <color name="colorYellow">#FFA600</color>
-    <color name="colorPrimaryDark">#D1003E</color>
-    <color name="colorPrimaryLight">#FFFFFF</color>
+    <color name="colorPrimaryDark">#1B615E</color>
+    <color name="colorPrimaryLight">#e6f8f6</color>
     <color name="colorError">#ff7272</color>
     <color name="colorErrorSecondary">#A13532</color>
     <color name="colorSuccess">#3ED48F</color>
-    <color name="colorGrey">#ECECEC</color>
+    <color name="colorGrey">#E5E5E5</color>
 </resources>

@@ -210,7 +210,9 @@ class BookmarkListFragment : Fragment()  {
         mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
             views = listOf(
                 mbBookmarkAppBarLayoutId, mbBookmarkHeaderTitleTextViewId,
-                mbBookmarkHeaderTitleLabelTextViewId
+                mbBookmarkHeaderTitleLabelTextViewId,
+                mbBookmarkHeaderTotBookmarkCardId
+
             )
         )
 

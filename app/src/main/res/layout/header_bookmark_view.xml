@@ -43,7 +43,7 @@
                         android:id="@+id/mbBookmarkPreviewHeaderSubtitleTextViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialTextDescrSmallBrown"
+                        style="@style/MBMaterialTextDescrSmallBlue"
                         tools:text="on Monday 23 at 14:00"/>
             </LinearLayout>
 
