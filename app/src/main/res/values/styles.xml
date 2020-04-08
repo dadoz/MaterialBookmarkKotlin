@@ -166,7 +166,7 @@
     </style>
 
     <style name="MBMaterialChipTextApparence" parent="TextAppearance.MaterialComponents.Chip" >
-        <item name="android:fontFamily">@font/yantramanav_thin</item>
+        <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textSize">@dimen/text_22</item>
     </style>
 

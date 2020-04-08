@@ -16,4 +16,6 @@
     <dimen name="bookmark_icon_preview_big_size">64dp</dimen>
     <dimen name="icon_filter_bookmark">36dp</dimen>
     <dimen name="empty_icon_size">200dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="min_margin_bottom_recycler">120dp</dimen>
 </resources>
