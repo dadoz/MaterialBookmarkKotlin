@@ -161,7 +161,7 @@
     </style>
 
     <style name="MBMaterialChipDescrSmallThinPurple" parent="Widget.MaterialComponents.ChipGroup" >
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
     </style>
 
