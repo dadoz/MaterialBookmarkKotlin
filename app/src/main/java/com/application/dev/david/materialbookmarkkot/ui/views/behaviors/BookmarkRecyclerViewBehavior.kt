@@ -79,39 +79,44 @@ class BookmarkAnimator {
  * extension class :P
  */
 fun RecyclerView.addOnScrollListenerWithViews(views: List<View>) {
+    //set animation
+    views[0].tag = false
+    //set on scroll listener
     addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        var isAnimating = false
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             if (!recyclerView.canScrollVertically(-1) &&
-                newState == RecyclerView.SCROLL_STATE_IDLE) {
-                isAnimating = false
+                newState == RecyclerView.SCROLL_STATE_IDLE &&
+                (views[0].tag as Boolean)) {
+                //set animation
+                views[0].tag = false
+
                 AnimatorSet().apply {
-//                    duration = 500
-                    BookmarkAnimator().apply {
-                        playTogether(
-                            expandAnimator(views[0]),
-                            alphaAnimator(views[1], 1f),
-                            alphaAnimator(views[2], 1f),
-                            alphaAnimator(views[3], 1f)
-                        )
+                        BookmarkAnimator().apply {
+                            playTogether(
+                                expandAnimator(views[0]),
+                                alphaAnimator(views[1], 1f),
+                                alphaAnimator(views[2], 1f),
+                                alphaAnimator(views[3], 1f)
+                            )
+                        }
+                        start()
                     }
-                    start()
-                }
             }
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            if (dy > 10 && !isAnimating) {
-                isAnimating = true
+            if (dy > 10 && !(views[0].tag as Boolean)) {
+                //set animation
+                views[0].tag = true
+
                 AnimatorSet().apply {
-//                    duration = 500
                     BookmarkAnimator().apply {
                         playTogether(
                             collapseAnimator(views[0]),
                             alphaAnimator(views[1], 0f),
                             alphaAnimator(views[2], 0f),
                             alphaAnimator(views[3], 0f)
-                            )
+                        )
                     }
                     start()
                 }

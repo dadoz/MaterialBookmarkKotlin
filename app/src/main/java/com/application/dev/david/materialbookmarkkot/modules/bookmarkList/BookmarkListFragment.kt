@@ -213,14 +213,10 @@ class BookmarkListFragment : Fragment()  {
             }
         }
 
-
-
         mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
             views = listOf(
                 mbBookmarkAppBarLayoutId, mbBookmarkHeaderTitleTextViewId,
-                mbBookmarkHeaderTitleLabelTextViewId,
-                mbBookmarkHeaderTotBookmarkCardId
-
+                mbBookmarkHeaderTitleLabelTextViewId, mbBookmarkHeaderTotBookmarkCardId
             )
         )
 
