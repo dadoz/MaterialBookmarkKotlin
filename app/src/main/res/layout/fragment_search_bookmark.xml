@@ -13,14 +13,14 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:background="@android:color/background_light"
-                android:colorControlNormal="@color/colorAccent"
+                app:titleTextColor="@color/colorPrimary"
                 android:theme="@style/AppTheme.AppBarOverlay">
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/mbToolbarId"
                     android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:titleTextColor="@color/colorAccent"
+                    app:titleTextColor="@color/colorPrimary"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -75,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/yantramanav_thin"
                             android:maxLines="5"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/text_22" />
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>

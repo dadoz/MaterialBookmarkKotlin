@@ -16,7 +16,7 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
-        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -142,7 +142,7 @@
         <item name="android:textSize">@dimen/text_26</item>
     </style>
     <style name="MBMaterialTextSubtitlePurple" parent="MBMaterialTextSubtitleBlue" >
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <style name="MBMaterialTextSubtitleThinPurple" parent="MBMaterialTextSubtitlePurple" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
@@ -161,7 +161,7 @@
     </style>
 
     <style name="MBMaterialChipDescrSmallThinPurple" parent="Widget.MaterialComponents.ChipGroup" >
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
     </style>
 

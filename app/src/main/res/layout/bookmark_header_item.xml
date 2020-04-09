@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_8"
                 android:gravity="center_horizontal"
-                style="@style/MBMaterialTextSubtitleThinBlue"
+                style="@style/MBMaterialTextSubtitleThinPurple"
                 tools:text="G"
                 />
 

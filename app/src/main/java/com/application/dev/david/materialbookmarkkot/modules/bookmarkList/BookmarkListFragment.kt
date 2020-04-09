@@ -148,16 +148,11 @@ class BookmarkListFragment : Fragment()  {
                     }
                 )
             }
-
-            //please replace with viewModel isEmptyDataList
-            when (list.isNotEmpty()) {
-                true -> mbBookmarkEmptyViewId.visibility = GONE
-                false -> mbBookmarkEmptyViewId.visibility = VISIBLE
-            }
         })
 
         bookmarkViewModel.bookmarkListSize.observe(this, Observer {
             mbBookmarkHeaderTotBookmarkLabelId.apply { text = it }
+            handleEmptyView(it == "0")
         })
 
         mbBookmarkEmptyAddNewButtonId.setOnClickListener {
@@ -221,6 +216,30 @@ class BookmarkListFragment : Fragment()  {
         )
 
     }
+
+    /**
+     *
+     */
+    private fun handleEmptyView(isEmptyData: Boolean) {
+        //TODO please replace with viewModel isEmptyDataList
+        when (isEmptyData) {
+            false -> {
+                mbBookmarkEmptyViewId.visibility = GONE
+                mbBookmarkAddNewButtonId.visibility = VISIBLE
+                mbBookmarkAppBarLayoutId.visibility = VISIBLE
+                mbBookmarkHeaderFilterActionsLayoutId.visibility = VISIBLE
+            }
+            true -> {
+                if (bookmarkFilters.starFilterType != BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW) {
+                    mbBookmarkEmptyViewId.visibility = VISIBLE
+                    mbBookmarkAddNewButtonId.visibility = GONE
+                    mbBookmarkAppBarLayoutId.visibility = GONE
+                    mbBookmarkHeaderFilterActionsLayoutId.visibility = GONE
+                }
+            }
+        }
+    }
+
     /**
      *
      */

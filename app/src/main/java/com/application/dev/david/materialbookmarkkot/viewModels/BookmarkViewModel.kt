@@ -280,8 +280,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 when (sortTypeList) {
                     IS_BY_TITLE.ordinal -> {
                         bookmark.title?.let {
-                            if (it.isBlank()) "" else it.toLowerCase()[0].toString()
-                        }?: ""
+                            if (it.isBlank()) "..." else it.toLowerCase()[0].toString()
+                        }?: "..."
                     }
                     IS_BY_DATE.ordinal -> bookmark.timestamp?.let { it.toString("MMMM")}?: ""
                     else -> ""

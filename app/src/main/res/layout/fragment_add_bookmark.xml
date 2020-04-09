@@ -24,12 +24,12 @@
                     android:colorControlNormal="@color/colorAccent"
                     android:theme="@style/AppTheme.AppBarOverlay">
 
-                <androidx.appcompat.widget.Toolbar
+                    <androidx.appcompat.widget.Toolbar
                         android:id="@+id/mbToolbarId"
                         android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
-                        app:titleTextColor="@color/colorAccent"
+                        app:titleTextColor="@color/colorPrimary"
                         app:popupTheme="@style/AppTheme.PopupOverlay" />
             </com.google.android.material.appbar.AppBarLayout>
 
