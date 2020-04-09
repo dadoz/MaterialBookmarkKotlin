@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.databinding.adapters.TextViewBindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,6 +33,7 @@ import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
 import kotlinx.android.synthetic.main.fragment_search_bookmark.*
 
@@ -101,10 +105,13 @@ class SearchBookmarkFragment : Fragment() {
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
-
         mbBookmarkSearchPasteClipboardButtonId.setOnClickListener {
             when {
-                !clipboard.hasPrimaryClip() || clipboard.primaryClipDescription == null -> print("no obj")
+                !clipboard.hasPrimaryClip() || clipboard.primaryClipDescription == null -> {
+                    view?.let {
+                        Snackbar.make(it, "Nothing pasted on clipboard", Snackbar.LENGTH_SHORT).show()
+                    }
+                }
                 else -> {
                     clipboard.primaryClipDescription?.let {
                         val res: String = when  {
@@ -117,7 +124,8 @@ class SearchBookmarkFragment : Fragment() {
                 }
             }
         }
-        searchBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
+
+        searchBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{
             navigation?.navigate(R.id.addBookmarkFragment)
         })
 
@@ -133,23 +141,20 @@ class SearchBookmarkFragment : Fragment() {
                 }, 200)
         }
 
-    }
+        mbNewBookmarkUrlEditTextId.apply {
+            mbsearchBookmarkButtonViewId.isEnabled = false
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
 
-    /**
-     * get placeholder
-     */
-//    private fun getPlaceholder(): Drawable? {
-//        return context?.let {ctx ->
-//            ContextCompat.getDrawable(ctx, R.drawable.ic_bookmark)?.let {
-//                DrawableCompat.setTint(it, ContextCompat.getColor(ctx, R.color.colorPrimary))
-//                it
-//            }
-//        }
-//    }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    mbsearchBookmarkButtonViewId.isEnabled = !s.isNullOrEmpty()
+                }
+            })
+        }
     }
 
     override fun onAttach(context: Context) {
