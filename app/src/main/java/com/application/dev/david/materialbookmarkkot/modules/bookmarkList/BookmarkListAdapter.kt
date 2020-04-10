@@ -27,7 +27,6 @@ class BookmarkListAdapter(
     private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val EMPTY_BOOKMARK_LABEL = "Title..."
     enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -131,6 +130,10 @@ class BookmarkListAdapter(
         val bookmarkSubtitleHeader: TextView = itemView.findViewById(R.id.bookmarkSubtitleHeaderViewId)
         val bookmarkLabelHeader: TextView = itemView.findViewById(R.id.bookmarkLabelHeaderViewId)
 
+    }
+
+    companion object {
+        const val EMPTY_BOOKMARK_LABEL = "Title..."
     }
 
 }

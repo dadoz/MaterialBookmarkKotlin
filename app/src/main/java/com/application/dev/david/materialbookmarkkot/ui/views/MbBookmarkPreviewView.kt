@@ -8,6 +8,9 @@ import android.view.View
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
+import com.application.dev.david.materialbookmarkkot.ui.setIconByResource
+import com.application.dev.david.materialbookmarkkot.ui.toggleIcon
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,7 +55,7 @@ class MbBookmarkPreviewView : RelativeLayout {
         this.bookmark = bookmark
         //set title and icon
         mbBookmarkPreviewHeaderViewId.setViewModel(bookmarkViewModel)
-        mbBookmarkPreviewHeaderViewId.setTitle(bookmark.title)
+        mbBookmarkPreviewHeaderViewId.setTitle(bookmark.title.let { if (it.isNullOrEmpty()) EMPTY_BOOKMARK_LABEL else it })
         mbBookmarkPreviewHeaderViewId.setDescription(bookmark.timestamp)
         mbBookmarkPreviewHeaderViewId.setIcon(bookmark.image)
         mbBookmarkPreviewUrlTextId.text = "https://${bookmark.url}"
@@ -89,9 +92,17 @@ class MbBookmarkPreviewView : RelativeLayout {
     }
 
     fun setMoreButtonAction(callbackAction: () -> Unit) {
-        mbBookmarkPreviewMoreButtonId.setOnClickListener {
-            setPreviewVisible(false)
-            callbackAction.invoke()
+        mbBookmarkPreviewMoreButtonId.apply {
+            toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
+            setOnClickListener {
+                setPreviewVisible(tag == "up")
+                callbackAction.invoke()
+                tag = when (tag) {
+                    "down" -> "up"
+                    else -> "down"
+                }
+                toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
+            }
         }
     }
 
