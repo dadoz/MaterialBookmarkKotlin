@@ -1,5 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.ui.views
 
+import android.animation.Animator
+import android.animation.AnimatorSet
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,7 +13,9 @@ import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
 import com.application.dev.david.materialbookmarkkot.ui.setIconByResource
 import com.application.dev.david.materialbookmarkkot.ui.toggleIcon
+import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.BookmarkAnimator
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
+import com.google.android.material.animation.AnimatorSetCompat.playTogether
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_bookmark_list.view.*
@@ -36,7 +40,8 @@ class MbBookmarkPreviewView : RelativeLayout {
                 when (newState) {
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         fab.animate().scaleX(0F).scaleY(0F).setDuration(300).start()
-                        mbBookmarkPreviewCardviewId.setPreviewVisible(true)
+                        mbBookmarkPreviewCardviewId.resetDownIconByTag()
+//                        mbBookmarkPreviewCardviewId.setPreviewVisible(true)
                     }
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         fab.animate().scaleX(1F).scaleY(1F).setDuration(300).start()
@@ -91,16 +96,23 @@ class MbBookmarkPreviewView : RelativeLayout {
         }
     }
 
+    fun resetDownIconByTag() {
+        mbBookmarkPreviewMoreButtonId.apply {
+            tag = "down"
+            toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
+        }
+    }
+
     fun setMoreButtonAction(callbackAction: () -> Unit) {
         mbBookmarkPreviewMoreButtonId.apply {
             toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
             setOnClickListener {
-                setPreviewVisible(tag == "up")
-                callbackAction.invoke()
                 tag = when (tag) {
                     "down" -> "up"
                     else -> "down"
                 }
+                setPreviewVisible(tag == "down")
+                callbackAction.invoke()
                 toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
             }
         }
@@ -115,16 +127,18 @@ class MbBookmarkPreviewView : RelativeLayout {
     }
 
     fun setPreviewVisible(isPreviewVisible: Boolean) {
-        when (isPreviewVisible) {
-            true -> {
-                mbBookmarkPreviewDeleteLayoutId.visibility = View.GONE
-                mbBookmarkPreviewHeaderEditUrlLayoutId.visibility = View.VISIBLE
+        val animatorList: List<Animator> = BookmarkAnimator().let {
+            when (isPreviewVisible) {
+                true -> listOf(it.collapseAnimator(mbBookmarkPreviewDeleteLayoutId),
+                        it.expandAnimator(mbBookmarkPreviewHeaderEditUrlLayoutId))
+                else -> listOf(it.collapseAnimator(mbBookmarkPreviewHeaderEditUrlLayoutId),
+                        it.expandAnimator(mbBookmarkPreviewDeleteLayoutId))
             }
-            else -> {
-                mbBookmarkPreviewDeleteLayoutId.visibility = View.VISIBLE
-                mbBookmarkPreviewHeaderEditUrlLayoutId.visibility = View.GONE
-            }
+        }
 
+        AnimatorSet().apply {
+            playSequentially(animatorList)
+            start()
         }
     }
 

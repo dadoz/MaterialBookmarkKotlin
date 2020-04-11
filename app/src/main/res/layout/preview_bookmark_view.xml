@@ -84,13 +84,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/MBMaterialTextDescrSmallPurple"
+                                android:layout_marginBottom="@dimen/margin_4"
                                 android:text="@string/delete_fulle_descr_label_text"/>
                         <com.google.android.material.button.MaterialButton
                                 android:id="@+id/mbBookmarkPreviewDeleteButtonId"
                                 android:layout_marginTop="@dimen/margin_32"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 tools:visibility="visible"
+                                android:layout_gravity="end"
                                 style="@style/MBMaterialButtonStyleOutlinePurple"
                                 android:text="@string/delete_label_text"/>
                 </LinearLayout>
