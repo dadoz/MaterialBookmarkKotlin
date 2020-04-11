@@ -113,9 +113,11 @@ class BookmarkListFragment : Fragment()  {
             pairData.second?.let { list ->
                 mbBookmarkRecyclerViewId.apply {
                     adapter?.let {
-                        (it as BookmarkListAdapter).setItems(list as MutableList<Any>)
-                        it.notifyItemRemoved(position)
-                        it.notifyItemRangeChanged(position, list.size - position)
+                        (it as BookmarkListAdapter).setItems(list)
+                        it.notifyItemRemoved(position[0])
+                        if (position[1] != -1)
+                            it.notifyItemRemoved(position[1])
+                        it.notifyItemRangeChanged(position[0], list.size - position[0])
                     }
                 }
             }

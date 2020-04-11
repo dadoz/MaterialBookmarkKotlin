@@ -299,7 +299,6 @@ class AddBookmarkFragment : Fragment() {
                 val result = CropImage.getActivityResult(data)
                 when (resultCode) {
                     Activity.RESULT_OK -> {
-//                        Toast.makeText(context, result.uri.toString(), Toast.LENGTH_LONG).show()
                         result.uri.toString().let {
                             mbNewBookmarkTitleEditTextId.tag = it
                             addBookmarkViewModel.bookmarkIconUrl.set(it)
@@ -310,6 +309,7 @@ class AddBookmarkFragment : Fragment() {
             }
         }
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -325,7 +325,7 @@ class AddBookmarkFragment : Fragment() {
     }
 
     companion object {
-        public final const val SAVE_ACTION_BOOKMARK = "SAVE_ACTION_BOOKMARK"
-        public final const val UPDATE_ACTION_BOOKMARK = "UPDATE_ACTION_BOOKMARK"
+        const val SAVE_ACTION_BOOKMARK = "SAVE_ACTION_BOOKMARK"
+        const val UPDATE_ACTION_BOOKMARK = "UPDATE_ACTION_BOOKMARK"
     }
 }

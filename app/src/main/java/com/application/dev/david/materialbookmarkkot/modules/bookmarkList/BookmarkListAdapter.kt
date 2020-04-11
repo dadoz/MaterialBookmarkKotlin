@@ -22,7 +22,7 @@ import khronos.toString
 
 class BookmarkListAdapter(
     private var items: MutableList<Any>,
-    val bookmarkFilter: BookmarkFilter,
+    private val bookmarkFilter: BookmarkFilter,
     private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
     private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit
 ) :

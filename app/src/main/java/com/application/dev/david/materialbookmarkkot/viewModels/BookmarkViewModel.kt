@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
     var bookmarksLiveData: MutableLiveData<MutableList<Any>> = MutableLiveData()
-    var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<Int, MutableList<Any>?>> = MutableLiveData()
+    var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<List<Int>, MutableList<Any>?>> = MutableLiveData()
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
     var isEmptyDataList: MutableLiveData<Boolean> = MutableLiveData(false)
     var bookmarkListSize: MutableLiveData<String> = MutableLiveData()
@@ -78,8 +78,25 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      * delete bookmark
      */
     fun deleteBookmarkFromList(position: Int) {
-        bookmarksLiveData.value?.removeAt(position)
-        bookmarksRemovedBookmarkPairData.value = Pair(position, bookmarksLiveData.value)
+        var labelPos = -1
+        bookmarksLiveData.value?.let {
+            it.removeAt(position)
+            if (position > 0 && position < it.size &&
+                it[position -1] is BookmarkHeader &&
+                it[position] is BookmarkHeader) {
+                it.removeAt(position -1)
+                labelPos = position -1
+            }
+            if (position == it.size &&
+                it[position -1] is BookmarkHeader) {
+                it.removeAt(position -1)
+                labelPos = position -1
+            }
+        }
+        bookmarksRemovedBookmarkPairData.value = Pair(listOf(position, labelPos), bookmarksLiveData.value)
+    }
+
+    private fun removeLabelIfNeed(position: Int) {
     }
 
     /**
