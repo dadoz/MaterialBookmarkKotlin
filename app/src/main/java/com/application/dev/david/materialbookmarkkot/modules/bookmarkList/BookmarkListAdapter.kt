@@ -14,10 +14,13 @@ import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
+import com.application.dev.david.materialbookmarkkot.ui.setStarColor
+import com.application.dev.david.materialbookmarkkot.ui.setStarOutlineColor
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.card.MaterialCardView
 import khronos.toString
 
 class BookmarkListAdapter(
@@ -53,6 +56,10 @@ class BookmarkListAdapter(
             when (holder) {
                 //BookmarkViewHolder
                 is BookmarkViewHolder -> {
+                    //set backround color
+                    (holder.itemView as MaterialCardView).setStarOutlineColor(bookmarkFilter.starFilterType)
+
+                    //set items view holder
                     (item as Bookmark).let {
                         holder.apply {
                             bookmarkTitle.apply {

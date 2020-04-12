@@ -66,6 +66,19 @@ fun MaterialCardView.setStarColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
     }
 }
 
+fun MaterialCardView.setStarOutlineColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
+    when (viewType) {
+        IS_DEFAULT_VIEW -> {
+            setBackgroundColorByColorRes(R.color.colorPrimaryLight)
+            setStrokeColorByColorRes(R.color.colorPrimaryDark)
+        }
+        IS_STAR_VIEW -> {
+            setBackgroundColorByColorRes(R.color.colorAccentLight)
+            setStrokeColorByColorRes(R.color.colorAccent)
+        }
+    }
+}
+
 fun View.toggleVisibiltyWithView(view: View) {
     visibility = View.GONE
     view.visibility = View.VISIBLE
