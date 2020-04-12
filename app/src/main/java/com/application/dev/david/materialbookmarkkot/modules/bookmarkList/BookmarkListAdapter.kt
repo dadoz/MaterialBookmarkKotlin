@@ -68,7 +68,7 @@ class BookmarkListAdapter(
                             }
 
                             val starColor = when (item.isStar) {
-                                true -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorYellow)
+                                true -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorAccent)
                                 else -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorPrimary)
                             }
                             bookmarkStarButton.setColorFilter(starColor)

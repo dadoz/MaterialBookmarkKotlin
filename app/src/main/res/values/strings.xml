@@ -13,6 +13,7 @@
     <string name="settings_actionbar_string">Settings</string>
     <string name="no_bookmark_string">Still no one bookmark in your list, seem so sad!</string>
     <string name="add_new_string">Add new</string>
+    <string name="no_bookmark_star_string">Still no preferred bookmarks here!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

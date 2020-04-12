@@ -36,9 +36,9 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbBookmarkMainBackgroundImageId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bookmark_illustration"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_mermaid_illustration"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -178,6 +178,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="filtering by"/>
+        <LinearLayout
+                android:id="@+id/mbBookmarkHeaderSortFilterChipLayoutId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal">
+
         <com.google.android.material.chip.Chip
                 android:id="@+id/mbBookmarkHeaderSortFilterByDateChipId"
                 style="@style/MBMaterialChipDescrSmallThinWhite"
@@ -185,9 +194,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:chipIcon="@drawable/ic_time_clock_circle"
                 app:chipIconTint="@color/colorPrimaryLight"
                 app:chipBackgroundColor="@color/colorPrimary"
@@ -202,9 +208,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:chipIcon="@drawable/ic_font_size"
                 app:chipIconTint="@color/colorPrimary"
                 app:chipBackgroundColor="@android:color/white"
@@ -213,6 +216,8 @@
                 app:chipCornerRadius="5dp"
                 app:iconStartPadding="@dimen/margin_8"
                 android:text="title"/>
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--main view-->
@@ -230,6 +235,14 @@
     <include layout="@layout/empty_view" tools:visibility="gone"/>
 
     <!--bottombar -->
+    <include
+            android:id="@+id/mbEmptyStarViewLayoutId"
+            layout="@layout/empty_star_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:visibility="gone" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mbBookmarkBottomBarLayoutId"
             android:layout_width="match_parent"

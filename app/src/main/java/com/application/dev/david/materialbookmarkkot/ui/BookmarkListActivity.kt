@@ -15,6 +15,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
+import com.google.android.material.card.MaterialCardView
 
 class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {
 
@@ -34,11 +38,32 @@ class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener,
 }
 
 /**
- * companion fun
+ * extension fun
  */
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun View.setBackgroundColorByColorRes(colorRes: Int) {
+    setBackgroundColor(ContextCompat.getColor(context, colorRes))
+}
+
+fun MaterialCardView.setBackgroundColorByColorRes(colorRes: Int) {
+    setCardBackgroundColor(ContextCompat.getColor(context, colorRes))
+}
+
+fun MaterialCardView.setStarColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
+    when (viewType) {
+        IS_DEFAULT_VIEW -> {
+            setBackgroundColorByColorRes(R.color.colorPrimary)
+            setStrokeColorByColorRes(R.color.colorPrimaryDark)
+        }
+        IS_STAR_VIEW -> {
+            setBackgroundColorByColorRes(R.color.colorAccent)
+            setStrokeColorByColorRes(R.color.colorAccent)
+        }
+    }
 }
 
 fun View.toggleVisibiltyWithView(view: View) {
@@ -46,6 +71,13 @@ fun View.toggleVisibiltyWithView(view: View) {
     view.visibility = View.VISIBLE
 }
 
+fun MaterialCardView.setStrokeColorByColorRes(colorRes: Int) {
+    strokeColor = ContextCompat.getColor(context, colorRes)
+}
+
+fun ImageView.setColor(colorRes: Int) {
+    setColorFilter(ContextCompat.getColor(context, colorRes))
+}
 fun ImageView.toggleIcon(condition: Boolean, resource1: Int, resource2: Int) {
     when (condition) {
         true -> setIconByResource(resource1)

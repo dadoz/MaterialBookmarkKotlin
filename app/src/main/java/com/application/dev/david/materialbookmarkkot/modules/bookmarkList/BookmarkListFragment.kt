@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,14 +22,16 @@ import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListV
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.*
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortOrderListEnum.*
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.*
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
-import com.application.dev.david.materialbookmarkkot.ui.setIconDependingOnSortAscending
-import com.application.dev.david.materialbookmarkkot.ui.toggleVisibiltyWithView
+import com.application.dev.david.materialbookmarkkot.ui.*
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.addOnScrollListenerWithViews
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.setGridOrListLayout
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView
+import kotlinx.android.synthetic.main.empty_star_view.*
 import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
@@ -85,14 +89,32 @@ class BookmarkListFragment : Fragment()  {
             }
 
             setOnMenuItemClickListener {
+                val views = listOf<View>(mbBookmarkHeaderTitleTextViewId,
+                    mbBookmarkHeaderTitleLabelTextViewId,
+                    mbBookmarkHeaderSortFilterChipLayoutId,
+                    mbBookmarkHeaderSortFilterLabelId)
+
+                val filterViews = listOf<ImageView>(
+                    mbBookmarkHeaderListFilterIconId,
+                    mbBookmarkHeaderCardFilterIconId,
+                    mbBookmarkHeaderSortFilterIconId
+                )
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
-                        bookmarkFilters.starFilterType = BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
+                        bookmarkFilters.starFilterType = IS_STAR_VIEW
+                        mbBookmarkMainBackgroundImageId.setIconByResource(R.drawable.ic_budda_illustration)
+                        mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_STAR_VIEW)
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                        views.forEach { it.visibility = GONE }
+                        filterViews.forEach { it.setColor(R.color.colorAccent) }
                     }
                     R.id.mbBookmarkHeaderHomeFilterIconId -> {
-                        bookmarkFilters.starFilterType = BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
+                        bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
+                        mbBookmarkMainBackgroundImageId.setIconByResource(R.drawable.ic_mermaid_illustration)
+                        mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_DEFAULT_VIEW)
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                        views.forEach { it.visibility = VISIBLE }
+                        filterViews.forEach { it.setColor(R.color.colorPrimary) }
                     }
                 }
                 true
@@ -109,15 +131,15 @@ class BookmarkListFragment : Fragment()  {
 
         //event update list
         bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(this, Observer { pairData ->
-            val position = pairData.first
+            val positionList = pairData.first
             pairData.second?.let { list ->
                 mbBookmarkRecyclerViewId.apply {
                     adapter?.let {
                         (it as BookmarkListAdapter).setItems(list)
-                        it.notifyItemRemoved(position[0])
-                        if (position[1] != -1)
-                            it.notifyItemRemoved(position[1])
-                        it.notifyItemRangeChanged(position[0], list.size - position[0])
+                        it.notifyItemRemoved(positionList[0])
+                        if (positionList[1] != -1)
+                            it.notifyItemRemoved(positionList[1])
+                        it.notifyItemRangeChanged(positionList[0], list.size - positionList[0])
                     }
                 }
             }
@@ -125,6 +147,7 @@ class BookmarkListFragment : Fragment()  {
 
         //event retrieve list
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
+            //set recyclerview
             mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
                 setGridOrListLayout(ListViewTypeEnum.values()[bookmarkFilters.listViewType])
@@ -144,7 +167,7 @@ class BookmarkListFragment : Fragment()  {
 
         bookmarkViewModel.bookmarkListSize.observe(this, Observer {
             mbBookmarkHeaderTotBookmarkLabelId.apply { text = it }
-            handleEmptyView(it == "0")
+//            handleEmptyView(it == "0")
         })
 
         mbBookmarkEmptyAddNewButtonId.setOnClickListener {
@@ -191,6 +214,7 @@ class BookmarkListFragment : Fragment()  {
             }
 
         }
+
         mbBookmarkHeaderCardFilterIconId.apply {
             visibility = bookmarkFilters.getVisibilityByViewType(IS_GRID)
             setOnClickListener {
@@ -207,29 +231,6 @@ class BookmarkListFragment : Fragment()  {
             )
         )
 
-    }
-
-    /**
-     *
-     */
-    private fun handleEmptyView(isEmptyData: Boolean) {
-        //TODO please replace with viewModel isEmptyDataList
-        when (isEmptyData) {
-            false -> {
-                mbBookmarkEmptyViewId.visibility = GONE
-                mbBookmarkAddNewButtonId.visibility = VISIBLE
-                mbBookmarkAppBarLayoutId.visibility = VISIBLE
-                mbBookmarkHeaderFilterActionsLayoutId.visibility = VISIBLE
-            }
-            true -> {
-                if (bookmarkFilters.starFilterType != BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW) {
-                    mbBookmarkEmptyViewId.visibility = VISIBLE
-                    mbBookmarkAddNewButtonId.visibility = GONE
-                    mbBookmarkAppBarLayoutId.visibility = GONE
-                    mbBookmarkHeaderFilterActionsLayoutId.visibility = GONE
-                }
-            }
-        }
     }
 
     /**
@@ -263,6 +264,44 @@ class BookmarkListFragment : Fragment()  {
         }
 
 
+    /**
+     *
+     */
+    private fun handleEmptyView(isEmptyData: Boolean) {
+        //TODO please replace with viewModel isEmptyDataList
+        when (isEmptyData) {
+            false -> {
+                GONE.let {
+                    mbBookmarkEmptyViewId.visibility = it
+                }
+                VISIBLE.let {
+                    mbBookmarkAddNewButtonId.visibility = it
+                    mbBookmarkAppBarLayoutId.visibility = it
+                    mbBookmarkHeaderFilterActionsLayoutId.visibility = it
+                }
+            }
+            true -> {
+                when (bookmarkFilters.starFilterType) {
+                    IS_STAR_VIEW -> {
+                        VISIBLE.let {
+                            mbBookmarkEmptyStarViewId.visibility = it
+                        }
+                    }
+                    else -> {
+                        GONE.let {
+                            mbBookmarkAddNewButtonId.visibility = it
+                            mbBookmarkAppBarLayoutId.visibility = it
+                            mbBookmarkHeaderFilterActionsLayoutId.visibility = it
+                        }
+                        VISIBLE.let {
+                            mbBookmarkEmptyViewId.visibility = it
+                        }
+
+                    }
+                }
+            }
+        }
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
