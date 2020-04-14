@@ -142,6 +142,9 @@
         <item name="android:textColor">@color/colorError</item>
     </style>
 
+    <style name="MBMaterialTextSubtitleSmallYellow" parent="MBMaterialTextSubtitleYellow" >
+        <item name="android:textSize">@dimen/text_22</item>
+    </style>
     <style name="MBMaterialTextSubtitleYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>

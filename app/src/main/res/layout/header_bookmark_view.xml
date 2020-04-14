@@ -19,9 +19,9 @@
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbBookmarkPreviewHeaderIconImageViewId"
                     tools:background="@color/colorAccent"
-                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_width="@dimen/bookmark_icon_preview_size"
                     android:layout_height="@dimen/bookmark_icon_preview_size"
+                    android:layout_marginStart="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_16"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
@@ -30,6 +30,7 @@
                     android:id="@+id/mbBookmarkPreviewHeaderSubtitleLayoutId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/mbShareBookmarkActionId"
                     android:layout_toEndOf="@+id/mbBookmarkPreviewHeaderIconImageViewId"
                     android:orientation="vertical">
@@ -49,6 +50,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbShareBookmarkActionId"
+                    android:background="?attr/selectableItemBackground"
                     android:layout_margin="@dimen/margin_8"
                     android:layout_width="@dimen/small_icon_size_bookmark"
                     android:layout_height="@dimen/small_icon_size_bookmark"
@@ -57,6 +59,7 @@
                     android:src="@drawable/ic_share_bookmark"/>
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbBookmarkPreviewMoreButtonId"
+                    android:background="?attr/selectableItemBackground"
                     android:tag="down"
                     android:layout_below="@+id/mbShareBookmarkActionId"
                     android:layout_width="@dimen/icon_size"
@@ -64,7 +67,6 @@
                     android:layout_margin="@dimen/margin_8"
                     android:layout_alignParentEnd="true"
                     android:tint="@color/colorPrimary"
-                    style="@style/MBMaterialTextSubtitleYellow"
                     android:src="@drawable/ic_arrow_down"/>
         </RelativeLayout>
         <View

@@ -7,7 +7,6 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -155,11 +154,15 @@ class BookmarkListFragment : Fragment()  {
                 adapter = BookmarkListAdapter(list as MutableList<Any>,
                     bookmarkFilters,
                     { position, bookmark -> openPreviewView(position, bookmark) },
-                    { _, bookmark ->
+                    { position, bookmark ->
                         bookmark.isStar = !bookmark.isStar
                         //toggling status
                         bookmarkViewModel.setStarBookmark(bookmark)
                         adapter?.notifyDataSetChanged()
+                        if (bookmarkFilters.starFilterType == IS_STAR_VIEW) {
+                            adapter?.notifyItemRemoved(position)
+                            bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                        }
                     }
                 )
             }
@@ -175,6 +178,7 @@ class BookmarkListFragment : Fragment()  {
         }
 
         mbBookmarkAddNewButtonId.setOnClickListener {
+            bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
             findNavController().navigate(R.id.searchBookmarkFragment)
         }
 
@@ -211,6 +215,10 @@ class BookmarkListFragment : Fragment()  {
                 bookmarkFilters.setListViewType()
                 mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST)
                 it.toggleVisibiltyWithView(mbBookmarkHeaderCardFilterIconId)
+
+                //TODO is really bad this updated
+                bookmarkViewModel.bookmarksLiveData.value?.clear()
+                bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
             }
 
         }
@@ -221,6 +229,11 @@ class BookmarkListFragment : Fragment()  {
                 bookmarkFilters.setGridViewType()
                 mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID)
                 it.toggleVisibiltyWithView(mbBookmarkHeaderListFilterIconId)
+                mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
+
+                //TODO is really bad this updated
+                bookmarkViewModel.bookmarksLiveData.value?.clear()
+                bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
             }
         }
 
@@ -238,6 +251,7 @@ class BookmarkListFragment : Fragment()  {
      */
     private fun openPreviewView(position: Int, bookmark: Bookmark) =
         mbBookmarkPreviewCardviewId.apply {
+            setStarColor(bookmarkFilters.starFilterType)
             initView(BottomSheetBehavior.from(mbBookmarkPreviewCardviewId), fab = mbBookmarkAddNewButtonId)
             initData(bookmark, bookmarkViewModel)
             setMoreButtonAction { }

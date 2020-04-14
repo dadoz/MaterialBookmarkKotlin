@@ -7,22 +7,24 @@ import android.content.Intent
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
-import com.application.dev.david.materialbookmarkkot.ui.setIconByResource
+import com.application.dev.david.materialbookmarkkot.ui.setStrokeColorByColorRes
 import com.application.dev.david.materialbookmarkkot.ui.toggleIcon
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.BookmarkAnimator
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
-import com.google.android.material.animation.AnimatorSetCompat.playTogether
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_bookmark_list.view.*
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.view.*
 
-class MbBookmarkPreviewView : RelativeLayout {
+class MbBookmarkPreviewView : FrameLayout {
     var bookmark: Bookmark? = null
 
     constructor(context: Context) : this(context, null)
@@ -32,6 +34,12 @@ class MbBookmarkPreviewView : RelativeLayout {
     }
     private var previewBehaviourView: BottomSheetBehavior<View>? = null
 
+    fun setStarColor(starFilterType: BookmarkFilter.StarFilterTypeEnum) {
+        when (starFilterType) {
+            IS_STAR_VIEW -> mbBookmarkPreviewHeaderCardViewId.setStrokeColorByColorRes(R.color.colorAccent)
+            else -> mbBookmarkPreviewHeaderCardViewId.setStrokeColorByColorRes(R.color.colorPrimary)
+        }
+    }
     fun initView(previewBehaviourView: BottomSheetBehavior<View>, fab: FloatingActionButton) {
         this.previewBehaviourView = previewBehaviourView
         previewBehaviourView.addBottomSheetCallback(object :

@@ -1,5 +1,7 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.dev.david.materialbookmarkkot.models.BookmarkHeader
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
@@ -22,6 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import khronos.toString
+import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 class BookmarkListAdapter(
     private var items: MutableList<Any>,
@@ -35,12 +39,13 @@ class BookmarkListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             BOOKMARK_VIEW_TYPE.ordinal -> {
-                val inflatedView = parent.inflate(R.layout.bookmark_view_item, false)
-                BookmarkViewHolder(inflatedView)
+                when (bookmarkFilter.listViewType) {
+                    IS_LIST.ordinal -> BookmarkViewHolder(parent.inflate(R.layout.bookmark_list_view_item, false))
+                    else -> BookmarkViewHolder(parent.inflate(R.layout.bookmark_card_view_item, false))
+                }
             }
             else -> {
-                val inflatedView = parent.inflate(R.layout.bookmark_header_item, false)
-                BookmarkHeaderViewHolder(inflatedView)
+                BookmarkHeaderViewHolder(parent.inflate(R.layout.bookmark_header_item, false))
             }
         }
     }
@@ -64,22 +69,17 @@ class BookmarkListAdapter(
                         holder.apply {
                             bookmarkTitle.apply {
                                 text = item.title?.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
-                                setLines(if (bookmarkFilter.isGridViewType()) 1 else 2)
+                            }
+                            bookmarkUrl.text = "https://${item.url}"
+                            bookmarkTimestamp.text = item.timestamp?.toString("dd MMM")
+
+                            bookmarkStarButton.apply {
+                                setColorFilter(getColorByStarType(this.context, item.isStar))
                             }
 
-                            bookmarkUrl.text = "https://${item.url}"
-
-                            bookmarkTimestamp.text = item.timestamp?.toString("dd MMM")
                             itemView.setOnClickListener {
                                 onBookmarkItemClicked(position, item)
                             }
-
-                            val starColor = when (item.isStar) {
-                                true -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorAccent)
-                                else -> ContextCompat.getColor(bookmarkStarButton.context, R.color.colorPrimary)
-                            }
-                            bookmarkStarButton.setColorFilter(starColor)
-
                             bookmarkStarButton.setOnClickListener {
                                 onBookmarkStarlicked(position, item)
                             }
@@ -104,6 +104,11 @@ class BookmarkListAdapter(
             }
         }
     }
+
+    private fun getColorByStarType(context: Context, isStar: Boolean): Int = when (isStar) {
+            true -> ContextCompat.getColor(context, R.color.colorAccent)
+            else -> ContextCompat.getColor(context, R.color.colorPrimary)
+        }
 
     /***
      * set items
