@@ -33,11 +33,16 @@ import com.application.dev.david.materialbookmarkkot.ui.views.MbAddBookmarkPrevi
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlEditTextId
+import kotlinx.android.synthetic.main.add_bookmark_preview_view.mbNewBookmarkUrlTextInputLayoutId
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.fragment_add_bookmark.*
+import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
+import kotlinx.android.synthetic.main.fragment_search_bookmark.*
 
 
 /**
@@ -123,6 +128,8 @@ class AddBookmarkFragment : Fragment() {
 
         mbNewBookmarkUrlCardviewId.setOnClickListener {
             mbAddBookmarkPreviewId.setStatusVisibility(UPDATE)
+            mbNewBookmarkTitleTextInputId.visibility = VISIBLE
+            mbNewBookmarkTitleTextViewId.visibility = GONE
         }
 
         // loader cbs
@@ -217,18 +224,18 @@ class AddBookmarkFragment : Fragment() {
             }
         })
 
-        mbNewBookmarkIconImageViewId.setOnClickListener {
+        mbBookmarkSearchedUrlAddPlaceholderId.setOnClickListener {
             context?.let {
                 CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(it, this)
             }
+
+        }
+        mbNewBookmarkIconImageViewId.setOnClickListener {
+            Snackbar.make(it, "show preview url", Snackbar.LENGTH_SHORT).show()
         }
 
-        mbNewBookmarkAddEditButtonId.setOnClickListener {
-            mbNewBookmarkTitleTextInputId.visibility = VISIBLE
-            mbNewBookmarkTitleTextViewId.visibility = GONE
-        }
     }
 
     private fun onUpdateBookmarkWithError() {
@@ -243,13 +250,22 @@ class AddBookmarkFragment : Fragment() {
      * update status
      */
     private fun updateBookmarkView(url: String?, title: String?, iconUrl: String?) {
-        mbBookmarkUpdateNewButtonId.visibility = VISIBLE
-        mbBookmarkSaveNewButtonId.visibility = GONE
+        VISIBLE.let {
+            mbBookmarkUpdateNewButtonId.visibility = it
+            mbNewBookmarkTitleTextInputId.visibility = it
+        }
+        GONE.let {
+            mbBookmarkSaveNewButtonId.visibility = it
+            mbNewBookmarkTitleTextViewId.visibility = it
+            mbNewBookmarkTitleLoaderId.visibility = it
+            mbNewBookmarkAddEditButtonId.visibility = it
+        }
+
+        mbNewBookmarkTitleTextInputId.requestFocus()
 
         mbNewBookmarkUrlTextId.text = url
         mbNewBookmarkTitleTextViewId.text = title
         mbNewBookmarkTitleEditTextId.setText(title)
-        mbNewBookmarkTitleLoaderId.visibility = GONE
         iconUrl?.let {
             mbNewBookmarkTitleEditTextId.tag = iconUrl
             addBookmarkViewModel.bookmarkIconUrl.set(iconUrl)
@@ -263,7 +279,10 @@ class AddBookmarkFragment : Fragment() {
      */
     private fun searchBookmarkAction(url: String) {
         mbBookmarkUpdateNewButtonId.visibility = GONE
-        mbBookmarkSaveNewButtonId.visibility = VISIBLE
+        VISIBLE.let {
+            mbBookmarkSaveNewButtonId.visibility = it
+            mbNewBookmarkAddEditButtonId.visibility = it
+        }
 
         mbNewBookmarkUrlTextId.text = url
         addBookmarkViewModel.updateWebviewByUrl(url)

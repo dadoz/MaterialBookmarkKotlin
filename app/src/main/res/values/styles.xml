@@ -88,6 +88,9 @@
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textSize">@dimen/text_48</item>
     </style>
+    <style name="MBMaterialTextHeaderBigPurple" parent="MBMaterialTextHeaderBigBlue" >
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
     <style name="MBMaterialTextHeaderBigThinPurple" parent="MBMaterialTextHeaderBigBlue" >
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">52sp</item>
@@ -127,6 +130,9 @@
     </style>
 
     <style name="MBMaterialTextDescrUltraSmallBoldBlue" parent="MBMaterialTextDescrSmallBoldBlue" >
+        <item name="android:textSize">@dimen/text_14</item>
+    </style>
+    <style name="MBMaterialTextDescrUltraSmallBoldPurple" parent="MBMaterialTextDescrSmallBoldPurple" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
     <style name="MBMaterialTextDescrUltraSmallBlue" parent="MBMaterialTextDescrSmallBlue" >

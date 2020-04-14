@@ -45,13 +45,13 @@
                         android:layout_height="wrap_content"
                         android:text="Search \nBookmark"
                         android:layout_marginRight="@dimen/margin_16"
-                        style="@style/MBMaterialTextHeaderBlue"/>
+                        style="@style/MBMaterialTextHeaderPurple"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_below="@+id/mbTitleSearchBookmarkTextViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="just type a bookmark "
-                        style="@style/MBMaterialTextDescrSmallBlue"
+                        style="@style/MBMaterialTextDescrSmallPurple"
                         android:layout_marginRight="@dimen/margin_16"
                         android:layout_marginBottom="@dimen/margin_16"/>
             </RelativeLayout>
@@ -93,7 +93,7 @@
                             android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            app:tint="@color/colorAccent"
+                            app:tint="@color/colorPrimary"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_clipboard_paste"
                             tools:visibility="visible"/>
@@ -102,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_8"
-                            style="@style/MBMaterialTextDescrUltraSmallBoldBlue"
+                            style="@style/MBMaterialTextDescrUltraSmallBoldPurple"
                             android:layout_centerVertical="true"
                             android:text="PASTE \nCLIPBOARD"/>
                 </RelativeLayout>
@@ -126,7 +126,7 @@
                         android:layout_centerInParent="true"
                         android:layout_width="220dp"
                         android:layout_height="220dp"
-                        android:src="@drawable/ic_search_illustration"/>
+                        android:src="@drawable/ic_golf_illustration "/>
 
             </RelativeLayout>
         </LinearLayout>

@@ -8,11 +8,13 @@ import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.databinding.AddBookmarkPreviewViewBinding
+import com.application.dev.david.materialbookmarkkot.models.setImageViewResource
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
 import khronos.Dates
 import khronos.toString
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.view.*
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.view.*
+import kotlinx.android.synthetic.main.fragment_add_bookmark.view.*
 
 class MbAddBookmarkPreviewView : RelativeLayout {
     private val binding: AddBookmarkPreviewViewBinding
