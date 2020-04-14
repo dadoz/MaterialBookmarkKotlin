@@ -63,20 +63,18 @@
                     android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
-                        style="@style/MBMaterialTextInputOutlinedPurple"
+                        style="@style/MBMaterialTextInputOutlinedYellow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/yantramanav_thin"
+                        app:hintTextColor="@color/colorAccent"
                         android:hint="Search your bookmark">
 
                     <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/mbNewBookmarkUrlEditTextId"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/yantramanav_thin"
                             android:maxLines="5"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/text_22" />
+                            style="@style/MBMaterialTextSubtitleThinBlue"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
             <RelativeLayout
@@ -110,7 +108,7 @@
                         android:id="@+id/mbsearchBookmarkButtonViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialButtonStyleOutlinePurple"
+                        style="@style/MBMaterialButtonStyleOutlineYellow"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         tools:visibility="visible"

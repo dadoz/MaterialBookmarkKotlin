@@ -105,6 +105,8 @@ class SearchBookmarkFragment : Fragment() {
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
+        mbNewBookmarkUrlTextInputLayoutId.requestFocus()
+
         mbBookmarkSearchPasteClipboardButtonId.setOnClickListener {
             when {
                 !clipboard.hasPrimaryClip() || clipboard.primaryClipDescription == null -> {

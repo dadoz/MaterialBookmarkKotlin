@@ -33,7 +33,7 @@
             tools:text="Title..."/>
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/MBMaterialTextInputOutlinedPurple"
+            style="@style/MBMaterialTextInputOutlinedBlue"
             android:id="@+id/mbNewBookmarkTitleTextInputId"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,10 +59,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/margin_8"
+            android:padding="@dimen/margin_8"
             android:layout_width="@dimen/bookmark_icon_preview_big_size"
             android:layout_height="@dimen/bookmark_icon_preview_big_size"
             android:tint="@color/colorPrimary"
             android:background="?attr/selectableItemBackground"
-            android:src="@drawable/ic_world_refresh"/>
+            android:src="@drawable/ic_world_map"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

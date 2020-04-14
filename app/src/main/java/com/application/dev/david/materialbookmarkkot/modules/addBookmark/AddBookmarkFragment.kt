@@ -130,6 +130,7 @@ class AddBookmarkFragment : Fragment() {
             mbAddBookmarkPreviewId.setStatusVisibility(UPDATE)
             mbNewBookmarkTitleTextInputId.visibility = VISIBLE
             mbNewBookmarkTitleTextViewId.visibility = GONE
+            mbAddNewBookmarkUrlEditLayoutId.requestFocus()
         }
 
         // loader cbs
@@ -233,6 +234,8 @@ class AddBookmarkFragment : Fragment() {
 
         }
         mbNewBookmarkIconImageViewId.setOnClickListener {
+            mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
+            mbNewBookmarkEditTitleViewId.visibility = GONE
             Snackbar.make(it, "show preview url", Snackbar.LENGTH_SHORT).show()
         }
 

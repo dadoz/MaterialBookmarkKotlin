@@ -47,14 +47,14 @@ class MbAddBookmarkPreviewView : RelativeLayout {
     fun setStatusVisibility(status: MbPreviewStatus) {
         when(status) {
             MbPreviewStatus.SEARCH -> {
-                mbNewBookmarkUrlEditLayoutId.visibility = View.GONE
+                mbAddNewBookmarkUrlEditLayoutId.visibility = View.GONE
                 mbBookmarkUpdateNewLayoutId.visibility = View.GONE
                 mbBookmarkSaveNewLayoutId.visibility = View.VISIBLE
                 mbBookmarkSaveNewButtonId.visibility = View.VISIBLE
                 mbNewBookmarkUrlCardviewId.visibility = View.VISIBLE
             }
             MbPreviewStatus.UPDATE -> {
-                mbNewBookmarkUrlEditLayoutId.visibility = View.VISIBLE
+                mbAddNewBookmarkUrlEditLayoutId.visibility = View.VISIBLE
                 mbBookmarkUpdateNewLayoutId.visibility = View.VISIBLE
                 mbNewBookmarkUrlCardviewId.visibility = View.GONE
                 mbBookmarkSaveNewLayoutId.visibility = View.GONE

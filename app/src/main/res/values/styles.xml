@@ -206,7 +206,22 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
+    <style name="MBMaterialButtonStyleOutlineYellow" parent="TextAppearance.MaterialComponents.Button" >
+        <item name="backgroundTint">@android:color/white</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="strokeColor">@color/colorAccent</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="fontFamily">@font/yantramanav_light</item>
+    </style>
 
-    <style name="MBMaterialTextInputOutlinedPurple" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+    <style name="MBMaterialTextInputOutlinedYellow" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="MBMaterialTextInputOutlinedBlue" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="boxStrokeWidth">2dp</item>
     </style>
 </resources>

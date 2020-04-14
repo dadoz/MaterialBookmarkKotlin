@@ -47,14 +47,14 @@
         </RelativeLayout>
 
         <RelativeLayout
-                android:id="@+id/mbNewBookmarkUrlEditLayoutId"
+                android:id="@+id/mbAddNewBookmarkUrlEditLayoutId"
                 android:visibility="gone"
                 tools:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
-                    style="@style/MBMaterialTextInputOutlinedPurple"
+                    style="@style/MBMaterialTextInputOutlinedBlue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yantramanav_thin"
@@ -98,13 +98,6 @@
                     android:src="@drawable/ic_edit_pencil"/>
         </com.google.android.material.card.MaterialCardView>
 
-        <View
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_height="1dp"
-                android:alpha="0.1"
-                android:background="@color/colorAccent"/>
         <RelativeLayout
                 android:id="@+id/mbBookmarkSaveNewLayoutId"
                 android:visibility="visible"
@@ -113,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
                     android:layout_marginEnd="@dimen/margin_8"
