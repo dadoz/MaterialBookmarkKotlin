@@ -35,14 +35,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Last update: "
-                    style="@style/MBMaterialTextSubtitlePurple"/>
+                    style="@style/MBMaterialTextSubtitleViolet"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
                     android:layout_toEndOf="@+id/mbNewBookmarkAddUpdatedTimestampLabelId"
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/MBMaterialTextDescrSmallPurple"
+                    style="@style/MBMaterialTextDescrSmallViolet"
                     tools:text="this is lates update label"/>
         </RelativeLayout>
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
-                    style="@style/MBMaterialTextInputOutlinedBlue"
+                    style="@style/MBMaterialTextInputOutlinedViolet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yantramanav_thin"
@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="5"
-                        style="@style/MBMaterialTextSubtitleThinPurple"/>
+                        style="@style/MBMaterialTextSubtitleThinViolet"/>
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
@@ -74,7 +74,7 @@
                 tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/MBMaterialCardviewStylePurple"
+                style="@style/MBMaterialCardviewStyleViolet"
                 android:layout_marginTop="@dimen/margin_8">
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkUrlTextId"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:lines="1"
                     android:layout_centerVertical="true"
-                    style="@style/MBMaterialTextTitlePurple"
+                    style="@style/MBMaterialTextTitleViolet"
                     tools:text="www.googgle.it"/>
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbNewBookmarkAddEditButtonId"
@@ -111,18 +111,18 @@
                     android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:layout_centerVertical="true"
-                    style="@style/MBMaterialTextDescrSmallPurple"
+                    style="@style/MBMaterialTextDescrSmallViolet"
                     android:text="@string/save_your_bookmark_label"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkSaveNewButtonId"
-                    style="@style/MBMaterialButtonStylePurple"
+                    style="@style/MBMaterialButtonStyleViolet"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/save_label_button"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkUpdateNewButtonId"
-                    style="@style/MBMaterialButtonStyleOutlinePurple"
+                    style="@style/MBMaterialButtonStyleOutlineViolet"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,12 +141,12 @@
                     android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:layout_centerVertical="true"
-                    style="@style/MBMaterialTextDescrSmallPurple"
+                    style="@style/MBMaterialTextDescrSmallViolet"
                     android:text="Update your bookmark"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
                     android:layout_alignParentEnd="true"
-                    style="@style/MBMaterialButtonStyleOutlinePurple"
+                    style="@style/MBMaterialButtonStyleOutlineViolet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UPDATE"/>

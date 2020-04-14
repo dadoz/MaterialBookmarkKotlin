@@ -10,7 +10,7 @@
         android:focusable="true"
         android:id="@+id/mbBookmarkPreviewHeaderCardViewId"
         app:rippleColor="@android:color/transparent"
-        style="@style/MBMaterialCardviewStyleBlue">
+        style="@style/MBMaterialCardviewStyleYellow">
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
-                                        style="@style/MBMaterialTextSubtitlePurple"
+                                        style="@style/MBMaterialTextSubtitleViolet"
                                         tools:text="wwww.google.it"/>
                                 <androidx.appcompat.widget.AppCompatImageView
                                         android:id="@+id/mbBookmarkPreviewEditButtonId"
@@ -59,7 +59,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentEnd="true"
-                                        style="@style/MBMaterialButtonStylePurple"
+                                        style="@style/MBMaterialButtonStyleViolet"
                                         android:text="@string/open_in_browser_label_text"/>
                         </RelativeLayout>
 
@@ -78,12 +78,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="@dimen/margin_8"
-                                style="@style/MBMaterialTextSubtitlePurple"
+                                style="@style/MBMaterialTextSubtitleViolet"
                                 android:text="Delete Bookmark"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                style="@style/MBMaterialTextDescrSmallPurple"
+                                style="@style/MBMaterialTextDescrSmallViolet"
                                 android:layout_marginBottom="@dimen/margin_4"
                                 android:text="@string/delete_fulle_descr_label_text"/>
                         <com.google.android.material.button.MaterialButton
@@ -93,7 +93,7 @@
                                 android:layout_height="wrap_content"
                                 tools:visibility="visible"
                                 android:layout_gravity="end"
-                                style="@style/MBMaterialButtonStyleOutlinePurple"
+                                style="@style/MBMaterialButtonStyleOutlineViolet"
                                 android:text="@string/delete_label_text"/>
                 </LinearLayout>
 

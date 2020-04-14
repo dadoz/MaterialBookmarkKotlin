@@ -18,7 +18,7 @@
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/MBMaterialTextDescrSmallBlue"
+                style="@style/MBMaterialTextDescrSmallYellow"
                 tools:text="bookmark with:"
                 android:text="with"
                 />
@@ -31,7 +31,7 @@
                 android:paddingStart="@dimen/margin_16"
                 android:paddingEnd="@dimen/margin_16"
                 android:gravity="center_horizontal"
-                style="@style/MBMaterialTextSubtitleThinPurple"
+                style="@style/MBMaterialTextSubtitleThinViolet"
                 tools:text="SEPT"
                 />
 

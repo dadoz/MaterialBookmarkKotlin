@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/mbSettingsAppBarLayoutId"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/MBMaterialTextHeaderBlue"
+            style="@style/MBMaterialTextHeaderYellow"
             android:text="Settings"
             />
     <androidx.recyclerview.widget.RecyclerView

@@ -27,15 +27,15 @@
         <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">6dp</item>
     </style>
-    <style name="MBMaterialCardviewStylePurple" parent="MBMaterialCardviewStyle" >
+    <style name="MBMaterialCardviewStyleViolet" parent="MBMaterialCardviewStyle" >
         <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
-    <style name="MBMaterialCardviewStyleFilledPurple" parent="MBMaterialCardviewStylePurple" >
+    <style name="MBMaterialCardviewStyleFilledViolet" parent="MBMaterialCardviewStyleViolet" >
         <item name="cardBackgroundColor">@color/colorPrimary</item>
         <item name="strokeColor">@color/colorPrimaryDark</item>
     </style>
-    <style name="MBMaterialCardviewStyleBlue" parent="MBMaterialCardviewStyle" >
+    <style name="MBMaterialCardviewStyleYellow" parent="MBMaterialCardviewStyle" >
         <item name="cardBackgroundColor">@android:color/white</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
@@ -54,110 +54,110 @@
         <item name="strokeColor">@color/colorError</item>
     </style>
 
-    <style name="MBMaterialTextTitleThinPurple" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextTitleThinViolet" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_30</item>
     </style>
-    <style name="MBMaterialTextTitleThinBlue" parent="MBMaterialTextTitleThinPurple" >
+    <style name="MBMaterialTextTitleThinYellow" parent="MBMaterialTextTitleThinViolet" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextTitlePurple" parent="MBMaterialTextTitleThinPurple" >
+    <style name="MBMaterialTextTitleViolet" parent="MBMaterialTextTitleThinViolet" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialTextTitleBlue" parent="MBMaterialTextTitlePurple" >
+    <style name="MBMaterialTextTitleYellow" parent="MBMaterialTextTitleViolet" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="MBMaterialTextHeaderPurple" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextHeaderViolet" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_36</item>
     </style>
-    <style name="MBMaterialTextHeaderBlue" parent="MBMaterialTextHeaderPurple" >
+    <style name="MBMaterialTextHeaderYellow" parent="MBMaterialTextHeaderViolet" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextHeaderThinBlue" parent="MBMaterialTextHeaderBlue" >
+    <style name="MBMaterialTextHeaderThinYellow" parent="MBMaterialTextHeaderYellow" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextHeaderThinPurple" parent="MBMaterialTextHeaderThinBlue" >
+    <style name="MBMaterialTextHeaderThinViolet" parent="MBMaterialTextHeaderThinYellow" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextHeaderBigBlue" parent="MBMaterialTextHeaderBlue" >
+    <style name="MBMaterialTextHeaderBigYellow" parent="MBMaterialTextHeaderYellow" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textSize">@dimen/text_48</item>
     </style>
-    <style name="MBMaterialTextHeaderBigPurple" parent="MBMaterialTextHeaderBigBlue" >
+    <style name="MBMaterialTextHeaderBigViolet" parent="MBMaterialTextHeaderBigYellow" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
-    <style name="MBMaterialTextHeaderBigThinPurple" parent="MBMaterialTextHeaderBigBlue" >
+    <style name="MBMaterialTextHeaderBigThinViolet" parent="MBMaterialTextHeaderBigYellow" >
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">52sp</item>
     </style>
-    <style name="MBMaterialTextHeaderBigThinWhite" parent="MBMaterialTextHeaderBigThinPurple" >
+    <style name="MBMaterialTextHeaderBigThinWhite" parent="MBMaterialTextHeaderBigThinViolet" >
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
-    <style name="MBMaterialTextHeaderBigThinBlue" parent="MBMaterialTextHeaderBigThinPurple" >
+    <style name="MBMaterialTextHeaderBigThinYellow" parent="MBMaterialTextHeaderBigThinViolet" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 
-    <style name="MBMaterialTextDescrSmallPurple" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextDescrSmallViolet" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_18</item>
     </style>
 
-    <style name="MBMaterialTextDescrSmallBlue" parent="MBMaterialTextDescrSmallPurple" >
+    <style name="MBMaterialTextDescrSmallYellow" parent="MBMaterialTextDescrSmallViolet" >
         <item name="android:textColor">@color/colorAccent</item>
     </style>
-    <style name="MBMaterialTextDescrSmallThinBlue" parent="MBMaterialTextDescrSmallBlue" >
+    <style name="MBMaterialTextDescrSmallThinYellow" parent="MBMaterialTextDescrSmallYellow" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextDescrSmallThinWhite" parent="MBMaterialTextDescrSmallThinBlue" >
+    <style name="MBMaterialTextDescrSmallThinWhite" parent="MBMaterialTextDescrSmallThinYellow" >
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
-    <style name="MBMaterialTextDescrSmallThinPurple" parent="MBMaterialTextDescrSmallThinBlue" >
+    <style name="MBMaterialTextDescrSmallThinViolet" parent="MBMaterialTextDescrSmallThinYellow" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextDescrSmallBoldBlue" parent="MBMaterialTextDescrSmallBlue" >
+    <style name="MBMaterialTextDescrSmallBoldYellow" parent="MBMaterialTextDescrSmallYellow" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialTextDescrSmallBoldPurple" parent="MBMaterialTextDescrSmallBoldBlue" >
+    <style name="MBMaterialTextDescrSmallBoldViolet" parent="MBMaterialTextDescrSmallBoldYellow" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextDescrUltraSmallBoldBlue" parent="MBMaterialTextDescrSmallBoldBlue" >
+    <style name="MBMaterialTextDescrUltraSmallBoldYellow" parent="MBMaterialTextDescrSmallBoldYellow" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
-    <style name="MBMaterialTextDescrUltraSmallBoldPurple" parent="MBMaterialTextDescrSmallBoldPurple" >
+    <style name="MBMaterialTextDescrUltraSmallBoldViolet" parent="MBMaterialTextDescrSmallBoldViolet" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
-    <style name="MBMaterialTextDescrUltraSmallBlue" parent="MBMaterialTextDescrSmallBlue" >
+    <style name="MBMaterialTextDescrUltraSmallYellow" parent="MBMaterialTextDescrSmallYellow" >
         <item name="android:textSize">@dimen/text_14</item>
     </style>
-    <style name="MBMaterialTextDescrSmallRed" parent="MBMaterialTextDescrSmallBlue" >
+    <style name="MBMaterialTextDescrSmallRed" parent="MBMaterialTextDescrSmallYellow" >
         <item name="android:textColor">@color/colorError</item>
     </style>
 
-    <style name="MBMaterialTextSubtitleBlue" parent="Widget.AppCompat.TextView" >
+    <style name="MBMaterialTextSubtitleYellow" parent="Widget.AppCompat.TextView" >
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_26</item>
     </style>
-    <style name="MBMaterialTextSubtitlePurple" parent="MBMaterialTextSubtitleBlue" >
+    <style name="MBMaterialTextSubtitleViolet" parent="MBMaterialTextSubtitleYellow" >
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
-    <style name="MBMaterialTextSubtitleThinPurple" parent="MBMaterialTextSubtitlePurple" >
+    <style name="MBMaterialTextSubtitleThinViolet" parent="MBMaterialTextSubtitleViolet" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
-    <style name="MBMaterialTextSubtitleThinBlue" parent="MBMaterialTextSubtitleBlue" >
+    <style name="MBMaterialTextSubtitleThinYellow" parent="MBMaterialTextSubtitleYellow" >
         <item name="android:fontFamily">@font/yantramanav_thin</item>
     </style>
-    <style name="MBMaterialTextSubtitleThinWhite" parent="MBMaterialTextSubtitleThinBlue" >
+    <style name="MBMaterialTextSubtitleThinWhite" parent="MBMaterialTextSubtitleThinYellow" >
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
 
@@ -166,7 +166,7 @@
         <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
     </style>
 
-    <style name="MBMaterialChipDescrSmallThinPurple" parent="Widget.MaterialComponents.ChipGroup" >
+    <style name="MBMaterialChipDescrSmallThinViolet" parent="Widget.MaterialComponents.ChipGroup" >
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
     </style>
@@ -177,20 +177,20 @@
     </style>
 
 
-    <style name="MBMaterialButtonStyleBlue" parent="TextAppearance.MaterialComponents.Button" >
+    <style name="MBMaterialButtonStyleYellow" parent="TextAppearance.MaterialComponents.Button" >
         <item name="backgroundTint">@android:color/background_light</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="strokeColor">@color/colorAccent</item>
         <item name="strokeWidth">1dp</item>
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
-    <style name="MBMaterialButtonStyleRed" parent="MBMaterialButtonStyleBlue" >
+    <style name="MBMaterialButtonStyleRed" parent="MBMaterialButtonStyleYellow" >
         <item name="backgroundTint">@android:color/white</item>
         <item name="android:textColor">@color/colorError</item>
         <item name="strokeColor">@color/colorErrorSecondary</item>
     </style>
 
-    <style name="MBMaterialButtonStylePurple" parent="TextAppearance.MaterialComponents.Button" >
+    <style name="MBMaterialButtonStyleViolet" parent="TextAppearance.MaterialComponents.Button" >
         <item name="backgroundTint">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="strokeColor">@color/colorPrimaryDark</item>
@@ -198,7 +198,7 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
-    <style name="MBMaterialButtonStyleOutlinePurple" parent="TextAppearance.MaterialComponents.Button" >
+    <style name="MBMaterialButtonStyleOutlineViolet" parent="TextAppearance.MaterialComponents.Button" >
         <item name="backgroundTint">@android:color/white</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="strokeColor">@color/colorPrimary</item>
@@ -220,7 +220,7 @@
         <item name="boxStrokeWidth">2dp</item>
     </style>
 
-    <style name="MBMaterialTextInputOutlinedBlue" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="MBMaterialTextInputOutlinedViolet" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorPrimary</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>

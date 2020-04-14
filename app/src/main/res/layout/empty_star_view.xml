@@ -32,7 +32,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_16"
             android:text="@string/no_bookmark_star_string"
-            style="@style/MBMaterialTextSubtitleBlue"
+            style="@style/MBMaterialTextSubtitleYellow"
             />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

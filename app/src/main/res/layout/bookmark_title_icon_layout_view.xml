@@ -28,12 +28,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/mbNewBookmarkIconImageViewId"
-            style="@style/MBMaterialTextHeaderBigPurple"
+            style="@style/MBMaterialTextHeaderBigViolet"
             android:maxLines="5"
             tools:text="Title..."/>
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/MBMaterialTextInputOutlinedBlue"
+            style="@style/MBMaterialTextInputOutlinedViolet"
             android:id="@+id/mbNewBookmarkTitleTextInputId"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="5"
-                style="@style/MBMaterialTextSubtitlePurple"/>
+                style="@style/MBMaterialTextSubtitleViolet"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatImageView

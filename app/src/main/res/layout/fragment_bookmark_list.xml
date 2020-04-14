@@ -47,17 +47,17 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbBookmarkHeaderTitleTextViewId"
-                    style="@style/MBMaterialTextHeaderBlue"
+                    style="@style/MBMaterialTextHeaderViolet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16"
-                    android:text="Bookmarks"
+                    android:text="@string/bookmarks_title_string"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbBookmarkHeaderTitleLabelTextViewId"
-                    style="@style/MBMaterialTextDescrSmallThinBlue"
+                    style="@style/MBMaterialTextDescrSmallThinViolet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="stored in your list"
@@ -67,7 +67,7 @@
             <!-- tot cardview -->
             <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mbBookmarkHeaderTotBookmarkCardId"
-                    style="@style/MBMaterialCardviewStyleFilledPurple"
+                    style="@style/MBMaterialCardviewStyleFilledViolet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16"
@@ -170,7 +170,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mbBookmarkHeaderSortFilterLabelId"
-                style="@style/MBMaterialTextDescrSmallPurple"
+                style="@style/MBMaterialTextDescrSmallViolet"
                 tools:visibility="visible"
                 app:layout_constraintStart_toEndOf="@+id/mbGuidelineHeaderLayout"
                 app:layout_constraintTop_toTopOf="parent"
@@ -204,7 +204,7 @@
                 android:text="date"/>
         <com.google.android.material.chip.Chip
                 android:id="@+id/mbBookmarkHeaderSortFilterByTitleChipId"
-                style="@style/MBMaterialChipDescrSmallThinPurple"
+                style="@style/MBMaterialChipDescrSmallThinViolet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"

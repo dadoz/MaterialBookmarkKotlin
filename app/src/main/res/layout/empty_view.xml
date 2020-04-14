@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_16"
             android:text="@string/no_bookmark_string"
-            style="@style/MBMaterialTextSubtitlePurple"
+            style="@style/MBMaterialTextSubtitleViolet"
             />
     <com.google.android.material.button.MaterialButton
             android:id="@+id/mbBookmarkEmptyAddNewButtonId"

@@ -37,13 +37,13 @@
                         android:id="@+id/mbBookmarkPreviewHeaderTitleTextViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialTextHeaderThinBlue"
+                        style="@style/MBMaterialTextHeaderThinYellow"
                         tools:text="Android Dev"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/mbBookmarkPreviewHeaderSubtitleTextViewId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/MBMaterialTextDescrSmallPurple"
+                        style="@style/MBMaterialTextDescrSmallViolet"
                         tools:text="on Monday 23 at 14:00"/>
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_margin="@dimen/margin_8"
                     android:layout_alignParentEnd="true"
                     android:tint="@color/colorPrimary"
-                    style="@style/MBMaterialTextSubtitleBlue"
+                    style="@style/MBMaterialTextSubtitleYellow"
                     android:src="@drawable/ic_arrow_down"/>
         </RelativeLayout>
         <View
