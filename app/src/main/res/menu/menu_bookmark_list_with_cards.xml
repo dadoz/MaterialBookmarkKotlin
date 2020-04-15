@@ -5,7 +5,7 @@
             android:id="@+id/mbBookmarkHeaderHomeFilterIconId"
             android:icon="@drawable/ic_home"
             android:visible="true"
-            app:iconTint="@android:color/white"
+            app:iconTint="@color/colorAccent"
             android:title="HOME"
             app:showAsAction="always"/>
     <item

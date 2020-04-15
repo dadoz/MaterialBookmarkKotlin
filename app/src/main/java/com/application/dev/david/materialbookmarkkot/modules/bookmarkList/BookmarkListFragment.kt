@@ -98,6 +98,7 @@ class BookmarkListFragment : Fragment()  {
                     mbBookmarkHeaderCardFilterIconId,
                     mbBookmarkHeaderSortFilterIconId
                 )
+
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
                         bookmarkFilters.starFilterType = IS_STAR_VIEW
@@ -106,6 +107,7 @@ class BookmarkListFragment : Fragment()  {
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                         views.forEach { it.visibility = GONE }
                         filterViews.forEach { it.setColor(R.color.colorAccent) }
+                        it.toggleSetIconTintListByRes(context, R.color.colorAccent, menu.findItem(R.id.mbBookmarkHeaderHomeFilterIconId))
                     }
                     R.id.mbBookmarkHeaderHomeFilterIconId -> {
                         bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
@@ -114,6 +116,7 @@ class BookmarkListFragment : Fragment()  {
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                         views.forEach { it.visibility = VISIBLE }
                         filterViews.forEach { it.setColor(R.color.colorPrimary) }
+                        it.toggleSetIconTintListByRes(context, R.color.colorAccent, menu.findItem(R.id.mbBookmarkHeaderStarFilterIconId))
                     }
                 }
                 true

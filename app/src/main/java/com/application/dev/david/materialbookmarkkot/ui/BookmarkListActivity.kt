@@ -2,17 +2,22 @@ package com.application.dev.david.materialbookmarkkot.ui
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
+import com.application.dev.david.materialbookmarkkot.BuildConfig
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
@@ -107,6 +112,16 @@ fun ImageView.setIconDependingOnSortAscending(isSortAscending: Boolean) {
         true -> setImageResource(R.drawable.ic_reorder_up)
         false -> setImageResource(R.drawable.ic_reorder_down)
     }
+}
+
+fun MenuItem.toggleSetIconTintListByRes(context: Context, colorRes: Int, menuItem: MenuItem) {
+    setIconTintListByRes(context, colorRes)
+    menuItem.setIconTintListByRes(context, android.R.color.white)
+}
+
+fun MenuItem.setIconTintListByRes(context: Context, colorRes: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        this.iconTintList = ContextCompat.getColorStateList(context, colorRes)
 }
 
 fun Toolbar.changeToolbarFont() {
