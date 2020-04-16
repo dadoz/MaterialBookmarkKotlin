@@ -12,6 +12,7 @@
             android:id="@+id/mbMaterialSearchVIewId"
             android:layout_marginTop="@dimen/margin_8"
             android:layout_marginBottom="@dimen/margin_16"
+            app:databaseSuggestionsEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

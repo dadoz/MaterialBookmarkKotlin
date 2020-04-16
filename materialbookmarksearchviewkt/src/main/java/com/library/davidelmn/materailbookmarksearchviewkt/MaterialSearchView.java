@@ -1614,7 +1614,7 @@ public class MaterialSearchView extends LinearLayout implements
                 case STATE_FOCUSED_TEXT_PRESENT:
                     stopVoiceRecognitionIfNecessary();
                     showSearchView();
-                    filterSearchSuggestions(getSearchText());
+//                    filterSearchSuggestions(getSearchText());
                     setKeyboardActionListener();
                     hideMic();
                     showClear();
