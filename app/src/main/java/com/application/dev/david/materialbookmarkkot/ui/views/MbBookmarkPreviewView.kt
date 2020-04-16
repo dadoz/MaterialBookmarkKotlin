@@ -135,24 +135,7 @@ class MbBookmarkPreviewView : FrameLayout {
     private fun setPreviewVisible(isPreviewVisible: Boolean, isAnimated: Boolean = true) {
         when (isAnimated) {
             false -> {
-                when (isPreviewVisible) {
-                    true -> {
-                        mbBookmarkPreviewOpenLayoutId.visibility = VISIBLE
-                        GONE.let {
-                            mbBookmarkPreviewDeleteLayoutId.visibility = it
-                            mbBookmarkPreviewDeleteLabelTextId.visibility = it
-                            mbBookmarkPreviewEditButtonId.visibility = it
-                        }
-                    }
-                    false -> {
-                        mbBookmarkPreviewOpenLayoutId.visibility = GONE
-                        VISIBLE.let {
-                            mbBookmarkPreviewDeleteLayoutId.visibility = it
-                            mbBookmarkPreviewDeleteLabelTextId.visibility = it
-                            mbBookmarkPreviewEditButtonId.visibility = it
-                        }
-                    }
-                }
+                setVisibilityOnViews(isPreviewVisible)
             }
             true -> {
                 val animatorList: List<Animator> = BookmarkAnimator().let {
@@ -165,29 +148,43 @@ class MbBookmarkPreviewView : FrameLayout {
                 AnimatorSet().apply {
                     playSequentially(animatorList)
                     doOnStart {
-                        when (isPreviewVisible) {
-                            true -> {
-                                GONE.let {
-                                    mbBookmarkPreviewDeleteLayoutId.visibility = it
-                                    mbBookmarkPreviewDeleteLabelTextId.visibility = it
-                                }
-                                mbBookmarkPreviewEditButtonId.visibility = VISIBLE
-                                mbBookmarkPreviewMainLayoutId.isClickable = true
-                                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPrimary)
-                            }
-                            else -> {
-                                GONE.let {
-                                    mbBookmarkPreviewOpenLayoutId.visibility = it
-                                    mbBookmarkPreviewEditButtonId.visibility = it
-                                }
-                                mbBookmarkPreviewDeleteLabelTextId.visibility = VISIBLE
-                                mbBookmarkPreviewMainLayoutId.isClickable = false
-                                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPurple)
-                            }
-                        }
+                        setVisibilityOnViews(isPreviewVisible)
                     }
                     start()
                 }
+            }
+        }
+    }
+
+    private fun setVisibilityOnViews(isPreviewVisible: Boolean) {
+        when (isPreviewVisible) {
+            true -> {
+                VISIBLE.let {
+                    mbBookmarkPreviewOpenLayoutId.visibility = it
+                    mbBookmarkPreviewEditButtonId.visibility = it
+                }
+                GONE.let {
+                    mbBookmarkPreviewDeleteLayoutId.visibility = it
+                    mbBookmarkPreviewDeleteLabelTextId.visibility = it
+                }
+
+                mbBookmarkPreviewMainLayoutId.isClickable = true
+                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPrimary)
+
+            }
+            false -> {
+
+                GONE.let {
+                    mbBookmarkPreviewEditButtonId.visibility = it
+                    mbBookmarkPreviewOpenLayoutId.visibility = it
+                }
+                VISIBLE.let {
+                    mbBookmarkPreviewDeleteLayoutId.visibility = it
+                    mbBookmarkPreviewDeleteLabelTextId.visibility = it
+                }
+                mbBookmarkPreviewMainLayoutId.isClickable = false
+                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPurple)
+
             }
         }
     }
