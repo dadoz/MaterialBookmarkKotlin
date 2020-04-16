@@ -8,19 +8,20 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.animation.doOnStart
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
+import com.application.dev.david.materialbookmarkkot.ui.setColor
+import com.application.dev.david.materialbookmarkkot.ui.setColorByRes
 import com.application.dev.david.materialbookmarkkot.ui.setStrokeColorByColorRes
-import com.application.dev.david.materialbookmarkkot.ui.toggleIcon
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.BookmarkAnimator
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_bookmark_list.view.*
 import kotlinx.android.synthetic.main.header_bookmark_view.view.*
 import kotlinx.android.synthetic.main.preview_bookmark_view.view.*
 
@@ -48,12 +49,10 @@ class MbBookmarkPreviewView : FrameLayout {
                 when (newState) {
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         fab.animate().scaleX(0F).scaleY(0F).setDuration(300).start()
-                        mbBookmarkPreviewCardviewId.resetDownIconByTag()
-//                        mbBookmarkPreviewCardviewId.setPreviewVisible(true)
                     }
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         fab.animate().scaleX(1F).scaleY(1F).setDuration(300).start()
-                        mbBookmarkPreviewCardviewId.setPreviewVisible(true)
+                        setPreviewVisible(true, false)
                     }
                     else -> {}
                 }
@@ -61,6 +60,11 @@ class MbBookmarkPreviewView : FrameLayout {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
+
+        mbBookmarkPreviewBackButtonId.setOnClickListener {
+            setPreviewVisible(true)
+        }
+
     }
 
 
@@ -74,6 +78,11 @@ class MbBookmarkPreviewView : FrameLayout {
         mbBookmarkPreviewUrlTextId.text = "https://${bookmark.url}"
         //after calculation of data - otw cannot retrieve size
         previewBehaviourView?.state = BottomSheetBehavior.STATE_EXPANDED
+
+        when (bookmark.isStar) {
+            true -> mbBookmarkPreviewStarButtonId.setColor(R.color.colorAccent)
+            false -> mbBookmarkPreviewStarButtonId.setColor(R.color.colorPrimary)
+        }
     }
 
     fun actionShareBookmark(callbackAction: (intent: Intent) -> Unit) {
@@ -99,29 +108,16 @@ class MbBookmarkPreviewView : FrameLayout {
     }
 
     fun actionEditBookmark(callbackAction: () -> Unit) {
-        mbBookmarkPreviewActionLayoutId.setOnClickListener {
+        mbBookmarkPreviewMainLayoutId.setOnClickListener {
             callbackAction.invoke()
-        }
-    }
-
-    fun resetDownIconByTag() {
-        mbBookmarkPreviewMoreButtonId.apply {
-            tag = "down"
-            toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
         }
     }
 
     fun setMoreButtonAction(callbackAction: () -> Unit) {
         mbBookmarkPreviewMoreButtonId.apply {
-            toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
             setOnClickListener {
-                tag = when (tag) {
-                    "down" -> "up"
-                    else -> "down"
-                }
-                setPreviewVisible(tag == "down")
+                setPreviewVisible(false)
                 callbackAction.invoke()
-                toggleIcon(tag == "down", R.drawable.ic_arrow_down, R.drawable.ic_arrow_up)
             }
         }
     }
@@ -129,24 +125,70 @@ class MbBookmarkPreviewView : FrameLayout {
     fun setDeleteButtonAction(callbackAction: () -> Unit) {
         mbBookmarkPreviewDeleteButtonId.setOnClickListener {
             previewBehaviourView?.state = BottomSheetBehavior.STATE_COLLAPSED
-            setPreviewVisible(false)
             callbackAction.invoke()
         }
     }
 
-    fun setPreviewVisible(isPreviewVisible: Boolean) {
-        val animatorList: List<Animator> = BookmarkAnimator().let {
-            when (isPreviewVisible) {
-                true -> listOf(it.collapseAnimator(mbBookmarkPreviewDeleteLayoutId),
-                        it.expandAnimator(mbBookmarkPreviewHeaderEditUrlLayoutId))
-                else -> listOf(it.collapseAnimator(mbBookmarkPreviewHeaderEditUrlLayoutId),
-                        it.expandAnimator(mbBookmarkPreviewDeleteLayoutId))
+    /**
+     * logic to handle preview visibility
+     */
+    private fun setPreviewVisible(isPreviewVisible: Boolean, isAnimated: Boolean = true) {
+        when (isAnimated) {
+            false -> {
+                when (isPreviewVisible) {
+                    true -> {
+                        mbBookmarkPreviewOpenLayoutId.visibility = VISIBLE
+                        GONE.let {
+                            mbBookmarkPreviewDeleteLayoutId.visibility = it
+                            mbBookmarkPreviewDeleteLabelTextId.visibility = it
+                            mbBookmarkPreviewEditButtonId.visibility = it
+                        }
+                    }
+                    false -> {
+                        mbBookmarkPreviewOpenLayoutId.visibility = GONE
+                        VISIBLE.let {
+                            mbBookmarkPreviewDeleteLayoutId.visibility = it
+                            mbBookmarkPreviewDeleteLabelTextId.visibility = it
+                            mbBookmarkPreviewEditButtonId.visibility = it
+                        }
+                    }
+                }
             }
-        }
+            true -> {
+                val animatorList: List<Animator> = BookmarkAnimator().let {
+                    when (isPreviewVisible) {
+                        true -> listOf(it.expandAnimator(mbBookmarkPreviewOpenLayoutId))
+                        else -> listOf(it.expandAnimator(mbBookmarkPreviewDeleteLayoutId))
+                    }
+                }
 
-        AnimatorSet().apply {
-            playSequentially(animatorList)
-            start()
+                AnimatorSet().apply {
+                    playSequentially(animatorList)
+                    doOnStart {
+                        when (isPreviewVisible) {
+                            true -> {
+                                GONE.let {
+                                    mbBookmarkPreviewDeleteLayoutId.visibility = it
+                                    mbBookmarkPreviewDeleteLabelTextId.visibility = it
+                                }
+                                mbBookmarkPreviewEditButtonId.visibility = VISIBLE
+                                mbBookmarkPreviewMainLayoutId.isClickable = true
+                                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPrimary)
+                            }
+                            else -> {
+                                GONE.let {
+                                    mbBookmarkPreviewOpenLayoutId.visibility = it
+                                    mbBookmarkPreviewEditButtonId.visibility = it
+                                }
+                                mbBookmarkPreviewDeleteLabelTextId.visibility = VISIBLE
+                                mbBookmarkPreviewMainLayoutId.isClickable = false
+                                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPurple)
+                            }
+                        }
+                    }
+                    start()
+                }
+            }
         }
     }
 

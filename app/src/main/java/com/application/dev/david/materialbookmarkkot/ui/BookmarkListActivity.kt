@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -132,4 +133,8 @@ fun Toolbar.changeToolbarFont() {
             break
         }
     }
+}
+
+fun AppCompatTextView.setColorByRes(resource: Int) {
+    setTextColor(ContextCompat.getColor(context, resource))
 }

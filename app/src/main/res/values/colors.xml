@@ -9,4 +9,5 @@
     <color name="colorErrorSecondary">#A13532</color>
     <color name="colorSuccess">#3ED48F</color>
     <color name="colorGrey">#F3F3F3</color>
+    <color name="colorPurple">#d7385e</color>
 </resources>
