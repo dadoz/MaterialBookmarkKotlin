@@ -24,7 +24,7 @@
                     android:colorControlNormal="@color/colorAccent"
                     android:theme="@style/AppTheme.AppBarOverlay">
 
-                    <androidx.appcompat.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                         android:id="@+id/mbToolbarId"
                         android:visibility="visible"
                         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/mbAddBookmarkAppBarLayoutId"
                     android:layout_marginStart="@dimen/margin_16"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:layout_marginEnd="@dimen/margin_16" />
 
             <LinearLayout
@@ -54,11 +54,11 @@
                     <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/mbBookmarkSearchedUrlAddPlaceholderId"
                             android:layout_centerInParent="true"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                            android:layout_width="@dimen/bookmark_icon_preview_size_120dp"
+                            android:layout_height="@dimen/bookmark_icon_preview_size_120dp"
                             android:layout_marginBottom="@dimen/margin_16"
                             tools:src="@drawable/ic_golf_illustration"
-                            app:iconSrc="@{addBookmarkViewModel.bookmarkIconUrl}"/>
+                            app:iconSquaredSrc="@{addBookmarkViewModel.bookmarkIconUrl}"/>
                     <WebView
                             android:id="@+id/mbBookmarkSearchedUrlWebViewId"
                             tools:visibility="gone"

@@ -60,8 +60,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="@dimen/margin_8"
-            android:layout_width="@dimen/bookmark_icon_preview_big_size"
-            android:layout_height="@dimen/bookmark_icon_preview_big_size"
+            android:layout_width="@dimen/bookmark_icon_preview_middle_size"
+            android:layout_height="@dimen/bookmark_icon_preview_middle_size"
             android:tint="@color/colorPrimary"
             android:background="?attr/selectableItemBackground"
             android:src="@drawable/ic_world_map"/>

@@ -7,6 +7,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.application.dev.david.materialbookmarkkot.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.ContextualSerialization
@@ -48,6 +50,15 @@ fun setImageViewResource(imageView: ImageView, url: String?) {
         Glide.with(imageView.context)
                 .load(url)
                 .apply(RequestOptions.circleCropTransform())
+                .placeholder(R.drawable.ic_bookmark)
+                .into(imageView)
+}
+
+@BindingAdapter("iconSquaredSrc")
+fun setImageViewSquaredResource(imageView: ImageView, url: String?) {
+        Glide.with(imageView.context)
+                .load(url)
+                .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
                 .placeholder(R.drawable.ic_bookmark)
                 .into(imageView)
 }
