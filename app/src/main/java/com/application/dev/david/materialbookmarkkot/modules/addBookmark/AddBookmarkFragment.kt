@@ -172,12 +172,12 @@ class AddBookmarkFragment : Fragment() {
         })
 
         addBookmarkViewModel.bookmarkInfoLiveError.observe(this, Observer { error ->
-            mbAddBookmarkPreviewId.setEditTitleVisible(true)
+            mbAddBookmarkPreviewId.setEditTitleVisible(isVisible = true, isError = error.isNotEmpty())
         })
+
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer{ bookmarkInfo ->
             mbAddBookmarkPreviewId.setTitleAndIconImage(bookmarkInfo.meta.title, bookmarkInfo.meta.image)
        })
-
 
         addBookmarkViewModel.saveBookmarkStatus.observe(this, Observer { status ->
             when (status) {
@@ -304,8 +304,9 @@ class AddBookmarkFragment : Fragment() {
      *
      */
     private fun onSaveWithError() {
-        mbNewBookmarkUrlTextInputLayoutId.error = "Oh Snap! We got an error:"
+        mbNewBookmarkUrlTextInputLayoutId.error = getString(R.string.oh_snap_error_string)
         mbNewBookmarkUrlCardviewId.callOnClick()//trigger click
+        //TODO handle error box (change colors even on Title and other stuff
     }
 
     // TODO: Rename method, update argument and hook method into UI event

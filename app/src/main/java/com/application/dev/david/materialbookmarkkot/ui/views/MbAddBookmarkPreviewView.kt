@@ -38,8 +38,8 @@ class MbAddBookmarkPreviewView : RelativeLayout {
     /**
      * setvisibility - TODO mv all to viewBinding :P
      */
-    fun setEditTitleVisible(isVisible: Boolean) {
-        mbNewBookmarkEditTitleViewId.setEditTitleVisible(isVisible)
+    fun setEditTitleVisible(isVisible: Boolean, isError: Boolean = false) {
+        mbNewBookmarkEditTitleViewId.setEditTitleVisible(isVisible, isError)
     }
     /**
      * setvisibility - TODO mv all to viewBinding :P

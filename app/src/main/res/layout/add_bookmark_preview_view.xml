@@ -49,12 +49,12 @@
         <RelativeLayout
                 android:id="@+id/mbAddNewBookmarkUrlEditLayoutId"
                 android:visibility="gone"
-                tools:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
-                    style="@style/MBMaterialTextInputOutlinedViolet"
+                    style="@style/MBMaterialTextInputOutlinedYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/yantramanav_thin"
@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="5"
-                        style="@style/MBMaterialTextSubtitleThinViolet"/>
+                        style="@style/MBMaterialTextSubtitleThinYellow"/>
             </com.google.android.material.textfield.TextInputLayout>
         </RelativeLayout>
 
@@ -131,25 +131,25 @@
         <RelativeLayout
                 android:id="@+id/mbBookmarkUpdateNewLayoutId"
                 android:visibility="gone"
-                tools:visibility="gone"
+                tools:visibility="visible"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:layout_centerVertical="true"
-                    style="@style/MBMaterialTextDescrSmallViolet"
-                    android:text="Update your bookmark"/>
+                    style="@style/MBMaterialTextDescrSmallYellow"
+                    android:text="@string/search_your_bookmarks_string"/>
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
                     android:layout_alignParentEnd="true"
-                    style="@style/MBMaterialButtonStyleOutlineViolet"
+                    style="@style/MBMaterialButtonStyleOutlineYellow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UPDATE"/>
+                    android:text="SEARCH"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>

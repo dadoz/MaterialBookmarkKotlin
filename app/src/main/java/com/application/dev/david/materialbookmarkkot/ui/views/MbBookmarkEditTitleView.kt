@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.*
 import android.widget.RelativeLayout
 import com.application.dev.david.materialbookmarkkot.R
+import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.*
 import kotlinx.android.synthetic.main.bookmark_title_icon_layout_view.view.*
 
 class MbBookmarkEditTitleView : RelativeLayout {
@@ -19,7 +20,7 @@ class MbBookmarkEditTitleView : RelativeLayout {
     /**
      * setvisibility - TODO mv all to viewBinding :P
      */
-    fun setEditTitleVisible(isVisible: Boolean) {
+    fun setEditTitleVisible(isVisible: Boolean, isError: Boolean = false) {
         when (isVisible) {
             false -> {
                 mbNewBookmarkTitleTextViewId.visibility = View.VISIBLE
@@ -28,6 +29,12 @@ class MbBookmarkEditTitleView : RelativeLayout {
             true -> {
                 mbNewBookmarkTitleTextViewId.visibility = View.GONE
                 mbNewBookmarkTitleTextInputId.visibility = View.VISIBLE
+                when (isError) {
+                    true -> {
+                        mbNewBookmarkTitleEditTextId.tag = null
+                        mbNewBookmarkTitleEditTextId.setText("")
+                    }
+                }
             }
         }
     }
