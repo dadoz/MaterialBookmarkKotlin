@@ -34,7 +34,6 @@
             />
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mbSettingsRecyeclerViewId"
-            android:layout_margin="@dimen/margin_16"
             app:layout_constraintTop_toBottomOf="@+id/mbSettingsTitleTextViewId"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

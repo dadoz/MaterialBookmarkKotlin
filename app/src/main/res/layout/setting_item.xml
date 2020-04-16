@@ -3,7 +3,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_8"
+        android:paddingEnd="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_16"
+        android:paddingBottom="@dimen/margin_8"
+        android:paddingTop="@dimen/margin_8"
         android:background="?attr/selectableItemBackground"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.appcompat.widget.AppCompatTextView
@@ -14,7 +17,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mbSettingsItemValueTextId"
-            style="@style/MBMaterialTextSubtitleViolet"
+            style="@style/MBMaterialTextSubtitleSmallViolet"
             android:text="Description"
             />
     <androidx.appcompat.widget.AppCompatTextView
