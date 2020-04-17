@@ -49,8 +49,9 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                     updateBookmarkStatus.value = true },
                 { error -> Log.e(javaClass.name, error.message)
                     updateBookmarkStatus.value = false })
-        compositeDisposable.add(disposable)
 
+        //add to disposable
+        compositeDisposable.add(disposable)
     }
     /**
      * add bookamrk on db
@@ -77,6 +78,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                     saveBookmarkStatus.value = true },
                 { error -> Log.e(javaClass.name, error.message)
                     saveBookmarkStatus.value = false })
+
         compositeDisposable.add(disposable)
     }
 
@@ -122,6 +124,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                 { error ->
                     bookmarkInfoLiveError.value = error.message
                 })
+
         compositeDisposable.add(disposable)
     }
 

@@ -17,23 +17,8 @@ import khronos.Dates
 
 class SearchBookmarkViewModel(application: Application) : AndroidViewModel(application) {
     val bookmarkInfoLiveData : MutableLiveData<BookmarkInfo> = MutableLiveData()
-    val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    val loaderLiveStatus:  MutableLiveData<Boolean> = MutableLiveData()
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.clear()
-    }
-
-    /**
-     * please move it and generalize it
-     */
-    private fun <T> attachLoaderOnView():  ObservableTransformer< T, T> {
-        return ObservableTransformer {
-                observable -> observable
-            .doOnSubscribe { loaderLiveStatus.value = true }
-            .doOnNext { loaderLiveStatus.value = false}
-            .doOnError { loaderLiveStatus.value = false}
-        }
     }
 }

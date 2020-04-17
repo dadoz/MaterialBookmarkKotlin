@@ -9,6 +9,7 @@
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher_yellow"
+            android:name=".application.BookmarkApplication"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_bookmark"
             android:supportsRtl="true"
