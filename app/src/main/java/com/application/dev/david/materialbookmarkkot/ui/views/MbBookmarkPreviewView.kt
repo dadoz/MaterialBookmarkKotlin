@@ -8,7 +8,7 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
@@ -41,6 +41,7 @@ class MbBookmarkPreviewView : FrameLayout {
             else -> mbBookmarkPreviewHeaderCardViewId.setStrokeColorByColorRes(R.color.colorPrimary)
         }
     }
+
     fun initView(previewBehaviourView: BottomSheetBehavior<View>, fab: FloatingActionButton) {
         this.previewBehaviourView = previewBehaviourView
         previewBehaviourView.addBottomSheetCallback(object :
@@ -48,10 +49,22 @@ class MbBookmarkPreviewView : FrameLayout {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_EXPANDED -> {
-                        fab.animate().scaleX(0F).scaleY(0F).setDuration(300).start()
+                        AnimatorSet(). apply {
+                            playTogether(BookmarkAnimator().scaleXYAnimator(fab, 0F))
+                            doOnEnd {
+                                fab.visibility = GONE
+                            }
+                            start()
+                        }
                     }
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        fab.animate().scaleX(1F).scaleY(1F).setDuration(300).start()
+                        AnimatorSet(). apply {
+                            playTogether(BookmarkAnimator().scaleXYAnimator(fab, 1F))
+                            doOnStart {
+                                fab.visibility = View.VISIBLE
+                            }
+                            start()
+                        }
                         setPreviewVisible(true, false)
                     }
                     else -> {}
@@ -183,7 +196,6 @@ class MbBookmarkPreviewView : FrameLayout {
                     mbBookmarkPreviewDeleteLabelTextId.visibility = it
                 }
                 mbBookmarkPreviewMainLayoutId.isClickable = false
-                mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPurple)
 
             }
         }

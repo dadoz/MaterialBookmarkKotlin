@@ -25,6 +25,15 @@ class BookmarkAnimator {
     /**
      * alpha animator
      */
+    fun scaleXYAnimator(view: View, finalValue: Float): List<Animator> {
+        val initValue = if (finalValue == 0f) 1f else 0f
+        return listOf(ObjectAnimator.ofFloat(view, "scaleX", initValue, finalValue),
+            ObjectAnimator.ofFloat(view, "scaleY", initValue, finalValue))
+    }
+
+    /**
+     * alpha animator
+     */
     fun alphaAnimator(view: View, finalValue: Float): Animator {
         val initValue = if (finalValue == 0f) 1f else 0f
         return ObjectAnimator.ofFloat(view, "alpha", initValue, finalValue)
