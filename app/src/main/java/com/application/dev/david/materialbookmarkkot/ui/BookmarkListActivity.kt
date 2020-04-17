@@ -57,11 +57,13 @@ fun MaterialCardView.setBackgroundColorByColorRes(colorRes: Int) {
 fun MaterialCardView.setStarColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
     when (viewType) {
         IS_DEFAULT_VIEW -> {
-            setBackgroundColorByColorRes(R.color.colorPrimary)
+//            setBackgroundColorByColorRes(R.color.colorPrimary)
+            setBackgroundResource(R.drawable.bck_gradient_violet)
             setStrokeColorByColorRes(R.color.colorPrimaryDark)
         }
         IS_STAR_VIEW -> {
-            setBackgroundColorByColorRes(R.color.colorAccent)
+            setBackgroundResource(R.drawable.bck_gradient_yellow)
+//            setBackgroundColorByColorRes(R.color.colorAccent)
             setStrokeColorByColorRes(R.color.colorAccent)
         }
     }
