@@ -103,9 +103,15 @@ class AddBookmarkFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> navigation?.popBackStack()
+            R.id.menuShowEditActionId -> showEditBookmarkView()
             R.id.menuSettingsActionId -> startActivity(Intent(context, SettingsActivity::class.java))
         }
         return true
+    }
+
+    private fun showEditBookmarkView() {
+        mbBookmarkSearchedUrlWebViewId.visibility = GONE
+        mbNewBookmarkEditTitleViewId.visibility = VISIBLE
     }
 
     /**
@@ -236,7 +242,6 @@ class AddBookmarkFragment : Fragment() {
         mbNewBookmarkIconImageViewId.setOnClickListener {
             mbBookmarkSearchedUrlWebViewId.visibility = VISIBLE
             mbNewBookmarkEditTitleViewId.visibility = GONE
-            Snackbar.make(it, "show preview url", Snackbar.LENGTH_SHORT).show()
         }
 
     }

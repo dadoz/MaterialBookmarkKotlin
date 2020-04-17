@@ -80,7 +80,7 @@ class SearchBookmarkFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_add_bookmark, menu)
+        menuInflater.inflate(R.menu.menu_search_bookmark, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
