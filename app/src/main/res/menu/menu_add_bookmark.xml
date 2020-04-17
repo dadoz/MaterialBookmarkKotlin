@@ -3,7 +3,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
             android:id="@+id/menuShowEditActionId"
-            android:icon="@drawable/ic_edit_pen"
+            android:icon="@drawable/ic_eye_ok"
+            app:iconTint="@color/colorPrimary"
             android:title="edit"
             app:showAsAction="always"/>
     <item

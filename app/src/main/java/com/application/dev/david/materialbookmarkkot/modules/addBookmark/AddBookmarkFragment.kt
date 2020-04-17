@@ -27,13 +27,10 @@ import androidx.navigation.fragment.navArgs
 import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListener
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.databinding.FragmentAddBookmarkBinding
-import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
+import com.application.dev.david.materialbookmarkkot.ui.*
 import com.application.dev.david.materialbookmarkkot.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.dev.david.materialbookmarkkot.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
-import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
-import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
 import com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.add_bookmark_preview_view.*
@@ -102,7 +99,10 @@ class AddBookmarkFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> navigation?.popBackStack()
+            android.R.id.home -> {
+                navigation?.popBackStack()
+                activity?.hideKeyboardIfNeeded()
+            }
             R.id.menuShowEditActionId -> showEditBookmarkView()
             R.id.menuSettingsActionId -> startActivity(Intent(context, SettingsActivity::class.java))
         }
@@ -136,7 +136,10 @@ class AddBookmarkFragment : Fragment() {
             mbAddBookmarkPreviewId.setStatusVisibility(UPDATE)
             mbNewBookmarkTitleTextInputId.visibility = VISIBLE
             mbNewBookmarkTitleTextViewId.visibility = GONE
-            mbAddNewBookmarkUrlEditLayoutId.requestFocus()
+            mbNewBookmarkUrlEditTextId.requestFocus()
+            mbNewBookmarkUrlEditTextId.showKeyboard()
+            mbNewBookmarkIconImageViewId.visibility = GONE
+            showEditBookmarkView()
         }
 
         // loader cbs
@@ -219,6 +222,9 @@ class AddBookmarkFragment : Fragment() {
         mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
             mbAddBookmarkPreviewId.setStatusVisibility(SEARCH)
             searchBookmarkAction(mbNewBookmarkUrlEditTextId.text.toString())
+            mbNewBookmarkUrlEditTextId.hideKeyboard()
+            mbNewBookmarkTitleEditTextId.hideKeyboard()
+            mbNewBookmarkIconImageViewId.visibility = VISIBLE
         }
 
         (mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener(object : TextWatcher {

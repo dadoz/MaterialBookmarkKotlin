@@ -1,12 +1,15 @@
 package com.application.dev.david.materialbookmarkkot.ui
 
+import android.app.Activity
 import android.content.Context
+import android.inputmethodservice.InputMethodService
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +47,10 @@ class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener,
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
+}
+fun View.showKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
 }
 
 fun View.setBackgroundColorByColorRes(colorRes: Int) {
@@ -94,12 +101,6 @@ fun MaterialCardView.setStrokeColorByColorRes(colorRes: Int) {
 fun ImageView.setColor(colorRes: Int) {
     setColorFilter(ContextCompat.getColor(context, colorRes))
 }
-fun ImageView.toggleIcon(condition: Boolean, resource1: Int, resource2: Int) {
-    when (condition) {
-        true -> setIconByResource(resource1)
-        false -> setIconByResource(resource2)
-    }
-}
 
 fun ImageView.setIconByResource(resource: Int) {
     setImageDrawable(ContextCompat.getDrawable(context, resource))
@@ -134,4 +135,12 @@ fun Toolbar.changeToolbarFont() {
 
 fun AppCompatTextView.setColorByRes(resource: Int) {
     setTextColor(ContextCompat.getColor(context, resource))
+}
+
+fun Activity.hideKeyboardIfNeeded() {
+    window.currentFocus?.let {
+        when (it) {
+            is EditText -> it.hideKeyboard()
+        }
+    }
 }

@@ -129,6 +129,8 @@ class BookmarkListFragment : Fragment()  {
      */
     @SuppressLint("FragmentLiveDataObserve")
     private fun initView() {
+        mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_DEFAULT_VIEW)
+
         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
 
         //event update list

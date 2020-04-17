@@ -113,13 +113,14 @@
                     android:layout_centerVertical="true"
                     style="@style/MBMaterialTextDescrSmallViolet"
                     android:text="@string/save_your_bookmark_label"/>
+
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkSaveNewButtonId"
                     style="@style/MBMaterialButtonStyleViolet"
-                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/save_label_button"/>
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/save_label_button" />
             <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbBookmarkUpdateNewButtonId"
                     style="@style/MBMaterialButtonStyleOutlineViolet"

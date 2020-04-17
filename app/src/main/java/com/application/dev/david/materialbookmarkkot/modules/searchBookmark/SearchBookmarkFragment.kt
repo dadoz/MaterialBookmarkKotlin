@@ -32,6 +32,7 @@ import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBook
 import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
 import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
 import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
+import com.application.dev.david.materialbookmarkkot.ui.hideKeyboardIfNeeded
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
@@ -85,7 +86,10 @@ class SearchBookmarkFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> navigation?.popBackStack()
+            android.R.id.home -> {
+                navigation?.popBackStack()
+                activity?.hideKeyboardIfNeeded()
+            }
             R.id.menuSettingsActionId -> startActivity(Intent(context, SettingsActivity::class.java))
         }
         return true
