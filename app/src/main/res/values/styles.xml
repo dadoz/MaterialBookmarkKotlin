@@ -145,6 +145,10 @@
     <style name="MBMaterialTextSubtitleSmallYellow" parent="MBMaterialTextSubtitleYellow" >
         <item name="android:textSize">@dimen/text_22</item>
     </style>
+    <style name="MBMaterialTextSubtitleSmallThinViolet" parent="MBMaterialTextSubtitleViolet" >
+        <item name="android:textSize">@dimen/text_22</item>
+        <item name="android:fontFamily">@font/yantramanav_thin</item>
+    </style>
 
     <style name="MBMaterialTextSubtitleSmallViolet" parent="MBMaterialTextSubtitleSmallYellow" >
         <item name="android:textColor">@color/colorPrimary</item>

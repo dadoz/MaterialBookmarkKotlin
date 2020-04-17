@@ -30,8 +30,6 @@ import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.setGridO
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView
-import kotlinx.android.synthetic.main.empty_star_view.*
-import kotlinx.android.synthetic.main.empty_view.*
 import kotlinx.android.synthetic.main.fragment_bookmark_list.*
 
 class BookmarkListFragment : Fragment()  {
@@ -175,12 +173,7 @@ class BookmarkListFragment : Fragment()  {
 
         bookmarkViewModel.bookmarkListSize.observe(this, Observer {
             mbBookmarkHeaderTotBookmarkLabelId.apply { text = it }
-//            handleEmptyView(it == "0")
         })
-
-        mbBookmarkEmptyAddNewButtonId.setOnClickListener {
-            findNavController().navigate(R.id.searchBookmarkFragment)
-        }
 
         mbBookmarkAddNewButtonId.setOnClickListener {
             bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
@@ -249,6 +242,12 @@ class BookmarkListFragment : Fragment()  {
             )
         )
 
+        //handle empty view
+        val owner = this
+        mbBookmarkEmptyViewId.apply {
+            setViewModel(bookmarkViewModel)
+            init(owner = owner, recyclerView = mbBookmarkRecyclerViewId, bookmarkFilter = bookmarkFilters)
+        }
     }
 
     /**
@@ -283,44 +282,6 @@ class BookmarkListFragment : Fragment()  {
         }
 
 
-    /**
-     *
-     */
-    private fun handleEmptyView(isEmptyData: Boolean) {
-        //TODO please replace with viewModel isEmptyDataList
-        when (isEmptyData) {
-            false -> {
-                GONE.let {
-                    mbBookmarkEmptyViewId.visibility = it
-                }
-                VISIBLE.let {
-                    mbBookmarkAddNewButtonId.visibility = it
-                    mbBookmarkAppBarLayoutId.visibility = it
-                    mbBookmarkHeaderFilterActionsLayoutId.visibility = it
-                }
-            }
-            true -> {
-                when (bookmarkFilters.starFilterType) {
-                    IS_STAR_VIEW -> {
-                        VISIBLE.let {
-                            mbBookmarkEmptyStarViewId.visibility = it
-                        }
-                    }
-                    else -> {
-                        GONE.let {
-                            mbBookmarkAddNewButtonId.visibility = it
-                            mbBookmarkAppBarLayoutId.visibility = it
-                            mbBookmarkHeaderFilterActionsLayoutId.visibility = it
-                        }
-                        VISIBLE.let {
-                            mbBookmarkEmptyViewId.visibility = it
-                        }
-
-                    }
-                }
-            }
-        }
-    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {

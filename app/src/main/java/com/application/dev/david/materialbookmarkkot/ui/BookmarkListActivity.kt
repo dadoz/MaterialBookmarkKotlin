@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -144,3 +145,14 @@ fun Activity.hideKeyboardIfNeeded() {
         }
     }
 }
+
+fun AppCompatImageView.setImageDrawableByRes(res: Int) {
+    setImageDrawable(ContextCompat.getDrawable(context, res))
+}
+
+fun View.toggleVisibilty(visibility: Int): Int =
+    when (visibility) {
+        View.VISIBLE -> View.GONE
+        View.GONE -> View.VISIBLE
+        else -> visibility
+    }

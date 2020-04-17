@@ -30,7 +30,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     var bookmarksLiveData: MutableLiveData<MutableList<Any>> = MutableLiveData()
     var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<List<Int>, MutableList<Any>?>> = MutableLiveData()
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
-    var isEmptyDataList: MutableLiveData<Boolean> = MutableLiveData(false)
+    var sizeEmptyDataPair: MutableLiveData<Pair<Int, Int>> = MutableLiveData(Pair(0, 0)) //total and star
     var bookmarkListSize: MutableLiveData<String> = MutableLiveData()
     private val bookmarkListDataRepository: BookmarkListDataRepository = BookmarkListDataRepository(getApplication())
     private val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()
@@ -44,7 +44,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
+            .compose(setListSizeComposable())
             .compose(filterByStarTypeComposable(bookmarkFilter.starFilterType))
             .compose(updatedBookmarkListSizeComposable())
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
@@ -59,8 +59,6 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         compositeDisposable.add(disposable)
     }
 
-
-
     /**
      * add bookamrk on db
      *
@@ -70,37 +68,17 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(bookmarkListDataRepository::deleteBookmark)
-            .doOnNext { _ -> bookmarkListSize.value =
-                bookmarkListSize.value?.toInt()?.minus(1).toString()
+            .doOnNext { _ ->
+                bookmarkListSize.value =
+                    bookmarkListSize.value?.toInt()?.minus(1).toString()
             }
+            .flatMap { bookmarkListDataRepository.getBookmarks() }
+            .compose(setListSizeComposable())
             .subscribe({ success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
         compositeDisposable.add(disposable)
 
     }
-
-    /**
-     * delete bookmark
-     */
-    fun deleteBookmarkFromList(position: Int) {
-        var labelPos = -1
-        bookmarksLiveData.value?.let {
-            it.removeAt(position)
-            if (position > 0 && position < it.size &&
-                it[position -1] is BookmarkHeader &&
-                it[position] is BookmarkHeader) {
-                it.removeAt(position -1)
-                labelPos = position -1
-            }
-            if (position == it.size &&
-                it[position -1] is BookmarkHeader) {
-                it.removeAt(position -1)
-                labelPos = position -1
-            }
-        }
-        bookmarksRemovedBookmarkPairData.value = Pair(listOf(position, labelPos), bookmarksLiveData.value)
-    }
-
 
     /**
      * composable to add Header on bookmark
@@ -110,6 +88,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(bookmarkListDataRepository::updateBookmark)
+            .flatMap { bookmarkListDataRepository.getBookmarks() }
+            .compose(setListSizeComposable())
             .subscribe({ success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
 
@@ -125,7 +105,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .doOnNext { list -> isEmptyDataList.value = list.isEmpty() }
+            .compose(setListSizeComposable())
             .compose(filterByStarTypeComposable(starFilterType = bookmarkFilter.starFilterType))
             .compose(filterSearchByTitleComposable(query))
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
@@ -356,4 +336,44 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .filter { bookmark -> (bookmark.title?: "").contains(query, true) }
             .toList().toObservable()
     }
+
+    /**
+     * set size of star bookmarks and full items
+     *
+     */
+    private fun setListSizeComposable() = ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
+        var first = 0
+        var second = 0
+        it
+            .doOnNext { list -> first = list.size }
+            .flatMap { list -> Observable.fromIterable(list) }
+            .filter { item -> item.isStar }
+            .toList().toObservable()
+            .doOnNext { list -> second = list.size }
+            .doOnNext { sizeEmptyDataPair.value = Pair(first, second) }
+            .flatMap { _ -> it }
+    }
+
+    /**
+     * delete bookmark
+     */
+    fun deleteBookmarkFromList(position: Int) {
+        var labelPos = -1
+        bookmarksLiveData.value?.let {
+            it.removeAt(position)
+            if (position > 0 && position < it.size &&
+                it[position -1] is BookmarkHeader &&
+                it[position] is BookmarkHeader) {
+                it.removeAt(position -1)
+                labelPos = position -1
+            }
+            if (position == it.size &&
+                it[position -1] is BookmarkHeader) {
+                it.removeAt(position -1)
+                labelPos = position -1
+            }
+        }
+        bookmarksRemovedBookmarkPairData.value = Pair(listOf(position, labelPos), bookmarksLiveData.value)
+    }
+
 }

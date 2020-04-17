@@ -233,17 +233,13 @@
             android:layout_height="match_parent"/>
 
     <!-- empty view-->
-    <include layout="@layout/empty_view" tools:visibility="gone"/>
-
-    <!--bottombar -->
-    <include
-            android:id="@+id/mbEmptyStarViewLayoutId"
-            layout="@layout/empty_star_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <com.application.dev.david.materialbookmarkkot.ui.views.MbEmptyView
+            android:id="@+id/mbBookmarkEmptyViewId"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:visibility="gone" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
+    <!-- BottomAppbar-->
     <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mbBookmarkBottomBarLayoutId"
             android:layout_width="match_parent"
