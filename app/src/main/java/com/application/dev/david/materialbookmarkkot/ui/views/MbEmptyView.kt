@@ -2,12 +2,10 @@ package com.application.dev.david.materialbookmarkkot.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
@@ -31,12 +29,14 @@ class MbEmptyView: FrameLayout {
         viewModel = bookmarkViewModel
     }
 
-    fun init(owner: LifecycleOwner, recyclerView: RecyclerView, bookmarkFilter: BookmarkFilter) {
+    fun init(owner: LifecycleOwner, bookmarkFilter: BookmarkFilter, views: List<View>) {
+        val recyclerView = views[0]
         viewModel.sizeEmptyDataPair.observe(owner, Observer {
             visibility = when (bookmarkFilter.starFilterType) {
                 IS_DEFAULT_VIEW -> {
                     mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_tortoise_illustration)
                     mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
+                    mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
                     when (it.first) {
                         0 -> VISIBLE
                         else -> GONE
@@ -45,10 +45,19 @@ class MbEmptyView: FrameLayout {
                 IS_STAR_VIEW -> {
                     mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
                     mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorAccent)
+                    mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
+                    views[1].visibility = View.VISIBLE
+                    views[2].visibility = View.VISIBLE
                     when (it.second) {
                         0 -> VISIBLE
                         else -> GONE
                     }
+                }
+            }
+
+            if (bookmarkFilter.starFilterType == IS_DEFAULT_VIEW) {
+                views.forEach{
+                    it.toggleVisibilty(this.visibility)
                 }
             }
             recyclerView.toggleVisibilty(this.visibility)

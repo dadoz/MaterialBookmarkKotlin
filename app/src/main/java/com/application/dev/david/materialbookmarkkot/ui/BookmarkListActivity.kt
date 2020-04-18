@@ -8,6 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -150,9 +152,10 @@ fun AppCompatImageView.setImageDrawableByRes(res: Int) {
     setImageDrawable(ContextCompat.getDrawable(context, res))
 }
 
-fun View.toggleVisibilty(visibility: Int): Int =
-    when (visibility) {
-        View.VISIBLE -> View.GONE
-        View.GONE -> View.VISIBLE
-        else -> visibility
+fun View.toggleVisibilty(oldVisibility: Int) {
+    visibility = when (oldVisibility) {
+        VISIBLE -> GONE
+        GONE -> VISIBLE
+        else -> oldVisibility
     }
+}

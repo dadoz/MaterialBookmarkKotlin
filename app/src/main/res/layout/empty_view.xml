@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
         tools:visibility="visible"
+        android:gravity="center_vertical"
         android:padding="@dimen/margin_16"
-        android:background="@android:color/white"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:background="@android:color/white">
     <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mbBookmarkEmptyImageViewId"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="80dp"
             android:layout_width="wrap_content"
+            android:layout_marginTop="-80dp"
             android:layout_height="@dimen/empty_icon_size"
             android:scaleType="fitCenter"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/ic_lamp_illustration"/>
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mbBookmarkEmptyLabelTextViewId"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mbBookmarkEmptyImageViewId"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/mbBookmarkEmptyImageViewId"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_16"
             android:text="@string/no_bookmark_string"
             style="@style/MBMaterialTextSubtitleSmallThinViolet"
             />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

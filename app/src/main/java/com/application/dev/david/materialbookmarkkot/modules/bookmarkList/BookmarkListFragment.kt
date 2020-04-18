@@ -246,7 +246,8 @@ class BookmarkListFragment : Fragment()  {
         val owner = this
         mbBookmarkEmptyViewId.apply {
             setViewModel(bookmarkViewModel)
-            init(owner = owner, recyclerView = mbBookmarkRecyclerViewId, bookmarkFilter = bookmarkFilters)
+            init(owner = owner, bookmarkFilter = bookmarkFilters,
+            views = listOf(mbBookmarkRecyclerViewId, mbBookmarkHeaderTotBookmarkCardId, mbBookmarkMainBackgroundImageId))
         }
     }
 

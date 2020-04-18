@@ -235,6 +235,9 @@
     <!-- empty view-->
     <com.application.dev.david.materialbookmarkkot.ui.views.MbEmptyView
             android:id="@+id/mbBookmarkEmptyViewId"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginBottom="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
