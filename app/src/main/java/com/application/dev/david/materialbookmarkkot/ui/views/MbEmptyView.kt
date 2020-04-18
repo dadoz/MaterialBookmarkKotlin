@@ -32,34 +32,49 @@ class MbEmptyView: FrameLayout {
     fun init(owner: LifecycleOwner, bookmarkFilter: BookmarkFilter, views: List<View>) {
         val recyclerView = views[0]
         viewModel.sizeEmptyDataPair.observe(owner, Observer {
-            visibility = when (bookmarkFilter.starFilterType) {
-                IS_DEFAULT_VIEW -> {
-                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_tortoise_illustration)
+            //search mode
+            visibility = when (bookmarkFilter.isSearchViewType) {
+                true -> {
+                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_rabbit_illustration)
                     mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
-                    mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
+                    mbBookmarkEmptyLabelTextViewId.setText(R.string.no_search_result_string)
                     when (it.first) {
                         0 -> VISIBLE
                         else -> GONE
                     }
                 }
-                IS_STAR_VIEW -> {
-                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
-                    mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorAccent)
-                    mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
-                    views[1].visibility = View.VISIBLE
-                    views[2].visibility = View.VISIBLE
-                    when (it.second) {
-                        0 -> VISIBLE
-                        else -> GONE
+                else -> when (bookmarkFilter.starFilterType) {
+                    IS_DEFAULT_VIEW -> {
+                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_tortoise_illustration)
+                        mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
+                        mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
+                        when (it.first) {
+                            0 -> VISIBLE
+                            else -> GONE
+                        }
+                    }
+                    IS_STAR_VIEW -> {
+                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
+                        mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorAccent)
+                        mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
+                        views[1].visibility = View.VISIBLE
+                        views[2].visibility = View.VISIBLE
+                        when (it.second) {
+                            0 -> VISIBLE
+                            else -> GONE
+                        }
                     }
                 }
             }
 
-            if (bookmarkFilter.starFilterType == IS_DEFAULT_VIEW) {
+            //handled custom logic to hide views on main view
+            if (bookmarkFilter.starFilterType == IS_DEFAULT_VIEW &&
+                !bookmarkFilter.isSearchViewType) {
                 views.forEach{
                     it.toggleVisibilty(this.visibility)
                 }
             }
+
             recyclerView.toggleVisibilty(this.visibility)
         })
     }

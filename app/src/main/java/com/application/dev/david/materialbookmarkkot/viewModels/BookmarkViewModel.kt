@@ -41,6 +41,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      */
     fun retrieveBookmarkList(bookmarkFilter: BookmarkFilter) {
         val disposable = Observable.just("")
+            .doOnNext { _ -> bookmarkFilter.isSearchViewType = false }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
@@ -101,13 +102,14 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      */
     fun searchBookmarkByTitle(bookmarkFilter: BookmarkFilter, query: String) {
         val disposable = Observable.just(query)
+            .doOnNext { _ -> bookmarkFilter.isSearchViewType = true }
             .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .compose(setListSizeComposable())
             .compose(filterByStarTypeComposable(starFilterType = bookmarkFilter.starFilterType))
             .compose(filterSearchByTitleComposable(query))
+            .compose(setListSizeComposable())
             .compose(sortListByTitleOrDateComposable(sortOrderList = bookmarkFilter.sortOrderList, sortTypeList = bookmarkFilter.sortTypeList))
             .compose(getBookmarkWithHeadersListComposable(starFilterType = bookmarkFilter.starFilterType, sortTypeList = bookmarkFilter.sortTypeList))
             .subscribe(

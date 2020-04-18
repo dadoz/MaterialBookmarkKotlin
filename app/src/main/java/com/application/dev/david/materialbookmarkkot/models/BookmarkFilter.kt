@@ -17,6 +17,7 @@ class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: 
     var sortOrderList: Int by intPreference(MB_SORT_ORDER_LIST_PREF, sortOrderListDefVal.ordinal)
     var sortTypeList: Int by intPreference(MB_SORT_TYPE_LIST_PREF, sortTypeListDefVal.ordinal)
     var starFilterType: StarFilterTypeEnum = StarFilterTypeEnum.IS_DEFAULT_VIEW
+    var isSearchViewType: Boolean = false
 
     enum class ListViewTypeEnum { IS_GRID, IS_LIST }
     enum class SortOrderListEnum { IS_ASCENDING, IS_DESCENDING }

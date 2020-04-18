@@ -19,6 +19,7 @@
     <string name="bookmarks_title_string">Bookmarks</string>
     <string name="update_bookmarks_label">Update your bookmark</string>
     <string name="oh_snap_error_string">Oh Snap! We got an error:</string>
+    <string name="no_search_result_string">No results...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
