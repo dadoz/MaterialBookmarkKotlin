@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MaterialBookmarkKot</string>
+    <string name="app_name">Bookmark Wallet</string>
     <string name="action_settings">Settings</string>
     <string name="delete_label_text">DELETE</string>
     <string name="open_in_browser_label_text">OPEN</string>
