@@ -6,6 +6,8 @@ import android.inputmethodservice.InputMethodService
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
@@ -27,6 +29,8 @@ import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
+import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment
+import com.application.dev.david.materialbookmarkkot.utils.FontSpan
 import com.google.android.material.card.MaterialCardView
 
 class BookmarkListActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {
@@ -157,5 +161,17 @@ fun View.toggleVisibilty(oldVisibility: Int) {
         VISIBLE -> GONE
         GONE -> VISIBLE
         else -> oldVisibility
+    }
+}
+
+fun MenuItem.applyFontToMenuItem(context: Context) {
+    SpannableString(title).apply {
+        setSpan(
+            FontSpan(ResourcesCompat.getFont(context, R.font.lato_light)),
+            0,
+            title.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
+        title = this
     }
 }

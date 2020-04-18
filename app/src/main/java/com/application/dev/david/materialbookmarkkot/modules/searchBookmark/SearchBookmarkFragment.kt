@@ -29,10 +29,7 @@ import com.application.dev.david.materialbookmarkkot.OnFragmentInteractionListen
 import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
-import com.application.dev.david.materialbookmarkkot.ui.SettingsActivity
-import com.application.dev.david.materialbookmarkkot.ui.changeToolbarFont
-import com.application.dev.david.materialbookmarkkot.ui.hideKeyboard
-import com.application.dev.david.materialbookmarkkot.ui.hideKeyboardIfNeeded
+import com.application.dev.david.materialbookmarkkot.ui.*
 import com.application.dev.david.materialbookmarkkot.viewModels.SearchBookmarkViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_bookmark.mbToolbarId
@@ -82,6 +79,7 @@ class SearchBookmarkFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_search_bookmark, menu)
+        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
