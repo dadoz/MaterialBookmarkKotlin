@@ -36,7 +36,7 @@ class MbEmptyView: FrameLayout {
             visibility = when (bookmarkFilter.isSearchViewType) {
                 true -> {
                     mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
-                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_scarf_sleepy_illustration)
+                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_rabbit_and_fox_illustration)
                     mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
                     mbBookmarkEmptyLabelTextViewId.setText(R.string.no_search_result_string)
                     when (it.first) {
