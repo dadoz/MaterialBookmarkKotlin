@@ -20,4 +20,8 @@
     <string name="update_bookmarks_label">Update your bookmark</string>
     <string name="oh_snap_error_string">Oh Snap! We got an error:</string>
     <string name="no_search_result_string">No results...</string>
+    <string name="star_title_string">Stars</string>
+    <string name="more_settings_description">Something more here....\nThanks
+        for all illustration in app, due to a dedicate works of a lot of illustrators and friends!\n....
+        \nBookmarksWallet@2020</string>
 </resources>

@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="elevation">0dp</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/colorLight</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -36,7 +36,7 @@
         <item name="strokeColor">@color/colorPrimaryDark</item>
     </style>
     <style name="MBMaterialCardviewStyleYellow" parent="MBMaterialCardviewStyle" >
-        <item name="cardBackgroundColor">@android:color/white</item>
+        <item name="cardBackgroundColor">@color/colorLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
 
@@ -196,21 +196,21 @@
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
     <style name="MBMaterialButtonStyleRed" parent="MBMaterialButtonStyleYellow" >
-        <item name="backgroundTint">@android:color/white</item>
+        <item name="backgroundTint">@color/colorLight</item>
         <item name="android:textColor">@color/colorError</item>
         <item name="strokeColor">@color/colorErrorSecondary</item>
     </style>
 
     <style name="MBMaterialButtonStyleViolet" parent="TextAppearance.MaterialComponents.Button" >
         <item name="backgroundTint">@color/colorPrimary</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/colorLight</item>
         <item name="strokeColor">@color/colorPrimaryDark</item>
         <item name="strokeWidth">1dp</item>
         <item name="fontFamily">@font/yantramanav_light</item>
     </style>
 
     <style name="MBMaterialButtonStyleOutlinePurple" parent="TextAppearance.MaterialComponents.Button" >
-        <item name="backgroundTint">@android:color/white</item>
+        <item name="backgroundTint">@color/colorLight</item>
         <item name="android:textColor">@color/colorPurple</item>
         <item name="strokeColor">@color/colorPurple</item>
         <item name="strokeWidth">1dp</item>
@@ -218,7 +218,7 @@
     </style>
 
     <style name="MBMaterialButtonStyleOutlineViolet" parent="TextAppearance.MaterialComponents.Button" >
-        <item name="backgroundTint">@android:color/white</item>
+        <item name="backgroundTint">@color/colorLight</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="strokeColor">@color/colorPrimary</item>
         <item name="strokeWidth">1dp</item>
@@ -226,7 +226,7 @@
     </style>
 
     <style name="MBMaterialButtonStyleOutlineYellow" parent="TextAppearance.MaterialComponents.Button" >
-        <item name="backgroundTint">@android:color/white</item>
+        <item name="backgroundTint">@color/colorLight</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="strokeColor">@color/colorAccent</item>
         <item name="strokeWidth">1dp</item>

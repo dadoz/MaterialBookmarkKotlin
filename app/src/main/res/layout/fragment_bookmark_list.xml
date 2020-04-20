@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:elevation="0dp"
-            android:background="@android:color/white"
+            android:background="@color/colorLight"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:elevation="0dp">
 
@@ -38,8 +38,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mbBookmarkMainBackgroundImageId"
                     android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:src="@drawable/ic_mermaid_illustration"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_scarf_illustration"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +211,7 @@
                 android:minHeight="55dp"
                 app:chipIcon="@drawable/ic_font_size"
                 app:chipIconTint="@color/colorPrimary"
-                app:chipBackgroundColor="@android:color/white"
+                app:chipBackgroundColor="@color/colorLight"
                 app:chipStrokeColor="@color/colorPrimary"
                 app:chipStrokeWidth="1dp"
                 app:chipCornerRadius="5dp"

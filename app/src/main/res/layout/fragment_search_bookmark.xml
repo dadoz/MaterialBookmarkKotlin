@@ -12,7 +12,7 @@
                 android:id="@+id/mbAddBookmarkAppBarLayoutId"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:background="@android:color/background_light"
+                android:background="@color/colorLight"
                 app:titleTextColor="@color/colorPrimary"
                 android:theme="@style/AppTheme.AppBarOverlay">
             <androidx.appcompat.widget.Toolbar
@@ -125,7 +125,7 @@
                         android:layout_centerInParent="true"
                         android:layout_width="220dp"
                         android:layout_height="220dp"
-                        android:src="@drawable/ic_golf_illustration"/>
+                        android:src="@drawable/ic_bear_illustration"/>
 
             </RelativeLayout>
         </LinearLayout>

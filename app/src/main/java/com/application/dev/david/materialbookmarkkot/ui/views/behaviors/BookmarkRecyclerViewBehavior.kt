@@ -100,16 +100,16 @@ fun RecyclerView.addOnScrollListenerWithViews(views: List<View>) {
                 views[0].tag = false
 
                 AnimatorSet().apply {
-                        BookmarkAnimator().apply {
-                            playTogether(
-                                expandAnimator(views[0]),
-                                alphaAnimator(views[1], 1f),
-                                alphaAnimator(views[2], 1f),
-                                alphaAnimator(views[3], 1f)
-                            )
-                        }
-                        start()
+                    BookmarkAnimator().apply {
+                        playTogether(
+                            expandAnimator(views[0]),
+                            alphaAnimator(views[1], 1f),
+                            alphaAnimator(views[2], 1f),
+                            alphaAnimator(views[3], 1f)
+                        )
                     }
+                    start()
+                }
             }
         }
 

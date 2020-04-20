@@ -35,7 +35,7 @@ class SettingsActivity: AppCompatActivity(), OnFragmentInteractionListener, Life
     private fun initActionBar() {
         setSupportActionBar(mbSettingsToolbarId)
         mbSettingsToolbarId.changeToolbarFont()
-        supportActionBar?.title = "" //getString(R.string.settings_actionbar_string)
+        supportActionBar?.title = getString(R.string.app_name)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

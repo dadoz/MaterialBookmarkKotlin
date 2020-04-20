@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@android:color/background_light"
+            android:background="@color/colorLight"
             android:colorControlNormal="@color/colorAccent"
             android:theme="@style/AppTheme.AppBarOverlay">
         <androidx.appcompat.widget.Toolbar
@@ -35,10 +35,45 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mbSettingsRecyeclerViewId"
             app:layout_constraintTop_toBottomOf="@+id/mbSettingsTitleTextViewId"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/mbSettingsDescriptionTextViewId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/margin_16"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mbSettingsDescriptionTextViewId"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/mbSettingsSubDescriptionTextViewId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MBMaterialTextSubtitleViolet"
+            android:text="@string/app_name"
+            />
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mbSettingsSubDescriptionTextViewId"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:padding="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_32"
+            android:layout_height="wrap_content"
+            style="@style/MBMaterialTextDescrSmallViolet"
+            android:text="@string/more_settings_description"
+            />
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mbBookmarkSettingsImageViewId"
+            app:layout_constraintBottom_toTopOf="@+id/mbSettingsSubDescriptionTextViewId"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="@dimen/margin_32"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_fox_final_illustration"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

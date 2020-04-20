@@ -11,7 +11,7 @@
     <item
             android:id="@+id/mbBookmarkHeaderStarFilterIconId"
             android:icon="@drawable/ic_star_filter"
-            app:iconTint="@android:color/white"
+            app:iconTint="@color/colorLight"
             android:title="STAR"
             app:showAsAction="always"/>
 </menu>

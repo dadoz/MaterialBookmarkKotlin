@@ -1,5 +1,6 @@
 package com.application.dev.david.materialbookmarkkot.modules.bookmarkList
 
+import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -25,6 +26,7 @@ import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarF
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.dev.david.materialbookmarkkot.ui.*
+import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.BookmarkAnimator
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.addOnScrollListenerWithViews
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.setGridOrListLayout
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
@@ -86,8 +88,7 @@ class BookmarkListFragment : Fragment()  {
             }
 
             setOnMenuItemClickListener {
-                val views = listOf<View>(mbBookmarkHeaderTitleTextViewId,
-                    mbBookmarkHeaderTitleLabelTextViewId,
+                val views = listOf<View>(
                     mbBookmarkHeaderSortFilterChipLayoutId,
                     mbBookmarkHeaderSortFilterLabelId)
 
@@ -100,17 +101,23 @@ class BookmarkListFragment : Fragment()  {
                 when (it.itemId) {
                     R.id.mbBookmarkHeaderStarFilterIconId -> {
                         bookmarkFilters.starFilterType = IS_STAR_VIEW
-                        mbBookmarkMainBackgroundImageId.setIconByResource(R.drawable.ic_budda_illustration)
+                        mbBookmarkMainBackgroundImageId.setIconByResource(R.drawable.ic_fox2_illustration)
                         mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_STAR_VIEW)
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                        mbBookmarkHeaderTitleTextViewId.setColorByRes(R.color.colorAccent)
+                        mbBookmarkHeaderTitleTextViewId.text = getString(R.string.star_title_string)
+                        mbBookmarkHeaderTitleLabelTextViewId.setColorByRes(R.color.colorAccent)
                         views.forEach { it.visibility = GONE }
                         filterViews.forEach { it.setColor(R.color.colorAccent) }
                         it.toggleSetIconTintListByRes(context, R.color.colorAccent, menu.findItem(R.id.mbBookmarkHeaderHomeFilterIconId))
                     }
                     R.id.mbBookmarkHeaderHomeFilterIconId -> {
                         bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
-                        mbBookmarkMainBackgroundImageId.setIconByResource(R.drawable.ic_mermaid_illustration)
+                        mbBookmarkMainBackgroundImageId.setIconByResource(R.drawable.ic_scarf_illustration)
                         mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_DEFAULT_VIEW)
+                        mbBookmarkHeaderTitleTextViewId.setColorByRes(R.color.colorPrimary)
+                        mbBookmarkHeaderTitleTextViewId.text = getString(R.string.bookmarks_title_string)
+                        mbBookmarkHeaderTitleLabelTextViewId.setColorByRes(R.color.colorPrimary)
                         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                         views.forEach { it.visibility = VISIBLE }
                         filterViews.forEach { it.setColor(R.color.colorPrimary) }

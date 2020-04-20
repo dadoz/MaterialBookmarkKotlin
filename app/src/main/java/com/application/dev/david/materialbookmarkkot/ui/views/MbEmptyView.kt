@@ -35,7 +35,8 @@ class MbEmptyView: FrameLayout {
             //search mode
             visibility = when (bookmarkFilter.isSearchViewType) {
                 true -> {
-                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_rabbit_illustration)
+                    mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
+                    mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_scarf_sleepy_illustration)
                     mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
                     mbBookmarkEmptyLabelTextViewId.setText(R.string.no_search_result_string)
                     when (it.first) {
@@ -45,7 +46,8 @@ class MbEmptyView: FrameLayout {
                 }
                 else -> when (bookmarkFilter.starFilterType) {
                     IS_DEFAULT_VIEW -> {
-                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_tortoise_illustration)
+                        mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
+                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_fox_sleep_illustration)
                         mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
                         mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
                         when (it.first) {
@@ -54,7 +56,8 @@ class MbEmptyView: FrameLayout {
                         }
                     }
                     IS_STAR_VIEW -> {
-                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
+                        mbBookmarkEmptyImageViewId.visibility = View.GONE
+//                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
                         mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorAccent)
                         mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
                         views[1].visibility = View.VISIBLE
