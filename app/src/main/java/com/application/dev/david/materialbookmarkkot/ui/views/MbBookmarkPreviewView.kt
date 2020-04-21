@@ -42,37 +42,39 @@ class MbBookmarkPreviewView : FrameLayout {
         }
     }
 
-    fun initView(previewBehaviourView: BottomSheetBehavior<View>, fab: FloatingActionButton) {
+    fun initView(previewBehaviourView: BottomSheetBehavior<View>, fab: FloatingActionButton? = null) {
         this.previewBehaviourView = previewBehaviourView
-        previewBehaviourView.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                        AnimatorSet(). apply {
-                            playTogether(BookmarkAnimator().scaleXYAnimator(fab, 0F))
-                            doOnEnd {
-                                fab.visibility = GONE
+        fab?.let {
+            previewBehaviourView.addBottomSheetCallback(object :
+                BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                        BottomSheetBehavior.STATE_EXPANDED -> {
+                            AnimatorSet(). apply {
+                                playTogether(BookmarkAnimator().scaleXYAnimator(fab, 0F))
+                                doOnEnd {
+                                    fab.visibility = GONE
+                                }
+                                start()
                             }
-                            start()
                         }
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        AnimatorSet(). apply {
-                            playTogether(BookmarkAnimator().scaleXYAnimator(fab, 1F))
-                            doOnStart {
-                                fab.visibility = View.VISIBLE
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            AnimatorSet(). apply {
+                                playTogether(BookmarkAnimator().scaleXYAnimator(fab, 1F))
+                                doOnStart {
+                                    fab.visibility = View.VISIBLE
+                                }
+                                start()
                             }
-                            start()
+                            setPreviewVisible(true, false)
                         }
-                        setPreviewVisible(true, false)
+                        else -> {}
                     }
-                    else -> {}
                 }
-            }
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-        })
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                }
+            })
+        }
 
         mbBookmarkPreviewBackButtonId.setOnClickListener {
             setPreviewVisible(true)
