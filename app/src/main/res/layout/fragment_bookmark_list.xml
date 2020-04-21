@@ -22,24 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-
-    <!-- BottomAppbar-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/mbBookmarkBottomBarLayoutId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
-            app:itemIconTint="@color/colorLight"
-            app:itemTextColor="@color/colorLight"
-            app:menu="@menu/menu_bookmark_list" />
-<!--    <com.google.android.material.bottomappbar.BottomAppBar-->
-<!--            android:id="@+id/mbBookmarkBottomBarLayoutId"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            app:backgroundTint="@color/colorPrimary"-->
-<!--            app:fabAlignmentMode="end"/>-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mbBookmarkAddNewButtonId"
             android:layout_width="wrap_content"
@@ -48,5 +30,23 @@
             app:tint="@color/colorPrimaryLight"
             android:src="@drawable/ic_icon_plus"
             app:layout_anchor="@id/mbBookmarkBottomBarLayoutId" />
+
+    <!-- BottomAppbar-->
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/mbBookmarkBottomBarLayoutId"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            app:itemIconTint="@color/colorLight"-->
+<!--            app:itemTextColor="@color/colorLight"-->
+<!--            app:menu="@menu/menu_bookmark_list" />-->
+    <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/mbBookmarkBottomBarLayoutId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/colorLight"
+            app:fabAlignmentMode="end"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

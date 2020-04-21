@@ -58,10 +58,16 @@ class BookmarkListPageFragment: Fragment() {
         initView()
     }
 
-    private fun initView() {
+    fun initView() {
         when (viewType) {
-            0 -> initViewDefault()
-            else -> initViewStar()
+            0 -> {
+                bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
+                initViewDefault()
+            }
+            else -> {
+                bookmarkFilters.starFilterType = IS_STAR_VIEW
+                initViewStar()
+            }
         }
     }
 
