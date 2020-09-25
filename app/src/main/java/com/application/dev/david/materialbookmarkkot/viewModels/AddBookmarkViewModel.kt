@@ -16,6 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import khronos.Dates
+import timber.log.Timber
 
 
 class AddBookmarkViewModel(application: Application) : AndroidViewModel(application) {
@@ -47,7 +48,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .subscribe(
                 { print("INSERT SUCCESS")
                     updateBookmarkStatus.value = true },
-                { error -> Log.e(javaClass.name, error.message)
+                { error -> Timber.e(error.message?: "ERROR")
                     updateBookmarkStatus.value = false })
 
         //add to disposable
@@ -76,7 +77,7 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
             .subscribe(
                 { print("INSERT SUCCESS")
                     saveBookmarkStatus.value = true },
-                { error -> Log.e(javaClass.name, error.message)
+                { error -> Timber.e(error.message?:"ERROR")
                     saveBookmarkStatus.value = false })
 
         compositeDisposable.add(disposable)
