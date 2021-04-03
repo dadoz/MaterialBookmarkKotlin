@@ -1,130 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        tools:visibility="visible"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mbBookmarkPreviewHeaderCardViewId"
+        style="@style/MBMaterialCardviewStyleYellow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/mbBookmarkPreviewHeaderCardViewId"
+        android:orientation="vertical"
         app:rippleColor="@android:color/transparent"
-        style="@style/MBMaterialCardviewStyleYellow">
-        <RelativeLayout
+        tools:visibility="visible">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16">
+
+        <com.application.dev.david.materialbookmarkkot.ui.views.MbBookmarkDetailsHeaderView
+                android:id="@+id/mbBookmarkPreviewHeaderViewId"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <RelativeLayout
+                android:id="@+id/mbBookmarkPreviewMainLayoutId"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/margin_16">
-                <com.application.dev.david.materialbookmarkkot.ui.views.MbBookmarkDetailsHeaderView
-                        android:id="@+id/mbBookmarkPreviewHeaderViewId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                <RelativeLayout
-                        android:id="@+id/mbBookmarkPreviewMainLayoutId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="100dp"
-                        android:gravity="center_vertical"
-                        android:visibility="visible"
-                        tools:visibility="visible"
-                        android:background="?attr/selectableItemBackground"
-                        android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"
-                        android:orientation="vertical">
+                android:layout_below="@+id/mbBookmarkPreviewHeaderViewId"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="100dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/mbBookmarkPreviewUrlTextId"
-                                style="@style/MBMaterialTextTitleThinViolet"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
-                                tools:text="wwww.google.it" />
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbBookmarkPreviewUrlTextId"
+                    style="@style/MBMaterialTextTitleThinViolet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
+                    tools:text="wwww.google.it" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/mbBookmarkPreviewDeleteLabelTextId"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                tools:visibility="gone"
-                                style="@style/MBMaterialTextDescrSmallViolet"
-                                android:layout_below="@+id/mbBookmarkPreviewUrlTextId"
-                                android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
-                                android:layout_marginBottom="@dimen/margin_4"
-                                android:text="@string/delete_fulle_descr_label_text"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/mbBookmarkPreviewEditButtonId"
-                                android:layout_width="@dimen/icon_filter_bookmark"
-                                android:layout_height="@dimen/icon_filter_bookmark"
-                                android:layout_alignParentEnd="true"
-                                android:padding="@dimen/margin_4"
-                                android:tint="@color/colorPrimary"
-                                android:src="@drawable/ic_edit_pencil"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbBookmarkPreviewDeleteLabelTextId"
+                    style="@style/MBMaterialTextDescrSmallViolet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mbBookmarkPreviewUrlTextId"
+                    android:layout_marginBottom="@dimen/margin_4"
+                    android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
+                    android:text="@string/delete_fulle_descr_label_text"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
 
-                </RelativeLayout>
-                <RelativeLayout
-                        android:id="@+id/mbBookmarkPreviewDeleteLayoutId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:visibility="gone"
-                        android:visibility="gone"
-                        android:layout_below="@+id/mbBookmarkPreviewMainLayoutId">
-                        <FrameLayout
-                                android:id="@+id/mbBookmarkPreviewBackButtonId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_toStartOf="@+id/mbBookmarkPreviewDeleteButtonId">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/small_icon_size_bookmark"
-                                android:layout_height="@dimen/small_icon_size_bookmark"
-                                android:background="?attr/selectableItemBackground"
-                                android:padding="@dimen/margin_4"
-                                android:tint="@color/colorPrimary"
-                                android:src="@drawable/ic_arrow_left"/>
-                        </FrameLayout>
-
-                        <com.google.android.material.button.MaterialButton
-                                android:id="@+id/mbBookmarkPreviewDeleteButtonId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:visibility="visible"
-                                android:visibility="visible"
-                                android:layout_centerVertical="true"
-                                android:layout_alignParentEnd="true"
-                                style="@style/MBMaterialButtonStyleOutlinePurple"
-                                android:text="@string/delete_label_text"/>
-                </RelativeLayout>
-                <RelativeLayout
-                        android:id="@+id/mbBookmarkPreviewOpenLayoutId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:visibility="visible"
-                        android:layout_below="@+id/mbBookmarkPreviewMainLayoutId">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/mbBookmarkPreviewMoreButtonId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="?attr/selectableItemBackground"
-                                android:layout_centerVertical="true"
-                                android:padding="@dimen/margin_16"
-                                android:layout_marginEnd="@dimen/margin_16"
-                                android:layout_toStartOf="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
-                                style="@style/MBMaterialTextDescrSmallBoldViolet"
-                                android:text="@string/more_label_text"/>
-
-                        <com.google.android.material.button.MaterialButton
-                                android:id="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:visibility="visible"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                style="@style/MBMaterialButtonStyleViolet"
-                                android:text="@string/open_in_browser_label_text"/>
-                </RelativeLayout>
-
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkPreviewEditButtonId"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/margin_4"
+                    android:src="@drawable/ic_edit_pencil"
+                    android:tint="@color/colorPrimary" />
 
         </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/mbBookmarkPreviewDeleteLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mbBookmarkPreviewMainLayoutId"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+            <FrameLayout
+                    android:id="@+id/mbBookmarkPreviewBackButtonId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/mbBookmarkPreviewDeleteButtonId">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/small_icon_size_bookmark"
+                        android:layout_height="@dimen/small_icon_size_bookmark"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="@dimen/margin_4"
+                        android:src="@drawable/ic_arrow_left"
+                        android:tint="@color/colorPrimary" />
+            </FrameLayout>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbBookmarkPreviewDeleteButtonId"
+                    style="@style/MBMaterialButtonStyleOutlinePurple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/delete_label_text"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/mbBookmarkPreviewOpenLayoutId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mbBookmarkPreviewMainLayoutId"
+                tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mbBookmarkPreviewMoreButtonId"
+                    style="@style/MBMaterialTextDescrSmallBoldViolet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:layout_toStartOf="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="@dimen/margin_16"
+                    android:text="@string/more_label_text" />
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
+                    style="@style/MBMaterialButtonStyleViolet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/open_in_browser_label_text"
+                    tools:visibility="visible" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -36,7 +36,7 @@
         <item name="strokeColor">@color/colorPrimaryDark</item>
     </style>
     <style name="MBMaterialCardviewStyleYellow" parent="MBMaterialCardviewStyle" >
-        <item name="cardBackgroundColor">@color/colorLight</item>
+        <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
         <item name="strokeColor">@color/colorPrimary</item>
     </style>
 

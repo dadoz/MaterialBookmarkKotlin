@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 
 class BookmarkListPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-    private val NUM_PAGES = 2
+    private val NUM_PAGES = 1
     lateinit var currentFragment: Fragment
 
     override fun getItemCount(): Int {

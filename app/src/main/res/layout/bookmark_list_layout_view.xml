@@ -30,11 +30,11 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_scarf_illustration"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbBookmarkHeaderTitleTextViewId"
@@ -62,6 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_16"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mbBookmarkHeaderTitleLabelTextViewId">
@@ -150,6 +151,18 @@
                     android:layout_height="@dimen/icon_filter_bookmark"
                     android:layout_margin="@dimen/margin_4"
                     android:src="@drawable/ic_reorder_down"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/mbBookmarkHeaderStarredFilterIconId"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="2dp"
+                    app:tint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="@dimen/icon_filter_bookmark"
+                    android:layout_height="@dimen/icon_filter_bookmark"
+                    android:layout_margin="@dimen/margin_4"
+                    android:src="@drawable/ic_star_filter"/>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline

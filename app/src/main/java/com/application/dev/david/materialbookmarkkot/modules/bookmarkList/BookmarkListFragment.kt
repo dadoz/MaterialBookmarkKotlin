@@ -81,10 +81,12 @@ class BookmarkListFragment : Fragment()  {
         }
     }
 
-    fun initView() {
+    private fun initView() {
         activity?.let {
-            mbMaterialBookmarkViewPagerId.adapter =
-                BookmarkListPagerAdapter(it)
+            mbMaterialBookmarkViewPagerId.apply {
+                isUserInputEnabled = false
+                adapter = BookmarkListPagerAdapter(it)
+            }
         }
 
         mbMaterialBookmarkViewPagerId.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

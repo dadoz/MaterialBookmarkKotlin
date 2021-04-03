@@ -5,19 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.application.dev.david.materialbookmarkkot.R
-import kotlinx.android.synthetic.main.bookmark_list_layout_view.*
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.application.dev.david.materialbookmarkkot.R
 import com.application.dev.david.materialbookmarkkot.application.BookmarkApplication
 import com.application.dev.david.materialbookmarkkot.models.Bookmark
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.*
-import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.*
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.IS_BY_DATE
+import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.SortTypeListEnum.IS_BY_TITLE
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.dev.david.materialbookmarkkot.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
@@ -26,21 +27,21 @@ import com.application.dev.david.materialbookmarkkot.modules.bookmarkList.Bookma
 import com.application.dev.david.materialbookmarkkot.ui.setIconDependingOnSortAscending
 import com.application.dev.david.materialbookmarkkot.ui.setStarColor
 import com.application.dev.david.materialbookmarkkot.ui.toggleVisibiltyWithView
-import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.addOnScrollListenerWithViews
 import com.application.dev.david.materialbookmarkkot.ui.views.behaviors.setGridOrListLayout
 import com.application.dev.david.materialbookmarkkot.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_bookmark_list.*
+import kotlinx.android.synthetic.main.bookmark_list_layout_view.*
 
-class BookmarkListPageFragment: Fragment() {
+class BookmarkListPageFragment : Fragment() {
     private var viewType: Int = 0
     private val bookmarkViewModel by lazy {
         ViewModelProviders.of(this).get(BookmarkViewModel::class.java)
     }
 
     private val bookmarkFilters by lazy {
-            (activity?.application as BookmarkApplication).bookmarkFilters
+        (activity?.application as BookmarkApplication).bookmarkFilters
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,7 +55,7 @@ class BookmarkListPageFragment: Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewType = arguments?.getInt("MB_VIEWPAGER_TYPE")?: 0
+        viewType = arguments?.getInt("MB_VIEWPAGER_TYPE") ?: 0
         initView()
     }
 
@@ -155,7 +156,7 @@ class BookmarkListPageFragment: Fragment() {
             }
         }
 
-        mbBookmarkHeaderListFilterIconId.apply  {
+        mbBookmarkHeaderListFilterIconId.apply {
             visibility = bookmarkFilters.getVisibilityByViewType(IS_LIST)
             setOnClickListener {
                 bookmarkFilters.setListViewType()
@@ -183,19 +184,21 @@ class BookmarkListPageFragment: Fragment() {
             }
         }
 
-        mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
-            views = listOf(
-                mbBookmarkAppBarLayoutId, mbBookmarkHeaderTitleTextViewId,
-                mbBookmarkHeaderTitleLabelTextViewId, mbBookmarkHeaderTotBookmarkCardId
-            )
-        )
+//        mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
+//            views = listOf(
+//                mbBookmarkAppBarLayoutId, mbBookmarkHeaderTitleTextViewId,
+//                mbBookmarkHeaderTitleLabelTextViewId, mbBookmarkHeaderTotBookmarkCardId
+//            )
+//        )
 
         //handle empty view
         val owner = this
         mbBookmarkEmptyViewId.apply {
             setViewModel(bookmarkViewModel)
-            init(owner = owner, bookmarkFilter = bookmarkFilters,
-            views = listOf(mbBookmarkRecyclerViewId, mbBookmarkHeaderTotBookmarkCardId, mbBookmarkMainBackgroundImageId))
+            init(
+                owner = owner, bookmarkFilter = bookmarkFilters,
+                recyclerView = mbBookmarkRecyclerViewId
+            )
         }
     }
 
@@ -217,18 +220,20 @@ class BookmarkListPageFragment: Fragment() {
 
             actionEditBookmark {
                 val action = BookmarkListFragmentDirections
-                    .actionBookmarkListFragmentToAddBookmarkFragment(actionType = UPDATE_ACTION_BOOKMARK, bookmark =
-                    bundleOf(
-                        "bookmark_url" to bookmark.url,
-                        "bookmark_title" to bookmark.title,
-                        "bookmark_icon_url" to bookmark.image
-                    ))
+                    .actionBookmarkListFragmentToAddBookmarkFragment(
+                        actionType = UPDATE_ACTION_BOOKMARK, bookmark =
+                        bundleOf(
+                            "bookmark_url" to bookmark.url,
+                            "bookmark_title" to bookmark.title,
+                            "bookmark_icon_url" to bookmark.image
+                        )
+                    )
                 findNavController().navigate(action)
             }
 
-            actionShareBookmark { intent -> startActivity(intent)}
+            actionShareBookmark { intent -> startActivity(intent) }
 
-            actionOpenPreviewBookmark { intent -> startActivity(intent)}
+            actionOpenPreviewBookmark { intent -> startActivity(intent) }
         }
 
 
