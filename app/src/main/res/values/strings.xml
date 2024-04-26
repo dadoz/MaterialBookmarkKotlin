@@ -24,4 +24,6 @@
     <string name="more_settings_description">Something more here....\nThanks
         for all illustration in app, due to a dedicate works of a lot of illustrators and friends!\n....
         \nBookmarksWallet@2020</string>
+    <string name="last_update">Last update:</string>
+    <string name="search">SEARCH</string>
 </resources>

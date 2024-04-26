@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
                 name="addBookmarkViewModel"
-                type="com.application.dev.david.materialbookmarkkot.viewModels.AddBookmarkViewModel" />
+                type="com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewModel" />
     </data>
 
     <LinearLayout
@@ -16,7 +16,7 @@
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <com.application.dev.david.materialbookmarkkot.ui.views.MbBookmarkEditTitleView
+            <com.application.material.bookmarkswallet.app.ui.views.MbBookmarkEditTitleView
                     android:id="@+id/mbNewBookmarkEditTitleViewId"
                     android:layout_centerInParent="true"
                     android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Last update: "
+                    android:text="@string/last_update"
                     style="@style/MBMaterialTextSubtitleViolet"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mbNewBookmarkAddUpdatedTimestampId"
@@ -150,7 +150,7 @@
                     style="@style/MBMaterialButtonStyleOutlineYellow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SEARCH"/>
+                    android:text="@string/search"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>

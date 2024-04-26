@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_16">
 
-        <com.application.dev.david.materialbookmarkkot.ui.views.MbBookmarkDetailsHeaderView
+        <com.application.material.bookmarkswallet.app.ui.views.MbBookmarkDetailsHeaderView
                 android:id="@+id/mbBookmarkPreviewHeaderViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

@@ -4,7 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/mb_main_navigation"
             app:startDestination="@id/bookmarkListFragment">
     <fragment android:id="@+id/bookmarkListFragment"
-              android:name="com.application.dev.david.materialbookmarkkot.modules.bookmarkList.BookmarkListFragment"
+              android:name="com.application.material.bookmarkswallet.app.modules.bookmarkList.BookmarkListFragment"
               android:label="fragment_bookmark_list" tools:layout="@layout/fragment_bookmark_list">
         <action
                 android:id="@+id/action_bookmarkListFragment_to_searchBookmarkFragment"
@@ -26,7 +26,7 @@
         </action>
     </fragment>
     <fragment android:id="@+id/searchBookmarkFragment"
-              android:name="com.application.dev.david.materialbookmarkkot.modules.searchBookmark.SearchBookmarkFragment"
+              android:name="com.application.material.bookmarkswallet.app.modules.searchBookmark.SearchBookmarkFragment"
               android:label="fragment_search_bookmark" tools:layout="@layout/fragment_search_bookmark">
         <action
                 android:id="@+id/action_searchBookmarkFragment_to_addBookmarkFragment"
@@ -40,7 +40,7 @@
         </action>
     </fragment>
     <fragment android:id="@+id/addBookmarkFragment"
-            android:name="com.application.dev.david.materialbookmarkkot.modules.addBookmark.AddBookmarkFragment"
+            android:name="com.application.material.bookmarkswallet.app.modules.addBookmark.AddBookmarkFragment"
             android:label="fragment_add_bookmark" tools:layout="@layout/fragment_add_bookmark">
         <argument
                 android:name="bookmarkUrl"

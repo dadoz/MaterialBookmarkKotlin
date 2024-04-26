@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="bookmarkViewModel"
+            type="com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:fitsSystemWindows="true">
 
-    <!--search view-->
-    <com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView
-            android:id="@+id/mbMaterialSearchVIewId"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_16"
-            app:databaseSuggestionsEnabled="false"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <!--search view-->
+        <!--    <com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView-->
+        <!--            android:id="@+id/mbMaterialSearchVIewId"-->
+        <!--            android:layout_marginTop="@dimen/margin_8"-->
+        <!--            android:layout_marginBottom="@dimen/margin_16"-->
+        <!--            app:databaseSuggestionsEnabled="false"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"/>-->
 
-    <androidx.viewpager2.widget.ViewPager2
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mbMaterialBookmarkViewPagerId"
-            android:layout_marginTop="64dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="64dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mbBookmarkAddNewButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:backgroundTint="@color/colorAccent"
-            app:tint="@color/colorPrimaryLight"
+            android:layout_gravity="bottom|end"
+            android:contentDescription="blala"
             android:src="@drawable/ic_icon_plus"
-            android:layout_gravity="bottom|end"/>
+            app:backgroundTint="@color/colorAccent"
+            app:tint="@color/colorPrimaryLight" />
 
-    <!-- BottomAppbar-->
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--            android:id="@+id/mbBookmarkBottomBarLayoutId"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            android:background="@color/colorPrimary"-->
-<!--            app:itemIconTint="@color/colorLight"-->
-<!--            app:itemTextColor="@color/colorLight"-->
-<!--            app:menu="@menu/menu_bookmark_list" />-->
-    <com.google.android.material.bottomappbar.BottomAppBar
+        <!-- BottomAppbar-->
+        <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+        <!--            android:id="@+id/mbBookmarkBottomBarLayoutId"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="bottom"-->
+        <!--            android:background="@color/colorPrimary"-->
+        <!--            app:itemIconTint="@color/colorLight"-->
+        <!--            app:itemTextColor="@color/colorLight"-->
+        <!--            app:menu="@menu/menu_bookmark_list" />-->
+        <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mbBookmarkBottomBarLayoutId"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:visibility="gone"
             app:backgroundTint="@color/colorLight"
-            app:fabAlignmentMode="end"/>
+            app:fabAlignmentMode="end" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

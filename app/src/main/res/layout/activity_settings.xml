@@ -1,79 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/mbSettingsAppBarLayoutId"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorLight"
             android:colorControlNormal="@color/colorAccent"
-            android:theme="@style/AppTheme.AppBarOverlay">
-        <androidx.appcompat.widget.Toolbar
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/mbSettingsToolbarId"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleTextColor="@color/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-    </com.google.android.material.appbar.AppBarLayout>
+                android:visibility="visible"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextColor="@color/colorPrimary" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mbSettingsTitleTextViewId"
-            android:layout_margin="@dimen/margin_16"
+            style="@style/MBMaterialTextHeaderViolet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/mbSettingsAppBarLayoutId"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/MBMaterialTextHeaderViolet"
+            android:layout_margin="@dimen/margin_16"
             android:text="Settings"
-            />
-    <androidx.recyclerview.widget.RecyclerView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mbSettingsAppBarLayoutId" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mbSettingsRecyeclerViewId"
-            app:layout_constraintTop_toBottomOf="@+id/mbSettingsTitleTextViewId"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_16"
             app:layout_constraintBottom_toTopOf="@+id/mbSettingsDescriptionTextViewId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/margin_16"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
-    <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintTop_toBottomOf="@+id/mbSettingsTitleTextViewId" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mbSettingsDescriptionTextViewId"
+            style="@style/MBMaterialTextSubtitleViolet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/mbSettingsSubDescriptionTextViewId"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/MBMaterialTextSubtitleViolet"
-            android:text="@string/app_name"
-            />
-    <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mbSettingsSubDescriptionTextViewId"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:padding="@dimen/margin_16"
-            android:layout_marginBottom="@dimen/margin_32"
-            android:layout_height="wrap_content"
             style="@style/MBMaterialTextDescrSmallViolet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_32"
+            android:padding="@dimen/margin_16"
             android:text="@string/more_settings_description"
-            />
-    <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/mbBookmarkSettingsImageViewId"
-            app:layout_constraintBottom_toTopOf="@+id/mbSettingsSubDescriptionTextViewId"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mbBookmarkSettingsImageViewId"
             android:layout_width="180dp"
             android:layout_height="180dp"
-            android:scaleType="fitCenter"
-            android:layout_marginBottom="@dimen/margin_32"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_fox_final_illustration"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginBottom="@dimen/margin_32"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_fox_final_illustration"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/mbSettingsSubDescriptionTextViewId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
