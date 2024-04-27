@@ -2,6 +2,7 @@ package com.application.material.bookmarkswallet.app.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
@@ -20,7 +21,7 @@ import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 class MbEmptyView : FrameLayout {
     private lateinit var viewModel: BookmarkViewModel
     val binding by lazy {
-        EmptyViewBinding.bind(this)
+        EmptyViewBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     constructor(context: Context) : this(context, null)

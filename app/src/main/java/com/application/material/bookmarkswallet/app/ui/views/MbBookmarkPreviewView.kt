@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.animation.doOnEnd
@@ -27,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MbBookmarkPreviewView : FrameLayout {
     var bookmark: Bookmark? = null
     val binding: PreviewBookmarkViewBinding by lazy {
-        PreviewBookmarkViewBinding.bind(this)
+        PreviewBookmarkViewBinding.inflate(LayoutInflater.from(context), this, true)
     }
     private val bookmarkPreviewHeaderBinding by lazy {
         binding.mbBookmarkPreviewHeaderViewId.binding

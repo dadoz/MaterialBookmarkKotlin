@@ -2,13 +2,14 @@ package com.application.material.bookmarkswallet.app.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.application.material.bookmarkswallet.app.databinding.BookmarkTitleIconLayoutViewBinding
 
 class MbBookmarkEditTitleView : RelativeLayout {
     val binding: BookmarkTitleIconLayoutViewBinding by lazy {
-        BookmarkTitleIconLayoutViewBinding.bind(this)
+        BookmarkTitleIconLayoutViewBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     constructor(context: Context) : this(context, null)

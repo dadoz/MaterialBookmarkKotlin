@@ -2,6 +2,7 @@ package com.application.material.bookmarkswallet.app.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.application.material.bookmarkswallet.app.databinding.AddBookmarkPreviewViewBinding
@@ -11,7 +12,7 @@ import com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewMo
 
 class MbAddBookmarkPreviewView : RelativeLayout {
     val binding: AddBookmarkPreviewViewBinding by lazy {
-        AddBookmarkPreviewViewBinding.bind(this)
+        AddBookmarkPreviewViewBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     enum class MbPreviewStatus { UPDATE, SEARCH }

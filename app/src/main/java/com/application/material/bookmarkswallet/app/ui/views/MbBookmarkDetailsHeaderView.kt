@@ -2,6 +2,7 @@ package com.application.material.bookmarkswallet.app.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.application.material.bookmarkswallet.app.databinding.HeaderBookmarkViewBinding
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
@@ -10,7 +11,7 @@ import java.util.Date
 class MbBookmarkDetailsHeaderView : RelativeLayout {
     private var viewModel: BookmarkViewModel? = null
     val binding: HeaderBookmarkViewBinding by lazy {
-        HeaderBookmarkViewBinding.bind(this)
+        HeaderBookmarkViewBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     constructor(context: Context) : this(context, null)
