@@ -17,7 +17,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -136,7 +135,7 @@ fun Toolbar.changeToolbarFont() {
     }
 }
 
-fun AppCompatTextView.setColorByRes(resource: Int) {
+fun TextView.setColorByRes(resource: Int) {
     setTextColor(ContextCompat.getColor(context, resource))
 }
 
@@ -160,14 +159,14 @@ fun View.toggleVisibilty(oldVisibility: Int) {
     }
 }
 
-fun MenuItem.applyFontToMenuItem(context: Context) {
-    SpannableString(title).apply {
-        setSpan(
-            FontSpan(ResourcesCompat.getFont(context, R.font.lato_light)),
-            0,
-            title?.length ?: 0,
-            Spannable.SPAN_INCLUSIVE_INCLUSIVE
-        )
-        title = this
-    }
-}
+//fun MenuItem.applyFontToMenuItem(context: Context) {
+//    SpannableString(title).apply {
+//        setSpan(
+//            FontSpan(ResourcesCompat.getFont(context, R.font.lato_light)),
+//            0,
+//            title?.length ?: 0,
+//            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+//        )
+//        title = this
+//    }
+//}

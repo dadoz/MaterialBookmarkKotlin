@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/mbTitleSearchBookmarkTextViewId"
                     style="@style/MBMaterialTextHeaderViolet"
                     android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                     android:layout_marginRight="@dimen/margin_16"
                     android:text="Search \nBookmark" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     style="@style/MBMaterialTextDescrSmallViolet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                         app:tint="@color/colorPrimary"
                         tools:visibility="visible" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         style="@style/MBMaterialTextDescrUltraSmallBoldViolet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                         android:text="PASTE \nCLIPBOARD" />
                 </RelativeLayout>
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/mbsearchBookmarkButtonViewId"
                     style="@style/MBMaterialButtonStyleOutlineYellow"
                     android:layout_width="wrap_content"

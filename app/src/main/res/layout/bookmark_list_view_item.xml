@@ -29,7 +29,7 @@
                 android:padding="@dimen/margin_16"
                 android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                     android:id="@+id/bookmarkTitleTextViewId"
                     android:maxLines="3"
                     android:layout_marginEnd="@dimen/margin_32"
@@ -38,7 +38,7 @@
                     style="@style/MBMaterialTextTitleThinViolet"
                     tools:text="Android developer bla bla blab" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                     android:id="@+id/bookmarkUrlTextViewId"
                     android:layout_gravity="center_vertical"
                     android:maxLines="2"
@@ -62,7 +62,7 @@
                 android:layout_centerVertical="true"
                 app:tint="@color/colorPrimary"
                 android:src="@drawable/ic_star"/>
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
                 android:id="@+id/bookmarkTimestampTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

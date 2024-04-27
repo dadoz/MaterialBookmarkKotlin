@@ -23,7 +23,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="@color/colorPrimary" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/mbSettingsTitleTextViewId"
             style="@style/MBMaterialTextHeaderViolet"
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mbSettingsTitleTextViewId" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/mbSettingsDescriptionTextViewId"
             style="@style/MBMaterialTextSubtitleViolet"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/mbSettingsSubDescriptionTextViewId"
             style="@style/MBMaterialTextDescrSmallViolet"
             android:layout_width="wrap_content"

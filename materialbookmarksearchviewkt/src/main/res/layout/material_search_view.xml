@@ -120,7 +120,7 @@
                 android:layout_marginTop="@dimen/medium_margin"
                 android:contentDescription="@string/cd_listening_image"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
                 android:id="@+id/msv_voice_search_listening_real_time_text"
                 android:fontFamily="@font/heebo_thin"
                 android:layout_width="wrap_content"
@@ -132,7 +132,7 @@
                 android:layout_marginTop="100dp"
                 android:textSize="18sp"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
                 android:id="@+id/msv_voice_search_listening_prompt"
                 android:fontFamily="@font/heebo_thin"
                 android:layout_width="wrap_content"

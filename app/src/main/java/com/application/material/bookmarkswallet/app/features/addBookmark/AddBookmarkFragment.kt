@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.applyFontToMenuItem
 import com.application.material.bookmarkswallet.app.databinding.FragmentAddBookmarkBinding
 import com.application.material.bookmarkswallet.app.hideKeyboard
 import com.application.material.bookmarkswallet.app.hideKeyboardIfNeeded
@@ -93,7 +92,7 @@ class AddBookmarkFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_add_bookmark, menu)
-        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
+//        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -261,14 +260,15 @@ class AddBookmarkFragment : Fragment() {
             }
         addBookmarkPreviewBinding
             .also { addBinding ->
-                addBinding.mbBookmarkUpdateSearchNewButtonId.setOnClickListener {
-                    binding.mbAddBookmarkPreviewId.setStatusVisibility(SEARCH)
-                    searchBookmarkAction(addBinding.mbNewBookmarkUrlEditTextId.text.toString())
-                    addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
-                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.hideKeyboard()
-                    newBookmarkEditTitleViewBinding.mbNewBookmarkIconImageViewId.visibility =
-                        VISIBLE
-                }
+                addBinding.mbBookmarkUpdateSearchNewButtonId
+                    .setOnClickListener {
+                        binding.mbAddBookmarkPreviewId.setStatusVisibility(SEARCH)
+                        searchBookmarkAction(addBinding.mbNewBookmarkUrlEditTextId.text.toString())
+                        addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
+                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.hideKeyboard()
+                        newBookmarkEditTitleViewBinding.mbNewBookmarkIconImageViewId.visibility =
+                            VISIBLE
+                    }
             }
         addBookmarkPreviewBinding
             .also { addBinding ->

@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.applyFontToMenuItem
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkBinding
 import com.application.material.bookmarkswallet.app.hideKeyboard
 import com.application.material.bookmarkswallet.app.hideKeyboardIfNeeded
@@ -73,7 +72,7 @@ class SearchBookmarkFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_search_bookmark, menu)
-        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
+//        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

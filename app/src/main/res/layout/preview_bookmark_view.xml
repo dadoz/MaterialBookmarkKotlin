@@ -34,7 +34,7 @@
                 android:visibility="visible"
                 tools:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                     android:id="@+id/mbBookmarkPreviewUrlTextId"
                     style="@style/MBMaterialTextTitleThinViolet"
                     android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_toStartOf="@+id/mbBookmarkPreviewEditButtonId"
                     tools:text="wwww.google.it" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                     android:id="@+id/mbBookmarkPreviewDeleteLabelTextId"
                     style="@style/MBMaterialTextDescrSmallViolet"
                     android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                         android:tint="@color/colorPrimary" />
             </FrameLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                     android:id="@+id/mbBookmarkPreviewDeleteButtonId"
                     style="@style/MBMaterialButtonStyleOutlinePurple"
                     android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                 android:layout_below="@+id/mbBookmarkPreviewMainLayoutId"
                 tools:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                     android:id="@+id/mbBookmarkPreviewMoreButtonId"
                     style="@style/MBMaterialTextDescrSmallBoldViolet"
                     android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                     android:padding="@dimen/margin_16"
                     android:text="@string/more_label_text" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                     android:id="@+id/mbBookmarkPreviewOpenInBrowserButtonId"
                     style="@style/MBMaterialButtonStyleViolet"
                     android:layout_width="wrap_content"

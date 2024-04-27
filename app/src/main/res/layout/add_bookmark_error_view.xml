@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/margin_8"
         tools:visibility="visible">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
             android:padding="@dimen/margin_16"
             android:id="@+id/mbBookmarkSaveNewErrorMessageId"
             android:layout_width="wrap_content"

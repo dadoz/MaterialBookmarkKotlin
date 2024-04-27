@@ -35,7 +35,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="gone" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/mbBookmarkHeaderTitleTextViewId"
                     style="@style/MBMaterialTextHeaderViolet"
                     android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/mbBookmarkHeaderTitleLabelTextViewId"
                     style="@style/MBMaterialTextDescrSmallThinViolet"
                     android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                         android:layout_marginBottom="@dimen/margin_8"
                         tools:layout_width="140dp">
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <TextView
                             android:id="@+id/mbBookmarkHeaderTotBookmarkPreLabelId"
                             style="@style/MBMaterialTextDescrSmallThinWhite"
                             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="saved in\nyour list" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <TextView
                             android:id="@+id/mbBookmarkHeaderTotBookmarkLabelId"
                             style="@style/MBMaterialTextHeaderBigThinWhite"
                             android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/mbBookmarkHeaderSortFilterLabelId"
                 style="@style/MBMaterialTextDescrSmallViolet"
                 android:layout_width="wrap_content"

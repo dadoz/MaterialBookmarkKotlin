@@ -24,32 +24,31 @@
         <!--            app:databaseSuggestionsEnabled="false"-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="wrap_content"/>-->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mbToolbarId"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:visibility="visible"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/colorPrimary" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mbMaterialBookmarkViewPagerId"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/mbBookmarkAddNewButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/margin_16"
             android:contentDescription="blala"
             android:src="@drawable/ic_icon_plus"
             app:backgroundTint="@color/colorAccent"
-            app:tint="@color/colorPrimaryLight" />
+            app:tint="?attr/colorPrimaryDark" />
 
-        <!-- BottomAppbar-->
-        <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-        <!--            android:id="@+id/mbBookmarkBottomBarLayoutId"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_gravity="bottom"-->
-        <!--            android:background="@color/colorPrimary"-->
-        <!--            app:itemIconTint="@color/colorLight"-->
-        <!--            app:itemTextColor="@color/colorLight"-->
-        <!--            app:menu="@menu/menu_bookmark_list" />-->
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/mbBookmarkBottomBarLayoutId"
             android:layout_width="match_parent"
