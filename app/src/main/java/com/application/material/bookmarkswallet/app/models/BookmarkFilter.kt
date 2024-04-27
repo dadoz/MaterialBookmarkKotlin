@@ -9,8 +9,12 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTy
 import com.application.material.bookmarkswallet.app.preferences.SharedPrefProv
 import com.application.material.bookmarkswallet.app.preferences.intPreference
 
-class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: SortOrderListEnum,
-    sortTypeListDefVal: SortTypeListEnum, context: Context?) :
+class BookmarkFilter(
+    listViewTypeDefVal: ListViewTypeEnum,
+    sortOrderListDefVal: SortOrderListEnum,
+    sortTypeListDefVal: SortTypeListEnum,
+    context: Context?
+) :
     SharedPrefProv(context) {
 
     var listViewType: Int by intPreference(MB_LIST_VIEW_TYPE_PREF, listViewTypeDefVal.ordinal)
@@ -23,7 +27,6 @@ class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: 
     enum class SortOrderListEnum { IS_ASCENDING, IS_DESCENDING }
     enum class SortTypeListEnum { IS_BY_TITLE, IS_BY_DATE }
     enum class StarFilterTypeEnum { IS_STAR_VIEW, IS_DEFAULT_VIEW }
-
 
     fun isGridViewType(): Boolean = listViewType == ListViewTypeEnum.IS_GRID.ordinal
 
@@ -46,6 +49,7 @@ class BookmarkFilter(listViewTypeDefVal: ListViewTypeEnum, sortOrderListDefVal: 
     fun setSortByTitle() {
         sortTypeList = IS_BY_TITLE.ordinal
     }
+
     fun setSortByDate() {
         sortTypeList = IS_BY_DATE.ordinal
     }
