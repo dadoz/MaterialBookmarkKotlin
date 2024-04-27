@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.modules.searchBookmark
+package com.application.material.bookmarkswallet.app.features.searchBookmark
 
 import android.annotation.SuppressLint
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
@@ -11,7 +11,6 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,9 +19,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.applyFontToMenuItem
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkBinding
-import com.application.material.bookmarkswallet.app.modules.addBookmark.AddBookmarkFragment
-import com.application.material.bookmarkswallet.app.modules.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
+import com.application.material.bookmarkswallet.app.hideKeyboard
+import com.application.material.bookmarkswallet.app.hideKeyboardIfNeeded
+import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment
+import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.viewModels.SearchBookmarkViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -95,11 +97,11 @@ class SearchBookmarkFragment : Fragment() {
      * init actionbar
      */
     private fun initActionBar() {
-        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
-        binding.mbToolbarId.changeToolbarFont()
-        binding.mbToolbarId.title = getString(R.string.search_actionbar_string)
-        binding.mbToolbarId.visibility = View.VISIBLE
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
+//        binding.mbToolbarId.changeToolbarFont()
+//        binding.mbToolbarId.title = getString(R.string.search_actionbar_string)
+//        binding.mbToolbarId.visibility = View.VISIBLE
+//        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     @SuppressLint("FragmentLiveDataObserve")

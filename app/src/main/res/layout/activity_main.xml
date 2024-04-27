@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/colorLight"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.BookmarkListActivity">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookmarkListActivity">
 
     <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:showIn="@layout/activity_main"
-            tools:context=".ui.BookmarkListActivity"/>
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".BookmarkListActivity"
+        tools:showIn="@layout/activity_main" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

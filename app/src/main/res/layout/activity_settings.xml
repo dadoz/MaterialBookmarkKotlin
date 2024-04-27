@@ -12,24 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/mbSettingsAppBarLayoutId"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mbSettingsToolbarId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorLight"
-            android:colorControlNormal="@color/colorAccent"
-            android:theme="@style/AppTheme.AppBarOverlay"
+            android:layout_height="?attr/actionBarSize"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/mbSettingsToolbarId"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:visibility="visible"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextColor="@color/colorPrimary" />
-        </com.google.android.material.appbar.AppBarLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/colorPrimary" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mbSettingsTitleTextViewId"
@@ -39,7 +31,7 @@
             android:layout_margin="@dimen/margin_16"
             android:text="Settings"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mbSettingsAppBarLayoutId" />
+            app:layout_constraintTop_toBottomOf="@+id/mbSettingsToolbarId" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mbSettingsRecyeclerViewId"

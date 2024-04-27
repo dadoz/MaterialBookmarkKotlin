@@ -24,7 +24,6 @@
                 android:id="@+id/mbAddBookmarkAppBarLayoutId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorLight"
                 android:colorControlNormal="@color/colorAccent"
                 android:theme="@style/AppTheme.AppBarOverlay">
 

@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.modules.bookmarkList
+package com.application.material.bookmarkswallet.app.features.bookmarkList
 
 import android.content.Context
 import android.os.Bundle
@@ -18,7 +18,7 @@ import com.application.material.bookmarkswallet.app.application.BookmarkApplicat
 import com.application.material.bookmarkswallet.app.databinding.FragmentBookmarkListBinding
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.modules.bookmarkList.pager.BookmarkListPagerAdapter
+import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.BookmarkListPagerAdapter
 
 class BookmarkListFragment : Fragment() {
     private lateinit var binding: FragmentBookmarkListBinding

@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.application.material.bookmarkswallet.app.BuildConfig
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.changeToolbarFont
 import com.application.material.bookmarkswallet.app.databinding.ActivitySettingsBinding
-import com.application.material.bookmarkswallet.app.modules.bookmarkList.inflate
+import com.application.material.bookmarkswallet.app.features.bookmarkList.inflate
 import com.application.material.bookmarkswallet.app.ui.SettingsActivity.SettingsAdapter.SettingsViewHolder
 
 class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.application.material.bookmarkswallet.app.ui.BookmarkListActivity"
+            android:name="com.application.material.bookmarkswallet.app.BookmarkListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.application.material.bookmarkswallet.app.ui.BookmarkListActivity" />
+                android:value="com.application.material.bookmarkswallet.app.BookmarkListActivity" />
         </activity>
 
 <!--        <activity-->

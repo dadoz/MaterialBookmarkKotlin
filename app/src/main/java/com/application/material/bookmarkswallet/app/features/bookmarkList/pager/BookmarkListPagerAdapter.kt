@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.modules.bookmarkList.pager
+package com.application.material.bookmarkswallet.app.features.bookmarkList.pager
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

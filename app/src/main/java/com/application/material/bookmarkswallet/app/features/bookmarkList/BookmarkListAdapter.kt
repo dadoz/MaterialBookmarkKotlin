@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.modules.bookmarkList
+package com.application.material.bookmarkswallet.app.features.bookmarkList
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,9 +14,9 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
-import com.application.material.bookmarkswallet.app.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
-import com.application.material.bookmarkswallet.app.modules.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
-import com.application.material.bookmarkswallet.app.ui.setStarOutlineColor
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
+import com.application.material.bookmarkswallet.app.setStarOutlineColor
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners

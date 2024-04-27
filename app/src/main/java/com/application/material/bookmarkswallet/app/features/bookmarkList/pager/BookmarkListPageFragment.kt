@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.modules.bookmarkList.pager
+package com.application.material.bookmarkswallet.app.features.bookmarkList.pager
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -22,11 +22,11 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTy
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTypeListEnum.IS_BY_TITLE
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.modules.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
-import com.application.material.bookmarkswallet.app.modules.bookmarkList.BookmarkListAdapter
-import com.application.material.bookmarkswallet.app.ui.setIconDependingOnSortAscending
-import com.application.material.bookmarkswallet.app.ui.setStarColor
-import com.application.material.bookmarkswallet.app.ui.toggleVisibiltyWithView
+import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
+import com.application.material.bookmarkswallet.app.setIconDependingOnSortAscending
+import com.application.material.bookmarkswallet.app.setStarColor
+import com.application.material.bookmarkswallet.app.toggleVisibiltyWithView
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior

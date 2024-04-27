@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.modules.addBookmark
+package com.application.material.bookmarkswallet.app.features.addBookmark
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,7 +13,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,7 +21,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.applyFontToMenuItem
 import com.application.material.bookmarkswallet.app.databinding.FragmentAddBookmarkBinding
+import com.application.material.bookmarkswallet.app.hideKeyboard
+import com.application.material.bookmarkswallet.app.hideKeyboardIfNeeded
+import com.application.material.bookmarkswallet.app.showKeyboard
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
@@ -120,11 +123,11 @@ class AddBookmarkFragment : Fragment() {
      * init actionbar
      */
     private fun initActionBar() {
-        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
-        binding.mbToolbarId.changeToolbarFont()
-        binding.mbToolbarId.title = getString(R.string.add_actionbar_string)
-        binding.mbToolbarId.visibility = VISIBLE
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
+//        binding.mbToolbarId.changeToolbarFont()
+//        binding.mbToolbarId.title = getString(R.string.add_actionbar_string)
+//        binding.mbToolbarId.visibility = VISIBLE
+//        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     /**

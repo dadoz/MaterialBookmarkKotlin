@@ -6,16 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.EmptyViewBinding
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.ui.setColorByRes
-import com.application.material.bookmarkswallet.app.ui.setImageDrawableByRes
-import com.application.material.bookmarkswallet.app.ui.toggleVisibilty
+import com.application.material.bookmarkswallet.app.setColorByRes
+import com.application.material.bookmarkswallet.app.setImageDrawableByRes
+import com.application.material.bookmarkswallet.app.toggleVisibilty
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 
 class MbEmptyView : FrameLayout {

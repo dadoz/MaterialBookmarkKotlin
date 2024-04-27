@@ -11,25 +11,15 @@
             name="bookmarkViewModel"
             type="com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel" />
     </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--appbar layout-->
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/mbBookmarkAppBarLayoutId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorLight"
-            android:elevation="0dp"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mbBookmarkHeaderSortFilterLayoutId"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/mbMaterialSearchVIewId"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_16">
@@ -112,7 +102,6 @@
 
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mbBookmarkHeaderFilterActionsLayoutId"
@@ -266,5 +255,6 @@
             app:behavior_peekHeight="0dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             tools:behavior_peekHeight="0dp" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+
 </layout>

@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.ui
+package com.application.material.bookmarkswallet.app
 
 import android.app.Activity
 import android.content.Context
@@ -23,8 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
-import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
-import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
