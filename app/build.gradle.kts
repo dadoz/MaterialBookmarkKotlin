@@ -26,8 +26,8 @@ android {
         applicationId = "com.application.material.bookmarkswallet.app"
         minSdk = 30
         targetSdk = 34
-        versionCode = 8
-        versionName = "2.1.0"
+        versionCode = 9
+        versionName = "2.2.0"
         buildConfigField("String", "BOOKMARK_INFO_URL", "\"https://api.urlmeta.org\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -35,11 +35,6 @@ android {
 
     buildTypes {
         debug {
-//            firebaseAppDistribution {
-//                releaseNotes = "this is commit"
-//                testers = "davide.lamanna.appsquad@gmail.com"
-//                serviceCredentialsFile = "./app/src/main/frenzspots-b597dc1778fc.json"
-//            }
             applicationIdSuffix = ".debug"
             manifestPlaceholders.let {
                 it["appIcon"] = "@mipmap/ic_launcher_debug"
@@ -53,11 +48,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//            firebaseAppDistribution {
-//                releaseNotes = "this is commit"
-//                testers = "davide.lamanna.appsquad@gmail.com"
-//                serviceCredentialsFile = "./app/src/main/frenzspots-b597dc1778fc.json"
-//            }
         }
     }
 
@@ -74,8 +64,6 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    // Authentications
-//    implementation(project(mapOf("path" to ":authetication")))
 
     //android
     implementation(libs.core.ktx)
@@ -122,8 +110,8 @@ dependencies {
 
     //retrofit
     implementation(libs.bundles.retrofit)
-    implementation("com.squareup.retrofit2:adapter-rxjava3:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation(libs.adapter.rxjava3)
+    implementation(libs.converter.gson)
 
     //moshi
     implementation(libs.moshi.kotlin)
