@@ -13,6 +13,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+//release version
+val MAJOR = 2
+val MINOR = 2
+val PATCH = 0
+
 android {
     compileSdk = 34
     buildToolsVersion = "34.0.0"
@@ -26,8 +31,8 @@ android {
         applicationId = "com.application.material.bookmarkswallet.app"
         minSdk = 30
         targetSdk = 34
-        versionCode = 9
-        versionName = "2.2.0"
+        versionCode = MAJOR * 10000 + MINOR * 100 + PATCH
+        versionName = "$MAJOR.$MINOR.$PATCH"
         buildConfigField("String", "BOOKMARK_INFO_URL", "\"https://api.urlmeta.org\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -80,7 +85,7 @@ dependencies {
     implementation(libs.bundles.compose)
     runtimeOnly(libs.work.runtime.ktx)
     //maps
-    implementation (libs.maps.compose)
+    implementation(libs.maps.compose)
     // Optionally, you can include the Compose utils library for Clustering,
     // Street View metadata checks, etc.
     implementation(libs.maps.compose.utils)
