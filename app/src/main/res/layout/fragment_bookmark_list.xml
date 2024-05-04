@@ -17,20 +17,10 @@
         android:fitsSystemWindows="true">
 
         <!--search view-->
-        <!--    <com.library.davidelmn.materailbookmarksearchviewkt.MaterialSearchView-->
-        <!--            android:id="@+id/mbMaterialSearchVIewId"-->
-        <!--            android:layout_marginTop="@dimen/margin_8"-->
-        <!--            android:layout_marginBottom="@dimen/margin_16"-->
-        <!--            app:databaseSuggestionsEnabled="false"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"/>-->
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/mbToolbarId"
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/mbMaterialSearchVIewId"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:visibility="visible"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/colorPrimary" />
+            android:layout_height="wrap_content" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mbMaterialBookmarkViewPagerId"
