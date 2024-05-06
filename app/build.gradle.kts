@@ -1,3 +1,6 @@
+import java.sql.Timestamp
+import java.time.ZonedDateTime
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.kapt)
@@ -14,9 +17,14 @@ plugins {
 }
 
 //release version
-val MAJOR = 2
-val MINOR = 2
-val PATCH = 0
+val major = 2
+val minor = 2
+val patch = 0
+val timestamp: Int =
+    Timestamp.from(ZonedDateTime.now().toInstant())
+        .toInstant()
+        .toEpochMilli().toInt()
+
 
 android {
     compileSdk = 34
@@ -31,8 +39,8 @@ android {
         applicationId = "com.application.material.bookmarkswallet.app"
         minSdk = 30
         targetSdk = 34
-        versionCode = MAJOR * 10000 + MINOR * 100 + PATCH
-        versionName = "$MAJOR.$MINOR.$PATCH"
+        versionCode = major * 10000 + minor * 100 + patch + timestamp
+        versionName = "$major.$minor.$patch"
         buildConfigField("String", "BOOKMARK_INFO_URL", "\"https://api.urlmeta.org\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
