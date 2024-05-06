@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 style="@style/MBMaterialTextDescrSmallYellow"
                 tools:text="bookmark with:"
-                android:text="with"
+                android:text="@string/with"
                 />
         <TextView
                 android:id="@+id/bookmarkLabelHeaderViewId"

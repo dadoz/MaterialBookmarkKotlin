@@ -12,6 +12,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,10 +21,12 @@ import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkBinding
-import com.application.material.bookmarkswallet.app.hideKeyboard
-import com.application.material.bookmarkswallet.app.hideKeyboardIfNeeded
+import com.application.material.bookmarkswallet.app.extensions.changeToolbarFont
+import com.application.material.bookmarkswallet.app.extensions.hideKeyboard
+import com.application.material.bookmarkswallet.app.extensions.hideKeyboardIfNeeded
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
+import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.viewModels.SearchBookmarkViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -37,7 +40,7 @@ import com.google.android.material.snackbar.Snackbar
  * create an instance of this fragment.
  *
  */
-class SearchBookmarkFragment : Fragment() {
+class SearchBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentSearchBookmarkBinding
     private var listener: OnFragmentInteractionListener? = null
     val clipboard by lazy {
@@ -51,11 +54,6 @@ class SearchBookmarkFragment : Fragment() {
         view?.let { Navigation.findNavController(it) }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,16 +65,37 @@ class SearchBookmarkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initActionBar()
         initView()
+        startActivity(
+            Intent(
+                context,
+                SettingsActivity::class.java
+            )
+        )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    /**
+     * init actionbar
+     */
+    private fun initActionBar() {
+        requireActivity()
+            .apply {
+                this.addMenuProvider(this@SearchBookmarkFragment, viewLifecycleOwner)
+                binding.mbToolbarId.changeToolbarFont()
+
+//        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
+//        binding.mbToolbarId.changeToolbarFont()
+//        binding.mbToolbarId.title = getString(R.string.search_actionbar_string)
+//        binding.mbToolbarId.visibility = View.VISIBLE
+//        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_search_bookmark, menu)
-//        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
             android.R.id.home -> {
                 navigation?.popBackStack()
                 activity?.hideKeyboardIfNeeded()
@@ -90,17 +109,6 @@ class SearchBookmarkFragment : Fragment() {
             )
         }
         return true
-    }
-
-    /**
-     * init actionbar
-     */
-    private fun initActionBar() {
-//        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
-//        binding.mbToolbarId.changeToolbarFont()
-//        binding.mbToolbarId.title = getString(R.string.search_actionbar_string)
-//        binding.mbToolbarId.visibility = View.VISIBLE
-//        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     @SuppressLint("FragmentLiveDataObserve")

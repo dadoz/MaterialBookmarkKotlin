@@ -16,7 +16,7 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListVi
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
-import com.application.material.bookmarkswallet.app.setStarOutlineColor
+import com.application.material.bookmarkswallet.app.extensions.setStarOutlineColor
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners

@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,9 +23,10 @@ import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentAddBookmarkBinding
-import com.application.material.bookmarkswallet.app.hideKeyboard
-import com.application.material.bookmarkswallet.app.hideKeyboardIfNeeded
-import com.application.material.bookmarkswallet.app.showKeyboard
+import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
+import com.application.material.bookmarkswallet.app.extensions.hideKeyboard
+import com.application.material.bookmarkswallet.app.extensions.hideKeyboardIfNeeded
+import com.application.material.bookmarkswallet.app.extensions.showKeyboard
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
@@ -39,7 +41,7 @@ import com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewMo
  * create an instance of this fragment.
  *
  */
-class AddBookmarkFragment : Fragment() {
+class AddBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentAddBookmarkBinding
     private val newBookmarkEditTitleViewBinding by lazy {
         (binding.mbAddBookmarkPreviewId).binding.mbNewBookmarkEditTitleViewId.binding
@@ -53,11 +55,6 @@ class AddBookmarkFragment : Fragment() {
     }
     private val addBookmarkViewModel: AddBookmarkViewModel by lazy {
         ViewModelProvider(this)[AddBookmarkViewModel::class.java]
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -90,13 +87,35 @@ class AddBookmarkFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_add_bookmark, menu)
-//        menu.findItem(R.id.menuSettingsActionId).applyFontToMenuItem(requireContext())
+    private fun showEditBookmarkView() {
+        binding.mbBookmarkSearchedUrlWebViewId.visibility = GONE
+        (binding.mbAddBookmarkPreviewId).binding.mbNewBookmarkEditTitleViewId.visibility = VISIBLE
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    /**
+     * init actionbar
+     */
+    private fun initActionBar() {
+        requireActivity()
+            .apply {
+                this.addMenuProvider(this@AddBookmarkFragment, viewLifecycleOwner)
+                //todo please clean up
+//            (this as? AppCompatActivity)?.also {
+//                it.setSupportActionBar(binding.mbToolbarId)
+//                it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//            }
+//            binding.mbToolbarId.changeToolbarFont()
+//            binding.mbToolbarId.title = getString(R.string.add_actionbar_string)
+//            binding.mbToolbarId.visibility = VISIBLE
+            }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_add_bookmark, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
             android.R.id.home -> {
                 navigation?.popBackStack()
                 activity?.hideKeyboardIfNeeded()
@@ -111,22 +130,6 @@ class AddBookmarkFragment : Fragment() {
             )
         }
         return true
-    }
-
-    private fun showEditBookmarkView() {
-        binding.mbBookmarkSearchedUrlWebViewId.visibility = GONE
-        (binding.mbAddBookmarkPreviewId).binding.mbNewBookmarkEditTitleViewId.visibility = VISIBLE
-    }
-
-    /**
-     * init actionbar
-     */
-    private fun initActionBar() {
-//        (activity as AppCompatActivity).setSupportActionBar(binding.mbToolbarId)
-//        binding.mbToolbarId.changeToolbarFont()
-//        binding.mbToolbarId.title = getString(R.string.add_actionbar_string)
-//        binding.mbToolbarId.visibility = VISIBLE
-//        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     /**

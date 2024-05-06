@@ -24,9 +24,9 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
-import com.application.material.bookmarkswallet.app.setIconDependingOnSortAscending
-import com.application.material.bookmarkswallet.app.setStarColor
-import com.application.material.bookmarkswallet.app.toggleVisibiltyWithView
+import com.application.material.bookmarkswallet.app.extensions.setIconDependingOnSortAscending
+import com.application.material.bookmarkswallet.app.extensions.setStarColor
+import com.application.material.bookmarkswallet.app.extensions.toggleVisibiltyWithView
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior

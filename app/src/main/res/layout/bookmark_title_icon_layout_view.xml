@@ -45,7 +45,7 @@
             android:textColorHint="@color/colorPrimary"
             tools:visibility="gone"
             android:visibility="gone"
-            android:hint="Title insert...">
+            android:hint="@string/title_insert">
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/mbNewBookmarkTitleEditTextId"
                 android:layout_width="match_parent"

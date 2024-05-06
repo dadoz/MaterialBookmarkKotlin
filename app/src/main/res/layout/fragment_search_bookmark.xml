@@ -15,6 +15,7 @@
             android:layout_height="?attr/actionBarSize"
             android:visibility="visible"
             app:title="@string/app_name"
+            app:menu="@menu/menu_search_bookmark"
             app:titleTextColor="@color/colorPrimary" />
 
         <LinearLayout
@@ -40,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/margin_16"
-                    android:text="Search \nBookmark" />
+                    android:text="@string/search_nbookmark" />
 
                 <TextView
                     style="@style/MBMaterialTextDescrSmallViolet"
@@ -49,7 +50,7 @@
                     android:layout_below="@+id/mbTitleSearchBookmarkTextViewId"
                     android:layout_marginRight="@dimen/margin_16"
                     android:layout_marginBottom="@dimen/margin_16"
-                    android:text="just type a bookmark " />
+                    android:text="@string/just_type_a_bookmark" />
             </RelativeLayout>
 
             <!-- search box -->
@@ -63,7 +64,7 @@
                     style="@style/MBMaterialTextInputOutlinedYellow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search your bookmark"
+                    android:hint="@string/search_your_bookmark"
                     app:hintTextColor="@color/colorAccent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -103,7 +104,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/margin_8"
                         android:layout_toEndOf="@+id/mbNewBookmarkUrlClipboardLayoutId"
-                        android:text="PASTE \nCLIPBOARD" />
+                        android:text="@string/paste_nclipboard" />
                 </RelativeLayout>
 
                 <Button
@@ -113,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="SEARCH"
+                    android:text="@string/search"
                     tools:visibility="visible" />
             </RelativeLayout>
 

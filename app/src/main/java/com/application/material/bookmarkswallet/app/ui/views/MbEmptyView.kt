@@ -12,9 +12,9 @@ import com.application.material.bookmarkswallet.app.databinding.EmptyViewBinding
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.setColorByRes
-import com.application.material.bookmarkswallet.app.setImageDrawableByRes
-import com.application.material.bookmarkswallet.app.toggleVisibilty
+import com.application.material.bookmarkswallet.app.extensions.setColorByRes
+import com.application.material.bookmarkswallet.app.extensions.setImageDrawableByRes
+import com.application.material.bookmarkswallet.app.extensions.toggleVisibilty
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 
 class MbEmptyView : FrameLayout {

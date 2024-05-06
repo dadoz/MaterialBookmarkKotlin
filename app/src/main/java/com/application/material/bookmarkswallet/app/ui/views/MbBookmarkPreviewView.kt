@@ -17,9 +17,9 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
-import com.application.material.bookmarkswallet.app.setColor
-import com.application.material.bookmarkswallet.app.setColorByRes
-import com.application.material.bookmarkswallet.app.setStrokeColorByColorRes
+import com.application.material.bookmarkswallet.app.extensions.setColor
+import com.application.material.bookmarkswallet.app.extensions.setColorByRes
+import com.application.material.bookmarkswallet.app.extensions.setStrokeColorByColorRes
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.BookmarkAnimator
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior

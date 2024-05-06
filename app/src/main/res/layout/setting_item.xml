@@ -17,7 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mbSettingsItemValueTextId"
             style="@style/MBMaterialTextSubtitleSmallViolet"
-            android:text="Description"
+            android:text="@string/description"
             />
     <TextView
             android:id="@+id/mbSettingsItemValueTextId"
@@ -27,5 +27,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/MBMaterialTextDescrSmallBoldViolet"
-            android:text="value"/>
+            android:text="@string/value"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name="com.application.material.bookmarkswallet.app.ui.SettingsActivity"
+            android:name="com.application.material.bookmarkswallet.app.features.settings.SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

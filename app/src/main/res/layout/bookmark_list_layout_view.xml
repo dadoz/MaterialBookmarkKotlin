@@ -50,7 +50,7 @@
                     style="@style/MBMaterialTextDescrSmallThinViolet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="stored in your list"
+                    android:text="@string/stored_in_your_list"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mbBookmarkHeaderTitleTextViewId" />
 
@@ -81,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:text="saved in\nyour list" />
+                            android:text="@string/saved_in_nyour_list" />
 
                         <TextView
                             android:id="@+id/mbBookmarkHeaderTotBookmarkLabelId"
@@ -179,7 +179,7 @@
                 style="@style/MBMaterialTextDescrSmallViolet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="filtering by"
+                android:text="@string/filtering_by"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/mbGuidelineHeaderLayout"
                 app:layout_constraintTop_toTopOf="parent"
@@ -200,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="55dp"
-                    android:text="date"
+                    android:text="@string/date"
                     app:chipBackgroundColor="@color/colorPrimary"
                     app:chipCornerRadius="5dp"
                     app:chipIcon="@drawable/ic_time_clock_circle"
@@ -216,7 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="55dp"
-                    android:text="title"
+                    android:text="@string/title"
                     app:chipBackgroundColor="@color/colorLight"
                     app:chipCornerRadius="5dp"
                     app:chipIcon="@drawable/ic_font_size"
