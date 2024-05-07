@@ -5,7 +5,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
     <com.google.android.material.card.MaterialCardView
-            style="@style/MBMaterialCardviewStyleGrey"
+        style="@style/Widget.Material3.CardView.Elevated"
             android:orientation="horizontal"
             android:layout_alignParentEnd="true"
             android:minWidth="60dp"

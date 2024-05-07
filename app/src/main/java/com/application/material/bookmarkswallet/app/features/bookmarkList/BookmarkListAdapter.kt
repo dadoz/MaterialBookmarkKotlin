@@ -10,13 +10,13 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.extensions.setStarOutlineColor
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
-import com.application.material.bookmarkswallet.app.extensions.setStarOutlineColor
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -36,10 +36,22 @@ class BookmarkListAdapter(
         return when (viewType) {
             BOOKMARK_VIEW_TYPE.ordinal -> {
                 when (bookmarkFilter.listViewType) {
-                    IS_LIST.ordinal -> BookmarkViewHolder(parent.inflate(R.layout.bookmark_list_view_item, false))
-                    else -> BookmarkViewHolder(parent.inflate(R.layout.bookmark_card_view_item, false))
+                    IS_LIST.ordinal -> BookmarkViewHolder(
+                        parent.inflate(
+                            R.layout.bookmark_list_view_item,
+                            false
+                        )
+                    )
+
+                    else -> BookmarkViewHolder(
+                        parent.inflate(
+                            R.layout.bookmark_card_view_item,
+                            false
+                        )
+                    )
                 }
             }
+
             else -> {
                 BookmarkHeaderViewHolder(parent.inflate(R.layout.bookmark_header_item, false))
             }
@@ -64,7 +76,8 @@ class BookmarkListAdapter(
                     (item as Bookmark).let {
                         holder.apply {
                             bookmarkTitle.apply {
-                                text = item.title?.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
+                                text =
+                                    item.title?.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
                             }
                             bookmarkUrl.text = "https://${item.url}"
                             bookmarkTimestamp.text = item.timestamp?.toString() //"dd MMM"
@@ -84,7 +97,7 @@ class BookmarkListAdapter(
                         Glide.with(holder.itemView.context)
                             .load(item.image)
                             .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-                            .placeholder(R.drawable.ic_bookmark)
+                            .placeholder(R.drawable.ic_bookmark_light)
                             .into(holder.bookmarkIcon)
                     }
                 }
@@ -96,15 +109,16 @@ class BookmarkListAdapter(
                         }
                     }
                 }
+
                 else -> null
             }
         }
     }
 
     private fun getColorByStarType(context: Context, isStar: Boolean): Int = when (isStar) {
-            true -> ContextCompat.getColor(context, R.color.colorAccent)
-            else -> ContextCompat.getColor(context, R.color.colorPrimary)
-        }
+        true -> ContextCompat.getColor(context, R.color.colorAccent)
+        else -> ContextCompat.getColor(context, R.color.colorPrimary)
+    }
 
     /***
      * set items
@@ -131,11 +145,13 @@ class BookmarkListAdapter(
         val bookmarkIcon: ImageView = itemView.findViewById(R.id.bookmarkIconImageViewId)
         val bookmarkStarButton: ImageView = itemView.findViewById(R.id.mbBookmarkStarButtonId)
     }
+
     /**
      * view holder
      */
     class BookmarkHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val bookmarkSubtitleHeader: TextView = itemView.findViewById(R.id.bookmarkSubtitleHeaderViewId)
+        val bookmarkSubtitleHeader: TextView =
+            itemView.findViewById(R.id.bookmarkSubtitleHeaderViewId)
         val bookmarkLabelHeader: TextView = itemView.findViewById(R.id.bookmarkLabelHeaderViewId)
 
     }

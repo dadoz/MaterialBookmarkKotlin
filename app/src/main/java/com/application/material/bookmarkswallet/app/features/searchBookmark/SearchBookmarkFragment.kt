@@ -7,7 +7,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -65,12 +64,6 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
         super.onViewCreated(view, savedInstanceState)
         initActionBar()
         initView()
-        startActivity(
-            Intent(
-                context,
-                SettingsActivity::class.java
-            )
-        )
     }
 
     /**
@@ -148,23 +141,22 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
         })
 
         binding.mbsearchBookmarkButtonViewId.setOnClickListener {
-            navigation?.navigate(
-                R.id.searchBookmarkFragment, bundleOf(
-                    "actionType" to SAVE_ACTION_BOOKMARK,
-                    "bookmarkUrl" to binding.mbNewBookmarkUrlEditTextId.text.toString()
-                )
-            )
-
-            Handler().postDelayed(
-                {
-                    binding.mbNewBookmarkUrlEditTextId.hideKeyboard()
-                }, 200
-            )
+            binding.mbNewBookmarkUrlEditTextId.text
+                ?.let {
+                    navigation?.navigate(
+                        R.id.addBookmarkFragment, bundleOf(
+                            "actionType" to SAVE_ACTION_BOOKMARK,
+                            "bookmarkUrl" to it.toString()
+                        )
+                    )
+                }
+            //hide keyboard
+            binding.mbNewBookmarkUrlEditTextId.hideKeyboard()
         }
 
         binding.mbNewBookmarkUrlEditTextId.apply {
             binding.mbsearchBookmarkButtonViewId.isEnabled = false
-            binding.mbsearchBookmarkButtonViewId.addTextChangedListener(object : TextWatcher {
+            binding.mbNewBookmarkUrlEditTextId.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                 }
 

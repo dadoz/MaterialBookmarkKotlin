@@ -49,7 +49,7 @@ fun setImageViewResource(imageView: ImageView, url: String?) {
         Glide.with(imageView.context)
                 .load(url)
                 .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.ic_bookmark)
+                .placeholder(R.drawable.ic_bookmark_light)
                 .into(imageView)
 }
 
@@ -58,6 +58,6 @@ fun setImageViewSquaredResource(imageView: ImageView, url: String?) {
         Glide.with(imageView.context)
                 .load(url)
                 .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-                .placeholder(R.drawable.ic_bookmark)
+                .placeholder(R.drawable.ic_bookmark_light)
                 .into(imageView)
 }

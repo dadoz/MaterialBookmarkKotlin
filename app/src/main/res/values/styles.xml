@@ -29,9 +29,8 @@
         <item name="cardCornerRadius">6dp</item>
     </style>
 
-    <style name="MBMaterialCardviewStyleViolet" parent="MBMaterialCardviewStyle">
-        <item name="cardBackgroundColor">@color/colorPrimaryLight</item>
-        <item name="strokeColor">@color/colorPrimary</item>
+    <style name="MBMaterialCardviewStyleViolet" parent="@style/Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">0dp</item>
     </style>
 
     <style name="MBMaterialCardviewStyleFilledViolet" parent="MBMaterialCardviewStyleViolet">
@@ -59,10 +58,10 @@
         <item name="strokeColor">@color/colorError</item>
     </style>
 
-    <style name="MBMaterialTextTitleThinViolet" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/yantramanav_thin</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/text_30</item>
+    <style name="MBMaterialTextTitleThinViolet" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/yantramanav_bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_22</item>
     </style>
 
     <style name="MBMaterialTextTitleThinYellow" parent="MBMaterialTextTitleThinViolet">
@@ -121,11 +120,11 @@
     <style name="MBMaterialTextDescrSmallViolet" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:textSize">@dimen/text_14</item>
     </style>
 
     <style name="MBMaterialTextDescrSmallYellow" parent="MBMaterialTextDescrSmallViolet">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="MBMaterialTextDescrSmallThinYellow" parent="MBMaterialTextDescrSmallYellow">
@@ -164,8 +163,8 @@
         <item name="android:textColor">@color/colorError</item>
     </style>
 
-    <style name="MBMaterialTextSubtitleSmallYellow" parent="MBMaterialTextSubtitleYellow">
-        <item name="android:textSize">@dimen/text_22</item>
+    <style name="MBMaterialTextSubtitleSmallYellow" parent="MBMaterialTextSubtitleViolet">
+        <item name="android:textSize">@dimen/text_18</item>
     </style>
 
     <style name="MBMaterialTextSubtitleSmallThinViolet" parent="MBMaterialTextSubtitleViolet">
@@ -200,19 +199,22 @@
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
 
-    <style name="MBMaterialChipDescrSmallThinWhite" parent="Widget.Material3.Chip.Assist.Elevated">
-        <item name="android:textColor">@color/colorPrimaryLight</item>
-        <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
-    </style>
-
-    <style name="MBMaterialChipDescrSmallThinViolet" parent="Widget.Material3.Chip.Assist.Elevated">
+    <style name="MBMaterialChipDescrSmallThinWhite" parent="Widget.Material3.Chip.Assist">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textAppearance">@style/MBMaterialChipTextApparence</item>
+        <item name="android:textAppearance">@style/MBMaterialChipTextAppearance</item>
+        <item name="chipBackgroundColor">?attr/colorSurfaceVariant</item>
+        <item name="chipStrokeWidth">0dp</item>
     </style>
 
-    <style name="MBMaterialChipTextApparence">
-        <item name="android:fontFamily">@font/yantramanav_light</item>
-        <item name="android:textSize">@dimen/text_18</item>
+    <style name="MBMaterialChipDescrSmallThinViolet" parent="Widget.Material3.Chip.Assist">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAppearance">@style/MBMaterialChipTextAppearance</item>
+        <item name="chipBackgroundColor">?attr/colorSurfaceVariant</item>
+        <item name="chipStrokeWidth">0dp</item>
+    </style>
+
+    <style name="MBMaterialChipTextAppearance" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/yantramanav_bold</item>
     </style>
 
     <style name="MBMaterialButtonStyleYellow" parent="Widget.Material3.Button.ElevatedButton">

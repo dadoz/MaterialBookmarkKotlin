@@ -31,8 +31,8 @@
     <string name="stored_in_your_list">stored in your list</string>
     <string name="saved_in_nyour_list">saved in\nyour list</string>
     <string name="filtering_by">filtering by</string>
-    <string name="date">date</string>
-    <string name="title">title</string>
+    <string name="date">Date</string>
+    <string name="title">Title</string>
     <string name="search_nbookmark">Search \nBookmark</string>
     <string name="just_type_a_bookmark">just type a bookmark</string>
     <string name="paste_nclipboard">PASTE \nCLIPBOARD</string>

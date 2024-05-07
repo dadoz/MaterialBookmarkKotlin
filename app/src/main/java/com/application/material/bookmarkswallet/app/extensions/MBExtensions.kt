@@ -2,7 +2,6 @@ package com.application.material.bookmarkswallet.app.extensions
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -15,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
+import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
+import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.google.android.material.card.MaterialCardView
 
 /**
@@ -30,25 +31,15 @@ fun View.showKeyboard() {
     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
-fun View.setBackgroundColorByColorRes(colorRes: Int) {
-    setBackgroundColor(ContextCompat.getColor(context, colorRes))
-}
-
-fun MaterialCardView.setBackgroundColorByColorRes(colorRes: Int) {
-    setCardBackgroundColor(ContextCompat.getColor(context, colorRes))
-}
-
 fun MaterialCardView.setStarColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
     when (viewType) {
-        BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW -> {
-//            setBackgroundColorByColorRes(R.color.colorPrimary)
+        IS_DEFAULT_VIEW -> {
             setBackgroundResource(R.drawable.bck_gradient_violet)
             setStrokeColorByColorRes(R.color.colorPrimaryDark)
         }
 
-        BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW -> {
+        IS_STAR_VIEW -> {
             setBackgroundResource(R.drawable.bck_gradient_yellow)
-//            setBackgroundColorByColorRes(R.color.colorAccent)
             setStrokeColorByColorRes(R.color.colorAccent)
         }
     }
@@ -56,15 +47,11 @@ fun MaterialCardView.setStarColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
 
 fun MaterialCardView.setStarOutlineColor(viewType: BookmarkFilter.StarFilterTypeEnum) {
     when (viewType) {
-        BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW -> {
-            setBackgroundColorByColorRes(R.color.colorPrimaryLight)
+        IS_DEFAULT_VIEW ->
             setStrokeColorByColorRes(R.color.colorPrimaryDark)
-        }
 
-        BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW -> {
-            setBackgroundColorByColorRes(R.color.colorAccentLight)
+        IS_STAR_VIEW ->
             setStrokeColorByColorRes(R.color.colorAccent)
-        }
     }
 }
 
@@ -86,9 +73,9 @@ fun ImageView.setIconByResource(resource: Int) {
 }
 
 fun ImageView.setIconDependingOnSortAscending(isSortAscending: Boolean) {
-    when (isSortAscending) {
-        true -> setImageResource(R.drawable.ic_reorder_up)
-        false -> setImageResource(R.drawable.ic_reorder_down)
+    when {
+        isSortAscending -> this.rotation = 180.0f //setImageResource(R.drawable.ic_sort_amount_up)
+        else -> this.rotation = 0.0f //R.drawable.ic_sort_amount_up)
     }
 }
 
@@ -98,8 +85,7 @@ fun MenuItem.toggleSetIconTintListByRes(context: Context, colorRes: Int, menuIte
 }
 
 fun MenuItem.setIconTintListByRes(context: Context, colorRes: Int) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        this.iconTintList = ContextCompat.getColorStateList(context, colorRes)
+    this.iconTintList = ContextCompat.getColorStateList(context, colorRes)
 }
 
 fun Toolbar.changeToolbarFont() {
