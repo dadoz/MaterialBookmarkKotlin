@@ -20,6 +20,7 @@
             android:layout_height="@dimen/bookmark_icon_preview_middle_size"
             android:layout_alignParentEnd="true"
             android:layout_margin="@dimen/margin_16"
+            android:tint="?attr/colorPrimary"
             tools:src="@drawable/ic_bookmark_light" />
 
         <LinearLayout

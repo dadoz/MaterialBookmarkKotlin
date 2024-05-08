@@ -64,5 +64,5 @@
             android:layout_height="@dimen/bookmark_icon_preview_middle_size"
             android:tint="@color/colorPrimary"
             android:background="?attr/selectableItemBackground"
-            android:src="@drawable/ic_world_map"/>
+            android:src="@drawable/ic_web_light"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

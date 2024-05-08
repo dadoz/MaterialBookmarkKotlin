@@ -91,9 +91,9 @@ class MbBookmarkPreviewView : FrameLayout {
             })
         }
 
-        binding.mbBookmarkPreviewBackButtonId.setOnClickListener {
-            setPreviewVisible(true)
-        }
+//        binding.mbBookmarkPreviewBackButtonId.setOnClickListener {
+//            setPreviewVisible(true)
+//        }
 
     }
 
@@ -137,18 +137,18 @@ class MbBookmarkPreviewView : FrameLayout {
     }
 
     fun actionEditBookmark(callbackAction: () -> Unit) {
-        binding.mbBookmarkPreviewMainLayoutId.setOnClickListener {
-            callbackAction.invoke()
-        }
+//        binding.mbBookmarkPreviewMainLayoutId.setOnClickListener {
+//            callbackAction.invoke()
+//        }
     }
 
     fun setMoreButtonAction(callbackAction: () -> Unit) {
-        binding.mbBookmarkPreviewMoreButtonId.apply {
-            setOnClickListener {
-                setPreviewVisible(false)
-                callbackAction.invoke()
-            }
-        }
+//        binding.mbBookmarkPreviewMoreButtonId.apply {
+//            setOnClickListener {
+//                setPreviewVisible(false)
+//                callbackAction.invoke()
+//            }
+//        }
     }
 
     fun setDeleteButtonAction(callbackAction: () -> Unit) {
@@ -168,20 +168,20 @@ class MbBookmarkPreviewView : FrameLayout {
             }
 
             true -> {
-                val animatorList: List<Animator> = BookmarkAnimator().let {
-                    when (isPreviewVisible) {
-                        true -> listOf(it.expandAnimator(binding.mbBookmarkPreviewOpenLayoutId))
-                        else -> listOf(it.expandAnimator(binding.mbBookmarkPreviewDeleteLayoutId))
-                    }
-                }
+//                val animatorList: List<Animator> = BookmarkAnimator().let {
+//                    when (isPreviewVisible) {
+//                        true -> listOf(it.expandAnimator(binding.mbBookmarkPreviewOpenLayoutId))
+//                        else -> listOf(it.expandAnimator(binding.mbBookmarkPreviewDeleteLayoutId))
+//                    }
+//                }
 
-                AnimatorSet().apply {
-                    playSequentially(animatorList)
-                    doOnStart {
-                        setVisibilityOnViews(isPreviewVisible)
-                    }
-                    start()
-                }
+//                AnimatorSet().apply {
+//                    playSequentially(animatorList)
+//                    doOnStart {
+//                        setVisibilityOnViews(isPreviewVisible)
+//                    }
+//                    start()
+//                }
             }
         }
     }
@@ -190,15 +190,15 @@ class MbBookmarkPreviewView : FrameLayout {
         when (isPreviewVisible) {
             true -> {
                 VISIBLE.let {
-                    binding.mbBookmarkPreviewOpenLayoutId.visibility = it
-                    binding.mbBookmarkPreviewEditButtonId.visibility = it
+//                    binding.mbBookmarkPreviewOpenLayoutId.visibility = it
+//                    binding.mbBookmarkPreviewEditButtonId.visibility = it
                 }
                 GONE.let {
-                    binding.mbBookmarkPreviewDeleteLayoutId.visibility = it
-                    binding.mbBookmarkPreviewDeleteLabelTextId.visibility = it
+//                    binding.mbBookmarkPreviewDeleteLayoutId.visibility = it
+//                    binding.mbBookmarkPreviewDeleteLabelTextId.visibility = it
                 }
 
-                binding.mbBookmarkPreviewMainLayoutId.isClickable = true
+//                binding.mbBookmarkPreviewMainLayoutId.isClickable = true
                 binding.mbBookmarkPreviewUrlTextId.setColorByRes(R.color.colorPrimary)
 
             }
@@ -206,14 +206,14 @@ class MbBookmarkPreviewView : FrameLayout {
             false -> {
 
                 GONE.let {
-                    binding.mbBookmarkPreviewEditButtonId.visibility = it
-                    binding.mbBookmarkPreviewOpenLayoutId.visibility = it
+//                    binding.mbBookmarkPreviewEditButtonId.visibility = it
+//                    binding.mbBookmarkPreviewOpenLayoutId.visibility = it
                 }
                 VISIBLE.let {
-                    binding.mbBookmarkPreviewDeleteLayoutId.visibility = it
-                    binding.mbBookmarkPreviewDeleteLabelTextId.visibility = it
+//                    binding.mbBookmarkPreviewDeleteLayoutId.visibility = it
+//                    binding.mbBookmarkPreviewDeleteLabelTextId.visibility = it
                 }
-                binding.mbBookmarkPreviewMainLayoutId.isClickable = false
+//                binding.mbBookmarkPreviewMainLayoutId.isClickable = false
             }
         }
     }

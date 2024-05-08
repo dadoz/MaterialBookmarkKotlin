@@ -201,6 +201,7 @@
 
     <style name="MBMaterialChipDescrSmallThinWhite" parent="Widget.Material3.Chip.Assist">
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="chipIconTint">?attr/colorPrimary</item>
         <item name="android:textAppearance">@style/MBMaterialChipTextAppearance</item>
         <item name="chipBackgroundColor">?attr/colorSurfaceVariant</item>
         <item name="chipStrokeWidth">0dp</item>
@@ -208,6 +209,7 @@
 
     <style name="MBMaterialChipDescrSmallThinViolet" parent="Widget.Material3.Chip.Assist">
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="chipIconTint">?attr/colorPrimary</item>
         <item name="android:textAppearance">@style/MBMaterialChipTextAppearance</item>
         <item name="chipBackgroundColor">?attr/colorSurfaceVariant</item>
         <item name="chipStrokeWidth">0dp</item>

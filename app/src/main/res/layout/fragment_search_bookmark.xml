@@ -93,7 +93,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_clipboard_paste"
+                        android:src="@drawable/ic_clipboard_text_alt"
                         app:tint="@color/colorPrimary"
                         tools:visibility="visible" />
 
