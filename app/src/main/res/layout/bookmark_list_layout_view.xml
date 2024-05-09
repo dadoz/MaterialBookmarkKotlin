@@ -239,15 +239,30 @@
             android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:visibility="gone" />
+
         <!-- preivew view-->
-        <com.application.material.bookmarkswallet.app.ui.views.MbBookmarkPreviewView
-            android:id="@+id/mbBookmarkPreviewCardviewId"
-            android:layout_width="wrap_content"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/mbBookmarkPreviewComposeCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_16"
             app:behavior_hideable="true"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:background="?attr/colorTertiary"
             tools:behavior_peekHeight="0dp" />
+        <!--        <com.application.material.bookmarkswallet.app.ui.views.MbBookmarkPreviewView-->
+        <!--            android:id="@+id/mbBookmarkPreviewCardviewId"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:behavior_hideable="true"-->
+        <!--            app:behavior_peekHeight="0dp"-->
+        <!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"-->
+        <!--            tools:behavior_peekHeight="0dp" />-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

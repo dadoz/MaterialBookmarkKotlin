@@ -5,15 +5,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.BookmarkListLayoutViewBinding
+import com.application.material.bookmarkswallet.app.extensions.setIconDependingOnSortAscending
+import com.application.material.bookmarkswallet.app.extensions.setStarColor
+import com.application.material.bookmarkswallet.app.extensions.toggleVisibiltyWithView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
@@ -22,14 +42,13 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTy
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTypeListEnum.IS_BY_TITLE
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.UPDATE_ACTION_BOOKMARK
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
-import com.application.material.bookmarkswallet.app.extensions.setIconDependingOnSortAscending
-import com.application.material.bookmarkswallet.app.extensions.setStarColor
-import com.application.material.bookmarkswallet.app.extensions.toggleVisibiltyWithView
+import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
+import com.application.material.bookmarkswallet.app.ui.YantramanavRegularFontFamily
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
 import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 
 class BookmarkListPageFragment : Fragment() {
     private lateinit var binding: BookmarkListLayoutViewBinding
@@ -109,12 +128,18 @@ class BookmarkListPageFragment : Fragment() {
             //set recyclerview
             binding.mbBookmarkRecyclerViewId.apply {
                 layoutManager = GridLayoutManager(context, 2)
-                setGridOrListLayout(ListViewTypeEnum.values()[bookmarkFilters.listViewType])
+                setGridOrListLayout(ListViewTypeEnum.entries[bookmarkFilters.listViewType])
 
-                adapter = BookmarkListAdapter(list as MutableList<Any>,
-                    bookmarkFilters,
-                    { position, bookmark -> openPreviewView(position, bookmark) },
-                    { position, bookmark ->
+                adapter = BookmarkListAdapter(
+                    items = list,
+                    bookmarkFilter = bookmarkFilters,
+                    onBookmarkItemClicked = { position, bookmark ->
+                        openPreviewView(
+                            position,
+                            bookmark
+                        )
+                    },
+                    onBookmarkStarClicked = { position, bookmark ->
                         bookmark.isStar = !bookmark.isStar
                         //toggling status
                         bookmarkViewModel.setStarBookmark(bookmark)
@@ -205,40 +230,145 @@ class BookmarkListPageFragment : Fragment() {
                     recyclerView = binding.mbBookmarkRecyclerViewId
                 )
             }
+
+        //compose view
+        binding.mbBookmarkPreviewComposeCard
+            .apply {
+                // is destroyed
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setContent {
+                    // In Compose world
+                    MaterialBookmarkMaterialTheme {
+                        BookmarkPreviewCard(
+                            modifier = Modifier
+                        )
+                    }
+                }
+            }
+    }
+
+    fun openPreviewView(position: Int, bookmark: Bookmark) {
+        Toast.makeText(context, "blallaal", Toast.LENGTH_SHORT).show()
+        BottomSheetBehavior.from(binding.mbBookmarkPreviewComposeCard).state = STATE_EXPANDED
     }
 
     /**
-     *
+     * old BookmarkPreviewCard
      */
-    private fun openPreviewView(position: Int, bookmark: Bookmark) =
-        binding.mbBookmarkPreviewCardviewId
-            .also {
-                it.setStarColor(bookmarkFilters.starFilterType)
-                it.initView(BottomSheetBehavior.from(binding.mbBookmarkPreviewCardviewId))
-                it.initData(bookmark, bookmarkViewModel)
-                it.setMoreButtonAction { }
+    @Composable
+    fun BookmarkPreviewCard(modifier: Modifier) {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
 
-                it.setDeleteButtonAction {
-                    bookmarkViewModel.deleteBookmark(bookmark)
-                    bookmarkViewModel.deleteBookmarkFromList(position)
-                }
+            ) {
 
-                it.actionEditBookmark {
-                    findNavController().navigate(
-                        R.id.bookmarkListFragment, bundleOf(
-                            "actionType" to UPDATE_ACTION_BOOKMARK,
-                            "bookmark" to bundleOf(
-                                "bookmark_url" to bookmark.url,
-                                "bookmark_title" to bookmark.title,
-                                "bookmark_icon_url" to bookmark.image
-                            )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    listOf(
+                        AppCompatResources.getDrawable(
+                            LocalContext.current,
+                            R.drawable.ic_share_light
+                        ),
+                        AppCompatResources.getDrawable(
+                            LocalContext.current,
+                            R.drawable.ic_star_light
+                        ),
+                        AppCompatResources.getDrawable(
+                            LocalContext.current,
+                            R.drawable.ic_pen_field
                         )
+                    ).onEach {
+                        Image(
+                            modifier = Modifier
+                                .width(32.dp)
+                                .height(32.dp),
+                            painter = rememberDrawablePainter(drawable = it),
+                            contentDescription = ""
+                        )
+                    }
+                }
+                AppCompatResources.getDrawable(
+                    LocalContext.current,
+                    R.drawable.ic_bookmark_light
+                ).also {
+                    Image(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .width(64.dp)
+                            .height(64.dp),
+                        painter = rememberDrawablePainter(drawable = it),
+                        contentDescription = ""
                     )
                 }
-
-                it.actionShareBookmark { intent -> startActivity(intent) }
-
-                it.actionOpenPreviewBookmark { intent -> startActivity(intent) }
+                Text(
+                    modifier = Modifier,
+                    fontFamily = YantramanavRegularFontFamily,
+                    text = "Title"
+                )
+                Text(
+                    modifier = Modifier,
+                    fontFamily = YantramanavRegularFontFamily,
+                    text = "url"
+                )
+                Text(
+                    modifier = Modifier,
+                    fontFamily = YantramanavRegularFontFamily,
+                    text = "timestamp"
+                )
+                ExtendedFloatingActionButton(onClick = { }) {
+                    Text(
+                        modifier = Modifier,
+                        fontFamily = YantramanavRegularFontFamily,
+                        text = "Open"
+                    )
+                }
             }
+        }
+    }
+
+    @Composable
+    @Preview
+    fun BookmarkPreviewCardPreview() {
+        BookmarkPreviewCard(modifier = Modifier)
+    }
+//    /**
+//     * old BookmarkPreviewCard
+//     */
+//    private fun openPreviewView(position: Int, bookmark: Bookmark) =
+//        binding.mbBookmarkPreviewCardviewId
+//            .also {
+//                it.setStarColor(bookmarkFilters.starFilterType)
+//                it.initView(BottomSheetBehavior.from(binding.mbBookmarkPreviewCardviewId))
+//                it.initData(bookmark, bookmarkViewModel)
+//                it.setMoreButtonAction { }
+//
+//                it.setDeleteButtonAction {
+//                    bookmarkViewModel.deleteBookmark(bookmark)
+//                    bookmarkViewModel.deleteBookmarkFromList(position)
+//                }
+//
+//                it.actionEditBookmark {
+//                    findNavController().navigate(
+//                        R.id.bookmarkListFragment, bundleOf(
+//                            "actionType" to UPDATE_ACTION_BOOKMARK,
+//                            "bookmark" to bundleOf(
+//                                "bookmark_url" to bookmark.url,
+//                                "bookmark_title" to bookmark.title,
+//                                "bookmark_icon_url" to bookmark.image
+//                            )
+//                        )
+//                    )
+//                }
+//
+//                it.actionShareBookmark { intent -> startActivity(intent) }
+//
+//                it.actionOpenPreviewBookmark { intent -> startActivity(intent) }
+//            }
 
 }

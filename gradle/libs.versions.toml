@@ -58,6 +58,7 @@ material3WindowSizeClass = "1.2.1"
 
 [libraries]
 #core ktx
+accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version = "0.34.0" }
 adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "adapterRxjava3" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -228,7 +229,8 @@ compose = [
     "compose-animation",
     "compose-animation-core",
     "compose-constraintlayout",
-    "compose-window-size"
+    "compose-window-size",
+    "accompanist-drawablepainter"
 ]
 
 # Hilt

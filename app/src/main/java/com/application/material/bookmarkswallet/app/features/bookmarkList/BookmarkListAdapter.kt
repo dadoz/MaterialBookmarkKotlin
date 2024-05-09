@@ -27,7 +27,7 @@ class BookmarkListAdapter(
     private var items: List<Any>,
     private val bookmarkFilter: BookmarkFilter,
     private val onBookmarkItemClicked: (position: Int, bookmark: Bookmark) -> Unit,
-    private val onBookmarkStarlicked: (position: Int, bookmark: Bookmark) -> Unit
+    private val onBookmarkStarClicked: (position: Int, bookmark: Bookmark) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
@@ -90,7 +90,7 @@ class BookmarkListAdapter(
                                 onBookmarkItemClicked(position, item)
                             }
                             bookmarkStarButton.setOnClickListener {
-                                onBookmarkStarlicked(position, item)
+                                onBookmarkStarClicked(position, item)
                             }
                         }
                         //TODO handle how to move this
