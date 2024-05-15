@@ -19,6 +19,3 @@ fun MaterialBookmarkMaterialTheme(
         content = content
     )
 }
-val YantramanavRegularFontFamily = FontFamily(
-    Font(R.font.yantramanav_regular)
-)

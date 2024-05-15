@@ -83,7 +83,7 @@ class BookmarkListAdapter(
                             bookmarkTimestamp.text = item.timestamp?.toString() //"dd MMM"
 
                             bookmarkStarButton.apply {
-                                setColorFilter(getColorByStarType(this.context, item.isStar))
+                                setColorFilter(getColorByStarType(this.context, item.isLike))
                             }
 
                             itemView.setOnClickListener {

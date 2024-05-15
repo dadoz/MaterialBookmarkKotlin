@@ -1,6 +1,5 @@
 package com.application.material.bookmarkswallet.app.ui.views
 
-import android.animation.Animator
 import android.animation.AnimatorSet
 import android.content.Context
 import android.content.Intent
@@ -108,7 +107,7 @@ class MbBookmarkPreviewView : FrameLayout {
         //after calculation of data - otw cannot retrieve size
         previewBehaviourView?.state = BottomSheetBehavior.STATE_EXPANDED
 
-        when (bookmark.isStar) {
+        when (bookmark.isLike) {
             true -> bookmarkPreviewHeaderBinding.mbBookmarkPreviewStarButtonId.setColor(R.color.colorAccent)
             false -> bookmarkPreviewHeaderBinding.mbBookmarkPreviewStarButtonId.setColor(R.color.colorPrimary)
         }

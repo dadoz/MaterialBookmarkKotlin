@@ -1,7 +1,6 @@
 package com.application.material.bookmarkswallet.app.models
 
 import android.widget.ImageView
-import androidx.annotation.NonNull
 import androidx.databinding.BindingAdapter
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -15,19 +14,15 @@ import java.util.*
 
 @Entity(tableName = "mb_bookmark")
 data class Bookmark (
-        //TODO useless
         @SerializedName("site_name")
         var siteName: String?,
         @SerializedName("title")
         var title: String?,
-        //TODO useless
         @SerializedName("image")
         var image: String?,
-        //TODO mv to uniqueID
         @SerializedName("app_id")
         var appId: String?,
         @PrimaryKey
-        @NonNull
         @SerializedName("url")
         var url: String,
         @SerializedName("timestamp")
@@ -35,7 +30,7 @@ data class Bookmark (
         var timestamp: Date?,
         @SerializedName("is_star")
 //        @ContextualSerialization
-        var isStar: Boolean = false
+        var isLike: Boolean = false
 ): BookmarkType {
         companion object {
                 fun getId(url: String): String {

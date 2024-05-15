@@ -400,7 +400,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
                 .filter { bookmark ->
                     when (starFilterType) {
-                        IS_STAR_VIEW -> bookmark.isStar
+                        IS_STAR_VIEW -> bookmark.isLike
                         else -> true
                     }
                 }
@@ -438,7 +438,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             it
                 .doOnNext { list -> first = list.size }
                 .flatMap { list -> Observable.fromIterable(list) }
-                .filter { item -> item.isStar }
+                .filter { item -> item.isLike }
                 .toList().toObservable()
                 .doOnNext { list -> second = list.size }
                 .doOnNext { sizeEmptyDataPair.value = Pair(first, second) }
