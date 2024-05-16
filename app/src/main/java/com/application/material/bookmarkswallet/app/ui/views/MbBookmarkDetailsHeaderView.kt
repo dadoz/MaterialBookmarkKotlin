@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.application.material.bookmarkswallet.app.databinding.HeaderBookmarkViewBinding
-import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import java.util.Date
 
 class MbBookmarkDetailsHeaderView : RelativeLayout {

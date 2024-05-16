@@ -27,7 +27,7 @@ import com.application.material.bookmarkswallet.app.features.addBookmark.AddBook
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
 import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
 import com.application.material.bookmarkswallet.app.ui.*
-import com.application.material.bookmarkswallet.app.viewModels.SearchBookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.google.android.material.snackbar.Snackbar
 
 /**

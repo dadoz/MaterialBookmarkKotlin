@@ -9,7 +9,7 @@
 
         <variable
             name="addBookmarkViewModel"
-            type="com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewModel" />
+            type="com.application.material.bookmarkswallet.app.features.addBookmark.viewmodels.AddBookmarkViewModel" />
     </data>
 
     <LinearLayout
@@ -59,14 +59,13 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible">
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mbNewBookmarkUrlTextInputLayoutId"
                 style="@style/MBMaterialTextInputOutlinedYellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/yantramanav_thin"
-                android:hint="@string/search_your_bookmarks_string">
+                android:hint="@string/search_your_bookmark"
+                app:hintTextColor="@color/colorAccent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mbNewBookmarkUrlEditTextId"

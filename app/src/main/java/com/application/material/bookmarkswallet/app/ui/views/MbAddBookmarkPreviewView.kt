@@ -8,7 +8,7 @@ import android.widget.RelativeLayout
 import com.application.material.bookmarkswallet.app.databinding.AddBookmarkPreviewViewBinding
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
-import com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.addBookmark.viewmodels.AddBookmarkViewModel
 
 class MbAddBookmarkPreviewView : RelativeLayout {
     val binding: AddBookmarkPreviewViewBinding by lazy {

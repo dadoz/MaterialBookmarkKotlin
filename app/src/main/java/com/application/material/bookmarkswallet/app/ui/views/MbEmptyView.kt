@@ -15,7 +15,7 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.extensions.setColorByRes
 import com.application.material.bookmarkswallet.app.extensions.setImageDrawableByRes
 import com.application.material.bookmarkswallet.app.extensions.toggleVisibilty
-import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 
 class MbEmptyView : FrameLayout {
     private lateinit var viewModel: BookmarkViewModel

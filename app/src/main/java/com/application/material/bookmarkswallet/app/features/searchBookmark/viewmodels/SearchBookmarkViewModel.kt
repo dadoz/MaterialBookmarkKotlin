@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.viewModels
+package com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

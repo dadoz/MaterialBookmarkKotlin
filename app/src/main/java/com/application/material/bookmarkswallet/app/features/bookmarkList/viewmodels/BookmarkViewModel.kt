@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.viewModels
+package com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels
 
 import android.app.Application
 import androidx.databinding.ObservableField

@@ -17,10 +17,7 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import com.application.material.bookmarkswallet.app.models.setImageViewSquaredResource
 import com.google.android.material.card.MaterialCardView
 
 class BookmarkListAdapter(
@@ -93,12 +90,12 @@ class BookmarkListAdapter(
                                 onBookmarkStarClicked(position, item)
                             }
                         }
-                        //TODO handle how to move this
-                        Glide.with(holder.itemView.context)
-                            .load(item.image)
-                            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-                            .placeholder(R.drawable.ic_bookmark_light)
-                            .into(holder.bookmarkIcon)
+
+                        //set images
+                        setImageViewSquaredResource(
+                            holder.bookmarkIcon,
+                            item.iconUrl
+                        )
                     }
                 }
                 //BookmarkHeaderViewHolder

@@ -169,9 +169,9 @@ dependencies {
     implementation(libs.firebase.database.ktx)
 
     //coil
-//    implementation(libs.coil.compose)
+    implementation(libs.coil.compose)
     //glide
-    implementation(libs.glide)
+//    implementation(libs.glide)
 
     //test
     testImplementation(libs.junit)

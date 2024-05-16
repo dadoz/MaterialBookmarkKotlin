@@ -16,11 +16,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +32,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.BookmarkListLayoutViewBinding
@@ -35,6 +40,7 @@ import com.application.material.bookmarkswallet.app.extensions.setIconDependingO
 import com.application.material.bookmarkswallet.app.extensions.setStarColor
 import com.application.material.bookmarkswallet.app.extensions.toggleVisibiltyWithView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
+import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
@@ -50,12 +56,11 @@ import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbWhiteLightBlackFilter
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
-import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import timber.log.Timber
 import java.util.Date
 
 const val EMPTY_TITLE: String = "Bookmark"
@@ -303,22 +308,28 @@ class BookmarkListPageFragment : Fragment() {
                     }
                 }
             }
-
-            AppCompatResources.getDrawable(
-                LocalContext.current,
-                R.drawable.ic_bookmark_light
-            ).also {
-                Image(
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterHorizontally)
-                        .padding(Dimen.paddingMedium16dp)
-                        .width(Dimen.sizeExtraLarge64dp)
-                        .height(Dimen.sizeExtraLarge64dp),
-                    colorFilter = mbWhiteLightBlackFilter(),
-                    painter = rememberDrawablePainter(drawable = it),
-                    contentDescription = ""
+            val fallbackIcon: Painter = rememberDrawablePainter(
+                drawable = AppCompatResources.getDrawable(
+                    LocalContext.current,
+                    R.drawable.ic_bookmark_light
                 )
-            }
+            )
+
+            Timber.e(bookmark.toString())
+
+            AsyncImage(
+                model = bookmark.iconUrl,
+                error = fallbackIcon,
+                placeholder = fallbackIcon,
+                contentScale = ContentScale.Crop,
+                contentDescription = null,
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .padding(Dimen.paddingMedium16dp)
+                    .width(Dimen.sizeExtraLarge96dp)
+                    .height(Dimen.sizeExtraLarge96dp)
+                    .clip(CircleShape),
+            )
 
             Text(
                 modifier = Modifier
@@ -365,7 +376,7 @@ class BookmarkListPageFragment : Fragment() {
                 title = "This is a title",
                 siteName = "Blalallallalala",
                 timestamp = Date(),
-                image = "",
+                iconUrl = "",
                 url = "www.google.it",
                 appId = null,
                 isLike = false

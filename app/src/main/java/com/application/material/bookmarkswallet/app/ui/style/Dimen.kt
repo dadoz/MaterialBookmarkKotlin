@@ -41,6 +41,7 @@ object Dimen {
 
     //background values
     val sizeExtraLarge64dp = 64.dp
+    val sizeExtraLarge96dp = 96.dp
     val paddingExtraLarge64dp = 64.dp
 
     val sizeExtraLarge128dp = 128.dp

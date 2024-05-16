@@ -4,11 +4,9 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.application.material.bookmarkswallet.app.R
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -19,7 +17,7 @@ data class Bookmark (
         @SerializedName("title")
         var title: String?,
         @SerializedName("image")
-        var image: String?,
+        var iconUrl: String?,
         @SerializedName("app_id")
         var appId: String?,
         @PrimaryKey
@@ -41,18 +39,21 @@ data class Bookmark (
 
 @BindingAdapter("iconSrc")
 fun setImageViewResource(imageView: ImageView, url: String?) {
-        Glide.with(imageView.context)
-                .load(url)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.ic_bookmark_light)
-                .into(imageView)
+        imageView.load(url) {
+                crossfade(true)
+                placeholder(R.drawable.ic_bookmark_light)
+                error(R.drawable.ic_bookmark_light)
+                transformations(CircleCropTransformation())
+        }
 }
 
 @BindingAdapter("iconSquaredSrc")
 fun setImageViewSquaredResource(imageView: ImageView, url: String?) {
-        Glide.with(imageView.context)
-                .load(url)
-                .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-                .placeholder(R.drawable.ic_bookmark_light)
-                .into(imageView)
+        imageView.load(url) {
+                crossfade(true)
+                placeholder(R.drawable.ic_bookmark_light)
+                error(R.drawable.ic_bookmark_light)
+//                        .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
+                transformations(CircleCropTransformation())
+        }
 }

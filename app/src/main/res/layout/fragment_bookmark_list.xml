@@ -8,7 +8,7 @@
 
         <variable
             name="bookmarkViewModel"
-            type="com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel" />
+            type="com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

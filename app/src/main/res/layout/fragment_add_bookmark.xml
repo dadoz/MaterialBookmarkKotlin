@@ -9,7 +9,7 @@
 
         <variable
             name="addBookmarkViewModel"
-            type="com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewModel" />
+            type="com.application.material.bookmarkswallet.app.features.addBookmark.viewmodels.AddBookmarkViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -63,7 +63,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginBottom="@dimen/margin_16"
                         app:iconSquaredSrc="@{addBookmarkViewModel.bookmarkIconUrl}"
-                        tools:src="@drawable/ic_arrow_left" />
+                        tools:src="@drawable/ic_bookmark_light" />
 
                     <WebView
                         android:id="@+id/mbBookmarkSearchedUrlWebViewId"

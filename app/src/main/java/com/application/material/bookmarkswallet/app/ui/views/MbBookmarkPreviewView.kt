@@ -20,7 +20,7 @@ import com.application.material.bookmarkswallet.app.extensions.setColor
 import com.application.material.bookmarkswallet.app.extensions.setColorByRes
 import com.application.material.bookmarkswallet.app.extensions.setStrokeColorByColorRes
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.BookmarkAnimator
-import com.application.material.bookmarkswallet.app.viewModels.BookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -102,7 +102,7 @@ class MbBookmarkPreviewView : FrameLayout {
         binding.mbBookmarkPreviewHeaderViewId.setViewModel(bookmarkViewModel)
         binding.mbBookmarkPreviewHeaderViewId.setTitle(bookmark.title.let { if (it.isNullOrEmpty()) EMPTY_BOOKMARK_LABEL else it })
         binding.mbBookmarkPreviewHeaderViewId.setDescription(bookmark.timestamp)
-        binding.mbBookmarkPreviewHeaderViewId.setIcon(bookmark.image)
+        binding.mbBookmarkPreviewHeaderViewId.setIcon(bookmark.iconUrl)
         binding.mbBookmarkPreviewUrlTextId.text = "https://${bookmark.url}"
         //after calculation of data - otw cannot retrieve size
         previewBehaviourView?.state = BottomSheetBehavior.STATE_EXPANDED

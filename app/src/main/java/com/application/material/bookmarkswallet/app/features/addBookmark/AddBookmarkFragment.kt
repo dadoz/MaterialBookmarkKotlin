@@ -13,7 +13,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,14 +22,14 @@ import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentAddBookmarkBinding
-import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
 import com.application.material.bookmarkswallet.app.extensions.hideKeyboard
 import com.application.material.bookmarkswallet.app.extensions.hideKeyboardIfNeeded
 import com.application.material.bookmarkswallet.app.extensions.showKeyboard
+import com.application.material.bookmarkswallet.app.features.addBookmark.viewmodels.AddBookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
-import com.application.material.bookmarkswallet.app.viewModels.AddBookmarkViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -75,7 +74,9 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
         initView()
         when (arguments?.getString("actionType")) {
             SAVE_ACTION_BOOKMARK -> arguments?.getString("bookmarkUrl")
-                ?.let { searchBookmarkAction(it) }
+                ?.let {
+                    searchBookmarkAction(it)
+                }
 
             UPDATE_ACTION_BOOKMARK -> arguments?.getBundle("bookmark")
                 ?.let {
@@ -181,6 +182,7 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
             binding.mbBookmarkSearchedUrlWebViewId.apply {
                 visibility = GONE
                 webViewClient = object : WebViewClient() {
+                    @Deprecated("Deprecated in Java")
                     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                         url?.let {
                             view?.loadUrl(it)
@@ -238,29 +240,38 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
             .also { addBinding ->
                 addBinding.mbBookmarkUpdateNewButtonId.setOnClickListener {
                     addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
-                    addBookmarkViewModel.updateBookmark(
-                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.text.toString(),
-                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.tag.let {
-                            it?.toString() ?: ""
-                        },
-                        addBinding.mbNewBookmarkUrlTextId.text.toString()
-                    )
+                    //save bookmark
+                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId
+                        .let {
+                            addBookmarkViewModel.updateBookmark(
+                                title = it.text.toString(),
+                                iconUrl = addBookmarkViewModel.bookmarkIconUrl.get(),
+                                url = addBinding.mbNewBookmarkUrlTextId.text.toString()
+                            )
+                        }
                 }
             }
 
         addBookmarkPreviewBinding
             .also { addBinding ->
-                addBinding.mbBookmarkSaveNewButtonId.setOnClickListener {
-                    addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
-                    addBookmarkViewModel.saveBookmark(
-                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.text.toString(),
-                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.tag.let {
-                            it?.toString() ?: ""
-                        },
-                        addBinding.mbNewBookmarkUrlTextId.text.toString()
-                    )
-                }
+                addBinding.mbBookmarkSaveNewButtonId
+                    .setOnClickListener {
+                        //hide keyboard
+                        addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
+
+                        //save bookmark
+                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId
+                            .let {
+                                addBookmarkViewModel.saveBookmark(
+                                    title = it.text.toString(),
+                                    iconUrl = addBookmarkViewModel.bookmarkIconUrl.get(),
+                                    url = addBinding.mbNewBookmarkUrlTextId.text.toString()
+                                )
+                            }
+
+                    }
             }
+
         addBookmarkPreviewBinding
             .also { addBinding ->
                 addBinding.mbBookmarkUpdateSearchNewButtonId
@@ -275,23 +286,18 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
             }
         addBookmarkPreviewBinding
             .also { addBinding ->
-                (addBinding.mbNewBookmarkUrlEditTextId as AppCompatEditText).addTextChangedListener(
+                addBinding.mbNewBookmarkUrlEditTextId.addTextChangedListener(
                     object :
                         TextWatcher {
                         override fun beforeTextChanged(
-                            text: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
                         ) {
                         }
 
-                        override fun onTextChanged(
-                            text: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
-                        ) {
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         }
 
                         override fun afterTextChanged(text: Editable?) {
@@ -300,14 +306,6 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
                     })
             }
 
-        binding.mbBookmarkSearchedUrlAddPlaceholderId.setOnClickListener {
-            context?.let {
-//                CropImage.activity()
-//                    .setGuidelines(CropImageView.Guidelines.ON)
-//                    .start(it, this)
-            }
-
-        }
         addBookmarkPreviewBinding
             .also { addBinding ->
                 newBookmarkEditTitleViewBinding.mbNewBookmarkIconImageViewId.setOnClickListener {
@@ -351,10 +349,11 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
                 binding.mbNewBookmarkUrlTextId.text = url
                 newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = title
                 newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.setText(title)
-                iconUrl?.also {
-                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.tag = iconUrl
-                    addBookmarkViewModel.bookmarkIconUrl.set(iconUrl)
-                }
+                iconUrl
+                    ?.also {
+                        newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.tag = it
+                        addBookmarkViewModel.bookmarkIconUrl.set(it)
+                    }
                 url?.let { addBookmarkViewModel.updateWebviewByUrl(url) }
                 binding.mbNewBookmarkUrlCardviewId.isClickable = false
             }

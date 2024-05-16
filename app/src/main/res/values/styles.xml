@@ -100,7 +100,7 @@
     </style>
 
     <style name="MBMaterialTextHeaderBigViolet" parent="MBMaterialTextHeaderBigYellow">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
     <style name="MBMaterialTextHeaderBigThinViolet" parent="MBMaterialTextHeaderBigYellow">
