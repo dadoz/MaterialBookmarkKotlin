@@ -72,7 +72,6 @@
             android:layout_width="@dimen/bookmark_icon_card_size"
             android:layout_height="@dimen/bookmark_icon_card_size"
             android:layout_margin="@dimen/margin_16"
-            android:tint="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bookmarkUrlTextViewId"
