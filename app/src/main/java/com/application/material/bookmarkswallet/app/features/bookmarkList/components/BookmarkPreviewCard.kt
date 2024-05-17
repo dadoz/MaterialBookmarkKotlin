@@ -1,8 +1,8 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
-import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,8 +26,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.EMPTY_TITLE
@@ -43,7 +44,6 @@ import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyl
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import timber.log.Timber
 import java.util.Date
 
 @Composable
@@ -52,6 +52,9 @@ fun BookmarkPreviewCard(
     bookmark: Bookmark
 ) {
     val localUriHandler = LocalUriHandler.current
+    //fallbackIcon
+    val fallbackIcon = rememberDrawablePainterWithColor(res = R.drawable.ic_bookmark_light)
+
     MbCardView(
         modifier = modifier
     ) {
@@ -84,20 +87,12 @@ fun BookmarkPreviewCard(
                             .width(Dimen.sizeLarge32dp)
                             .height(Dimen.sizeLarge32dp),
                         painter = rememberDrawablePainter(drawable = it),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+                        colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
                         contentDescription = ""
                     )
                 }
             }
         }
-        val fallbackIcon: Painter = rememberDrawablePainter(
-            drawable = AppCompatResources.getDrawable(
-                LocalContext.current,
-                R.drawable.ic_bookmark_light
-            )
-        )
-
-        Timber.e(bookmark.toString())
 
         AsyncImage(
             model = bookmark.iconUrl,
@@ -161,6 +156,18 @@ fun BookmarkPreviewCard(
         )
     }
 }
+
+@Composable
+fun rememberDrawablePainterWithColor(res: Int): Painter = rememberDrawablePainter(
+    drawable = AppCompatResources.getDrawable(
+        LocalContext.current,
+        res
+    ).also {
+        it?.colorFilter = PorterDuffColorFilter(
+            ContextCompat.getColor(LocalContext.current, R.color.colorPrimary),
+            PorterDuff.Mode.SRC_ATOP
+        )
+    })
 
 @Composable
 @Preview
