@@ -15,7 +15,7 @@ import com.application.material.bookmarkswallet.app.databinding.PreviewBookmarkV
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter.Companion.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.extensions.setColor
 import com.application.material.bookmarkswallet.app.extensions.setColorByRes
 import com.application.material.bookmarkswallet.app.extensions.setStrokeColorByColorRes
@@ -110,28 +110,6 @@ class MbBookmarkPreviewView : FrameLayout {
         when (bookmark.isLike) {
             true -> bookmarkPreviewHeaderBinding.mbBookmarkPreviewStarButtonId.setColor(R.color.colorAccent)
             false -> bookmarkPreviewHeaderBinding.mbBookmarkPreviewStarButtonId.setColor(R.color.colorPrimary)
-        }
-    }
-
-    fun actionShareBookmark(callbackAction: (intent: Intent) -> Unit) {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, bookmark.toString())
-            type = "text/plain"
-        }
-
-        bookmarkPreviewHeaderBinding.mbShareBookmarkActionId.setOnClickListener {
-            callbackAction.invoke(sendIntent)
-        }
-    }
-
-    fun actionOpenPreviewBookmark(callbackAction: (intent: Intent) -> Unit) {
-        binding.mbBookmarkPreviewOpenInBrowserButtonId.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_VIEW
-                data = Uri.parse("https://${bookmark?.url}")
-            }
-            callbackAction.invoke(sendIntent)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.features.bookmarkList
+package com.application.material.bookmarkswallet.app.features.bookmarkList.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.extensions.setStarOutlineColor
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_VIEW_TYPE
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_LIST

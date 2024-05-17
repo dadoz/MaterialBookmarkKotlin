@@ -37,7 +37,7 @@ fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle().copy(
 
 @Composable
 fun mbButtonTextStyle() = TextStyle(
-    color = colorResource(R.color.colorPrimary),
+    color = MaterialTheme.colorScheme.primary,
     fontSize = MaterialTheme.typography.labelLarge.fontSize,
     fontFamily = MbYantramanavBoldFontFamily,
     fontWeight = FontWeight.Normal

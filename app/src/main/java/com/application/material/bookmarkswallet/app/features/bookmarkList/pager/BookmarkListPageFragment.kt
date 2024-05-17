@@ -1,45 +1,23 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.pager
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import coil.compose.AsyncImage
-import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.BookmarkListLayoutViewBinding
 import com.application.material.bookmarkswallet.app.extensions.setIconDependingOnSortAscending
 import com.application.material.bookmarkswallet.app.extensions.setStarColor
 import com.application.material.bookmarkswallet.app.extensions.toggleVisibiltyWithView
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum
@@ -50,22 +28,18 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTy
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
-import com.application.material.bookmarkswallet.app.ui.components.MbCardView
-import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
 import timber.log.Timber
-import java.util.Date
 
 const val EMPTY_TITLE: String = "Bookmark"
 
-class BookmarkListPageFragment : Fragment() {
+class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit) :
+    Fragment() {
     private lateinit var binding: BookmarkListLayoutViewBinding
 
     private var viewType: Int = 0
@@ -150,7 +124,6 @@ class BookmarkListPageFragment : Fragment() {
                     bookmarkFilter = bookmarkFilters,
                     onBookmarkItemClicked = { position, bookmark ->
                         openPreviewView(
-                            position,
                             bookmark
                         )
                     },
@@ -247,12 +220,13 @@ class BookmarkListPageFragment : Fragment() {
             }
     }
 
-    private fun openPreviewView(position: Int, bookmark: Bookmark) {
+    private fun openPreviewView(bookmark: Bookmark) {
         //compose view
         binding.mbBookmarkPreviewComposeCard
             .apply {
                 // is destroyed
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setViewCompositionStrategy(DisposeOnViewTreeLifecycleDestroyed)
+                //set content
                 setContent {
                     // In Compose world
                     MaterialBookmarkMaterialTheme {
@@ -262,125 +236,23 @@ class BookmarkListPageFragment : Fragment() {
                         )
                     }
                 }
-            }
-        BottomSheetBehavior.from(binding.mbBookmarkPreviewComposeCard).state = STATE_EXPANDED
-    }
+                //set callbacks
+                BottomSheetBehavior.from(this)
+                    .apply {
+                        //set state and add
+                        this.state = STATE_EXPANDED
+                        //set callback
+                        this.addBottomSheetCallback(object : BottomSheetCallback() {
+                            override fun onStateChanged(view: View, state: Int) {
+                                val isVisible = state != STATE_DRAGGING && state != STATE_SETTLING && state != STATE_EXPANDED
+                                bookmarkAddButtonVisibleCallback.invoke(isVisible)
+                            }
 
-    @Composable
-    fun BookmarkPreviewCard(
-        modifier: Modifier,
-        bookmark: Bookmark
-    ) {
-        MbCardView(
-            modifier = modifier
-        ) {
-            Box(
-                Modifier
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .align(alignment = Alignment.CenterEnd),
-                    horizontalArrangement = Arrangement.spacedBy(Dimen.paddingSmall8dp)
-                ) {
-                    listOf(
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.ic_share_light
-                        ),
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.ic_star_light
-                        ),
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.ic_pen_field
-                        )
-                    ).onEach {
-                        Image(
-                            modifier = Modifier
-                                .width(Dimen.sizeLarge32dp)
-                                .height(Dimen.sizeLarge32dp),
-                            painter = rememberDrawablePainter(drawable = it),
-                            contentDescription = ""
-                        )
+                            override fun onSlide(p0: View, p1: Float) {
+                            }
+                        })
+
                     }
-                }
             }
-            val fallbackIcon: Painter = rememberDrawablePainter(
-                drawable = AppCompatResources.getDrawable(
-                    LocalContext.current,
-                    R.drawable.ic_bookmark_light
-                )
-            )
-
-            Timber.e(bookmark.toString())
-
-            AsyncImage(
-                model = bookmark.iconUrl,
-                error = fallbackIcon,
-                placeholder = fallbackIcon,
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(Dimen.paddingMedium16dp)
-                    .width(Dimen.sizeExtraLarge96dp)
-                    .height(Dimen.sizeExtraLarge96dp)
-                    .clip(CircleShape),
-            )
-
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = Dimen.paddingExtraSmall4dp),
-                style = mbTitleBoldTextStyle(),
-                text = bookmark.title ?: EMPTY_TITLE
-            )
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = Dimen.paddingExtraSmall4dp),
-                style = mbSubtitleTextStyle(),
-                text = bookmark.url
-            )
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = Dimen.paddingMedium16dp),
-                style = mbSubtitleLightTextStyle(),
-                text = bookmark.timestamp.toString()
-            )
-
-            ExtendedFloatingActionButton(
-                modifier = Modifier
-                    .align(alignment = Alignment.End),
-                onClick = { }) {
-                Text(
-                    modifier = Modifier,
-                    style = mbButtonTextStyle(),
-                    text = "Open"
-                )
-            }
-        }
-    }
-
-    @Composable
-    @Preview
-    @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-    fun BookmarkPreviewCardPreview() {
-        BookmarkPreviewCard(
-            modifier = Modifier,
-            bookmark = Bookmark(
-                title = "This is a title",
-                siteName = "Blalallallalala",
-                timestamp = Date(),
-                iconUrl = "",
-                url = "www.google.it",
-                appId = null,
-                isLike = false
-            )
-        )
     }
 }

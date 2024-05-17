@@ -5,28 +5,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
+const val MB_VIEWPAGER_TYPE = "MB_VIEWPAGER_TYPE"
 
-class BookmarkListPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-    private val NUM_PAGES = 1
-    lateinit var currentFragment: Fragment
+class BookmarkListPagerAdapter(
+    fa: FragmentActivity,
+    private val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit
+) :
+    FragmentStateAdapter(fa) {
 
-    override fun getItemCount(): Int {
-        return NUM_PAGES
-    }
+    override fun getItemCount(): Int = 1
 
-    override fun createFragment(position: Int): Fragment {
-        when (position) {
-            0 -> {
-                currentFragment = BookmarkListPageFragment().apply {
-                    arguments = Bundle().apply { putInt("MB_VIEWPAGER_TYPE", 0) }
-                }
+    override fun createFragment(position: Int): Fragment =
+        BookmarkListPageFragment(bookmarkAddButtonVisibleCallback = bookmarkAddButtonVisibleCallback)
+            .apply {
+                arguments = Bundle()
+                    .apply { putInt(MB_VIEWPAGER_TYPE, position) }
             }
-            else -> {
-                currentFragment = BookmarkListPageFragment().apply {
-                    arguments = Bundle().apply { putInt("MB_VIEWPAGER_TYPE", 1) }
-                }
-            }
-        }
-        return currentFragment
-    }
 }

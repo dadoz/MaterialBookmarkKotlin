@@ -16,9 +16,9 @@ import com.application.material.bookmarkswallet.app.OnFragmentInteractionListene
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.FragmentBookmarkListBinding
+import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.BookmarkListPagerAdapter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.BookmarkListPagerAdapter
 
 class BookmarkListFragment : Fragment() {
     private lateinit var binding: FragmentBookmarkListBinding
@@ -37,9 +37,10 @@ class BookmarkListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentBookmarkListBinding.inflate(inflater, container, false).also {
-        binding = it
-    }.root
+    ): View = FragmentBookmarkListBinding.inflate(inflater, container, false)
+        .also {
+            binding = it
+        }.root
 
     /**
      * init view app
@@ -61,6 +62,7 @@ class BookmarkListFragment : Fragment() {
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_bookmark_list, menu)
@@ -93,7 +95,10 @@ class BookmarkListFragment : Fragment() {
         activity?.let {
             binding.mbMaterialBookmarkViewPagerId.apply {
                 isUserInputEnabled = false
-                adapter = BookmarkListPagerAdapter(it)
+                adapter = BookmarkListPagerAdapter(it) {
+                    binding.mbBookmarkAddNewButtonId.visibility =
+                        it.takeIf { it }?.let { View.VISIBLE } ?: View.GONE
+                }
             }
         }
 
@@ -130,5 +135,4 @@ class BookmarkListFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
 }

@@ -16,7 +16,7 @@ import com.application.material.bookmarkswallet.app.OnFragmentInteractionListene
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.extensions.changeToolbarFont
 import com.application.material.bookmarkswallet.app.databinding.ActivitySettingsBinding
-import com.application.material.bookmarkswallet.app.features.bookmarkList.inflate
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.inflate
 import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity.SettingsAdapter.SettingsViewHolder
 
 class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {

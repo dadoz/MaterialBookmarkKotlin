@@ -14,8 +14,8 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.Compan
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.Companion.LIST_SPAN_COUNT
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_GRID
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter.BookmarkViewItemType.BOOKMARK_HEADER_TYPE
 
 
 class BookmarkRecyclerViewBehavior {

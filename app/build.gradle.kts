@@ -39,7 +39,7 @@ android {
         applicationId = "com.application.material.bookmarkswallet.app"
         minSdk = 30
         targetSdk = 34
-        versionCode = major * 10000 + minor * 100 + patch + timestamp
+        versionCode = (major * 10000 + minor * 100 + patch)
         versionName = "$major.$minor.$patch"
         buildConfigField("String", "BOOKMARK_INFO_URL", "\"https://api.urlmeta.org\"")
 
