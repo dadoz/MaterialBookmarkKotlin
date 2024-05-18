@@ -1,18 +1,25 @@
 package com.application.material.bookmarkswallet.app.ui.style
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
 import com.application.material.bookmarkswallet.app.R
+const val densityResizeFactor = 1f
 
 @Composable
 fun mbTitleBoldTextStyle() = TextStyle(
@@ -55,12 +62,36 @@ fun mbWhiteLightBlackFilter(isEnabled: Boolean = true) =
 @Composable
 fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
-        containerColor =
-        when (isSystemInDarkTheme()) {
-            true -> MaterialTheme.colorScheme.onSurface
-            else -> MaterialTheme.colorScheme.surfaceContainerLow
-        }
+        containerColor = mbGrayLightColor()
+
     )
+
+@Composable
+fun mbGrayLightColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MaterialTheme.colorScheme.onSurface
+        else -> MaterialTheme.colorScheme.surfaceContainerLow
+    }
+}
+
+@Composable
+fun mbBottomSheetRoundedCornerShape() = RoundedCornerShape(
+    topStart = Dimen.mbModalRoundedCornerSize,
+    topEnd = Dimen.mbModalRoundedCornerSize
+)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun expandedBottomSheetState(): SheetState = rememberModalBottomSheetState(
+    skipPartiallyExpanded = true,
+    confirmValueChange = { true }
+)
+fun Density.getResizedDensity(): Float {
+    return when {
+        (this.density > 2.5f && this.density < 3.0f) -> this.density
+        else -> this.density * densityResizeFactor
+    }
+}
 
 //---------------------FONT FAMILY
 val MbYantramanavRegularFontFamily = FontFamily(

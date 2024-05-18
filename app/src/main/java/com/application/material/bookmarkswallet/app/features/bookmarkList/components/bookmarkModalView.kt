@@ -71,7 +71,7 @@ fun BookmarkPreviewCard(
                 listOf(
                     AppCompatResources.getDrawable(
                         LocalContext.current,
-                        R.drawable.ic_share_light
+                        R.drawable.ic_edit_light_square
                     ),
                     AppCompatResources.getDrawable(
                         LocalContext.current,
@@ -79,7 +79,7 @@ fun BookmarkPreviewCard(
                     ),
                     AppCompatResources.getDrawable(
                         LocalContext.current,
-                        R.drawable.ic_pen_field
+                        R.drawable.ic_share_light
                     )
                 ).onEach {
                     Image(

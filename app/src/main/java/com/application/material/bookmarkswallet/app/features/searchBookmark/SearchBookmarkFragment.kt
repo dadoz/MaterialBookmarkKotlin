@@ -10,6 +10,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -25,9 +28,11 @@ import com.application.material.bookmarkswallet.app.extensions.hideKeyboard
 import com.application.material.bookmarkswallet.app.extensions.hideKeyboardIfNeeded
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment.Companion.SAVE_ACTION_BOOKMARK
+import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
 import com.application.material.bookmarkswallet.app.ui.*
-import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
+import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -173,6 +178,33 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                 }
             })
         }
+
+        //set content modal view
+//        setContentModalView()
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    private fun setContentModalView() {
+        //compose view
+        binding.mbNewBookmarkUrlComposeView
+            .apply {
+                // is destroyed
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                //set content
+                setContent {
+                    // In Compose world
+                    MaterialBookmarkMaterialTheme {
+                        BookmarkModalBottomSheetView(
+                            modifier = Modifier,
+                            bottomSheetState = expandedBottomSheetState(),
+                            url = "https://www.ecosia.com",
+                            onCloseCallback = {
+
+                            }
+                        )
+                    }
+                }
+            }
     }
 
     override fun onAttach(context: Context) {

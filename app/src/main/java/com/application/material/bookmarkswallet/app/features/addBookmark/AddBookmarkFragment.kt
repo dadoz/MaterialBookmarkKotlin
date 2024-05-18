@@ -30,6 +30,7 @@ import com.application.material.bookmarkswallet.app.features.settings.SettingsAc
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
+import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 /**
  * A simple [Fragment] subclass.
@@ -218,8 +219,8 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer { bookmarkInfo ->
             binding.mbAddBookmarkPreviewId.setTitleAndIconImage(
-                bookmarkInfo.meta.title,
-                bookmarkInfo.meta.image
+                bookmarkInfo.sitename ?: EMPTY,
+                bookmarkInfo.favicon ?: EMPTY
             )
         })
 

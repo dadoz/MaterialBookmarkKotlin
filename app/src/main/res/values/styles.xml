@@ -76,7 +76,7 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
-    <style name="MBMaterialTextHeaderViolet" parent="Widget.AppCompat.TextView">
+    <style name="MBMaterialTextHeaderViolet" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_36</item>
@@ -117,7 +117,7 @@
     </style>
 
 
-    <style name="MBMaterialTextDescrSmallViolet" parent="Widget.AppCompat.TextView">
+    <style name="MBMaterialTextDescrSmallViolet" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/yantramanav_thin</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_14</item>
@@ -176,7 +176,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
-    <style name="MBMaterialTextSubtitleYellow" parent="Widget.AppCompat.TextView">
+    <style name="MBMaterialTextSubtitleYellow" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/yantramanav_light</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_26</item>
@@ -260,12 +260,12 @@
     </style>
 
 
-    <style name="MBMaterialTextInputOutlinedYellow" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="MBMaterialTextInputOutlinedYellow" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorAccent</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
 
-    <style name="MBMaterialTextInputOutlinedViolet" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="MBMaterialTextInputOutlinedViolet" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorPrimary</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>

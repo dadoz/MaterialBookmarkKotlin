@@ -124,7 +124,7 @@ object Dimen {
     val sizeAlignmentDashboard: Dp = (-12).dp
 
     //wev modal web view
-    val myVeModalRoundedCornerSize = 11.dp
+    val mbModalRoundedCornerSize = 11.dp
 
     val stepsContentCardHeightIn = 250.dp
 

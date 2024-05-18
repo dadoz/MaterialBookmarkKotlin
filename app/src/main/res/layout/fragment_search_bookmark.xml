@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:visibility="visible"
-            app:title="@string/app_name"
             app:menu="@menu/menu_search_bookmark"
+            app:title="@string/app_name"
             app:titleTextColor="@color/colorPrimary" />
 
         <LinearLayout
@@ -76,47 +76,47 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
                 android:layout_marginTop="@dimen/margin_8">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/mbBookmarkSearchPasteClipboardButtonId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:background="?attr/selectableItemBackground">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_clipboard_text_alt"
-                        app:tint="@color/colorPrimary"
-                        tools:visibility="visible" />
 
                     <TextView
                         style="@style/MBMaterialTextDescrUltraSmallBoldViolet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_8"
-                        android:layout_toEndOf="@+id/mbNewBookmarkUrlClipboardLayoutId"
-                        android:text="@string/paste_nclipboard" />
-                </RelativeLayout>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/margin_8"
+                        android:text="@string/paste_clipboard" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/mbNewBookmarkUrlClipboardLayoutId"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_clipboard_text_alt"
+                        app:tint="@color/colorPrimary"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/mbsearchBookmarkButtonViewId"
                     style="@style/MBMaterialButtonStyleOutlineYellow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:text="@string/search"
                     tools:visibility="visible" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -133,4 +133,13 @@
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
+    <!-- preivew view-->
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/mbNewBookmarkUrlComposeView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="?attr/colorTertiary" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

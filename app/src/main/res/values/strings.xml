@@ -36,7 +36,7 @@
     <string name="title">Title</string>
     <string name="search_nbookmark">Search \nBookmark</string>
     <string name="just_type_a_bookmark">just type a bookmark</string>
-    <string name="paste_nclipboard">PASTE \nCLIPBOARD</string>
+    <string name="paste_clipboard">paste from clipboard</string>
     <string name="description">Description</string>
     <string name="value">value</string>
     <string name="title_insert">Title insert...</string>

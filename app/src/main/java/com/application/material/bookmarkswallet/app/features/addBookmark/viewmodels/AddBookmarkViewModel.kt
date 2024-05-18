@@ -115,17 +115,20 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
                 bookmarkListDataRepository.findBookmarkInfo(url = it) ?: Observable.empty()
             }
             .doOnNext { bookmarksInfo ->
-                if (!bookmarksInfo.meta.image.contains("https")) {
-                    bookmarksInfo.meta.image = "https://$url/" + bookmarksInfo.meta.image
+                //print ciao bookmarksinfo
+                Timber.e(bookmarksInfo.toString())
+
+                if (bookmarksInfo.favicon?.contains("https") != true) {
+                    bookmarksInfo.favicon = "https://$url/" + bookmarksInfo.favicon
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
             .compose(attachLoaderOnView())
             .subscribe(
                 { data ->
-                    data.meta.apply {
-                        image = image.replace("//", "/").replace("https:/", "https://")
-                        bookmarkIconUrl.set(image)
+                    data.apply {
+                        favicon = favicon.replace("//", "/").replace("https:/", "https://")
+                        bookmarkIconUrl.set(favicon)
                     }
                     bookmarkInfoLiveData.value = data
                 },

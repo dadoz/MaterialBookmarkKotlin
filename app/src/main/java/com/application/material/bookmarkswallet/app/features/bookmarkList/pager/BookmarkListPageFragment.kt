@@ -37,6 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLIN
 import timber.log.Timber
 
 const val EMPTY_TITLE: String = "Bookmark"
+const val N_COUNT_GRID_BOOKMARKS = 2
 
 class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit) :
     Fragment() {
@@ -116,7 +117,7 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
         bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
             //set recyclerview
             binding.mbBookmarkRecyclerViewId.apply {
-                layoutManager = GridLayoutManager(context, 2)
+                layoutManager = GridLayoutManager(context, N_COUNT_GRID_BOOKMARKS)
                 setGridOrListLayout(ListViewTypeEnum.entries[bookmarkFilters.listViewType])
 
                 adapter = BookmarkListAdapter(
