@@ -25,6 +25,8 @@
                 android:id="@+id/mbNewBookmarkEditTitleViewId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout="@layout/header_bookmark_view"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
 
@@ -125,7 +127,7 @@
                 android:layout_toStartOf="@+id/mbBookmarkSaveNewButtonId"
                 android:text="@string/save_your_bookmark_label" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/mbBookmarkSaveNewButtonId"
                 style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="wrap_content"
@@ -133,11 +135,12 @@
                 android:layout_alignParentEnd="true"
                 android:text="@string/save_label_button" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/mbBookmarkUpdateNewButtonId"
                 style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:layout_alignParentEnd="false"
                 android:layout_alignParentEnd="true"
                 android:text="@string/update_label_button" />
         </RelativeLayout>
@@ -159,9 +162,9 @@
                 android:layout_toStartOf="@+id/mbBookmarkUpdateSearchNewButtonId"
                 android:text="@string/search_your_bookmarks_string" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/mbBookmarkUpdateSearchNewButtonId"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

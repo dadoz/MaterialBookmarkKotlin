@@ -242,6 +242,7 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
                 addBinding.mbBookmarkUpdateNewButtonId.setOnClickListener {
                     addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
                     //save bookmark
+                    addBinding.mbNewBookmarkUrlTextId.visibility = VISIBLE
                     newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId
                         .let {
                             addBookmarkViewModel.updateBookmark(
@@ -259,7 +260,7 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
                     .setOnClickListener {
                         //hide keyboard
                         addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
-
+                        addBinding.mbNewBookmarkUrlTextId.visibility = VISIBLE
                         //save bookmark
                         newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId
                             .let {
@@ -277,10 +278,13 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
             .also { addBinding ->
                 addBinding.mbBookmarkUpdateSearchNewButtonId
                     .setOnClickListener {
+                        //set search mode
                         binding.mbAddBookmarkPreviewId.setStatusVisibility(SEARCH)
-                        searchBookmarkAction(addBinding.mbNewBookmarkUrlEditTextId.text.toString())
+                        //hide keyboard
                         addBinding.mbNewBookmarkUrlEditTextId.hideKeyboard()
                         newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.hideKeyboard()
+                        //search bookmark
+                        searchBookmarkAction(addBinding.mbNewBookmarkUrlEditTextId.text.toString())
                         newBookmarkEditTitleViewBinding.mbNewBookmarkIconImageViewId.visibility =
                             VISIBLE
                     }
@@ -347,6 +351,7 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
 
                 newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextInputId.requestFocus()
 
+                binding.mbNewBookmarkUrlTextId.visibility = VISIBLE
                 binding.mbNewBookmarkUrlTextId.text = url
                 newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = title
                 newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.setText(title)
@@ -368,13 +373,19 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
             .also { binding ->
                 binding.mbBookmarkUpdateNewButtonId.visibility = GONE
                 VISIBLE.let {
-                    binding.mbBookmarkSaveNewButtonId.visibility = it
-                    binding.mbNewBookmarkAddEditButtonId.visibility = it
+                    binding.mbBookmarkSaveNewButtonId.visibility = VISIBLE
+                    binding.mbNewBookmarkAddEditButtonId.visibility = VISIBLE
                 }
 
                 binding.mbNewBookmarkUrlTextId.text = url
+                newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = "Balallllllallalal"
+                newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.visibility = VISIBLE
                 addBookmarkViewModel.updateWebviewByUrl(url)
                 addBookmarkViewModel.findBookmarkInfoByUrl(url)
+                addBookmarkViewModel.bookmarkInfoLiveData.observe(viewLifecycleOwner) {
+                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = it.sitename
+                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.setText(it.sitename)
+                }
             }
     }
 

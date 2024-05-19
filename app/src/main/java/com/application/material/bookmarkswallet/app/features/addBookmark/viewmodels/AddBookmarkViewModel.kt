@@ -61,9 +61,6 @@ class AddBookmarkViewModel(application: Application) : AndroidViewModel(applicat
      *
      */
     fun saveBookmark(title: String, iconUrl: String?, url: String) {
-        Timber.e(title)
-        Timber.e(url)
-        Timber.e(iconUrl)
         viewModelScope.launch {
             try {
                 Bookmark(

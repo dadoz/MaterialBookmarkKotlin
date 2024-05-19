@@ -21,16 +21,15 @@
 
     <TextView
         android:id="@+id/mbNewBookmarkTitleTextViewId"
-        style="@style/MBMaterialTextHeaderBigViolet"
+        style="@style/MBMaterialTextHeaderBigYellow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_32"
         android:maxLines="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/mbNewBookmarkIconImageViewId"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title..."
+        tools:text="this is a a small description"
         tools:visibility="visible" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -38,7 +37,6 @@
         style="@style/MBMaterialTextInputOutlinedViolet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_32"
         android:hint="@string/title_insert"
         android:textColorHint="@color/colorPrimary"
         android:visibility="gone"
@@ -64,6 +62,7 @@
         android:padding="@dimen/margin_8"
         android:src="@drawable/ic_web_light"
         android:tint="@color/colorPrimary"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
