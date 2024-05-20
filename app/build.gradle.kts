@@ -75,6 +75,7 @@ android {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
     namespace = "com.application.material.bookmarkswallet.app"
 }
