@@ -1,6 +1,5 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.pager
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
@@ -29,6 +27,8 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
+import com.application.material.bookmarkswallet.app.utils.N_COUNT_GRID_BOOKMARKS
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
@@ -36,14 +36,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDE
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
 import timber.log.Timber
 
-const val EMPTY_TITLE: String = "Bookmark"
-const val N_COUNT_GRID_BOOKMARKS = 2
-
 class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit) :
     Fragment() {
     private lateinit var binding: BookmarkListLayoutViewBinding
 
-    private var viewType: Int = 0
+    private var viewType: Int = ZERO
     private val bookmarkViewModel by lazy {
         ViewModelProvider(this)[BookmarkViewModel::class.java]
     }
@@ -66,140 +63,142 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewType = arguments?.getInt("MB_VIEWPAGER_TYPE") ?: 0
+        viewType = arguments?.getInt("MB_VIEWPAGER_TYPE") ?: ZERO
+        //init data
+        loadData()
+        //init view
         initView()
     }
 
-    fun initView() {
-        when (viewType) {
-            0 -> {
-                bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
-                initViewDefault()
-            }
-
-            else -> {
-                bookmarkFilters.starFilterType = IS_STAR_VIEW
-                initViewStar()
-            }
-        }
-    }
-
-    private fun initViewStar() {
-        initViewDefault()
+    //todo move to vm
+    fun loadData() {
+        bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
     }
 
     /**
      *
      */
-    @SuppressLint("FragmentLiveDataObserve")
-    private fun initViewDefault() {
+    private fun initView() {
         binding.mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_DEFAULT_VIEW)
 
-        bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
-
         //event update list
-        bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(this, Observer { pairData ->
+        bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(viewLifecycleOwner) { pairData ->
             val positionList = pairData.first
-            pairData.second?.let { list ->
-                binding.mbBookmarkRecyclerViewId.apply {
-                    adapter?.let {
-                        (it as BookmarkListAdapter).setItems(list)
-                        it.notifyItemRemoved(positionList[0])
-                        if (positionList[1] != -1)
-                            it.notifyItemRemoved(positionList[1])
-                        it.notifyItemRangeChanged(positionList[0], list.size - positionList[0])
-                    }
+            pairData.second
+                ?.let { list ->
+                    (binding.mbBookmarkRecyclerViewId.adapter as? BookmarkListAdapter)
+                        ?.apply {
+                            setItems(list)
+                            notifyItemRemoved(positionList[0])
+                            if (positionList[1] != -1) {
+                                notifyItemRemoved(positionList[1])
+                            }
+                            notifyItemRangeChanged(
+                                positionList[0],
+                                list.size - positionList[0]
+                            )
+                        }
                 }
-            }
-        })
+        }
 
         //event retrieve list
-        bookmarkViewModel.bookmarksLiveData.observe(this, Observer { list ->
+        bookmarkViewModel.bookmarksLiveData.observe(viewLifecycleOwner) { list ->
             //set recyclerview
-            binding.mbBookmarkRecyclerViewId.apply {
-                layoutManager = GridLayoutManager(context, N_COUNT_GRID_BOOKMARKS)
-                setGridOrListLayout(ListViewTypeEnum.entries[bookmarkFilters.listViewType])
+            binding.mbBookmarkRecyclerViewId
+                .apply {
+                    //set layout manager
+                    layoutManager = GridLayoutManager(context, N_COUNT_GRID_BOOKMARKS)
 
-                adapter = BookmarkListAdapter(
-                    items = list,
-                    bookmarkFilter = bookmarkFilters,
-                    onBookmarkItemClicked = { position, bookmark ->
-                        openPreviewView(
-                            bookmark
-                        )
-                    },
-                    onBookmarkStarClicked = { position, bookmark ->
-                        bookmark.isLike = !bookmark.isLike
-                        //toggling status
-                        bookmarkViewModel.setStarBookmark(bookmark)
-                        adapter?.notifyDataSetChanged()
-                        if (bookmarkFilters.starFilterType == IS_STAR_VIEW) {
-                            adapter?.notifyItemRemoved(position)
-                            bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                    //set grid layout
+                    setGridOrListLayout(listViewType = ListViewTypeEnum.entries[bookmarkFilters.listViewType])
+
+                    //set adapter
+                    adapter = BookmarkListAdapter(
+                        items = list,
+                        bookmarkFilter = bookmarkFilters,
+                        onBookmarkItemClicked = { position, bookmark ->
+                            openPreviewView(
+                                bookmark
+                            )
+                        },
+                        onBookmarkStarClicked = { position, bookmark ->
+                            bookmark.isLike = !bookmark.isLike
+                            //toggling status
+                            bookmarkViewModel.setStarBookmark(bookmark)
+                            adapter?.notifyDataSetChanged()
+                            if (bookmarkFilters.starFilterType == IS_STAR_VIEW) {
+                                adapter?.notifyItemRemoved(position)
+                                bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                            }
                         }
-                    }
-                )
-            }
-        })
+                    )
+                }
+        }
 
-        bookmarkViewModel.bookmarkListSize.observe(this, Observer {
-            binding.mbBookmarkHeaderTotBookmarkLabelId.apply { text = it }
-        })
+        bookmarkViewModel.bookmarkListSize.observe(viewLifecycleOwner) {
+            binding.mbBookmarkHeaderTotBookmarkLabelId
+                .apply { text = it }
+        }
 
-        binding.mbBookmarkHeaderSortFilterIconId.apply {
-            setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
-            setOnClickListener {
-                bookmarkFilters.toggleSortAscending()
-                bookmarkViewModel.sortBookmarkAscending(bookmarkFilters = bookmarkFilters)
+        binding.mbBookmarkHeaderSortFilterIconId
+            .apply {
                 setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
-            }
-        }
-
-        binding.mbBookmarkHeaderSortFilterByTitleChipId.apply {
-            visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_TITLE)
-            setOnClickListener {
-                bookmarkFilters.setSortByTitle()
-                bookmarkViewModel.sortBookmarkByTitle(bookmarkFilters = bookmarkFilters)
-                it.toggleVisibiltyWithView(binding.mbBookmarkHeaderSortFilterByDateChipId)
-            }
-        }
-
-        binding.mbBookmarkHeaderSortFilterByDateChipId.apply {
-            visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_DATE)
-            setOnClickListener {
-                bookmarkFilters.setSortByDate()
-                bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
-                it.toggleVisibiltyWithView(binding.mbBookmarkHeaderSortFilterByTitleChipId)
-            }
-        }
-
-        binding.mbBookmarkHeaderListFilterIconId.apply {
-            visibility = bookmarkFilters.getVisibilityByViewType(IS_LIST)
-            setOnClickListener {
-                bookmarkFilters.setListViewType()
-                binding.mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST)
-                it.toggleVisibiltyWithView(binding.mbBookmarkHeaderCardFilterIconId)
-
-                //TODO is really bad this updated
-                bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
-                bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                setOnClickListener {
+                    bookmarkFilters.toggleSortAscending()
+                    bookmarkViewModel.sortBookmarkAscending(bookmarkFilters = bookmarkFilters)
+                    setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
+                }
             }
 
-        }
-
-        binding.mbBookmarkHeaderCardFilterIconId.apply {
-            visibility = bookmarkFilters.getVisibilityByViewType(IS_GRID)
-            setOnClickListener {
-                bookmarkFilters.setGridViewType()
-                binding.mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID)
-                it.toggleVisibiltyWithView(binding.mbBookmarkHeaderListFilterIconId)
-                binding.mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
-
-                //TODO is really bad this updated
-                bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
-                bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+        binding.mbBookmarkHeaderSortFilterByTitleChipId
+            .apply {
+                visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_TITLE)
+                setOnClickListener {
+                    bookmarkFilters.setSortByTitle()
+                    bookmarkViewModel.sortBookmarkByTitle(bookmarkFilters = bookmarkFilters)
+                    it.toggleVisibiltyWithView(binding.mbBookmarkHeaderSortFilterByDateChipId)
+                }
             }
-        }
+
+        binding.mbBookmarkHeaderSortFilterByDateChipId
+            .apply {
+                visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_DATE)
+                setOnClickListener {
+                    bookmarkFilters.setSortByDate()
+                    bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
+                    it.toggleVisibiltyWithView(binding.mbBookmarkHeaderSortFilterByTitleChipId)
+                }
+            }
+
+        binding.mbBookmarkHeaderListFilterIconId
+            .apply {
+                visibility = bookmarkFilters.getVisibilityByViewType(IS_LIST)
+                setOnClickListener {
+                    bookmarkFilters.setListViewType()
+                    binding.mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST)
+                    it.toggleVisibiltyWithView(binding.mbBookmarkHeaderCardFilterIconId)
+
+                    //TODO is really bad this updated
+                    bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
+                    bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                }
+
+            }
+
+        binding.mbBookmarkHeaderCardFilterIconId
+            .apply {
+                visibility = bookmarkFilters.getVisibilityByViewType(IS_GRID)
+                setOnClickListener {
+                    bookmarkFilters.setGridViewType()
+                    binding.mbBookmarkRecyclerViewId.setGridOrListLayout(IS_GRID)
+                    it.toggleVisibiltyWithView(binding.mbBookmarkHeaderListFilterIconId)
+                    binding.mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
+
+                    //TODO is really bad this updated
+                    bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
+                    bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+                }
+            }
 
 //        mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
 //            views = listOf(
@@ -209,12 +208,11 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
 //        )
 
         //handle empty view
-        val owner = this
         binding.mbBookmarkEmptyViewId
             .also {
                 it.setViewModel(bookmarkViewModel)
                 it.init(
-                    owner = owner,
+                    owner = viewLifecycleOwner,
                     bookmarkFilter = bookmarkFilters,
                     recyclerView = binding.mbBookmarkRecyclerViewId
                 )
@@ -245,7 +243,8 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                         //set callback
                         this.addBottomSheetCallback(object : BottomSheetCallback() {
                             override fun onStateChanged(view: View, state: Int) {
-                                val isVisible = state != STATE_DRAGGING && state != STATE_SETTLING && state != STATE_EXPANDED
+                                val isVisible =
+                                    state != STATE_DRAGGING && state != STATE_SETTLING && state != STATE_EXPANDED
                                 bookmarkAddButtonVisibleCallback.invoke(isVisible)
                             }
 

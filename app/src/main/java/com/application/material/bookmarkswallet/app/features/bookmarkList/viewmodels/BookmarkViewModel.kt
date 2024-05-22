@@ -3,7 +3,9 @@ package com.application.material.bookmarkswallet.app.features.bookmarkList.viewm
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
@@ -15,10 +17,10 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
+import com.application.material.bookmarkswallet.app.utils.EMPTY
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import java.util.Locale
@@ -29,24 +31,27 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
     var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<List<Int>, List<Bookmark>?>> =
         MutableLiveData()
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
-    var sizeEmptyDataPair: MutableLiveData<Pair<Int, Int>> =
-        MutableLiveData(Pair(0, 0)) //total and star
     var bookmarkListSize: MutableLiveData<String> = MutableLiveData()
     private val bookmarkListDataRepository: BookmarkListDataRepository =
         BookmarkListDataRepository(getApplication())
+
+    //delete status
     private val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    private var compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    //empty view
+    var sizeEmptyDataPair:
+            LiveData<Pair<Int, Int>> = bookmarksLiveData
+        .map { Pair(it.size, 0) }//total and star
 
     /**
      * retrieve bookamr list
      */
     fun retrieveBookmarkList(bookmarkFilter: BookmarkFilter) {
-        val disposable = Observable.just("")
+        Observable.just(EMPTY)
             .doOnNext { _ -> bookmarkFilter.isSearchViewType = false }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .compose(setListSizeComposable())
             .compose(filterByStarTypeComposable(bookmarkFilter.starFilterType))
             .compose(updatedBookmarkListSizeComposable())
             .compose(
@@ -72,8 +77,6 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 { error ->
                     Timber.e(error)
                 })
-
-        compositeDisposable.add(disposable)
     }
 
     /**
@@ -81,7 +84,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
      *
      */
     fun deleteBookmark(bookmark: Bookmark) {
-        val disposable = Observable.just(bookmark)
+        Observable.just(bookmark)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(bookmarkListDataRepository::deleteBookmark)
@@ -90,34 +93,28 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                     bookmarkListSize.value?.toInt()?.minus(1).toString()
             }
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .compose(setListSizeComposable())
             .subscribe({ success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
-        compositeDisposable.add(disposable)
-
     }
 
     /**
      * composable to add Header on bookmark
      */
     fun setStarBookmark(bookmark: Bookmark) {
-        val disposable = Observable.just(bookmark)
+        Observable.just(bookmark)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(bookmarkListDataRepository::updateBookmark)
             .flatMap { bookmarkListDataRepository.getBookmarks() }
-            .compose(setListSizeComposable())
             .subscribe({ success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
-
-        compositeDisposable.add(disposable)
     }
 
     /**
      * composable to add Header on bookmark
      */
     fun searchBookmarkByTitle(bookmarkFilter: BookmarkFilter, query: String) {
-        val disposable = Observable.just(query)
+        Observable.just(query)
             .doOnNext { _ -> bookmarkFilter.isSearchViewType = true }
             .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
@@ -125,7 +122,6 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .compose(filterByStarTypeComposable(starFilterType = bookmarkFilter.starFilterType))
             .compose(filterSearchByTitleComposable(query))
-            .compose(setListSizeComposable())
             .compose(
                 sortListByTitleOrDateComposable(
                     sortOrderList = bookmarkFilter.sortOrderList,
@@ -142,15 +138,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
             )
-
-        compositeDisposable.add(disposable)
     }
 
     /**
      * sort
      */
     fun sortBookmarkAscending(bookmarkFilters: BookmarkFilter) {
-        val disposable = Observable.just(bookmarksLiveData.value ?: listOf())
+        Observable.just(bookmarksLiveData.value ?: listOf())
             .flatMap { list -> Observable.fromIterable(list) }
             .map { item -> item as Bookmark }
             .toList().toObservable()
@@ -170,15 +164,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
             )
-
-        compositeDisposable.add(disposable)
     }
 
     /**
      *
      */
     fun sortBookmarkByTitle(bookmarkFilters: BookmarkFilter) {
-        val disposable = Observable.just(bookmarksLiveData.value ?: listOf())
+        Observable.just(bookmarksLiveData.value ?: listOf())
             .flatMap { list -> Observable.fromIterable(list) }
 //            .filter { item -> item is Bookmark }
             .map { item -> item as Bookmark }
@@ -194,15 +186,13 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 { result -> bookmarksLiveData.value = result },
                 { error -> Timber.e(error) }
             )
-
-        compositeDisposable.add(disposable)
     }
 
     /**
      *
      */
     fun sortBookmarkByDate(bookmarkFilters: BookmarkFilter) {
-        val disposable = Observable.just(bookmarksLiveData.value ?: listOf())
+        Observable.just(bookmarksLiveData.value ?: listOf())
             .flatMap { list -> Observable.fromIterable(list) }
             .filter { item -> item is Bookmark }
             .map { item -> item as Bookmark }
@@ -220,13 +210,10 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                     Timber.e(error)
                 }
             )
-
-        compositeDisposable.add(disposable)
     }
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.dispose()
     }
 
     /***
@@ -257,12 +244,12 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 .flatMap { list -> Observable.fromIterable(list) }
                 .sorted { bookmark1, bookmark2 ->
                     when (sortOrderList) {
-                        IS_ASCENDING.ordinal -> (bookmark1.title ?: "").compareTo(
-                            bookmark2.title ?: ""
+                        IS_ASCENDING.ordinal -> (bookmark1.title ?: EMPTY).compareTo(
+                            bookmark2.title ?: EMPTY
                         )
 
-                        IS_DESCENDING.ordinal -> (bookmark2.title ?: "").compareTo(
-                            bookmark1.title ?: ""
+                        IS_DESCENDING.ordinal -> (bookmark2.title ?: EMPTY).compareTo(
+                            bookmark1.title ?: EMPTY
                         )
 
                         else -> 0
@@ -301,11 +288,15 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 .flatMap { list -> Observable.fromIterable(list) }
                 .sorted { item1, item2 ->
                     when (sortOrderList) {
-                        IS_ASCENDING.ordinal -> (item1.title?.toLowerCase()
-                            ?: "").compareTo(item2.title?.toLowerCase() ?: "")
+                        IS_ASCENDING.ordinal -> (item1.title?.lowercase(Locale.getDefault())
+                            ?: EMPTY).compareTo(
+                            item2.title?.lowercase(Locale.getDefault()) ?: EMPTY
+                        )
 
-                        IS_DESCENDING.ordinal -> (item2.title?.toLowerCase()
-                            ?: "").compareTo(item1.title?.toLowerCase() ?: "")
+                        IS_DESCENDING.ordinal -> (item2.title?.lowercase(Locale.getDefault())
+                            ?: EMPTY).compareTo(
+                            item1.title?.lowercase(Locale.getDefault()) ?: EMPTY
+                        )
 
                         else -> 0
                     }
@@ -352,7 +343,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                                 Observable.fromIterable(bookmarkList)
                                     .doOnNext { bookmark -> list.add(bookmark) }
                                     .compose(setHeaderLabelBySortType(sortTypeList))
-                                    .map { charRes -> charRes.uppercase(Locale.ROOT) }
+                                    .map { charRes -> charRes.uppercase(locale = Locale.getDefault()) }
                                     .map { label -> BookmarkHeader(label) }
 //                                    .doOnNext { bookmarkHeader ->
 //                                        list.add(
@@ -380,12 +371,12 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                     when (sortTypeList) {
                         IS_BY_TITLE.ordinal -> {
                             bookmark.title?.let {
-                                if (it.isBlank()) "..." else it.toLowerCase(Locale.ROOT)[0].toString()
+                                if (it.isBlank()) "..." else it.lowercase(Locale.getDefault())[0].toString()
                             } ?: "..."
                         }
 
-                        IS_BY_DATE.ordinal -> bookmark.timestamp?.let { it.toString() } ?: ""
-                        else -> ""
+                        IS_BY_DATE.ordinal -> bookmark.timestamp?.toString() ?: EMPTY
+                        else -> EMPTY
                     }
                 }
                 .distinct()
@@ -423,26 +414,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
             it
                 .flatMap { bookmarks -> Observable.fromIterable(bookmarks) }
-                .filter { bookmark -> (bookmark.title ?: "").contains(query, true) }
+                .filter { bookmark -> (bookmark.title ?: EMPTY).contains(query, true) }
                 .toList().toObservable()
-        }
-
-    /**
-     * set size of star bookmarks and full items
-     *
-     */
-    private fun setListSizeComposable() =
-        ObservableTransformer<MutableList<Bookmark>, MutableList<Bookmark>> {
-            var first = 0
-            var second = 0
-            it
-                .doOnNext { list -> first = list.size }
-                .flatMap { list -> Observable.fromIterable(list) }
-                .filter { item -> item.isLike }
-                .toList().toObservable()
-                .doOnNext { list -> second = list.size }
-                .doOnNext { sizeEmptyDataPair.value = Pair(first, second) }
-                .flatMap { _ -> it }
         }
 
     /**
@@ -470,5 +443,4 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         bookmarksRemovedBookmarkPairData.value =
             Pair(listOf(position, labelPos), bookmarksLiveData.value)
     }
-
 }

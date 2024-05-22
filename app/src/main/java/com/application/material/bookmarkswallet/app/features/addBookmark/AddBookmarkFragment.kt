@@ -219,8 +219,8 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer { bookmarkInfo ->
             binding.mbAddBookmarkPreviewId.setTitleAndIconImage(
-                bookmarkInfo.sitename ?: EMPTY,
-                bookmarkInfo.favicon ?: EMPTY
+                bookmarkInfo.sitename,
+                bookmarkInfo.favicon
             )
         })
 

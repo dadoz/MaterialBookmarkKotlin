@@ -37,6 +37,7 @@ class MbEmptyView : FrameLayout {
         viewModel = bookmarkViewModel
     }
 
+    //todo stupid view not with vm :(
     fun init(
         owner: LifecycleOwner,
         bookmarkFilter: BookmarkFilter,

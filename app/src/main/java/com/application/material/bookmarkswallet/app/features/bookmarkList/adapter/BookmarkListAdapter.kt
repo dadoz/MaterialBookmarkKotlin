@@ -18,7 +18,10 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum.IS_LIST
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
 import com.application.material.bookmarkswallet.app.models.setImageViewSquaredResource
+import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
+import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.google.android.material.card.MaterialCardView
+import timber.log.Timber
 
 class BookmarkListAdapter(
     private var items: List<Any>,
@@ -28,6 +31,11 @@ class BookmarkListAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        recyclerView.adapter?.notifyDataSetChanged()
+        Timber.e("RecyclerView- onAttachedToRecyclerView " + recyclerView.adapter?.itemCount)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -57,65 +65,73 @@ class BookmarkListAdapter(
 
     override fun getItemViewType(position: Int): Int = getSpanSizeByPosition(position)
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         items[position].let { item ->
             when (holder) {
                 //BookmarkViewHolder
-                is BookmarkViewHolder -> {
-                    //set backround color
-                    (holder.itemView as MaterialCardView).setStarOutlineColor(bookmarkFilter.starFilterType)
-
-                    //set items view holder
-                    (item as Bookmark).let {
-                        holder.apply {
-                            bookmarkTitle.apply {
-                                text =
-                                    item.title?.let { if (it.isNullOrBlank()) EMPTY_BOOKMARK_LABEL else it }
-                            }
-                            bookmarkUrl.text = "https://${item.url}"
-                            bookmarkTimestamp.text = item.timestamp?.toString() //"dd MMM"
-
-                            bookmarkStarButton.apply {
-                                setColorFilter(getColorByStarType(this.context, item.isLike))
-                            }
-
-                            itemView.setOnClickListener {
-                                onBookmarkItemClicked(position, item)
-                            }
-                            bookmarkStarButton.setOnClickListener {
-                                onBookmarkStarClicked(position, item)
-                            }
-                        }
-
-                        //set images
-                        setImageViewSquaredResource(
-                            holder.bookmarkIcon,
-                            item.iconUrl
-                        )
-                    }
-                }
+                is BookmarkViewHolder -> onBindViewBookmarkVh(
+                    holder = holder,
+                    item = item as Bookmark
+                )
                 //BookmarkHeaderViewHolder
-                is BookmarkHeaderViewHolder -> {
-                    (item as BookmarkHeader).let {
-                        holder.apply {
-                            bookmarkLabelHeader.text = item.label
-                        }
-                    }
-                }
+                is BookmarkHeaderViewHolder -> onBindViewHeaderVh(
+                    holder = holder,
+                    item = item as BookmarkHeader
+                )
 
                 else -> null
             }
         }
     }
 
-    private fun getColorByStarType(context: Context, isStar: Boolean): Int = when (isStar) {
-        true -> ContextCompat.getColor(context, R.color.colorAccent)
-        else -> ContextCompat.getColor(context, R.color.colorPrimary)
+    private fun onBindViewHeaderVh(holder: BookmarkHeaderViewHolder, item: BookmarkHeader) {
+        holder.apply {
+            bookmarkLabelHeader.text = item.label
+        }
     }
+
+    private fun onBindViewBookmarkVh(holder: BookmarkViewHolder, item: Bookmark) {
+        //set backround color
+        (holder.itemView as MaterialCardView).setStarOutlineColor(bookmarkFilter.starFilterType)
+
+        //set items view holder
+        holder.apply {
+            bookmarkTitle.apply {
+                text =
+                    item.title
+                        ?.ifBlank { EMPTY_BOOKMARK_LABEL }
+            }
+            bookmarkUrl.text = HTTPS_SCHEMA.plus(item.url)
+            bookmarkTimestamp.text = item.timestamp?.toString() //"dd MMM"
+
+            bookmarkStarButton.apply {
+                setColorFilter(getColorByStarType(this.context, item.isLike))
+            }
+
+            itemView.setOnClickListener {
+                onBookmarkItemClicked(position, item)
+            }
+            bookmarkStarButton.setOnClickListener {
+                onBookmarkStarClicked(position, item)
+            }
+        }
+
+        //set images
+        setImageViewSquaredResource(
+            holder.bookmarkIcon,
+            item.iconUrl
+        )
+    }
+
+    private fun getColorByStarType(context: Context, isStar: Boolean): Int = ContextCompat.getColor(
+        context,
+        when {
+            isStar -> R.color.colorAccent
+            else -> R.color.colorPrimary
+        }
+    )
 
     /***
      * set items
@@ -147,16 +163,8 @@ class BookmarkListAdapter(
      * view holder
      */
     class BookmarkHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val bookmarkSubtitleHeader: TextView =
-            itemView.findViewById(R.id.bookmarkSubtitleHeaderViewId)
         val bookmarkLabelHeader: TextView = itemView.findViewById(R.id.bookmarkLabelHeaderViewId)
-
     }
-
-    companion object {
-        const val EMPTY_BOOKMARK_LABEL = "Title..."
-    }
-
 }
 
 /***

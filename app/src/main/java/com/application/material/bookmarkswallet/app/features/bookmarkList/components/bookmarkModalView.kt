@@ -32,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.EMPTY_TITLE
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
@@ -42,6 +41,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightText
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import java.util.Date
@@ -113,7 +113,7 @@ fun BookmarkPreviewCard(
                 .align(alignment = Alignment.CenterHorizontally)
                 .padding(bottom = Dimen.paddingExtraSmall4dp),
             style = mbTitleBoldTextStyle(),
-            text = bookmark.title ?: EMPTY_TITLE
+            text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
         )
         Text(
             modifier = Modifier

@@ -7,18 +7,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Px
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.ScrollState
 import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.FragmentBookmarkListBinding
-import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.BookmarkListPagerAdapter
+import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListPagerAdapter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
+import okhttp3.internal.notifyAll
+import timber.log.Timber
 
 class BookmarkListFragment : Fragment() {
     private lateinit var binding: FragmentBookmarkListBinding
@@ -52,6 +51,11 @@ class BookmarkListFragment : Fragment() {
         initView()
     }
 
+//    private fun updateData() {
+//        (binding.mbMaterialBookmarkViewPagerId.adapter as? BookmarkListPagerAdapter)?.getCurrentFragment()
+//            ?.loadData()
+//    }
+
     /**
      *
      */
@@ -59,7 +63,6 @@ class BookmarkListFragment : Fragment() {
 //        mbMaterialSearchVIewId.addListener(MaterialSearchView.SearchViewSearchListener {
 //            bookmarkViewModel.searchBookmarkByTitle(bookmarkFilter= bookmarkFilters, query= it)
 //        })
-
     }
 
     @Deprecated("Deprecated in Java")
@@ -68,6 +71,18 @@ class BookmarkListFragment : Fragment() {
         menuInflater.inflate(R.menu.menu_bookmark_list, menu)
     }
 
+    override fun onResume() {
+        super.onResume()
+        Timber.e("hey this is a Frag Adapter ")
+        (binding.mbMaterialBookmarkViewPagerId.adapter as BookmarkListPagerAdapter).initItems()
+        binding.mbMaterialBookmarkViewPagerId.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.e("hey this is a Frag Adapter stop")
+        binding.mbMaterialBookmarkViewPagerId.adapter?.notifyDataSetChanged()
+    }
     /**
      *
      */
@@ -92,34 +107,24 @@ class BookmarkListFragment : Fragment() {
     }
 
     private fun initView() {
-        activity?.let {
-            binding.mbMaterialBookmarkViewPagerId.apply {
-                isUserInputEnabled = false
-                adapter = BookmarkListPagerAdapter(it) {
-                    binding.mbBookmarkAddNewButtonId.visibility =
-                        it.takeIf { it }?.let { View.VISIBLE } ?: View.GONE
-                }
-            }
-        }
-
-        binding.mbMaterialBookmarkViewPagerId.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int, positionOffset: Float,
-                @Px positionOffsetPixels: Int
-            ) {
+        activity
+            ?.let {
+                binding.mbMaterialBookmarkViewPagerId
+                    .apply {
+                        isUserInputEnabled = false
+                        adapter =
+                            BookmarkListPagerAdapter(it) {
+                                binding.mbBookmarkAddNewButtonId.visibility =
+                                    it.takeIf { it }
+                                        ?.let { View.VISIBLE } ?: View.GONE
+                            }
+                    }
             }
 
-            override fun onPageSelected(position: Int) {
-            }
-
-            override fun onPageScrollStateChanged(@ScrollState state: Int) {}
-        })
         binding.mbBookmarkAddNewButtonId.setOnClickListener {
             bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
             findNavController().navigate(R.id.searchBookmarkFragment)
         }
-
     }
 
     override fun onAttach(context: Context) {
