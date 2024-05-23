@@ -16,7 +16,6 @@ import com.application.material.bookmarkswallet.app.databinding.FragmentBookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListPagerAdapter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import okhttp3.internal.notifyAll
 import timber.log.Timber
 
 class BookmarkListFragment : Fragment() {
@@ -74,15 +73,10 @@ class BookmarkListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Timber.e("hey this is a Frag Adapter ")
-        (binding.mbMaterialBookmarkViewPagerId.adapter as BookmarkListPagerAdapter).initItems()
-        binding.mbMaterialBookmarkViewPagerId.adapter?.notifyDataSetChanged()
+        (binding.mbMaterialBookmarkViewPagerId.adapter as BookmarkListPagerAdapter).initFragmentList()
+//        binding.mbMaterialBookmarkViewPagerId.adapter?.notifyDataSetChanged()
     }
 
-    override fun onStop() {
-        super.onStop()
-        Timber.e("hey this is a Frag Adapter stop")
-        binding.mbMaterialBookmarkViewPagerId.adapter?.notifyDataSetChanged()
-    }
     /**
      *
      */

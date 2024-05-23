@@ -37,7 +37,7 @@ fun MbCardView(
 @Composable
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun BookmarkPreviewCardPreview() {
+fun MbCardViewPreview() {
     MbCardView(
         modifier = Modifier
     ) {

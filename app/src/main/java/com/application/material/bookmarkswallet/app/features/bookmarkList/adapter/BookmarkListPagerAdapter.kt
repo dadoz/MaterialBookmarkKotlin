@@ -28,11 +28,8 @@ class BookmarkListPagerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment = fragList[position]
-    fun clear() {
-        fragList.clear()
-    }
 
-    fun initItems() {
+    fun initFragmentList() {
         fragList =
             mutableListOf(BookmarkListPageFragment(bookmarkAddButtonVisibleCallback = bookmarkAddButtonVisibleCallback)
                 .apply {

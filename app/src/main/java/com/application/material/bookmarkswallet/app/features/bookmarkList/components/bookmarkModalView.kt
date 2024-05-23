@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
@@ -45,6 +47,7 @@ import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import java.util.Date
+import java.util.Locale
 
 @Composable
 fun BookmarkPreviewCard(
@@ -130,6 +133,31 @@ fun BookmarkPreviewCard(
             text = bookmark.timestamp.toString()
         )
 
+        //delete cta
+        Row(
+            modifier = Modifier
+                .clickable {
+                }) {
+            Image(
+                modifier = Modifier
+                    .width(Dimen.sizeLarge32dp)
+                    .height(Dimen.sizeLarge32dp),
+                painter = rememberDrawablePainter(
+                    drawable = AppCompatResources.getDrawable(
+                        LocalContext.current, R.drawable.ic_delete
+                    )
+                ),
+                colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
+                contentDescription = ""
+            )
+            Text(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = Dimen.paddingSmall8dp),
+                style = mbSubtitleLightTextStyle(),
+                text = stringResource(id = R.string.delete_label_text).lowercase(Locale.getDefault())
+            )
+        }
         ExtendedFloatingActionButton(
             modifier = Modifier
                 .align(alignment = Alignment.End),
