@@ -14,14 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -31,6 +29,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -54,7 +54,8 @@ import java.util.Locale
 @Composable
 fun BookmarkPreviewCard(
     modifier: Modifier,
-    bookmark: Bookmark
+    bookmark: Bookmark,
+    onCloseCallback: () -> Unit
 ) {
     val localUriHandler = LocalUriHandler.current
     //fallbackIcon
@@ -89,6 +90,7 @@ fun BookmarkPreviewCard(
                 ).onEach {
                     Image(
                         modifier = Modifier
+                            .padding(horizontal = Dimen.paddingExtraSmall4dp)
                             .width(Dimen.sizeLarge32dp)
                             .height(Dimen.sizeLarge32dp),
                         painter = rememberDrawablePainter(drawable = it),
@@ -110,7 +112,7 @@ fun BookmarkPreviewCard(
                 .padding(Dimen.paddingMedium16dp)
                 .width(Dimen.sizeExtraLarge96dp)
                 .height(Dimen.sizeExtraLarge96dp)
-                .clip(CircleShape),
+//                .clip(CircleShape),
         )
 
         Text(
@@ -125,7 +127,7 @@ fun BookmarkPreviewCard(
                 .align(alignment = Alignment.CenterHorizontally)
                 .padding(bottom = Dimen.paddingExtraSmall4dp),
             style = mbSubtitleTextStyle(),
-            text = bookmark.url
+            text = bookmark.url ?: EMPTY
         )
         Text(
             modifier = Modifier
@@ -135,35 +137,53 @@ fun BookmarkPreviewCard(
             text = bookmark.timestamp.toString()
         )
 
-        //delete cta
-        MbDeleteBookmarkButtonView(
-            modifier = Modifier,
-            bookmark = bookmark
-        )
-        ExtendedFloatingActionButton(
+        ConstraintLayout(
             modifier = Modifier
-                .align(alignment = Alignment.End),
-            containerColor = MbColor.Yellow,
-            text = {
-                Text(
-                    modifier = Modifier,
-                    style = mbButtonTextStyle(),
-                    text = "Open"
-                )
-            },
-            icon = {
-                Icon(
-                    modifier = Modifier
-                        .width(Dimen.sizeMedium16dp)
-                        .height(Dimen.sizeMedium16dp),
-                    painter = painterResource(R.drawable.ic_send),
-                    contentDescription = EMPTY
-                )
-            },
-            onClick = {
-                localUriHandler.openUri("$HTTPS_SCHEMA${bookmark.url}")
-            }
-        )
+                .fillMaxWidth()
+        ) {
+            val (deleteButtonRef, openButtonRef) = createRefs()
+            //delete cta
+            MbDeleteBookmarkButtonView(
+                modifier = Modifier
+                    .constrainAs(ref = deleteButtonRef) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+
+                    },
+                bookmark = bookmark,
+                onCloseCallback = onCloseCallback
+            )
+            ExtendedFloatingActionButton(
+                modifier = Modifier
+                    .constrainAs(ref = openButtonRef) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    },
+                containerColor = MbColor.Yellow,
+                text = {
+                    Text(
+                        modifier = Modifier,
+                        style = mbButtonTextStyle(),
+                        text = "Open"
+                    )
+                },
+                icon = {
+                    Icon(
+                        modifier = Modifier
+                            .width(Dimen.sizeMedium16dp)
+                            .height(Dimen.sizeMedium16dp),
+                        painter = painterResource(R.drawable.ic_send),
+                        contentDescription = EMPTY
+                    )
+                },
+                onClick = {
+                    localUriHandler.openUri("$HTTPS_SCHEMA${bookmark.url}")
+                }
+            )
+        }
     }
 }
 
@@ -171,12 +191,16 @@ fun BookmarkPreviewCard(
 fun MbDeleteBookmarkButtonView(
     modifier: Modifier,
     bookmark: Bookmark,
+    onCloseCallback: () -> Unit,
     bookmarkViewModel: BookmarkViewModel = hiltViewModel()
 ) {
     Row(
         modifier = modifier
+            .padding(Dimen.paddingSmall8dp)
             .clickable {
                 bookmarkViewModel.deleteBookmark(bookmark = bookmark)
+                //on close callback
+                onCloseCallback.invoke()
             }) {
         Image(
             modifier = Modifier
@@ -216,6 +240,17 @@ fun rememberDrawablePainterWithColor(res: Int): Painter = rememberDrawablePainte
 @Composable
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun MbDeleteBookmarkButtonViewPreview() {
+    MbDeleteBookmarkButtonView(
+        modifier = Modifier,
+        bookmark = Bookmark("blal", "blal", "", "", "", Date(), false),
+        onCloseCallback = {}
+    )
+}
+
+@Composable
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun BookmarkPreviewCardPreview() {
     BookmarkPreviewCard(
         modifier = Modifier,
@@ -227,6 +262,7 @@ fun BookmarkPreviewCardPreview() {
             url = "www.google.it",
             appId = null,
             isLike = false
-        )
+        ),
+        onCloseCallback = {}
     )
 }

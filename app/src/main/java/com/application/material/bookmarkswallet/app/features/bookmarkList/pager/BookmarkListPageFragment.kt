@@ -1,6 +1,8 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.pager
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,7 @@ import com.application.material.bookmarkswallet.app.utils.N_COUNT_GRID_BOOKMARKS
 import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
@@ -70,8 +73,12 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
     }
 
     //todo move to vm
-    fun loadData() {
+    private fun loadData() {
         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+    }
+
+    private fun updateData() {
+        loadData()
     }
 
     /**
@@ -199,13 +206,6 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                 }
             }
 
-//        mbBookmarkRecyclerViewId.addOnScrollListenerWithViews(
-//            views = listOf(
-//                mbBookmarkAppBarLayoutId, mbBookmarkHeaderTitleTextViewId,
-//                mbBookmarkHeaderTitleLabelTextViewId, mbBookmarkHeaderTotBookmarkCardId
-//            )
-//        )
-
         //handle empty view
         binding.mbBookmarkEmptyViewId
             .also {
@@ -230,28 +230,37 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                     MaterialBookmarkMaterialTheme {
                         BookmarkPreviewCard(
                             modifier = Modifier,
-                            bookmark = bookmark
+                            bookmark = bookmark,
+                            onCloseCallback = {
+                                BottomSheetBehavior.from(this).state = STATE_COLLAPSED
+                                updateData()
+                            }
                         )
                     }
                 }
-                //set callbacks
-                BottomSheetBehavior.from(this)
-                    .apply {
-                        //set state and add
-                        this.state = STATE_EXPANDED
-                        //set callback
-                        this.addBottomSheetCallback(object : BottomSheetCallback() {
-                            override fun onStateChanged(view: View, state: Int) {
-                                val isVisible =
-                                    state != STATE_DRAGGING && state != STATE_SETTLING && state != STATE_EXPANDED
-                                bookmarkAddButtonVisibleCallback.invoke(isVisible)
-                            }
-
-                            override fun onSlide(p0: View, p1: Float) {
-                            }
-                        })
-
-                    }
             }
+            .also {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    //set callbacks
+                    BottomSheetBehavior.from(it)
+                        .apply {
+                            //set state and add
+                            this.state = STATE_EXPANDED
+                            //set callback
+                            this.addBottomSheetCallback(openBottomSheetCallback)
+                        }
+                }, 100)
+            }
+    }
+
+    private val openBottomSheetCallback = object : BottomSheetCallback() {
+        override fun onStateChanged(view: View, state: Int) {
+            val isVisible =
+                state != STATE_DRAGGING && state != STATE_SETTLING && state != STATE_EXPANDED
+            bookmarkAddButtonVisibleCallback.invoke(isVisible)
+        }
+
+        override fun onSlide(p0: View, p1: Float) {
+        }
     }
 }
