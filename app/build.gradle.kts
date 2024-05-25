@@ -45,7 +45,11 @@ android {
         buildConfigField("String", "API_URLMETA_USER", "\"da-doz@hotmail.it\"")
         buildConfigField("String", "API_URLMETA_PWD", "\"INuNPW7T5eZdYe6EFyw8\"")
         buildConfigField("String", "JSONLINK_BASE_URL", "\"https://jsonlink.io/api/\"")
-        buildConfigField("String", "JSONLINK_API_KEY", "\"pk_d1a3c2c5051ccc8e5970e37a1284962f7236632c\"")
+        buildConfigField(
+            "String",
+            "JSONLINK_API_KEY",
+            "\"pk_d1a3c2c5051ccc8e5970e37a1284962f7236632c\""
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -78,6 +82,11 @@ android {
         buildConfig = true
     }
     namespace = "com.application.material.bookmarkswallet.app"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {

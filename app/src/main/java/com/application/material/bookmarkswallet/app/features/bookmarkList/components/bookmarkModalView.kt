@@ -32,8 +32,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
@@ -134,30 +136,10 @@ fun BookmarkPreviewCard(
         )
 
         //delete cta
-        Row(
-            modifier = Modifier
-                .clickable {
-                }) {
-            Image(
-                modifier = Modifier
-                    .width(Dimen.sizeLarge32dp)
-                    .height(Dimen.sizeLarge32dp),
-                painter = rememberDrawablePainter(
-                    drawable = AppCompatResources.getDrawable(
-                        LocalContext.current, R.drawable.ic_delete
-                    )
-                ),
-                colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
-                contentDescription = ""
-            )
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .padding(start = Dimen.paddingSmall8dp),
-                style = mbSubtitleLightTextStyle(),
-                text = stringResource(id = R.string.delete_label_text).lowercase(Locale.getDefault())
-            )
-        }
+        MbDeleteBookmarkButtonView(
+            modifier = Modifier,
+            bookmark = bookmark
+        )
         ExtendedFloatingActionButton(
             modifier = Modifier
                 .align(alignment = Alignment.End),
@@ -181,6 +163,40 @@ fun BookmarkPreviewCard(
             onClick = {
                 localUriHandler.openUri("$HTTPS_SCHEMA${bookmark.url}")
             }
+        )
+    }
+}
+
+@Composable
+fun MbDeleteBookmarkButtonView(
+    modifier: Modifier,
+    bookmark: Bookmark,
+    bookmarkViewModel: BookmarkViewModel = hiltViewModel()
+) {
+    Row(
+        modifier = modifier
+            .clickable {
+                bookmarkViewModel.deleteBookmark(bookmark = bookmark)
+            }) {
+        Image(
+            modifier = Modifier
+                .width(Dimen.sizeLarge32dp)
+                .height(Dimen.sizeLarge32dp),
+            painter = rememberDrawablePainter(
+                drawable = AppCompatResources.getDrawable(
+                    LocalContext.current, R.drawable.ic_delete
+                )
+            ),
+            colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
+            contentDescription = ""
+        )
+        Text(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .padding(start = Dimen.paddingSmall8dp),
+            style = mbSubtitleLightTextStyle(),
+            text = stringResource(id = R.string.delete_label_text)
+                .lowercase(Locale.getDefault())
         )
     }
 }

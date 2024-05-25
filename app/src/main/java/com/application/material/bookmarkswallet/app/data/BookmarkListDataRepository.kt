@@ -1,6 +1,6 @@
 package com.application.material.bookmarkswallet.app.data
 
-import android.content.Context
+import android.app.Application
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.data.local.BookmarkDataSourceLocal
 import com.application.material.bookmarkswallet.app.data.remote.BookmarkDataSourceRemote
@@ -8,17 +8,19 @@ import com.application.material.bookmarkswallet.app.data.remote.BookmarkInfoServ
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import io.reactivex.rxjava3.core.Observable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-//TODO neeed dependency injection
-class BookmarkListDataRepository(val context: Context) {
+@Singleton
+class BookmarkListDataRepository @Inject constructor(val application: Application) {
     //todo this shit no please :( but no di in this jurassic world
     private val bookmarkInfoService: BookmarkInfoService =
-        (context.applicationContext as BookmarkApplication).retrofitClient.create(
+        (application as BookmarkApplication).retrofitClient.create(
             BookmarkInfoService::class.java
         )
 
     private val bookmarkDataSourceLocal: BookmarkDataSourceLocal =
-        BookmarkDataSourceLocal(context = context)
+        BookmarkDataSourceLocal(context = application)
     private val bookmarkDataSourceRemote: BookmarkDataSourceRemote = BookmarkDataSourceRemote(
         bookmarkInfoService = bookmarkInfoService
     )

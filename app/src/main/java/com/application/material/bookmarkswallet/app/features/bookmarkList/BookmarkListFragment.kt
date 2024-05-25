@@ -1,41 +1,40 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.FragmentBookmarkListBinding
 import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListPagerAdapter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-class BookmarkListFragment : Fragment() {
+@AndroidEntryPoint
+class BookmarkListFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentBookmarkListBinding
-    private var listener: OnFragmentInteractionListener? = null
 
     //TODO i'm not using in purpose ---- pattern but application
     private val bookmarkFilters by lazy {
         (activity?.application as BookmarkApplication).bookmarkFilters
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = FragmentBookmarkListBinding.inflate(inflater, container, false)
+        .also {
+            requireActivity().addMenuProvider(this@BookmarkListFragment, viewLifecycleOwner)
+        }
         .also {
             binding = it
         }.root
@@ -50,10 +49,13 @@ class BookmarkListFragment : Fragment() {
         initView()
     }
 
-//    private fun updateData() {
-//        (binding.mbMaterialBookmarkViewPagerId.adapter as? BookmarkListPagerAdapter)?.getCurrentFragment()
-//            ?.loadData()
-//    }
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_bookmark_list, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        TODO("Not yet implemented")
+    }
 
     /**
      *
@@ -64,17 +66,10 @@ class BookmarkListFragment : Fragment() {
 //        })
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_bookmark_list, menu)
-    }
-
     override fun onResume() {
         super.onResume()
         Timber.e("hey this is a Frag Adapter ")
         (binding.mbMaterialBookmarkViewPagerId.adapter as BookmarkListPagerAdapter).initFragmentList()
-//        binding.mbMaterialBookmarkViewPagerId.adapter?.notifyDataSetChanged()
     }
 
     /**
@@ -121,17 +116,4 @@ class BookmarkListFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
 }

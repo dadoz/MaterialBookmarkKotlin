@@ -7,8 +7,10 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListVi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortOrderListEnum.IS_ASCENDING
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTypeListEnum.IS_BY_TITLE
 import com.application.material.bookmarkswallet.app.network.NetworkModule
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
+@HiltAndroidApp
 class BookmarkApplication : Application() {
     init {
         if (DEBUG) {

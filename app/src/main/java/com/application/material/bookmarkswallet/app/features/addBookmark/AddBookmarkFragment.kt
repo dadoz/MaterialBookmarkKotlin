@@ -1,9 +1,7 @@
 package com.application.material.bookmarkswallet.app.features.addBookmark
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.*
 import android.view.*
@@ -19,7 +17,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentAddBookmarkBinding
 import com.application.material.bookmarkswallet.app.extensions.hideKeyboard
@@ -30,7 +27,6 @@ import com.application.material.bookmarkswallet.app.features.settings.SettingsAc
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
-import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 /**
  * A simple [Fragment] subclass.
@@ -49,7 +45,6 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
     private val addBookmarkPreviewBinding by lazy {
         (binding.mbAddBookmarkPreviewId).binding
     }
-    private var listener: OnFragmentInteractionListener? = null
     private val navigation: NavController? by lazy {
         view?.let { Navigation.findNavController(it) }
     }
@@ -378,7 +373,8 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
                 }
 
                 binding.mbNewBookmarkUrlTextId.text = url
-                newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = "Balallllllallalal"
+                newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text =
+                    "Balallllllallalal"
                 newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.visibility = VISIBLE
                 addBookmarkViewModel.updateWebviewByUrl(url)
                 addBookmarkViewModel.findBookmarkInfoByUrl(url)
@@ -411,9 +407,9 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
+//    fun onButtonPressed(uri: Uri) {
+//        listener?.onFragmentInteraction(uri)
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -434,20 +430,6 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
 //                }
 //            }
 //        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
     }
 
     companion object {

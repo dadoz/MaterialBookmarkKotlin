@@ -1,12 +1,14 @@
 package com.application.material.bookmarkswallet.app
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class BookmarkListActivity : AppCompatActivity(), LifecycleOwner, OnFragmentInteractionListener {
+@AndroidEntryPoint
+class BookmarksMainActivity : AppCompatActivity(),
+    LifecycleOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +22,6 @@ class BookmarkListActivity : AppCompatActivity(), LifecycleOwner, OnFragmentInte
                     .setPrimaryNavigationFragment(host)
                     .commit()
             }
-    }
-
-    override fun onFragmentInteraction(uri: Uri) {
     }
 
 }

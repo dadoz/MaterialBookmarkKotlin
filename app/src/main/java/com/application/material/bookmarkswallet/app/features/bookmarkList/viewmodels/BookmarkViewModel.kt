@@ -18,6 +18,7 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkHeader
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
@@ -25,15 +26,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class BookmarkViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class BookmarkViewModel @Inject constructor(
+    application: Application,
+    private val bookmarkListDataRepository: BookmarkListDataRepository
+) : AndroidViewModel(application = application) {
     var bookmarksLiveData: MutableLiveData<List<Bookmark>> = MutableLiveData()
     var bookmarksRemovedBookmarkPairData: MutableLiveData<Pair<List<Int>, List<Bookmark>?>> =
         MutableLiveData()
     val bookmarkIconUrl: ObservableField<String> = ObservableField()
     var bookmarkListSize: MutableLiveData<String> = MutableLiveData()
-    private val bookmarkListDataRepository: BookmarkListDataRepository =
-        BookmarkListDataRepository(getApplication())
 
     //delete status
     private val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()

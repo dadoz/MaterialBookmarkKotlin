@@ -12,14 +12,15 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.application.material.bookmarkswallet.app.BuildConfig
-import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.extensions.changeToolbarFont
 import com.application.material.bookmarkswallet.app.databinding.ActivitySettingsBinding
+import com.application.material.bookmarkswallet.app.extensions.changeToolbarFont
 import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.inflate
 import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity.SettingsAdapter.SettingsViewHolder
+import dagger.hilt.android.AndroidEntryPoint
 
-class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, LifecycleOwner {
+@AndroidEntryPoint
+class SettingsActivity : AppCompatActivity(), LifecycleOwner {
     private lateinit var binding: ActivitySettingsBinding
     private val items: List<Triple<Int, String, String>> = listOf(
         Triple(0, "Rate on PlayStore", ""),
@@ -62,9 +63,6 @@ class SettingsActivity : AppCompatActivity(), OnFragmentInteractionListener, Lif
                 }
             }
         }
-    }
-
-    override fun onFragmentInteraction(uri: Uri) {
     }
 
     private fun contactUs() {

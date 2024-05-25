@@ -20,7 +20,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.application.material.bookmarkswallet.app.OnFragmentInteractionListener
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkBinding
 import com.application.material.bookmarkswallet.app.extensions.changeToolbarFont
@@ -46,7 +45,6 @@ import com.google.android.material.snackbar.Snackbar
  */
 class SearchBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentSearchBookmarkBinding
-    private var listener: OnFragmentInteractionListener? = null
     val clipboard by lazy {
         activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
@@ -205,19 +203,5 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                     }
                 }
             }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
     }
 }

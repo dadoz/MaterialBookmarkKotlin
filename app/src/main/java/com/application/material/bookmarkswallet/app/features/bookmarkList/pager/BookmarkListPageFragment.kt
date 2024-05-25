@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.application.material.bookmarkswallet.app.application.BookmarkApplication
 import com.application.material.bookmarkswallet.app.databinding.BookmarkListLayoutViewBinding
@@ -34,16 +34,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
-import timber.log.Timber
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit) :
     Fragment() {
     private lateinit var binding: BookmarkListLayoutViewBinding
+    val bookmarkViewModel: BookmarkViewModel by viewModels()
 
     private var viewType: Int = ZERO
-    private val bookmarkViewModel by lazy {
-        ViewModelProvider(this)[BookmarkViewModel::class.java]
-    }
 
     private val bookmarkFilters by lazy {
         (activity?.application as BookmarkApplication).bookmarkFilters
