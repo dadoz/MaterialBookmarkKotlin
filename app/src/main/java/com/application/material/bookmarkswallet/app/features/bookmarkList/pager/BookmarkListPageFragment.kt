@@ -33,9 +33,9 @@ import com.application.material.bookmarkswallet.app.utils.N_COUNT_GRID_BOOKMARKS
 import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,8 +77,8 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
         bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
     }
 
-    private fun updateData() {
-        loadData()
+    private fun notifyItemRemoved(position: Int) {
+        binding.mbBookmarkRecyclerViewId.adapter?.notifyItemRemoved(position)
     }
 
     /**
@@ -124,7 +124,7 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                         bookmarkFilter = bookmarkFilters,
                         onBookmarkItemClicked = { position, bookmark ->
                             openPreviewView(
-                                bookmark
+                                position, bookmark
                             )
                         },
                         onBookmarkStarClicked = { position, bookmark ->
@@ -218,7 +218,7 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
             }
     }
 
-    private fun openPreviewView(bookmark: Bookmark) {
+    private fun openPreviewView(position: Int, bookmark: Bookmark) {
         //compose view
         binding.mbBookmarkPreviewComposeCard
             .apply {
@@ -231,9 +231,13 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                         BookmarkPreviewCard(
                             modifier = Modifier,
                             bookmark = bookmark,
-                            onCloseCallback = {
-                                BottomSheetBehavior.from(this).state = STATE_COLLAPSED
-                                updateData()
+                            onDeleteCallback = {
+                                //delete action
+                                bookmarkViewModel.deleteBookmark(bookmark = bookmark)
+                                //on close callback
+                                BottomSheetBehavior.from(this).state = STATE_HIDDEN
+                                //update list
+                                notifyItemRemoved(position = position)
                             }
                         )
                     }
