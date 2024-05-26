@@ -16,8 +16,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.R
@@ -33,6 +32,7 @@ import com.application.material.bookmarkswallet.app.features.settings.SettingsAc
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
@@ -43,13 +43,14 @@ import com.google.android.material.snackbar.Snackbar
  * create an instance of this fragment.
  *
  */
+@AndroidEntryPoint
 class SearchBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentSearchBookmarkBinding
-    val clipboard by lazy {
+    private val searchBookmarkViewModel: SearchBookmarkViewModel by viewModels()
+
+    //clipboard service
+    private val clipboard by lazy {
         activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    }
-    private val searchBookmarkViewModel: SearchBookmarkViewModel by lazy {
-        ViewModelProvider(this)[SearchBookmarkViewModel::class.java]
     }
 
     private val navigation: NavController? by lazy {
@@ -139,9 +140,9 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
             }
         }
 
-        searchBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer {
-            navigation?.navigate(R.id.addBookmarkFragment)
-        })
+        searchBookmarkViewModel.bookmarkInfoLiveData.observe(viewLifecycleOwner) {
+//            navigation?.navigate(R.id.addBookmarkFragment)
+        }
 
         binding.mbsearchBookmarkButtonViewId.setOnClickListener {
             binding.mbNewBookmarkUrlEditTextId.text
@@ -159,26 +160,29 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
 
         binding.mbNewBookmarkUrlEditTextId.apply {
             binding.mbsearchBookmarkButtonViewId.isEnabled = false
-            binding.mbNewBookmarkUrlEditTextId.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    binding.mbsearchBookmarkButtonViewId.isEnabled = !s.isNullOrEmpty()
-                }
-            })
+            binding.mbNewBookmarkUrlEditTextId.addTextChangedListener(textViewChangedCallback)
         }
 
         //set content modal view
 //        setContentModalView()
+    }
+
+    private val textViewChangedCallback = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(
+            s: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            binding.mbsearchBookmarkButtonViewId.isEnabled = !s.isNullOrEmpty()
+        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

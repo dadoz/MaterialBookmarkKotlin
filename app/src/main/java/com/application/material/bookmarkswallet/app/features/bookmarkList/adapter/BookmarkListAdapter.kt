@@ -31,6 +31,7 @@ class BookmarkListAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     enum class BookmarkViewItemType { BOOKMARK_VIEW_TYPE, BOOKMARK_HEADER_TYPE }
+
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         recyclerView.adapter?.notifyDataSetChanged()
@@ -146,6 +147,13 @@ class BookmarkListAdapter(
             is Bookmark -> BOOKMARK_VIEW_TYPE.ordinal
             else -> BOOKMARK_VIEW_TYPE.ordinal
         }
+    }
+
+    fun removeFromList(position: Int) {
+        items = items.toMutableList()
+            .also {
+                it.removeAt(index = position)
+            }
     }
 
     /**

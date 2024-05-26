@@ -78,7 +78,11 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
     }
 
     private fun notifyItemRemoved(position: Int) {
-        binding.mbBookmarkRecyclerViewId.adapter?.notifyItemRemoved(position)
+        (binding.mbBookmarkRecyclerViewId.adapter as? BookmarkListAdapter)
+            ?.also {
+                it.removeFromList(position)
+                it.notifyItemRemoved(position)
+            }
     }
 
     /**
