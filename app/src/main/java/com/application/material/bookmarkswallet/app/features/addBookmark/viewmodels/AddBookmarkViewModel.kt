@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
 
-class AddBookmarkViewModel(application: Application) : AndroidViewModel(application = application) {
-
+class AddBookmarkViewModel(application: Application) :
+    AndroidViewModel(application = application) {
     val bookmarkInfoLiveData: MutableLiveData<BookmarkInfo> = MutableLiveData()
     val bookmarkInfoLiveError: MutableLiveData<String> = MutableLiveData()
     private val bookmarkListDataRepository: BookmarkListDataRepository =

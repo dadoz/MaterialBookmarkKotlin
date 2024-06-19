@@ -18,7 +18,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColor
 import com.application.material.bookmarkswallet.app.R
+import com.google.android.material.color.utilities.Scheme
+
 const val densityResizeFactor = 1f
 
 @Composable
@@ -63,9 +66,15 @@ fun mbWhiteLightBlackFilter(isEnabled: Boolean = true) =
 fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbGrayLightColor()
-
     )
 
+@Composable
+fun mbGrayLightColor2(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.Black
+        else -> MaterialTheme.colorScheme.surface
+    }
+}
 @Composable
 fun mbGrayLightColor(): Color {
     return when (isSystemInDarkTheme()) {

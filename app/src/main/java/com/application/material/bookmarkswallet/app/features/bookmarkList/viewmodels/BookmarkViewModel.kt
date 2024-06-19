@@ -23,6 +23,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -47,6 +50,15 @@ class BookmarkViewModel @Inject constructor(
             LiveData<Pair<Int, Int>> = bookmarksLiveData
         .map { Pair(it.size, 0) }//total and star
 
+    //state to handle
+    private val bookmarkPreviewModalMutableState: MutableStateFlow<Boolean> =
+        MutableStateFlow(false)
+    var bookmarkPreviewModalState: StateFlow<Boolean> =
+        this.bookmarkPreviewModalMutableState.asStateFlow()
+
+    fun setBookmarkPreviewModal(hasToShown: Boolean) {
+        bookmarkPreviewModalMutableState.value = hasToShown
+    }
     /**
      * retrieve bookamr list
      */

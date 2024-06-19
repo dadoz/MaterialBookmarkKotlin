@@ -15,10 +15,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,7 +30,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,6 +44,7 @@ import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
@@ -51,16 +55,43 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import java.util.Date
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BookmarkModalPreviewCard(
+    modifier: Modifier,
+    bookmark: Bookmark,
+    onDeleteCallback: (Bookmark) -> Unit,
+    onOpenAction: (String) -> Unit,
+    showBottomSheet: State<Boolean>,
+    onDismissRequest: () -> Unit
+) {
+    //bottom sheet modal
+    val bottomSheetState = rememberModalBottomSheetState()
+    if (showBottomSheet.value) {
+        ModalBottomSheet(
+            onDismissRequest = onDismissRequest, //{ showBottomSheet.value = false },
+            sheetState = bottomSheetState,
+            containerColor = mbGrayLightColor()
+        ) {
+            BookmarkPreviewCard(
+                modifier = modifier.padding(bottom = Dimen.paddingMedium16dp),
+                bookmark = bookmark,
+                onDeleteAction = onDeleteCallback,
+                onOpenAction = onOpenAction
+            )
+        }
+    }
+}
+
 @Composable
 fun BookmarkPreviewCard(
     modifier: Modifier,
     bookmark: Bookmark,
-    onDeleteCallback: (Bookmark) -> Unit
+    onDeleteAction: ((Bookmark) -> Unit)? = null,
+    onOpenAction: ((String) -> Unit)? = null,
 ) {
-    val localUriHandler = LocalUriHandler.current
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(res = R.drawable.ic_bookmark_light)
-
     MbCardView(
         modifier = modifier
     ) {
@@ -138,52 +169,61 @@ fun BookmarkPreviewCard(
             text = bookmark.timestamp.toString()
         )
 
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            val (deleteButtonRef, openButtonRef) = createRefs()
-            //delete cta
-            MbDeleteBookmarkButtonView(
+        if (onDeleteAction != null && onOpenAction != null) {
+            ConstraintLayout(
                 modifier = Modifier
-                    .constrainAs(ref = deleteButtonRef) {
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.fillToConstraints
+                    .fillMaxWidth()
+            ) {
+                val (deleteButtonRef, openButtonRef) = createRefs()
 
-                    },
-                bookmark = bookmark,
-                onDeleteCallback = onDeleteCallback
-            )
-            ExtendedFloatingActionButton(
-                modifier = Modifier
-                    .constrainAs(ref = openButtonRef) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    },
-                containerColor = MbColor.Yellow,
-                text = {
-                    Text(
-                        modifier = Modifier,
-                        style = mbButtonTextStyle(),
-                        text = "Open"
-                    )
-                },
-                icon = {
-                    Icon(
+                //delete cta
+                onDeleteAction?.let {
+                    MbDeleteBookmarkButtonView(
                         modifier = Modifier
-                            .width(Dimen.sizeMedium16dp)
-                            .height(Dimen.sizeMedium16dp),
-                        painter = painterResource(R.drawable.ic_send),
-                        contentDescription = EMPTY
+                            .constrainAs(ref = deleteButtonRef) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                bottom.linkTo(parent.bottom)
+                                width = Dimension.fillToConstraints
+
+                            },
+                        bookmark = bookmark,
+                        onDeleteCallback = onDeleteAction
                     )
-                },
-                onClick = {
-                    localUriHandler.openUri("$HTTPS_SCHEMA${bookmark.url}")
                 }
-            )
+
+                //open action
+                onOpenAction?.let {
+                    ExtendedFloatingActionButton(
+                        modifier = Modifier
+                            .constrainAs(ref = openButtonRef) {
+                                top.linkTo(parent.top)
+                                end.linkTo(parent.end)
+                                bottom.linkTo(parent.bottom)
+                            },
+                        containerColor = MbColor.Yellow,
+                        text = {
+                            Text(
+                                modifier = Modifier,
+                                style = mbButtonTextStyle(),
+                                text = stringResource(id = R.string.open_bookmark)
+                            )
+                        },
+                        icon = {
+                            Icon(
+                                modifier = Modifier
+                                    .width(Dimen.sizeMedium16dp)
+                                    .height(Dimen.sizeMedium16dp),
+                                painter = painterResource(R.drawable.ic_send),
+                                contentDescription = EMPTY
+                            )
+                        },
+                        onClick = {
+                            onOpenAction.invoke("$HTTPS_SCHEMA${bookmark.url}")
+                        }
+                    )
+                }
+            }
         }
     }
 }
@@ -261,6 +301,7 @@ fun BookmarkPreviewCardPreview() {
             appId = null,
             isLike = false,
         ),
-        onDeleteCallback = {}
+        onDeleteAction = {},
+        onOpenAction = {}
     )
 }

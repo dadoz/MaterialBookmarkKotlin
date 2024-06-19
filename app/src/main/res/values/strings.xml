@@ -39,6 +39,8 @@
     <string name="paste_clipboard">paste from clipboard</string>
     <string name="description">Description</string>
     <string name="value">value</string>
-    <string name="title_insert">Title insert...</string>
+    <string name="title_insert">Title insert…</string>
     <string name="search_your_bookmark">Search your bookmark</string>
+    <string name="open_bookmark">Open</string>
+    <string name="bookmark_url">Bookmark Url</string>
 </resources>

@@ -1,12 +1,13 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.pager
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +18,7 @@ import com.application.material.bookmarkswallet.app.extensions.setIconDependingO
 import com.application.material.bookmarkswallet.app.extensions.setStarColor
 import com.application.material.bookmarkswallet.app.extensions.toggleVisibiltyWithView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.adapter.BookmarkListAdapter
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCard
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.ListViewTypeEnum
@@ -31,16 +32,17 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
 import com.application.material.bookmarkswallet.app.utils.N_COUNT_GRID_BOOKMARKS
 import com.application.material.bookmarkswallet.app.utils.ZERO
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit) :
+class BookmarkListPageFragment(
+    val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit
+) :
     Fragment() {
     private lateinit var binding: BookmarkListLayoutViewBinding
     val bookmarkViewModel: BookmarkViewModel by viewModels()
@@ -127,6 +129,9 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                         items = list,
                         bookmarkFilter = bookmarkFilters,
                         onBookmarkItemClicked = { position, bookmark ->
+                            //set preview to has been show
+                            bookmarkViewModel.setBookmarkPreviewModal(hasToShown = true)
+
                             openPreviewView(
                                 position, bookmark
                             )
@@ -232,32 +237,32 @@ class BookmarkListPageFragment(val bookmarkAddButtonVisibleCallback: (hasToShow:
                 setContent {
                     // In Compose world
                     MaterialBookmarkMaterialTheme {
-                        BookmarkPreviewCard(
+                        val showBottomSheet: State<Boolean> =
+                            bookmarkViewModel.bookmarkPreviewModalState.collectAsState()
+                        Timber.e("---------- ${showBottomSheet.value}")
+                        val localUriHandler = LocalUriHandler.current
+
+                        BookmarkModalPreviewCard(
                             modifier = Modifier,
                             bookmark = bookmark,
+                            showBottomSheet = showBottomSheet,
                             onDeleteCallback = {
+                                //on close callback
+                                bookmarkViewModel.setBookmarkPreviewModal(hasToShown = false)
                                 //delete action
                                 bookmarkViewModel.deleteBookmark(bookmark = bookmark)
-                                //on close callback
-                                BottomSheetBehavior.from(this).state = STATE_HIDDEN
                                 //update list
                                 notifyItemRemoved(position = position)
+                            },
+                            onDismissRequest = {
+                                bookmarkViewModel.setBookmarkPreviewModal(hasToShown = false)
+                            },
+                            onOpenAction = {
+                                localUriHandler.openUri(it)
                             }
                         )
                     }
                 }
-            }
-            .also {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    //set callbacks
-                    BottomSheetBehavior.from(it)
-                        .apply {
-                            //set state and add
-                            this.state = STATE_EXPANDED
-                            //set callback
-                            this.addBottomSheetCallback(openBottomSheetCallback)
-                        }
-                }, 100)
             }
     }
 
