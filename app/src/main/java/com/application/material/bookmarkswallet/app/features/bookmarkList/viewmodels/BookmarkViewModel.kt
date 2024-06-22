@@ -59,6 +59,7 @@ class BookmarkViewModel @Inject constructor(
     fun setBookmarkPreviewModal(hasToShown: Boolean) {
         bookmarkPreviewModalMutableState.value = hasToShown
     }
+
     /**
      * retrieve bookamr list
      */

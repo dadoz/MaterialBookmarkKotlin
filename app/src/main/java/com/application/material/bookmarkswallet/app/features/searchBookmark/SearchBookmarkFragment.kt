@@ -31,11 +31,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkComposeBinding
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
@@ -126,16 +128,25 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 //set content
                 setContent {
+                    val searchBookmarkViewModel = hiltViewModel<SearchBookmarkViewModel>()
+
                     // In Compose world
                     MaterialBookmarkMaterialTheme {
-                        SearchBookmarkView(modifier = Modifier)
+                        SearchBookmarkView(
+                            modifier = Modifier,
+                            onSearchBookmarkAction = {
+                                searchBookmarkViewModel.onSearchBookmarkByUrl(url = it)
+                            })
                     }
                 }
             }
     }
 
     @Composable
-    fun SearchBookmarkView(modifier: Modifier) {
+    fun SearchBookmarkView(
+        modifier: Modifier,
+        onSearchBookmarkAction: (url: String) -> Unit
+    ) {
         Column(
             modifier = modifier
                 .padding(Dimen.sizeMedium16dp)
@@ -190,7 +201,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                         )
                     },
                     onClick = {
-//                        localUriHandler.openUri("$HTTPS_SCHEMA${bookmark.url}")
+                        onSearchBookmarkAction.invoke("www.google.it")
                     }
                 )
             }
@@ -387,7 +398,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
         MaterialBookmarkMaterialTheme {
             Box(modifier = Modifier.background(mbGrayLightColor2())) {
 
-                SearchBookmarkView(modifier = Modifier)
+                SearchBookmarkView(modifier = Modifier, onSearchBookmarkAction = {})
             }
         }
     }
