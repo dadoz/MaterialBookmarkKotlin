@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -135,7 +137,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                         SearchBookmarkView(
                             modifier = Modifier,
                             onSearchBookmarkAction = {
-                                searchBookmarkViewModel.onSearchBookmarkByUrl(url = it)
+                                searchBookmarkViewModel.findBookmarkInfoByUrl(url = it)
                             })
                     }
                 }
@@ -147,6 +149,8 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
         modifier: Modifier,
         onSearchBookmarkAction: (url: String) -> Unit
     ) {
+        val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
+
         Column(
             modifier = modifier
                 .padding(Dimen.sizeMedium16dp)
@@ -168,7 +172,8 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
 
                 //search text field
                 MbBookmarkTextFieldView(
-                    modifier = Modifier
+                    modifier = Modifier,
+                    searchUrlTextState = searchUrlTextState
                 )
 
                 //clipboard
@@ -201,7 +206,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                         )
                     },
                     onClick = {
-                        onSearchBookmarkAction.invoke("www.google.it")
+                        onSearchBookmarkAction.invoke(searchUrlTextState.value.text)
                     }
                 )
             }
@@ -234,13 +239,15 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
     }
 
     @Composable
-    fun MbBookmarkTextFieldView(modifier: Modifier) {
-        var searchUrlText by remember { mutableStateOf(EMPTY) }
+    fun MbBookmarkTextFieldView(
+        modifier: Modifier,
+        searchUrlTextState: MutableState<TextFieldValue>
+    ) {
         OutlinedTextField(
             modifier = modifier
                 .fillMaxWidth(),
             textStyle = mbSubtitleTextStyle(),
-            value = searchUrlText,
+            value = searchUrlTextState.value,
             label = {
                 Text(
                     modifier = Modifier,
@@ -249,7 +256,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                 )
             },
             onValueChange = {
-                searchUrlText = it
+                searchUrlTextState.value = it
             })
     }
 

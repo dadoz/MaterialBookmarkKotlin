@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
 
+@Deprecated("not used anymore")
 class AddBookmarkViewModel(application: Application) :
     AndroidViewModel(application = application) {
     val bookmarkInfoLiveData: MutableLiveData<BookmarkInfo> = MutableLiveData()
     val bookmarkInfoLiveError: MutableLiveData<String> = MutableLiveData()
-    private val bookmarkListDataRepository: BookmarkListDataRepository =
-        BookmarkListDataRepository(getApplication())
+    private lateinit var bookmarkListDataRepository: BookmarkListDataRepository
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     val loaderLiveStatus: MutableLiveData<Boolean> = MutableLiveData()
@@ -98,40 +98,40 @@ class AddBookmarkViewModel(application: Application) :
      *
      */
     fun findBookmarkInfoByUrl(url: String) {
-        Observable.just(url)
-            .map { "https://$it" }
-            .filter { Patterns.WEB_URL.matcher(it).matches() }
-            .doOnNext {
-                Timber.tag(javaClass.name).e("----->$it")
-            }
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.newThread())
-            .filter { tempUrl -> tempUrl.isNotEmpty() }
-            .observeOn(Schedulers.newThread())
-            .flatMap {
-                bookmarkListDataRepository.findBookmarkInfo(url = it) ?: Observable.empty()
-            }
-            .doOnNext { bookmarksInfo ->
-                //print ciao bookmarksinfo
-                Timber.e(bookmarksInfo.toString())
-
-                if (bookmarksInfo.favicon?.contains("https") != true) {
-                    bookmarksInfo.favicon = "https://$url/" + bookmarksInfo.favicon
-                }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(attachLoaderOnView())
-            .subscribe(
-                { data ->
-                    data.apply {
-                        favicon = favicon.replace("//", "/").replace("https:/", "https://")
-                        bookmarkIconUrl.set(favicon)
-                    }
-                    bookmarkInfoLiveData.value = data
-                },
-                { error ->
-                    bookmarkInfoLiveError.value = error.message
-                })
+//        Observable.just(url)
+//            .map { "https://$it" }
+//            .filter { Patterns.WEB_URL.matcher(it).matches() }
+//            .doOnNext {
+//                Timber.tag(javaClass.name).e("----->$it")
+//            }
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(Schedulers.newThread())
+//            .filter { tempUrl -> tempUrl.isNotEmpty() }
+//            .observeOn(Schedulers.newThread())
+//            .flatMap {
+//                bookmarkListDataRepository.findBookmarkInfo(url = it) ?: Observable.empty()
+//            }
+//            .doOnNext { bookmarksInfo ->
+//                //print ciao bookmarksinfo
+//                Timber.e(bookmarksInfo.toString())
+//
+//                if (bookmarksInfo.favicon?.contains("https") != true) {
+//                    bookmarksInfo.favicon = "https://$url/" + bookmarksInfo.favicon
+//                }
+//            }
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .compose(attachLoaderOnView())
+//            .subscribe(
+//                { data ->
+//                    data.apply {
+//                        favicon = favicon.replace("//", "/").replace("https:/", "https://")
+//                        bookmarkIconUrl.set(favicon)
+//                    }
+//                    bookmarkInfoLiveData.value = data
+//                },
+//                { error ->
+//                    bookmarkInfoLiveError.value = error.message
+//                })
     }
 
     /**

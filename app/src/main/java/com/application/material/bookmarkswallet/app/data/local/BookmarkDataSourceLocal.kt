@@ -1,20 +1,27 @@
 package com.application.material.bookmarkswallet.app.data.local
 
-import android.content.Context
+import android.app.Application
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.application.material.bookmarkswallet.app.data.local.db.AppDatabase
 import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.network.models.Response
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class BookmarkDataSourceLocal(var context: Context) {
+class BookmarkDataSourceLocal @Inject constructor(val application: Application) {
     val MIGRATION_1_2 = object : Migration(1, 2) {
-        override fun migrate(database: SupportSQLiteDatabase) {
-            database.execSQL("ALTER TABLE mb_bookmark ADD COLUMN isStar INTEGER NOT NULL DEFAULT 0")
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE mb_bookmark ADD COLUMN isStar INTEGER NOT NULL DEFAULT 0")
         }
     }
 
-    private val database : AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, "db-bookmarks")
+    private val database: AppDatabase = Room.databaseBuilder(
+        application.applicationContext,
+        AppDatabase::class.java,
+        "db-bookmarks"
+    )
         .addMigrations(MIGRATION_1_2)
         .allowMainThreadQueries()   //Allows room to do operation on main thread
         .build()
@@ -39,7 +46,5 @@ class BookmarkDataSourceLocal(var context: Context) {
     fun deleteBookmark(bookmark: Bookmark) {
         database.bookmarkDao.deleteBookmark(bookmark)
     }
-
-
 
 }
