@@ -23,6 +23,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +54,7 @@ import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Date
 import java.util.Locale
 
@@ -59,12 +62,14 @@ import java.util.Locale
 @Composable
 fun BookmarkModalPreviewCard(
     modifier: Modifier,
-    bookmark: Bookmark,
+    bookmarkStateFlow: MutableStateFlow<Bookmark>,
     onDeleteCallback: (Bookmark) -> Unit,
     onOpenAction: (String) -> Unit,
     showBottomSheet: State<Boolean>,
     onDismissRequest: () -> Unit
 ) {
+    val bookmark by bookmarkStateFlow.collectAsState()
+
     //bottom sheet modal
     val bottomSheetState = rememberModalBottomSheetState()
     if (showBottomSheet.value) {
@@ -292,7 +297,8 @@ fun MbDeleteBookmarkButtonViewPreview() {
 fun BookmarkPreviewCardPreview() {
     BookmarkPreviewCard(
         modifier = Modifier,
-        bookmark = Bookmark(
+        bookmark =
+        Bookmark(
             title = "This is a title",
             siteName = "Blalallallalala",
             timestamp = Date(),
@@ -301,7 +307,6 @@ fun BookmarkPreviewCardPreview() {
             appId = null,
             isLike = false,
         ),
-        onDeleteAction = {},
-        onOpenAction = {}
-    )
+        onDeleteAction = {}
+    ) {}
 }

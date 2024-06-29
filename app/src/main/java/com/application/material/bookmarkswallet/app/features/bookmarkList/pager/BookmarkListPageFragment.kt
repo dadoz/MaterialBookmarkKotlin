@@ -37,6 +37,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGIN
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -244,7 +245,7 @@ class BookmarkListPageFragment(
 
                         BookmarkModalPreviewCard(
                             modifier = Modifier,
-                            bookmark = bookmark,
+                            bookmarkStateFlow = MutableStateFlow(bookmark), //todo find best sol
                             showBottomSheet = showBottomSheet,
                             onDeleteCallback = {
                                 //on close callback

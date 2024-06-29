@@ -20,10 +20,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -53,7 +53,8 @@ import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyl
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Date
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * A simple [Fragment] subclass.
@@ -136,6 +137,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                     MaterialBookmarkMaterialTheme {
                         SearchBookmarkView(
                             modifier = Modifier,
+                            searchedBookmarkState = searchBookmarkViewModel.searchedBookmarkState,
                             onSearchBookmarkAction = {
                                 searchBookmarkViewModel.findBookmarkInfoByUrl(url = it)
                             })
@@ -147,9 +149,11 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
     @Composable
     fun SearchBookmarkView(
         modifier: Modifier,
+        searchedBookmarkState: StateFlow<Bookmark?>,
         onSearchBookmarkAction: (url: String) -> Unit
     ) {
         val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
+        val bookmark by searchedBookmarkState.collectAsState()
 
         Column(
             modifier = modifier
@@ -211,23 +215,12 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                 )
             }
 
-            val searchedBookmark by remember {
-                mutableStateOf(
-                    Bookmark(
-                        "Google",
-                        "Google",
-                        "www.google.it",
-                        "",
-                        "http://www.google.it",
-                        Date(),
-                        false
-                    )
+            bookmark?.let {
+                BookmarkPreviewCard(
+                    modifier = Modifier,
+                    bookmark = it
                 )
             }
-            BookmarkPreviewCard(
-                modifier = Modifier,
-                bookmark = searchedBookmark
-            )
             Image(
                 modifier = Modifier
                     .padding(vertical = Dimen.paddingMedium16dp)
@@ -405,7 +398,12 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
         MaterialBookmarkMaterialTheme {
             Box(modifier = Modifier.background(mbGrayLightColor2())) {
 
-                SearchBookmarkView(modifier = Modifier, onSearchBookmarkAction = {})
+                SearchBookmarkView(
+                    modifier = Modifier,
+                    searchedBookmarkState = remember {
+                        MutableStateFlow(null)
+                    },
+                    onSearchBookmarkAction = {})
             }
         }
     }

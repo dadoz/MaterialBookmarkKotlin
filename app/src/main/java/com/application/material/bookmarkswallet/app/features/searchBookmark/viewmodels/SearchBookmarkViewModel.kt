@@ -13,6 +13,9 @@ import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.network.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -32,6 +35,8 @@ class SearchBookmarkViewModel @Inject constructor(
 
     //first state :)
     private val bookmarkIconUrl: MutableState<String> = mutableStateOf("bla")
+    private val searchedBookmarkMutableState: MutableStateFlow<Bookmark?> = MutableStateFlow(null)
+    val searchedBookmarkState: StateFlow<Bookmark?> = searchedBookmarkMutableState.asStateFlow()
 
     // TODO please !!!!!!!!!!!!!!!!!!!!!!
     override fun onCleared() {
