@@ -5,7 +5,6 @@ import com.application.material.bookmarkswallet.app.data.remote.BookmarkDataSour
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.network.models.Response
-import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,9 +14,7 @@ class BookmarkListDataRepository @Inject constructor(
     private val bookmarkDataSourceRemote: BookmarkDataSourceRemote,
     private val bookmarkDataSourceLocal: BookmarkDataSourceLocal
 ) {
-    fun getBookmarks(): Observable<MutableList<Bookmark>> {
-        return Observable.just(bookmarkDataSourceLocal.getBookmarks())
-    }
+    fun getBookmarks(): Flow<Response<List<Bookmark>>> = bookmarkDataSourceLocal.getBookmarks()
 
     fun addBookmark(bookmark: Bookmark) {
         bookmarkDataSourceLocal.insertBookmark(bookmark)
@@ -26,15 +23,15 @@ class BookmarkListDataRepository @Inject constructor(
     fun findBookmarkInfo(url: String): Flow<Response<BookmarkInfo>> =
         bookmarkDataSourceRemote.getBookmarkInfo(url)
 
-    fun updateBookmark(bookmark: Bookmark) {
+    fun updateBookmark(bookmark: Bookmark): Flow<Boolean> {
         return bookmarkDataSourceLocal.updateBookmark(bookmark)
     }
 
-    fun findBookmarkById(id: String): Bookmark {
+    fun findBookmarkById(id: String): Flow<Bookmark> {
         return bookmarkDataSourceLocal.findBookmarkById(id)
     }
 
-    fun deleteBookmark(bookmark: Bookmark) {
+    fun deleteBookmark(bookmark: Bookmark): Flow<Boolean> {
         return bookmarkDataSourceLocal.deleteBookmark(bookmark)
     }
 }

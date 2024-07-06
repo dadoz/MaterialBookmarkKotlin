@@ -1,65 +1,62 @@
 [versions]
 adapterRxjava3 = "2.11.0"
-androidGradlePlugin = "8.3.1"
+androidGradlePlugin = "8.3.2"
 coilCompose = "2.6.0"
 firebaseUiAuth = "8.0.2"
 khronos = "0.9.0"
 kotlin = "1.9.23"
 hilt = "2.51"
-mapsCompose = "4.3.0"
+mapsCompose = "4.3.3"
 navigationCompose = "2.7.7"
 room = "2.6.1"
-googleServicePlugin = "4.4.1"
+googleServicePlugin = "4.4.2"
 firebasePerfPlugin = "4.3.15"
-firebaseCrashlyticsPlugin = "2.9.9"
+firebaseCrashlyticsPlugin = "3.0.2"
 ksp = "1.9.23-1.0.19"
 kotlinCompiler = "1.5.11"
-rxandroid = "3.0.2"
-rxjava = "3.0.2"
 version-junit5-plugin = "1.9.3.0"
 
 #libraries version
-compose = "2024.04.00"
-firebase = "32.8.0"
-activityCompose = "1.8.2"
-retrofit = "2.9.0"
+compose = "2024.06.00"
+firebase = "33.1.1"
+activityCompose = "1.9.0"
+retrofit = "2.11.0"
 moshi = "1.15.1"
 hiltWork = "1.2.0"
 hiltNavigation = "1.2.0"
 destinations = "1.10.2"
 accompanistPager = "0.34.0"
-datastorePreferences = "1.0.0"
+datastorePreferences = "1.1.1"
 kotlinxDatetime = "0.5.0"
 junit = "4.13.2"
-junitExt = "1.1.5"
-espresso = "3.5.1"
-composeUi = "1.6.5"
+junitExt = "1.2.1"
+espresso = "3.6.1"
+composeUi = "1.6.8"
 composeConstraint = "1.0.1"
-coreKtx = "1.12.0"
-lifecycleRuntime = "2.7.0"
+coreKtx = "1.13.1"
+lifecycleRuntime = "2.8.2"
 kotlinxCoroutines = "1.6.4"
 constraintlayoutCompose = "1.0.1"
-viewpager2 = "1.0.0"
+viewpager2 = "1.1.0"
 workRuntime = "2.9.0"
 timber = "5.0.1"
 okhttp = "4.12.0"
 kotlinxSerialization = "1.6.3"
 lottie = "6.4.0"
-appcompat = "1.6.1"
-material = "1.11.0"
+appcompat = "1.7.0"
+material = "1.12.0"
 gson = "2.10.1"
 
 #version-junit5
 version-junit5 = "5.10.2"
 version-junit5-pioneer = "2.2.0"
-playServicesLocation = "21.2.0"
-playServicesMaps = "18.2.0"
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.0.0"
 material3WindowSizeClass = "1.2.1"
 
 [libraries]
 #core ktx
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version = "0.34.0" }
-adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "adapterRxjava3" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -101,8 +98,6 @@ navigation-fragment-ui = { module = "androidx.navigation:navigation-ui-ktx", ver
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 #work runtime
-rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
-rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntime" }
 

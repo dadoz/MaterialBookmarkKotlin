@@ -129,15 +129,15 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
 
-    implementation(libs.rxjava)
-    implementation(libs.rxandroid)
+//    implementation(libs.rxjava)
+//    implementation(libs.rxandroid)
 
     //timber log
     implementation(libs.timber)
 
     //retrofit
     implementation(libs.bundles.retrofit)
-    implementation(libs.adapter.rxjava3)
+//    implementation(libs.adapter.rxjava3)
     implementation(libs.converter.gson)
 
     //moshi

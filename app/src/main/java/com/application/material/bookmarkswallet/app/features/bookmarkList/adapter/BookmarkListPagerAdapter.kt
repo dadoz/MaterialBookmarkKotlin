@@ -10,8 +10,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.pager.
 const val MB_VIEWPAGER_TYPE = "MB_VIEWPAGER_TYPE"
 
 class BookmarkListPagerAdapter(
-    fa: FragmentActivity,
-    private val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit
+    fa: FragmentActivity
 ) :
     FragmentStateAdapter(fa) {
 
@@ -31,7 +30,7 @@ class BookmarkListPagerAdapter(
 
     fun initFragmentList() {
         fragList =
-            mutableListOf(BookmarkListPageFragment(bookmarkAddButtonVisibleCallback = bookmarkAddButtonVisibleCallback)
+            mutableListOf(BookmarkListPageFragment()
                 .apply {
                     arguments = Bundle()
                         .apply { putInt(MB_VIEWPAGER_TYPE, 0) }

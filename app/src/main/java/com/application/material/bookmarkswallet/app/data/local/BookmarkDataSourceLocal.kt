@@ -29,7 +29,7 @@ class BookmarkDataSourceLocal @Inject constructor(val application: Application) 
     /**
      * get bookmarks
      */
-    fun getBookmarks(): MutableList<Bookmark> {
+    fun getBookmarks(): Flow<Response<List<Bookmark>>> {
         return database.bookmarkDao.getBookmarks()
     }
 

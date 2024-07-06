@@ -32,18 +32,12 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOrListLayout
 import com.application.material.bookmarkswallet.app.utils.N_COUNT_GRID_BOOKMARKS
 import com.application.material.bookmarkswallet.app.utils.ZERO
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_DRAGGING
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_SETTLING
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
 
 @AndroidEntryPoint
-class BookmarkListPageFragment(
-    val bookmarkAddButtonVisibleCallback: (hasToShow: Boolean) -> Unit
-) :
+class BookmarkListPageFragment :
     Fragment() {
     private lateinit var binding: BookmarkListLayoutViewBinding
     val bookmarkViewModel: BookmarkViewModel by viewModels()
@@ -265,16 +259,5 @@ class BookmarkListPageFragment(
                     }
                 }
             }
-    }
-
-    private val openBottomSheetCallback = object : BottomSheetCallback() {
-        override fun onStateChanged(view: View, state: Int) {
-            val isVisible =
-                state != STATE_DRAGGING && state != STATE_SETTLING && state != STATE_EXPANDED
-            bookmarkAddButtonVisibleCallback.invoke(isVisible)
-        }
-
-        override fun onSlide(p0: View, p1: Float) {
-        }
     }
 }

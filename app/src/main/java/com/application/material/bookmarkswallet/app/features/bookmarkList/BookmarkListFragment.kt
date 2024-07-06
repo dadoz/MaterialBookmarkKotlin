@@ -102,11 +102,7 @@ class BookmarkListFragment : Fragment(), MenuProvider {
                     .apply {
                         isUserInputEnabled = false
                         adapter =
-                            BookmarkListPagerAdapter(it) {
-                                binding.mbBookmarkAddNewButtonId.visibility =
-                                    it.takeIf { it }
-                                        ?.let { View.VISIBLE } ?: View.GONE
-                            }
+                            BookmarkListPagerAdapter(it)
                     }
             }
 

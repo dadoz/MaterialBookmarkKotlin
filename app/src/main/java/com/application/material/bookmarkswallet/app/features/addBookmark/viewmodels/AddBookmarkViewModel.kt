@@ -1,7 +1,6 @@
 package com.application.material.bookmarkswallet.app.features.addBookmark.viewmodels
 
 import android.app.Application
-import android.util.Patterns
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,6 @@ import com.application.material.bookmarkswallet.app.data.BookmarkListDataReposit
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableTransformer
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -44,7 +42,6 @@ class AddBookmarkViewModel(application: Application) :
                 bookmark.iconUrl = iconUrl
             }
             .map(bookmarkListDataRepository::updateBookmark)
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     print("INSERT SUCCESS")

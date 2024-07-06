@@ -1,6 +1,10 @@
 package com.application.material.bookmarkswallet.app.data.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import com.application.material.bookmarkswallet.app.models.Bookmark
 
 @Dao
@@ -18,7 +22,7 @@ interface BookmarkDao {
     fun deleteBookmark(bookmark: Bookmark)
 
     @Query("SELECT * FROM mb_bookmark")
-    fun getBookmarks(): MutableList<Bookmark>
+    fun getBookmarks(): List<Bookmark>
 
     @Query("SELECT * FROM mb_bookmark WHERE url=:id")
     fun findBookmarkById(id: String): Bookmark
