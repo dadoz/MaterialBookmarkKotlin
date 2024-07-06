@@ -9,9 +9,9 @@ import com.application.material.bookmarkswallet.app.data.BookmarkListDataReposit
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableTransformer
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
@@ -32,25 +32,27 @@ class AddBookmarkViewModel(application: Application) :
      * add bookamrk on db
      *
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun updateBookmark(title: String, iconUrl: String?, url: String) {
-        Observable.just(url)
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.newThread())
-            .map(bookmarkListDataRepository::findBookmarkById)
-            .doOnNext { bookmark ->
-                bookmark.title = title
-                bookmark.iconUrl = iconUrl
-            }
-            .map(bookmarkListDataRepository::updateBookmark)
-            .subscribe(
-                {
-                    print("INSERT SUCCESS")
+        viewModelScope.launch {
+
+            bookmarkListDataRepository.findBookmarkById(id = url)
+                .map { bookmark ->
+                    bookmark.title = title
+                    bookmark.iconUrl = iconUrl
+                    bookmark
+                }
+                .flatMapLatest {
+                    bookmarkListDataRepository.updateBookmark(bookmark = it)
+                }
+                .collect {
+                    Timber.e("hey this is a message")
                     updateBookmarkStatus.value = true
-                },
-                { error ->
-                    Timber.e(error.message ?: "ERROR")
-                    updateBookmarkStatus.value = false
-                })
+//                    Timber.e(error.message ?: "ERROR")
+//                    updateBookmarkStatus.value = false
+                }
+
+        }
     }
 
     /**
@@ -129,17 +131,5 @@ class AddBookmarkViewModel(application: Application) :
 //                { error ->
 //                    bookmarkInfoLiveError.value = error.message
 //                })
-    }
-
-    /**
-     * please move it and generalize it
-     */
-    private fun <T : Any> attachLoaderOnView(): ObservableTransformer<T, T> {
-        return ObservableTransformer { observable ->
-            observable
-                .doOnSubscribe { loaderLiveStatus.value = true }
-                .doOnNext { loaderLiveStatus.value = false }
-                .doOnError { loaderLiveStatus.value = false }
-        }
     }
 }

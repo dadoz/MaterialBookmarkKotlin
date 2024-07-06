@@ -23,15 +23,12 @@ class BookmarkListDataRepository @Inject constructor(
     fun findBookmarkInfo(url: String): Flow<Response<BookmarkInfo>> =
         bookmarkDataSourceRemote.getBookmarkInfo(url)
 
-    fun updateBookmark(bookmark: Bookmark): Flow<Boolean> {
-        return bookmarkDataSourceLocal.updateBookmark(bookmark)
-    }
+    fun updateBookmark(bookmark: Bookmark): Flow<Boolean> =
+        bookmarkDataSourceLocal.updateBookmark(bookmark)
 
-    fun findBookmarkById(id: String): Flow<Bookmark> {
-        return bookmarkDataSourceLocal.findBookmarkById(id)
-    }
+    fun findBookmarkById(id: String): Flow<Bookmark> =
+        bookmarkDataSourceLocal.findBookmarkById(id)
 
-    fun deleteBookmark(bookmark: Bookmark): Flow<Boolean> {
-        return bookmarkDataSourceLocal.deleteBookmark(bookmark)
-    }
+    fun deleteBookmark(bookmark: Bookmark): Flow<Boolean> =
+        bookmarkDataSourceLocal.deleteBookmark(bookmark)
 }

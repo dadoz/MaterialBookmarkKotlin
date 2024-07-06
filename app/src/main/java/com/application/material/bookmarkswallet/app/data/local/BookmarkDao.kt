@@ -16,10 +16,10 @@ interface BookmarkDao {
     fun insertBookmark(bookmark: Bookmark)
 
     @Update
-    fun updateBookmark(bookmark: Bookmark)
+    fun updateBookmark(bookmark: Bookmark): Int
 
     @Delete
-    fun deleteBookmark(bookmark: Bookmark)
+    fun deleteBookmark(bookmark: Bookmark): Int
 
     @Query("SELECT * FROM mb_bookmark")
     fun getBookmarks(): List<Bookmark>

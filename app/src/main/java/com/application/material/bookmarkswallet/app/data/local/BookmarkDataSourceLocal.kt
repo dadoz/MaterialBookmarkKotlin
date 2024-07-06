@@ -8,6 +8,7 @@ import com.application.material.bookmarkswallet.app.data.local.db.AppDatabase
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.network.models.Response
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class BookmarkDataSourceLocal @Inject constructor(val application: Application) {
@@ -29,22 +30,38 @@ class BookmarkDataSourceLocal @Inject constructor(val application: Application) 
     /**
      * get bookmarks
      */
-    fun getBookmarks(): Flow<Response<List<Bookmark>>> {
-        return database.bookmarkDao.getBookmarks()
+    fun getBookmarks(): Flow<Response<List<Bookmark>>> = flow {
+        database.bookmarkDao.getBookmarks()
+            .let {
+                Response.Success(it)
+            }
+            .also {
+                emit(it)
+            }
     }
 
     fun insertBookmark(bookmark: Bookmark) {
         database.bookmarkDao.insertBookmark(bookmark)
     }
 
-    fun updateBookmark(bookmark: Bookmark) {
+    fun updateBookmark(bookmark: Bookmark): Flow<Boolean> = flow {
         database.bookmarkDao.updateBookmark(bookmark)
+            .also {
+                emit(it.toString().toBoolean())
+            }
     }
 
-    fun findBookmarkById(id: String): Bookmark = database.bookmarkDao.findBookmarkById(id)
+    fun findBookmarkById(id: String): Flow<Bookmark> = flow {
+        database.bookmarkDao.findBookmarkById(id)
+            .also {
+                emit(it)
+            }
+    }
 
-    fun deleteBookmark(bookmark: Bookmark) {
+    fun deleteBookmark(bookmark: Bookmark): Flow<Boolean> = flow {
         database.bookmarkDao.deleteBookmark(bookmark)
+            .also {
+                emit(it.toString().toBoolean())
+            }
     }
-
 }
