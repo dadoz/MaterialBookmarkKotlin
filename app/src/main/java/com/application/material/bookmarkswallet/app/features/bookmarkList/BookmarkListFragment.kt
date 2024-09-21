@@ -68,7 +68,6 @@ class BookmarkListFragment : Fragment(), MenuProvider {
 
     override fun onResume() {
         super.onResume()
-        Timber.e("hey this is a Frag Adapter ")
         (binding.mbMaterialBookmarkViewPagerId.adapter as BookmarkListPagerAdapter).initFragmentList()
     }
 

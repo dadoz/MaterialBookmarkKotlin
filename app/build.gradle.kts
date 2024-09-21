@@ -27,8 +27,8 @@ val timestamp: Int =
 
 
 android {
-    compileSdk = 34
-    buildToolsVersion = "34.0.0"
+    compileSdk = 35
+    buildToolsVersion = "35.0.0"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -37,10 +37,11 @@ android {
 
     defaultConfig {
         applicationId = "com.application.material.bookmarkswallet.app"
+
         minSdk = 30
-        targetSdk = 34
         versionCode = (major * 10000 + minor * 100 + patch)
         versionName = "$major.$minor.$patch"
+
         buildConfigField("String", "API_URLMETA_BASE_URL", "\"https://api.urlmeta.org\"")
         buildConfigField("String", "API_URLMETA_USER", "\"da-doz@hotmail.it\"")
         buildConfigField("String", "API_URLMETA_PWD", "\"INuNPW7T5eZdYe6EFyw8\"")

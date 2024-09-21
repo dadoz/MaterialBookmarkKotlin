@@ -35,7 +35,6 @@ class BookmarkListAdapter(
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         recyclerView.adapter?.notifyDataSetChanged()
-        Timber.e("RecyclerView- onAttachedToRecyclerView " + recyclerView.adapter?.itemCount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

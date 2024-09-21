@@ -18,6 +18,7 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.network.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import com.application.material.bookmarkswallet.app.utils.ONE
 import com.application.material.bookmarkswallet.app.utils.ZERO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -51,7 +52,7 @@ class BookmarkViewModel @Inject constructor(
     //empty view //total and star
     var sizeEmptyDataPair:
             LiveData<Pair<Int, Int>> = bookmarksLiveData
-        .map { Pair(ZERO, ZERO) }
+        .map { Pair(ONE, ZERO) }
 
     //state to handle
     private val bookmarkPreviewModalMutableState: MutableStateFlow<Boolean> =
