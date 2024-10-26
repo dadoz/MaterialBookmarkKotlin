@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 //    id("com.google.firebase.appdistribution")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
 }
 
 //release version
@@ -31,8 +32,8 @@ android {
     buildToolsVersion = "35.0.0"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     defaultConfig {
