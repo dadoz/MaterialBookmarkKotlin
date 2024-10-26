@@ -34,13 +34,13 @@
     <string name="filtering_by">filtering by</string>
     <string name="date">Date</string>
     <string name="title">Title</string>
-    <string name="search_nbookmark">Search \nBookmark</string>
+    <string name="search_nbookmark">Search</string>
     <string name="just_type_a_bookmark">just type a bookmark</string>
     <string name="paste_clipboard">paste from clipboard</string>
     <string name="description">Description</string>
     <string name="value">value</string>
     <string name="title_insert">Title insert…</string>
-    <string name="search_your_bookmark">Search your bookmark</string>
+    <string name="search_your_bookmark">Just type a Bookmark</string>
     <string name="open_bookmark">Open</string>
     <string name="bookmark_url">Bookmark Url</string>
 </resources>
