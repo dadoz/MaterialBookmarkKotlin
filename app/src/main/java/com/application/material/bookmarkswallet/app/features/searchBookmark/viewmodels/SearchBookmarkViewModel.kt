@@ -130,6 +130,7 @@ class SearchBookmarkViewModel @Inject constructor(
                     timestamp = Date(),//Dates.today,
                     isLike = false
                 ).also {
+                    Timber.e(it.toString())
                     bookmarkListDataRepository.addBookmark(it)
                     saveBookmarkStatus.value = true
                 }
@@ -144,7 +145,7 @@ class SearchBookmarkViewModel @Inject constructor(
     fun searchUrlInfoByUrlGenAI(url: String) {
         viewModelScope.launch {
             val response = genAIManager.generativeModel
-                .generateContent("get title, icon, url, description $url in JSON format")
+                .generateContent("get title, public icon, url, description $url in JSON format")
             Timber.e(response.candidates.map { it.content.parts.map { (it as TextPart).text }.joinToString()}.joinToString())
 
             try {
@@ -154,6 +155,7 @@ class SearchBookmarkViewModel @Inject constructor(
                         jsonAdapter.fromJson(it)
                     }
                     ?.also { bookmark ->
+                        Timber.e(bookmark.toString())
                         saveBookmark(
                             title = bookmark.title ?: EMPTY_BOOKMARK_LABEL,
                             iconUrl = bookmark.icon,
