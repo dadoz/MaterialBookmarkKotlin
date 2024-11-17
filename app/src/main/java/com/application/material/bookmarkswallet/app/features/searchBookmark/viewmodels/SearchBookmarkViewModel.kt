@@ -1,6 +1,7 @@
 package com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels
 
 import android.app.Application
+import android.graphics.BitmapFactory
 import android.util.Patterns
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +16,7 @@ import com.application.material.bookmarkswallet.app.models.BookmarkSimple
 import com.application.material.bookmarkswallet.app.network.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.google.ai.client.generativeai.type.TextPart
+import com.google.ai.client.generativeai.type.content
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +28,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import timber.log.Timber
+import java.io.BufferedInputStream
+import java.io.IOException
 import java.util.Date
 import javax.inject.Inject
 import kotlin.collections.joinToString
@@ -144,6 +152,56 @@ class SearchBookmarkViewModel @Inject constructor(
         }
     }
 
+    fun searchTextByImagerGenAI() {
+        val url = "https://lh3.googleusercontent.com/QHoiIO_W_jxLrG_EfMLu_A5mptYkU-IOWwDTTkZXCe3IRx6v6sd-w9ZeubjBE_K2qZ9_L1oxkfLB5N2HAPr7qiCqdCuJWc32v99bcYzgoWyEtOV-g8OkA7X-W4JEgRS8Qw=w740"
+        CoroutineScope(Dispatchers.IO)
+            .launch {
+
+                val client = OkHttpClient.Builder()
+                    .followRedirects(false)
+                    .build()
+                val request = Request.Builder()
+                    .url(url)
+                    .build()
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        e.printStackTrace()
+                    }
+
+                    override fun onResponse(call: Call, response: okhttp3.Response) {
+                        try {
+                            //generate bitmap from URL
+                            Timber.e(url)
+                            val bitmap = response.body?.byteStream()
+                                ?.let {
+                                    val temp = BitmapFactory.decodeStream(BufferedInputStream(it))
+                                    Timber.e(temp.height.toString())
+                                    temp
+                                }
+                                ?.let { bitmap ->
+                                    //generative AI ------>
+                                    val prompt = content {
+                                        image(bitmap)
+                                        text("retrieve text from image to JSON format")
+                                    }
+                                    CoroutineScope(Dispatchers.IO)
+                                        .launch {
+                                            val response =
+                                                genAIManager.generativeModel
+                                                    .generateContent(prompt)
+                                            Timber.e(response.text)
+                                        }
+                                } ?: {
+                                Timber.e("EMPTY IMAGE $url")
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                })
+            }
+    }
+
     fun searchUrlInfoByUrlGenAI(url: String, onCompletion: () -> Unit = {}) {
         CoroutineScope(Dispatchers.IO)
             .launch {
@@ -176,6 +234,7 @@ class SearchBookmarkViewModel @Inject constructor(
                 }
             }
     }
+
     /**
      *
      */

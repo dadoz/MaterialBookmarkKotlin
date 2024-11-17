@@ -146,9 +146,10 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                             modifier = Modifier,
                             searchedBookmarkState = searchBookmarkViewModel.searchedBookmarkState,
                             onSearchBookmarkAction = {
-                                searchBookmarkViewModel.searchUrlInfoByUrlGenAI(url = it) {
-                                    navigation?.popBackStack()
-                                }
+                                searchBookmarkViewModel.searchTextByImagerGenAI()
+//                                searchBookmarkViewModel.searchUrlInfoByUrlGenAI(url = it) {
+//                                    navigation?.popBackStack()
+//                                }
                             })
                     }
                 }
