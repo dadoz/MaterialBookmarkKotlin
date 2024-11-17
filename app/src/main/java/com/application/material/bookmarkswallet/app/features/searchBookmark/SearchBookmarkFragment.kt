@@ -139,7 +139,7 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                             modifier = Modifier,
                             searchedBookmarkState = searchBookmarkViewModel.searchedBookmarkState,
                             onSearchBookmarkAction = {
-                                searchBookmarkViewModel.findBookmarkInfoByUrl(url = it)
+                                searchBookmarkViewModel.searchUrlInfoByUrlGenAI(url = it)
                             })
                     }
                 }

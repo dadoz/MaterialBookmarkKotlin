@@ -103,7 +103,8 @@ class BookmarkListAdapter(
                     item.title
                         ?.ifBlank { EMPTY_BOOKMARK_LABEL }
             }
-            bookmarkUrl.text = HTTPS_SCHEMA.plus(item.url)
+            bookmarkUrl.text = item.url
+            bookmarkDescriptionTextViewId.text = item.siteName?.takeIf { it.isNotEmpty() } ?: EMPTY_BOOKMARK_LABEL
             bookmarkTimestamp.text = item.timestamp?.toString() //"dd MMM"
 
             bookmarkStarButton.apply {
@@ -161,6 +162,7 @@ class BookmarkListAdapter(
     class BookmarkViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val bookmarkTitle: TextView = itemView.findViewById(R.id.bookmarkTitleTextViewId)
         val bookmarkUrl: TextView = itemView.findViewById(R.id.bookmarkUrlTextViewId)
+        val bookmarkDescriptionTextViewId: TextView = itemView.findViewById(R.id.bookmarkDescriptionTextViewId)
         val bookmarkTimestamp: TextView = itemView.findViewById(R.id.bookmarkTimestampTextViewId)
         val bookmarkIcon: ImageView = itemView.findViewById(R.id.bookmarkIconImageViewId)
         val bookmarkStarButton: ImageView = itemView.findViewById(R.id.mbBookmarkStarButtonId)

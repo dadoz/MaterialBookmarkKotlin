@@ -15,6 +15,7 @@ plugins {
 //    id("com.google.firebase.appdistribution")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 //release version
@@ -89,6 +90,12 @@ android {
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
+}
+
+secrets {
+    // Change the properties file from the default "local.properties" in your root project
+    // to another properties file in your root project.
+    propertiesFileName = "secrets.properties"
 }
 
 dependencies {
@@ -188,6 +195,8 @@ dependencies {
     implementation(libs.coil.compose)
     //glide
 //    implementation(libs.glide)
+
+    implementation(libs.generativeai)
 
     //test
     testImplementation(libs.junit)

@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdk = 30
         versionCode 1
         versionName "1.4"
 
@@ -34,14 +34,14 @@ ext {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation libs.appcompat.v110
+    implementation libs.core.ktx.v120
     implementation "com.google.android.material:material:$google_material_version"
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation libs.recyclerview
     // For control over item selection of both touch and mouse driven selection
-    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
+    implementation libs.recyclerview.selection
 
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation libs.junit.v413
+    androidTestImplementation libs.junit.v111
+    androidTestImplementation libs.espresso.core.v320
 }

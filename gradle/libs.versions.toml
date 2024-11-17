@@ -1,23 +1,33 @@
 [versions]
+androidxJunit = "1.1.1"
+appcompatVersion = "1.1.0"
+coreKtxVersion = "1.2.0"
+espressoCore = "3.2.0"
+generativeai = "0.9.0"
+generativeaiVersion = "0.7.0"
 gsonAdapter = "2.11.0"
-androidGradlePlugin = "8.7.1"
+androidGradlePlugin = "8.7.2"
 coilCompose = "2.6.0"
 firebaseUiAuth = "8.0.2"
+junitVersion = "4.13"
 khronos = "0.9.0"
 kotlin = "2.0.21"
 hilt = "2.51"
 mapsCompose = "4.3.3"
-navigationCompose = "2.8.3"
+navigationCompose = "2.8.4"
+recyclerview = "1.3.2"
+recyclerviewSelection = "1.1.0"
 room = "2.6.1"
 googleServicePlugin = "4.4.2"
 firebasePerfPlugin = "4.3.15"
 firebaseCrashlyticsPlugin = "3.0.2"
 ksp = "2.0.21-1.0.26"
 kotlinCompiler = "1.5.11"
+secretsGradlePluginVersion = "2.0.1"
 version-junit5-plugin = "1.9.3.0"
 
 #libraries version
-compose = "2024.10.00"
+compose = "2024.11.00"
 firebase = "33.5.1"
 activityCompose = "1.9.3"
 retrofit = "2.11.0"
@@ -31,14 +41,14 @@ kotlinxDatetime = "0.5.0"
 junit = "4.13.2"
 junitExt = "1.2.1"
 espresso = "3.6.1"
-composeUi = "1.7.4"
+composeUi = "1.7.5"
 composeConstraint = "1.0.1"
-coreKtx = "1.13.1"
-lifecycleRuntime = "2.8.6"
-kotlinxCoroutines = "1.6.4"
-constraintlayoutCompose = "1.0.1"
+coreKtx = "1.15.0"
+lifecycleRuntime = "2.8.7"
+kotlinxCoroutines = "1.9.0"
+constraintlayoutCompose = "1.1.0"
 viewpager2 = "1.1.0"
-workRuntime = "2.9.1"
+workRuntime = "2.10.0"
 timber = "5.0.1"
 okhttp = "4.12.0"
 kotlinxSerialization = "1.6.3"
@@ -52,15 +62,22 @@ version-junit5 = "5.10.2"
 version-junit5-pioneer = "2.2.0"
 playServicesLocation = "21.3.0"
 playServicesMaps = "19.0.0"
-material3WindowSizeClass = "1.3.0"
+material3WindowSizeClass = "1.3.1"
 
 [libraries]
 #core ktx
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version = "0.34.0" }
+appcompat-v110 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "gsonAdapter" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+core-ktx-v120 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+espresso-core-v320 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 firebase-auth-ui = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
+generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai" }
+google-secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePluginVersion" }
+junit-v111 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+junit-v413 = { module = "junit:junit", version.ref = "junitVersion" }
 khronos = { module = "com.github.hotchemi:khronos", version.ref = "khronos" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
 
@@ -98,6 +115,8 @@ navigation-fragment-ui = { module = "androidx.navigation:navigation-ui-ktx", ver
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 #work runtime
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
 viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntime" }
 

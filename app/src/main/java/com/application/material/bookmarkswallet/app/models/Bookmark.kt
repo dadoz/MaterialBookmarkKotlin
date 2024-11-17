@@ -8,8 +8,10 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.application.material.bookmarkswallet.app.R
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.JsonClass
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "mb_bookmark")
 data class Bookmark (
         @SerializedName("site_name")
@@ -57,3 +59,15 @@ fun setImageViewSquaredResource(imageView: ImageView, url: String?) {
                 transformations(CircleCropTransformation())
         }
 }
+
+@JsonClass(generateAdapter = true)
+data class BookmarkSimple (
+        @SerializedName("title")
+        var title: String?,
+        @SerializedName("icon")
+        var icon: String?,
+        @SerializedName("url")
+        var url: String,
+        @SerializedName("description")
+        var description: String
+)

@@ -5,12 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-//        classpath(Dependencies.ANDROID_PLUGIN)
-//        classpath(Dependencies.KOTLIN_GRADLE_PLUGIN)
-//        classpath(Dependencies.GOOGLE_SERVICES)
-//        classpath(Dependencies.FIREBASE_PLUGIN)
-//        //hilt
-//        classpath(Dependencies.HILT_PLUGIN)
+        classpath(libs.google.secrets.gradle.plugin)
     }
 }
 

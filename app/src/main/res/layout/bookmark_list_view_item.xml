@@ -49,6 +49,20 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 tools:text="www.android.com" />
+            <TextView
+                android:id="@+id/bookmarkDescriptionTextViewId"
+                style="@style/MBMaterialTextSubtitleSmallYellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_16"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:minLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="www.androidsd lflkasdjf lkaasdfasdl kjflsd fkalsd jflaksd lkfjla skdjflkasjd flkajsd flkjsa df" />
+
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView

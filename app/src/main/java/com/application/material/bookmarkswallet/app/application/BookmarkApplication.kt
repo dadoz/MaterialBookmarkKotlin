@@ -20,4 +20,9 @@ class BookmarkApplication : Application() {
     val bookmarkFilters: BookmarkFilter by lazy {
         BookmarkFilter(IS_GRID, IS_ASCENDING, IS_BY_TITLE, this)
     }
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+
 }
