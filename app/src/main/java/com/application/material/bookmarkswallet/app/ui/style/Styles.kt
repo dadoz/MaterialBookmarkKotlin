@@ -18,9 +18,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColor
 import com.application.material.bookmarkswallet.app.R
-import com.google.android.material.color.utilities.Scheme
 
 const val densityResizeFactor = 1f
 
@@ -32,6 +30,14 @@ fun mbTitleBoldTextStyle() = TextStyle(
     fontWeight = FontWeight.Normal
 )
 
+@Composable
+fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(
+    color = when (isSystemInDarkTheme()) {
+        true -> colorResource(R.color.colorAccent)
+        else -> MbColor.DarkYellow
+    },
+    fontFamily = MbYantramanavRegularFontFamily
+)
 @Composable
 fun mbSubtitleTextStyle() = TextStyle(
     color = colorResource(R.color.colorPrimary),

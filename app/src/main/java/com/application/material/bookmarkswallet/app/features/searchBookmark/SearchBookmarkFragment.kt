@@ -51,6 +51,7 @@ import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
@@ -188,6 +189,20 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                     searchUrlTextState = searchUrlTextState
                 )
 
+                //clipboard
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = Dimen.paddingExtraSmall4dp),
+                    style = mbSubtitleTextAccentStyle(),
+                    text = "Hey Search with GEMINI"
+                )
+                //clipboard
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = Dimen.paddingExtraSmall4dp),
+                    style = mbSubtitleTextAccentStyle(),
+                    text = "Hey Search with ChatGPT"
+                )
                 //clipboard
                 Text(
                     modifier = Modifier

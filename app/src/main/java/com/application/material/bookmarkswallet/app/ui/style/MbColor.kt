@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 object MbColor {
     val Gray = Color(0xFF4A4D4E)
     val Yellow = Color(0xFFE9D40F)
+    val DarkYellow = Color(0xFFAD9A0C)
     val Magenta = Color(0xFFED2B47)
     val LightGray = Color(0xFFBEBEBE)
     val DarkGray: Color = Color(0xFF262B2B)
