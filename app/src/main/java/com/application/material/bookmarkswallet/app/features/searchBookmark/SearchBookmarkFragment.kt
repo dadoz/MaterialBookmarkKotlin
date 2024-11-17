@@ -31,9 +31,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkComposeBinding
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment
@@ -68,6 +71,9 @@ import kotlinx.coroutines.flow.StateFlow
 @AndroidEntryPoint
 class SearchBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentSearchBookmarkComposeBinding
+    private val navigation: NavController? by lazy {
+        view?.let { Navigation.findNavController(it) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -139,7 +145,9 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                             modifier = Modifier,
                             searchedBookmarkState = searchBookmarkViewModel.searchedBookmarkState,
                             onSearchBookmarkAction = {
-                                searchBookmarkViewModel.searchUrlInfoByUrlGenAI(url = it)
+                                searchBookmarkViewModel.searchUrlInfoByUrlGenAI(url = it) {
+                                    navigation?.popBackStack()
+                                }
                             })
                     }
                 }
@@ -203,8 +211,8 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                     icon = {
                         Icon(
                             modifier = Modifier
-                                .width(Dimen.sizeMedium16dp)
-                                .height(Dimen.sizeMedium16dp),
+                                .width(24.dp)
+                                .height(24.dp),
                             painter = painterResource(R.drawable.ic_star),
                             contentDescription = EMPTY
                         )
@@ -397,13 +405,13 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
     fun SearchBookmarkViewPreview() {
         MaterialBookmarkMaterialTheme {
             Box(modifier = Modifier.background(mbGrayLightColor2())) {
-
                 SearchBookmarkView(
                     modifier = Modifier,
                     searchedBookmarkState = remember {
                         MutableStateFlow(null)
                     },
-                    onSearchBookmarkAction = {})
+                    onSearchBookmarkAction = {}
+                )
             }
         }
     }

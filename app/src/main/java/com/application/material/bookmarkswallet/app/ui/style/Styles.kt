@@ -47,7 +47,7 @@ fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle().copy(
 
 @Composable
 fun mbButtonTextStyle() = TextStyle(
-    color = MaterialTheme.colorScheme.primary,
+    color = mbWhiteDarkColor(),
     fontSize = MaterialTheme.typography.labelLarge.fontSize,
     fontFamily = MbYantramanavBoldFontFamily,
     fontWeight = FontWeight.Normal
@@ -80,6 +80,13 @@ fun mbGrayLightColor(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MaterialTheme.colorScheme.onSurface
         else -> MaterialTheme.colorScheme.surfaceContainerLow
+    }
+}
+@Composable
+fun mbWhiteDarkColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.White
+        else -> MbColor.DarkGray
     }
 }
 

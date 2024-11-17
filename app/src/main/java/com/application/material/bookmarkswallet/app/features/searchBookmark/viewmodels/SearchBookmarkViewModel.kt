@@ -18,6 +18,8 @@ import com.google.ai.client.generativeai.type.TextPart
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -142,32 +144,37 @@ class SearchBookmarkViewModel @Inject constructor(
         }
     }
 
-    fun searchUrlInfoByUrlGenAI(url: String) {
-        viewModelScope.launch {
-            val response = genAIManager.generativeModel
-                .generateContent("get title, public icon, url, description $url in JSON format")
-            Timber.e(response.candidates.map { it.content.parts.map { (it as TextPart).text }.joinToString()}.joinToString())
+    fun searchUrlInfoByUrlGenAI(url: String, onCompletion: () -> Unit = {}) {
+        CoroutineScope(Dispatchers.IO)
+            .launch {
+                val response = genAIManager.generativeModel
+                    .generateContent("get title, public icon, url, description $url in JSON format")
+                Timber.e(response.candidates.map { it.content.parts.map { (it as TextPart).text }.joinToString()}.joinToString())
 
-            try {
-                (response.candidates.first().content.parts.first() as TextPart).text.replace("json", "").replace("```", "")
-                    .let {
-                        val  jsonAdapter: JsonAdapter<BookmarkSimple> = Moshi.Builder().build().adapter(BookmarkSimple::class.java).lenient()
-                        jsonAdapter.fromJson(it)
-                    }
-                    ?.also { bookmark ->
-                        Timber.e(bookmark.toString())
-                        saveBookmark(
-                            title = bookmark.title ?: EMPTY_BOOKMARK_LABEL,
-                            iconUrl = bookmark.icon,
-                            description = bookmark.description,
-                            url = bookmark.url
-                        )
-                    }
+                try {
+                    (response.candidates.first().content.parts.first() as TextPart).text.replace("json", "").replace("```", "")
+                        .let {
+                            val  jsonAdapter: JsonAdapter<BookmarkSimple> = Moshi.Builder().build().adapter(BookmarkSimple::class.java).lenient()
+                            jsonAdapter.fromJson(it)
+                        }
+                        ?.also { bookmark ->
+                            Timber.e(bookmark.toString())
+                            saveBookmark(
+                                title = bookmark.title ?: EMPTY_BOOKMARK_LABEL,
+                                iconUrl = bookmark.icon,
+                                description = bookmark.description,
+                                url = bookmark.url
+                            )
+                            //main thread
+                            viewModelScope.launch {
+                                onCompletion.invoke()
+                            }
+                        }
 
-            } catch (e: Exception) {
-                e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-        }
     }
     /**
      *
