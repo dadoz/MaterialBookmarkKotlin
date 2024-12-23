@@ -152,56 +152,6 @@ class SearchBookmarkViewModel @Inject constructor(
         }
     }
 
-    fun searchTextByImagerGenAI() {
-        val url = "https://lh3.googleusercontent.com/QHoiIO_W_jxLrG_EfMLu_A5mptYkU-IOWwDTTkZXCe3IRx6v6sd-w9ZeubjBE_K2qZ9_L1oxkfLB5N2HAPr7qiCqdCuJWc32v99bcYzgoWyEtOV-g8OkA7X-W4JEgRS8Qw=w740"
-        CoroutineScope(Dispatchers.IO)
-            .launch {
-
-                val client = OkHttpClient.Builder()
-                    .followRedirects(false)
-                    .build()
-                val request = Request.Builder()
-                    .url(url)
-                    .build()
-                client.newCall(request).enqueue(object : Callback {
-                    override fun onFailure(call: Call, e: IOException) {
-                        e.printStackTrace()
-                    }
-
-                    override fun onResponse(call: Call, response: okhttp3.Response) {
-                        try {
-                            //generate bitmap from URL
-                            Timber.e(url)
-                            val bitmap = response.body?.byteStream()
-                                ?.let {
-                                    val temp = BitmapFactory.decodeStream(BufferedInputStream(it))
-                                    Timber.e(temp.height.toString())
-                                    temp
-                                }
-                                ?.let { bitmap ->
-                                    //generative AI ------>
-                                    val prompt = content {
-                                        image(bitmap)
-                                        text("retrieve text from image to JSON format")
-                                    }
-                                    CoroutineScope(Dispatchers.IO)
-                                        .launch {
-                                            val response =
-                                                genAIManager.generativeModel
-                                                    .generateContent(prompt)
-                                            Timber.e(response.text)
-                                        }
-                                } ?: {
-                                Timber.e("EMPTY IMAGE $url")
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
-                })
-            }
-    }
-
     fun searchUrlInfoByUrlGenAI(url: String, onCompletion: () -> Unit = {}) {
         CoroutineScope(Dispatchers.IO)
             .launch {
