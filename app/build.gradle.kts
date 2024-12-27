@@ -1,5 +1,8 @@
+import java.io.FileInputStream
 import java.sql.Timestamp
 import java.time.ZonedDateTime
+import java.util.Properties
+import kotlin.apply
 
 plugins {
     alias(libs.plugins.android.application)
@@ -27,6 +30,10 @@ val timestamp: Int =
         .toInstant()
         .toEpochMilli().toInt()
 
+// KeyStore
+val keystoreProperties = Properties().apply {
+    load(FileInputStream(rootProject.file("keystore.properties")))
+}
 
 android {
     compileSdk = 35
@@ -56,6 +63,14 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        create("releaseConfig") {
+            storeFile = file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
+        }
+    }
 
     buildTypes {
         debug {
@@ -68,6 +83,7 @@ android {
 
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("releaseConfig")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
