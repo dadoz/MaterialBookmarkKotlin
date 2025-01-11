@@ -23,5 +23,4 @@ class BookmarksMainActivity : AppCompatActivity(),
                     .commit()
             }
     }
-
 }
