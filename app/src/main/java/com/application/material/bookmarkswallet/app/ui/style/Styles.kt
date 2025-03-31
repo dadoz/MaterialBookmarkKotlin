@@ -24,8 +24,8 @@ const val densityResizeFactor = 1f
 
 @Composable
 fun mbTitleBoldTextStyle() = TextStyle(
-    color = colorResource(R.color.colorAccent),
-    fontSize = 36.sp,// myVeTitleMedium(),
+    color = MbColor.Yellow,
+    fontSize = 38.sp,// myVeTitleMedium(),
     fontFamily = MbYantramanavRegularFontFamily,
     fontWeight = FontWeight.Light
 )

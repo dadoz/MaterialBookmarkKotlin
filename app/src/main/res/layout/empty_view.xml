@@ -17,7 +17,6 @@
             android:id="@+id/mbBookmarkEmptyImageViewId"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/min_margin_bottom_recycler"
-            android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_fox_sleep_illustration" />
 

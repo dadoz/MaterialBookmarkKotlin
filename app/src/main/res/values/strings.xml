@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Bookmark Wallet</string>
     <string name="action_settings">Settings</string>
-    <string name="bookmarks_title">Bookmarks</string>
+    <string name="bookmarks_title">List</string>
     <string name="bookmarks_description">stored on your phone</string>
     <string name="delete_label_text">DELETE</string>
     <string name="open_in_browser_label_text">OPEN</string>
