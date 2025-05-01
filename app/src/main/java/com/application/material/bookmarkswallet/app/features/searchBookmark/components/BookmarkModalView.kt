@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.BottomSheetDefaults.DragHandle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -62,9 +62,7 @@ fun BookmarkModalBottomSheetView(
         modifier = modifier
             .wrapContentHeight()
             .padding(top = 120.dp),
-        dragHandle = {
-            BottomSheetDefaults.DragHandle()
-        },
+        hasDragHandle = true,
         bottomSheetState = bottomSheetState,
         onCloseCallback = onCloseCallback
     ) {
@@ -115,7 +113,7 @@ fun WevWebView(
 @Composable
 fun WevBaseBottomSheetView(
     modifier: Modifier = Modifier,
-    dragHandle: @Composable (() -> Unit)? = {},
+    hasDragHandle: Boolean = false,
     bottomSheetState: SheetState,
     containerColor: Color = mbGrayLightColor(),
     onCloseCallback: () -> Unit,
@@ -127,7 +125,11 @@ fun WevBaseBottomSheetView(
         onDismissRequest = onCloseCallback,
         containerColor = containerColor,
         shape = mbBottomSheetRoundedCornerShape(),
-        dragHandle = dragHandle
+        dragHandle = {
+            if (hasDragHandle) {
+                DragHandle()
+            }
+        }
     ) {
         CompositionLocalProvider(
             LocalDensity provides Density(
