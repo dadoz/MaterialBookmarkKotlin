@@ -18,7 +18,7 @@ plugins {
 //    id("com.google.firebase.appdistribution")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.segrets.gradle)
 }
 
 //release version
@@ -51,10 +51,26 @@ android {
         versionCode = (major * 10000 + minor * 100 + patch)
         versionName = "$major.$minor.$patch"
 
-        buildConfigField("String", "API_URLMETA_BASE_URL", "\"https://api.urlmeta.org\"")
-        buildConfigField("String", "API_URLMETA_USER", "\"da-doz@hotmail.it\"")
-        buildConfigField("String", "API_URLMETA_PWD", "\"INuNPW7T5eZdYe6EFyw8\"")
-        buildConfigField("String", "JSONLINK_BASE_URL", "\"https://jsonlink.io/api/\"")
+        buildConfigField(
+            "String",
+            "API_URLMETA_BASE_URL",
+            "\"https://api.urlmeta.org\""
+        )
+        buildConfigField(
+            "String",
+            "API_URLMETA_USER",
+            "\"da-doz@hotmail.it\""
+        )
+        buildConfigField(
+            "String",
+            "API_URLMETA_PWD",
+            "\"INuNPW7T5eZdYe6EFyw8\""
+        )
+        buildConfigField(
+            "String",
+            "JSONLINK_BASE_URL",
+            "\"https://jsonlink.io/api/\""
+        )
         buildConfigField(
             "String",
             "JSONLINK_API_KEY",
@@ -136,6 +152,10 @@ dependencies {
     // Optionally, you can include the Compose utils library for Clustering,
     // Street View metadata checks, etc.
     implementation(libs.maps.compose.utils)
+    implementation("androidx.compose.material3:material3-android:1.4.0-alpha14")
+    implementation(
+         "androidx.compose.material:material-icons-extended:1.7.8"
+    )
 
     // Optionally, you can include the widgets library for ScaleBar, etc.
     implementation(libs.maps.compose.widgets)

@@ -1,0 +1,151 @@
+package com.application.material.bookmarkswallet.app.features.hp
+
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.PositionalThreshold
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.rememberNavController
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColorBackground
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HpView() {
+    val context = LocalContext.current
+    val navController = rememberNavController()
+
+    //pull to refresh config
+    val pullToRefreshState = rememberPullToRefreshState()
+    val verticalScrollState = rememberScrollState()
+    val isLoading = remember { mutableStateOf(false) }
+
+    //nav item selected state
+    val navItemSelectedState = remember { mutableStateOf(NavRoute.BookmarkList) }
+
+    LaunchedEffect(key1 = isLoading.value) {
+        if (isLoading.value) {
+            launch(Dispatchers.Main) {
+                delay(2000L)
+                isLoading.value = false
+            }
+        }
+    }
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = mbGrayLightColorBackground())
+            .windowInsetsPadding(insets = WindowInsets.systemBars),
+//        topBar = { //todo move header here and change values on a UI STATE please <3
+//},
+        bottomBar = {
+            NavigationBar(
+                modifier = Modifier,
+                containerColor = mbGrayLightColorBackground()
+            ) {
+                getTabMenuItemList(context = context)
+                    .forEach {
+                        NavigationBarItem(
+                            modifier = Modifier,
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = MbColor.Yellow
+                            ),
+                            icon = {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(24.dp),
+                                    painter = painterResource(it.icon),
+                                    contentDescription = "item"
+                                )
+                            },
+                            label = {
+                                Text(
+                                    text = it.label,
+                                    style = mbSubtitleLightTextStyle()
+                                )
+                            },
+                            selected = it.navRoute == navItemSelectedState.value,
+                            onClick = {
+                                navController.navigate(route = it.navRoute.route) {
+                                    //change selected state item
+                                    navItemSelectedState.value = it.navRoute
+                                    //popup item from controller
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    restoreState = true
+                                    launchSingleTop = true
+                                }
+                            }
+                        )
+                    }
+            }
+        },
+        floatingActionButton = { },
+        floatingActionButtonPosition = androidx.compose.material3.FabPosition.End,
+    ) { innerPadding ->
+        PullToRefreshBox(
+            modifier = Modifier
+                .fillMaxSize(),
+            isRefreshing = isLoading.value,
+            state = pullToRefreshState,
+            onRefresh = {
+                isLoading.value = true
+                //loading
+                Toast.makeText(context, "refresh", Toast.LENGTH_SHORT).show()
+            },
+            indicator = {
+                Indicator(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter),
+                    state = pullToRefreshState,
+                    isRefreshing = isLoading.value,
+                    threshold = PositionalThreshold,
+                    color = mbGrayLightColor(),
+                )
+            }
+        ) {
+            //pull to refresh content
+            HomeNavHost(
+                modifier = Modifier
+                    .background(mbGrayLightColorBackground())
+                    .clipToBounds()
+                    .padding(paddingValues = innerPadding)
+                    .fillMaxSize(),
+                verticalScrollState = verticalScrollState,
+                navController = navController
+            )
+        }
+    }
+}

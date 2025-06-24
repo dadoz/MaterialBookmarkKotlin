@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
+import com.application.material.bookmarkswallet.app.models.getBookmarkId
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
@@ -63,7 +64,7 @@ class AddBookmarkViewModel(application: Application) :
         viewModelScope.launch {
             try {
                 Bookmark(
-                    appId = Bookmark.getId(url),
+                    appId = getBookmarkId(url),
                     siteName = EMPTY,
                     title = title,
                     iconUrl = iconUrl,

@@ -255,27 +255,6 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
         }
     }
 
-    @Composable
-    fun MbBookmarkTextFieldView(
-        modifier: Modifier,
-        searchUrlTextState: MutableState<TextFieldValue>
-    ) {
-        OutlinedTextField(
-            modifier = modifier
-                .fillMaxWidth(),
-            textStyle = mbSubtitleTextStyle(),
-            value = searchUrlTextState.value,
-            label = {
-                Text(
-                    modifier = Modifier,
-                    style = mbSubtitleTextStyle(),
-                    text = stringResource(id = R.string.bookmark_url)
-                )
-            },
-            onValueChange = {
-                searchUrlTextState.value = it
-            })
-    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -431,4 +410,27 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
             }
         }
     }
+}
+
+@Composable
+fun MbBookmarkTextFieldView(
+    modifier: Modifier,
+    textLabel: String = stringResource(id = R.string.bookmark_url),
+    searchUrlTextState: MutableState<TextFieldValue>
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth(),
+        textStyle = mbSubtitleTextStyle(),
+        value = searchUrlTextState.value,
+        label = {
+            Text(
+                modifier = Modifier,
+                style = mbSubtitleTextStyle(),
+                text = textLabel
+            )
+        },
+        onValueChange = {
+            searchUrlTextState.value = it
+        })
 }

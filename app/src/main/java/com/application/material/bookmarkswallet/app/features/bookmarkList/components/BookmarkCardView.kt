@@ -1,7 +1,10 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
 import android.content.res.Configuration
+import android.icu.text.DateFormat
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -15,34 +18,47 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.models.getLocalDate
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
+import kotlinx.datetime.format
 import java.util.Date
 
 @Composable
 fun BookmarkCardView(
     modifier: Modifier,
     bookmark: Bookmark,
-    onOpenAction: ((String) -> Unit)? = null,
+    onOpenAction: ((Bookmark) -> Unit)? = null,
 ) {
     //fallbackIcon
-    val fallbackIcon = rememberDrawablePainterWithColor(res = R.drawable.ic_bookmark_light)
+    val fallbackIcon = rememberDrawablePainterWithColor(
+        res = R.drawable.ic_bookmark,
+        colorRes = R.color.colorAccent
+    )
+
     MbCardView(
         modifier = modifier
+            .fillMaxWidth()
             .clickable {
-                onOpenAction?.invoke("$HTTPS_SCHEMA${bookmark.url}")
+                onOpenAction?.invoke(bookmark)
             }
     ) {
         //title
         Text(
             modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally),
-            style = mbTitleBoldTextStyle(),
+                .align(
+                    alignment = Alignment.CenterHorizontally
+                )
+                .padding(bottom = Dimen.paddingSmall8dp),
+            style = mbTitleMediumBoldTextStyle(),
+            maxLines = 2,
             text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
         )
 
@@ -50,7 +66,7 @@ fun BookmarkCardView(
         Text(
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally),
-            style = mbSubtitleTextStyle(),
+            style = mbSubtitleTextStyle(color = MbColor.GrayBlueMildSea),
             text = bookmark.url
         )
 
@@ -59,7 +75,7 @@ fun BookmarkCardView(
             model = bookmark.iconUrl,
             error = fallbackIcon,
             placeholder = fallbackIcon,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             contentDescription = null,
             modifier = Modifier
                 .align(alignment = Alignment.CenterHorizontally)
@@ -75,7 +91,7 @@ fun BookmarkCardView(
                 .align(alignment = Alignment.CenterHorizontally),
             maxLines = 1,
             style = mbSubtitleLightTextStyle(),
-            text = bookmark.timestamp.toString()
+            text = bookmark.getLocalDate().toString()
         )
     }
 }

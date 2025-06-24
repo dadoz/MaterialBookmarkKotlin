@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkListView
+import com.application.material.bookmarkswallet.app.features.hp.HpView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ class BookmarkListFragmentCompose : Fragment() {
         setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         setContent {
             MaterialBookmarkMaterialTheme {
-                BookmarkListView()
+                HpView()
             }
         }
     }.rootView

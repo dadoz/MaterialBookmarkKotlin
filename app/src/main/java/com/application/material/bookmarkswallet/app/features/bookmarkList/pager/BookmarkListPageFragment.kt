@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
@@ -33,8 +34,6 @@ import com.application.material.bookmarkswallet.app.ui.views.behaviors.setGridOr
 import com.application.material.bookmarkswallet.app.utils.N_COUNT_GRID_BOOKMARKS
 import com.application.material.bookmarkswallet.app.utils.ZERO
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
-import timber.log.Timber
 
 @AndroidEntryPoint
 class BookmarkListPageFragment :
@@ -232,15 +231,15 @@ class BookmarkListPageFragment :
                 setContent {
                     // In Compose world
                     MaterialBookmarkMaterialTheme {
-                        val showBottomSheet: State<Boolean> =
-                            bookmarkViewModel.bookmarkPreviewModalState.collectAsState()
-                        Timber.e("---------- ${showBottomSheet.value}")
+//                        bookmarkViewModel.bookmarkPreviewModalState.collectAsState()
+                        val showBottomSheet: MutableState<Boolean> =
+                            remember { mutableStateOf(false) }
                         val localUriHandler = LocalUriHandler.current
 
                         BookmarkModalPreviewCard(
                             modifier = Modifier,
-                            bookmarkStateFlow = MutableStateFlow(bookmark), //todo find best sol
-                            showBottomSheet = showBottomSheet,
+                            bookmark = bookmark,
+                            bottomSheetVisible = showBottomSheet,
                             onDeleteCallback = {
                                 //on close callback
                                 bookmarkViewModel.setBookmarkPreviewModal(hasToShown = false)
@@ -248,9 +247,6 @@ class BookmarkListPageFragment :
                                 bookmarkViewModel.deleteBookmark(bookmark = bookmark)
                                 //update list
                                 notifyItemRemoved(position = position)
-                            },
-                            onDismissRequest = {
-                                bookmarkViewModel.setBookmarkPreviewModal(hasToShown = false)
                             },
                             onOpenAction = {
                                 localUriHandler.openUri(it)

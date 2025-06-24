@@ -31,6 +31,12 @@ fun mbTitleBoldTextStyle() = TextStyle(
 )
 
 @Composable
+fun mbTitleMediumBoldTextStyle() = mbTitleBoldTextStyle()
+    .copy(
+        fontSize = 30.sp,
+    )
+
+@Composable
 fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(
     color = when (isSystemInDarkTheme()) {
         true -> colorResource(R.color.colorAccent)
@@ -38,18 +44,21 @@ fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(
     },
     fontFamily = MbYantramanavRegularFontFamily
 )
+
 @Composable
-fun mbSubtitleTextStyle() = TextStyle(
-    color = colorResource(R.color.colorPrimary),
+fun mbSubtitleTextStyle(color: Color = colorResource(R.color.colorPrimary)) = TextStyle(
+    color = color,
     fontSize = 18.sp,// myVeTitleMedium(),
     fontFamily = MbYantramanavLightFontFamily,
     fontWeight = FontWeight.Normal
 )
 
 @Composable
-fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle().copy(
-    fontFamily = MbYantramanavThinFontFamily,
-)
+fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle()
+    .copy(
+        fontSize = 14.sp,
+        fontFamily = MbYantramanavThinFontFamily,
+    )
 
 @Composable
 fun mbButtonTextStyle() = TextStyle(
@@ -81,13 +90,22 @@ fun mbGrayLightColor2(): Color {
         else -> MaterialTheme.colorScheme.surface
     }
 }
+
 @Composable
 fun mbGrayLightColor(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MaterialTheme.colorScheme.onSurface
+        true -> MbColor.GrayDarkNight//MaterialTheme.colorScheme.onSurface
         else -> MaterialTheme.colorScheme.surfaceContainerLow
     }
 }
+@Composable
+fun mbGrayLightColorBackground(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.DarkGray2
+        else -> MbColor.White
+    }
+}
+
 @Composable
 fun mbWhiteDarkColor(): Color {
     return when (isSystemInDarkTheme()) {
@@ -108,6 +126,7 @@ fun expandedBottomSheetState(): SheetState = rememberModalBottomSheetState(
     skipPartiallyExpanded = true,
     confirmValueChange = { true }
 )
+
 fun Density.getResizedDensity(): Float {
     return when {
         (this.density > 2.5f && this.density < 3.0f) -> this.density
@@ -117,16 +136,16 @@ fun Density.getResizedDensity(): Float {
 
 //---------------------FONT FAMILY
 val MbYantramanavRegularFontFamily = FontFamily(
-    Font(R.font.yantramanav_regular)
+    Font(R.font.comfortaa_regular)//yantramanav_regular)
 )
 val MbYantramanavBoldFontFamily = FontFamily(
-    Font(R.font.yantramanav_bold)
+    Font(R.font.comfortaa_bold)//yantramanav_bold)
 )
 val MbYantramanavLightFontFamily = FontFamily(
-    Font(R.font.yantramanav_light)
+    Font(R.font.comfortaa_light)//yantramanav_light)
 )
 val MbYantramanavThinFontFamily = FontFamily(
-    Font(R.font.yantramanav_thin)
+    Font(R.font.comfortaa_light)//yantramanav_thin)
 )
 //---------------------FONT FAMILY
 
