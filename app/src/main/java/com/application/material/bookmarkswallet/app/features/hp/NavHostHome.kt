@@ -2,14 +2,13 @@ package com.application.material.bookmarkswallet.app.features.hp
 
 
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkListView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListView
 import com.application.material.bookmarkswallet.app.features.settings.SettingsView
 
 enum class NavRoute(val route: String) {

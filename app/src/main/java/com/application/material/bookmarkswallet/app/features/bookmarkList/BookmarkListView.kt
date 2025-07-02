@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.features.bookmarkList.components
+package com.application.material.bookmarkswallet.app.features.bookmarkList
 
 import android.content.res.Configuration
 import android.widget.Toast
@@ -49,6 +49,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkAddModalBottomSheetView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCard
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.searchBookmark.MbBookmarkTextFieldView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
@@ -235,25 +239,15 @@ fun BookmarkListView(
         }
 
         //fab button
-        ExtendedFloatingActionButton(
-            onClick = {
-                bottomSheetVisible.value = true
-            },
+        MBExtendedFab(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = Dimen.paddingMedium16dp)
                 .padding(end = Dimen.paddingMedium16dp),
-            content = {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add Icon"
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(start = Dimen.paddingSmall8dp),
-                    text = "Add",
-                    style = mbButtonTextStyle()
-                )
+            title = "Add",
+            iconRes = R.drawable.ic_add,
+            onClickAction = {
+                bottomSheetVisible.value = true
             }
         )
     }

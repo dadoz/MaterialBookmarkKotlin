@@ -61,6 +61,7 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 import java.util.Date
 import java.util.Locale
 
@@ -212,36 +213,19 @@ fun BookmarkPreviewCard(
                 }
 
                 //open action
-                onOpenAction?.let {
-                    ExtendedFloatingActionButton(
-                        modifier = Modifier
-                            .constrainAs(ref = openButtonRef) {
-                                top.linkTo(parent.top)
-                                end.linkTo(parent.end)
-                                bottom.linkTo(parent.bottom)
-                            },
-                        containerColor = MbColor.Yellow,
-                        text = {
-                            Text(
-                                modifier = Modifier,
-                                style = mbButtonTextStyle(),
-                                text = stringResource(id = R.string.open_bookmark)
-                            )
+                MBExtendedFab(
+                    modifier = Modifier
+                        .constrainAs(ref = openButtonRef) {
+                            top.linkTo(parent.top)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
                         },
-                        icon = {
-                            Icon(
-                                modifier = Modifier
-                                    .width(Dimen.sizeMedium16dp)
-                                    .height(Dimen.sizeMedium16dp),
-                                painter = painterResource(R.drawable.ic_send),
-                                contentDescription = EMPTY
-                            )
-                        },
-                        onClick = {
-                            onOpenAction.invoke("$HTTPS_SCHEMA${bookmark.url}")
-                        }
-                    )
-                }
+                    title = stringResource(id = R.string.open_bookmark),
+                    iconRes = R.drawable.ic_send,
+                    onClickAction = {
+                        onOpenAction.invoke("$HTTPS_SCHEMA${bookmark.url}")
+                    }
+                )
             }
         }
     }
