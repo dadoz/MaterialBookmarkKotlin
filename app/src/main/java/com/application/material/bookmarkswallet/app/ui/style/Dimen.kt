@@ -120,6 +120,9 @@ object Dimen {
     val size36dp = 36.dp
     val size180dp = 180.dp
     val size20dp = 20.dp
+    val size22dp = 22.dp
+    val size28dp = 28.dp
+    val size32dp = 32.dp
 
     val sizeAlignmentDashboard: Dp = (-12).dp
 

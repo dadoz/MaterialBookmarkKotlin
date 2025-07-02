@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,6 +54,8 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.compon
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCard
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.UserLoginCardView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.searchBookmark.MbBookmarkTextFieldView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
@@ -145,9 +148,16 @@ internal val bookmarkList = listOf(
         url = "www.facebook.it",
         timestamp = Date(),//Dates.today,
         isLike = true
-    ),
-
     )
+)
+
+val USER_MOCK = User(
+    name = "davide",
+    surname = "bllalal",
+    username = "blla",
+    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",
+    age = 40
+)
 
 @Composable
 fun BookmarkListView(
@@ -159,7 +169,11 @@ fun BookmarkListView(
     val bookmarkItems = remember { mutableStateOf(value = emptyList<Bookmark>()) }
     val coroutineScope = rememberCoroutineScope()
     val selectedBookmark = remember { mutableStateOf<Bookmark?>(null) }
-
+    val user by remember {
+        mutableStateOf(
+            value = USER_MOCK
+        )
+    }
     LaunchedEffect(key1 = null) {
         //this is wrong move on VM TODO in right VM please
         coroutineScope
@@ -188,19 +202,21 @@ fun BookmarkListView(
                 .padding(all = Dimen.paddingMedium16dp)
         ) {
             //items on title and subtitle
-            Text(
-                modifier = Modifier
-                    .padding(bottom = Dimen.paddingExtraSmall4dp),
-                style = mbTitleBoldTextStyle(),
-                text = stringResource(R.string.bookmarks_title)
-            )
-//        Text(
-//            modifier = Modifier
-//                .padding(bottom = Dimen.paddingExtraSmall4dp),
-//            style = mbSubtitleTextStyle(),
-//            text = stringResource(R.string.bookmarks_description)
-//        )
-
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(end = Dimen.paddingMedium16dp),
+                    style = mbTitleBoldTextStyle(),
+                    text = stringResource(R.string.bookmarks_title),
+                )
+                UserLoginCardView(
+                    modifier = Modifier,
+                    user = user
+                )
+            }
             //filers
             BookmarkFilterView(
                 modifier = Modifier,

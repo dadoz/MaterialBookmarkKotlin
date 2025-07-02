@@ -35,6 +35,11 @@ fun mbTitleMediumBoldTextStyle() = mbTitleBoldTextStyle()
     .copy(
         fontSize = 30.sp,
     )
+@Composable
+fun mbTitleSmallBoldTextStyle() = mbTitleBoldTextStyle()
+    .copy(
+        fontSize = 18.sp,
+    )
 
 @Composable
 fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(

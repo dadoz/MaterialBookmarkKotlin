@@ -1,8 +1,8 @@
 import java.io.FileInputStream
-import java.sql.Timestamp
-import java.time.ZonedDateTime
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.Properties
-import kotlin.apply
 
 plugins {
     alias(libs.plugins.android.application)
@@ -25,10 +25,11 @@ plugins {
 val major = 2
 val minor = 2
 val patch = 0
-val timestamp: Int =
-    Timestamp.from(ZonedDateTime.now().toInstant())
-        .toInstant()
-        .toEpochMilli().toInt()
+val versionCodeTimestamp = SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
+    .format(Date())
+    .let { dateStr ->
+        Integer.parseInt(dateStr.substring(0, dateStr.length - 1))
+    }
 
 // KeyStore
 val keystoreProperties = Properties().apply {
@@ -36,8 +37,8 @@ val keystoreProperties = Properties().apply {
 }
 
 android {
-    compileSdk = 35
-    buildToolsVersion = "35.0.0"
+    compileSdk = 36
+    buildToolsVersion = "36.0.0"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -48,7 +49,7 @@ android {
         applicationId = "com.application.material.bookmarkswallet.app"
 
         minSdk = 30
-        versionCode = (major * 10000 + minor * 100 + patch)
+        versionCode = versionCodeTimestamp
         versionName = "$major.$minor.$patch"
 
         buildConfigField(
@@ -152,9 +153,9 @@ dependencies {
     // Optionally, you can include the Compose utils library for Clustering,
     // Street View metadata checks, etc.
     implementation(libs.maps.compose.utils)
-    implementation("androidx.compose.material3:material3-android:1.4.0-alpha14")
+    implementation(libs.material3.android)
     implementation(
-         "androidx.compose.material:material-icons-extended:1.7.8"
+        libs.material.icons.extended
     )
 
     // Optionally, you can include the widgets library for ScaleBar, etc.

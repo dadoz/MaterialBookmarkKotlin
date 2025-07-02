@@ -9,7 +9,7 @@ object MbColor {
     val Magenta = Color(0xFFED2B47)
     val LightGray = Color(0xFFBEBEBE)
     val DarkGray: Color = Color(0xFF262B2B)
-    val DarkGray2: Color = Color(0xFF1D202A)
+    val DarkGray2: Color = Color(0xFF121316)
     val UltraLightGray: Color = Color(0xFFEEEEEE)
     val White: Color = Color.White
     val Black: Color = Color.Black
