@@ -2,6 +2,7 @@ package com.application.material.bookmarkswallet.app.features.hp
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,13 +30,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
+import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColorBackground
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTabIconColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -62,6 +64,7 @@ fun HpView() {
             }
         }
     }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -76,17 +79,26 @@ fun HpView() {
             ) {
                 getTabMenuItemList(context = context)
                     .forEach {
+                        //check is selected
+                        val isSelected = it.navRoute == navItemSelectedState.value
+
                         NavigationBarItem(
                             modifier = Modifier,
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = MbColor.Yellow
-                            ),
+                            colors = NavigationBarItemDefaults
+                                .colors(
+                                    indicatorColor = MbColor.Yellow
+                                ),
                             icon = {
                                 Icon(
                                     modifier = Modifier
-                                        .size(24.dp),
-                                    painter = painterResource(it.icon),
-                                    contentDescription = "item"
+                                        .size(size = Dimen.sizeMedium24dp),
+                                    painter = painterResource(
+                                        id = it.icon
+                                    ),
+                                    contentDescription = "item",
+                                    tint = mbTabIconColor(
+                                        isSelected = isSelected
+                                    )
                                 )
                             },
                             label = {
@@ -95,7 +107,7 @@ fun HpView() {
                                     style = mbSubtitleLightTextStyle()
                                 )
                             },
-                            selected = it.navRoute == navItemSelectedState.value,
+                            selected = isSelected,
                             onClick = {
                                 navController.navigate(route = it.navRoute.route) {
                                     //change selected state item

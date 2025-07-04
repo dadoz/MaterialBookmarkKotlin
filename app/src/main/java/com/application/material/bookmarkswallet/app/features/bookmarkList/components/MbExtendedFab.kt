@@ -1,6 +1,7 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
@@ -26,15 +28,14 @@ fun MBExtendedFab(
         text = {
             Text(
                 modifier = Modifier,
-                style = mbButtonTextStyle(),
+                style = mbButtonTextDarkStyle(),
                 text = title
             )
         },
         icon = {
             Icon(
                 modifier = Modifier
-                    .width(Dimen.sizeMedium16dp)
-                    .height(Dimen.sizeMedium16dp),
+                    .size(size = Dimen.size20dp),
                 painter = painterResource(iconRes),
                 contentDescription = EMPTY
             )

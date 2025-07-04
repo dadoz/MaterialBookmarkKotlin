@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,12 +21,16 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SplitButtonDefaults
+import androidx.compose.material3.SplitButtonDefaults.leadingButtonContentPaddingFor
+import androidx.compose.material3.SplitButtonDefaults.leadingButtonShapesFor
 import androidx.compose.material3.SplitButtonLayout
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
@@ -36,6 +41,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -64,6 +70,7 @@ import com.application.material.bookmarkswallet.app.network.models.Response
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
@@ -155,10 +162,14 @@ val USER_MOCK = User(
     name = "davide",
     surname = "bllalal",
     username = "blla",
-    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",
+//    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",
     age = 40
 )
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+val BookmarkListButtonContainerHeight = ButtonDefaults.MediumContainerHeight
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun BookmarkListView(
     modifier: Modifier = Modifier,
@@ -174,6 +185,15 @@ fun BookmarkListView(
             value = USER_MOCK
         )
     }
+    var checked by remember { mutableStateOf(false) }
+    val rotation: Float by animateFloatAsState(
+        targetValue = when (checked) {
+            true -> 180f
+
+            else -> 0f
+        },
+        label = "Trailing Icon Rotation"
+    )
     LaunchedEffect(key1 = null) {
         //this is wrong move on VM TODO in right VM please
         coroutineScope
@@ -258,16 +278,15 @@ fun BookmarkListView(
         MBExtendedFab(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = Dimen.paddingMedium16dp)
+                .padding(bottom = Dimen.paddingLarge32dp)
                 .padding(end = Dimen.paddingMedium16dp),
-            title = "Add",
+            title = stringResource(R.string.add_new_string),
             iconRes = R.drawable.ic_add,
             onClickAction = {
                 bottomSheetVisible.value = true
             }
         )
-    }
-
+}
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -276,9 +295,9 @@ fun BookmarkAddModalInternalView(
     modifier: Modifier = Modifier,
     searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel<SearchBookmarkViewModel>(),
 ) {
-    val checked = remember { mutableStateOf(value = false) }
+    var checked by remember { mutableStateOf(value = false) }
     val rotation by animateFloatAsState(
-        targetValue = if (checked.value) 180f else 0f,
+        targetValue = if (checked) 180f else 0f,
         label = "Trailing Icon Rotation"
     )
     val bookmarkUrl = remember { mutableStateOf(value = TextFieldValue()) }
@@ -359,42 +378,88 @@ fun BookmarkAddModalInternalView(
         )
 
         SplitButtonLayout(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(bottom = Dimen.paddingMedium16dp)
+                .padding(end = Dimen.paddingMedium16dp),
             leadingButton = {
                 SplitButtonDefaults
                     .ElevatedLeadingButton(
-                        onClick = { /* Do Nothing */ },
+                        modifier = Modifier.defaultMinSize(
+                            minHeight = BookmarkListButtonContainerHeight,
+                        ),
+                        shapes = leadingButtonShapesFor(
+                            buttonHeight = BookmarkListButtonContainerHeight
+                        ),
+                        contentPadding = leadingButtonContentPaddingFor(
+                            buttonHeight = BookmarkListButtonContainerHeight
+                        ),
+                        onClick = {
+                        },
+                        colors = ButtonColors(
+                            containerColor = MbColor.Yellow,
+                            contentColor = MbColor.GrayBlueMildSea,
+                            disabledContainerColor = MbColor.Yellow,
+                            disabledContentColor = MbColor.GrayBlueMildSea
+                        ),
                     ) {
                         Icon(
                             Icons.Filled.Add,
-                            modifier = Modifier.size(SplitButtonDefaults.LeadingIconSize),
+                            modifier = Modifier
+                                .size(
+                                    size = SplitButtonDefaults
+                                        .leadingButtonIconSizeFor(
+                                            buttonHeight = BookmarkListButtonContainerHeight
+                                        )
+                                ),
                             contentDescription = "Localized description",
                         )
                         Text(
                             modifier = Modifier
                                 .padding(start = 4.dp),
                             text = "Save or Gemini",
-                            style = mbButtonTextStyle()
+                            style = mbButtonTextDarkStyle()
+                            //ButtonDefaults.textStyleFor(BookmarkListButtonContainerHeight)
                         )
                     }
             },
             trailingButton = {
                 SplitButtonDefaults
                     .ElevatedTrailingButton(
-                        checked = checked.value,
-                        onCheckedChange = { checked.value = it },
                         modifier =
                             Modifier
+                                .defaultMinSize(
+                                    minHeight = BookmarkListButtonContainerHeight,
+                                )
                                 .semantics {
                                     stateDescription =
-                                        if (checked.value) "Expanded" else "Collapsed"
+                                        when (checked) {
+                                            true -> "Add"
+
+                                            else -> "Collapsed"
+                                        }
                                     contentDescription = "Toggle Button"
                                 },
+                        contentPadding = leadingButtonContentPaddingFor(
+                            buttonHeight = BookmarkListButtonContainerHeight
+                        ),
+                        checked = checked,
+                        colors = ButtonColors(
+                            containerColor = MbColor.Yellow,
+                            contentColor = MbColor.GrayBlueMildSea,
+                            disabledContainerColor = MbColor.Yellow,
+                            disabledContentColor = MbColor.GrayBlueMildSea
+                        ),
+                        onCheckedChange = { checked = it },
                     ) {
                         Icon(
                             Icons.Filled.KeyboardArrowDown,
                             modifier = Modifier
-                                .size(SplitButtonDefaults.TrailingIconSize)
+                                .size(
+                                    size = SplitButtonDefaults
+                                        .leadingButtonIconSizeFor(
+                                            buttonHeight = BookmarkListButtonContainerHeight
+                                        )
+                                )
                                 .graphicsLayer {
                                     this.rotationZ = rotation
                                 },

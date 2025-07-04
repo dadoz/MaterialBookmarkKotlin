@@ -35,6 +35,7 @@ fun mbTitleMediumBoldTextStyle() = mbTitleBoldTextStyle()
     .copy(
         fontSize = 30.sp,
     )
+
 @Composable
 fun mbTitleSmallBoldTextStyle() = mbTitleBoldTextStyle()
     .copy(
@@ -61,13 +62,38 @@ fun mbSubtitleTextStyle(color: Color = colorResource(R.color.colorPrimary)) = Te
 @Composable
 fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle()
     .copy(
+        color = when (isSystemInDarkTheme()) {
+            true -> MbColor.White
+            else -> MbColor.GrayDarkNight
+        },
         fontSize = 14.sp,
         fontFamily = MbYantramanavThinFontFamily,
     )
 
 @Composable
+fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
+    true -> when {
+        isSelected -> MbColor.GrayDarkNight
+        else -> MbColor.White
+    }
+
+    else -> when {
+        isSelected -> MbColor.GrayDarkNight
+        else -> MbColor.GrayDarkNight
+    }
+}
+
+@Composable
 fun mbButtonTextStyle() = TextStyle(
     color = mbWhiteDarkColor(),
+    fontSize = MaterialTheme.typography.labelLarge.fontSize,
+    fontFamily = MbYantramanavBoldFontFamily,
+    fontWeight = FontWeight.Normal
+)
+
+@Composable
+fun mbButtonTextDarkStyle() = TextStyle(
+    color = MbColor.DarkGray,
     fontSize = MaterialTheme.typography.labelLarge.fontSize,
     fontFamily = MbYantramanavBoldFontFamily,
     fontWeight = FontWeight.Normal
@@ -103,6 +129,7 @@ fun mbGrayLightColor(): Color {
         else -> MaterialTheme.colorScheme.surfaceContainerLow
     }
 }
+
 @Composable
 fun mbGrayLightColorBackground(): Color {
     return when (isSystemInDarkTheme()) {

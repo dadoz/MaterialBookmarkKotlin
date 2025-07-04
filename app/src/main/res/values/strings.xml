@@ -46,7 +46,7 @@
     <string name="open_bookmark">Open</string>
     <string name="bookmark_url">Bookmark Url</string>
 
-    <string name="menu_tab_bookmark_list">Bookmark Url</string>
-    <string name="menu_tab_settings">Bookmark Url</string>
+    <string name="menu_tab_bookmark_list">Bookmarks</string>
+    <string name="menu_tab_settings">Settings</string>
 
 </resources>
