@@ -1,6 +1,6 @@
 package com.application.material.bookmarkswallet.app.utils
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.DayOfWeek
@@ -13,11 +13,9 @@ import kotlinx.datetime.atTime
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
-import kotlinx.datetime.toJavaInstant
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toJavaLocalTime
 import kotlinx.datetime.toJavaZoneId
-import kotlinx.datetime.toKotlinInstant
 import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.datetime.toKotlinLocalDateTime
 import kotlinx.datetime.toLocalDateTime
@@ -33,6 +31,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Date
+import kotlin.time.ExperimentalTime
+import kotlin.time.toJavaInstant
+import kotlin.time.toKotlinInstant
 
 const val HYPHEN = "-"
 const val MIN_SLOT_TIME_MINUTES = 0L
@@ -57,6 +58,7 @@ const val FORMAT_TIME = "HH:mm"
 const val FORMAT_TIME_EXTENDED = "HH:mm:ss"
 const val FORMAT_PARAMS = "%02d:%02d"
 
+@OptIn(ExperimentalTime::class)
 fun Date.convert(): LocalDateTime? = this.toInstant()
     .toKotlinInstant()
     .toLocalDateTime(currentSystemDefault())
@@ -126,6 +128,7 @@ fun String.formatZonedDateTime(): String? = try {
 /**
  * output to Local time zone with Local format
  **/
+@OptIn(ExperimentalTime::class)
 fun String.parseZonedDateTimeToJavaLocalDateTimeUTC(): java.time.LocalDateTime? = try {
     this.takeIf { it.isNotEmpty() }
         ?.let {
@@ -142,6 +145,7 @@ fun String.parseZonedDateTimeToJavaLocalDateTimeUTC(): java.time.LocalDateTime? 
 /**
  * output to Local time zone with Local format
  **/
+@OptIn(ExperimentalTime::class)
 fun String.parseDateFromInstantToJavaLocalDateTime(): java.time.LocalDateTime? = try {
     this.takeIf { it.isNotEmpty() }
         ?.let {
@@ -225,24 +229,6 @@ fun String.formatDateTimeToCurrentTimeZone(): String? = try {
     null
 }
 
-
-/**
- * output to time zone with Local format without final TZ
- */
-fun String.parseUTCDateTimeToCurrentTimeZone(): String? = try {
-    this.takeIf { it.isNotEmpty() }
-        ?.toInstant()
-        ?.toLocalDateTime(currentSystemDefault())
-        ?.toJavaLocalDateTime()
-        ?.let {
-            DateTimeFormatter
-                .ofPattern(FORMAT_TIME)
-                .format(it)
-        }
-} catch (e: Exception) {
-    Timber.e("[parseUTCDateTimeToCurrentTimeZone] %s", e.message)
-    null
-}
 
 /**
  * output to Local time zone with Local format
@@ -342,6 +328,7 @@ fun LocalDateTime?.formatDateToUTCISO8601(): String? = try {
     null
 }
 
+@OptIn(ExperimentalTime::class)
 fun Long?.createLocalDateTime(): LocalDateTime? = this?.let {
     Instant
         .ofEpochMilli(it)
@@ -354,6 +341,7 @@ fun Long?.createNowDateTimeMorningFormatExplicit(): String? = this?.let {
         ?.formatDateToUTCTimeZoneISO8601()
 }
 
+@OptIn(ExperimentalTime::class)
 fun Long?.createNowDateTimeMorning(): LocalDateTime? = this?.let {
     Instant
         .ofEpochMilli(it)
@@ -367,6 +355,7 @@ fun Long?.createNowDateTimeAfternoonFormatExplicit(): String? = this?.let {
         ?.formatDateToUTCTimeZoneISO8601()
 }
 
+@OptIn(ExperimentalTime::class)
 fun Long?.createNowDateTimeAfternoon(): LocalDateTime? = this?.let {
     Instant
         .ofEpochMilli(it)
@@ -385,6 +374,7 @@ fun Long?.toJavaLocalDate(): java.time.LocalDate? = this?.let {
         .toLocalDate()
 }
 
+@OptIn(ExperimentalTime::class)
 fun createNowDateTime(): LocalDateTime =
     Clock.System.now()
         .toLocalDateTime(currentSystemDefault())
@@ -408,6 +398,7 @@ fun createDateUTCString(instant: Instant): String =
         .withZone(ZoneId.of("UTC"))
         .format(instant)
 
+@OptIn(ExperimentalTime::class)
 fun createNowDateUTCString() =
     createDateUTCString(
         instant = createNowDateTime()
@@ -428,10 +419,12 @@ fun createMonthsAgoStartDateTimeString(
                 .atOffset(ZoneOffset.UTC)
         )
 
+@OptIn(ExperimentalTime::class)
 private fun getTodayMillis(): Long {
     return Clock.System.now().toEpochMilliseconds()
 }
 
+@OptIn(ExperimentalTime::class)
 fun getTodayInSeconds(): Long =
     Clock.System.now()
         .epochSeconds
@@ -450,6 +443,7 @@ fun String.isGreaterThanToday(): Boolean = try {
     false
 }
 
+@OptIn(ExperimentalTime::class)
 fun java.time.LocalDate.createStartDayDateTime() =
     this.toKotlinLocalDate()
         .atStartOfDayIn(currentSystemDefault())
@@ -457,6 +451,7 @@ fun java.time.LocalDate.createStartDayDateTime() =
         .formatDateToUTCTimeZoneISO8601()
 
 
+@OptIn(ExperimentalTime::class)
 private fun getCurrentMinDateInstantEnabled(): kotlinx.datetime.Instant =
     Clock.System.now()
         .minus(DateTimePeriod(days = ONE), currentSystemDefault())
@@ -477,34 +472,41 @@ fun String?.startDayMillis(): Long = this?.toWevLocalDateTime()
     ?.toLocalDate()
     ?.getCurrentMinDateTimeMillsEnabled() ?: ZEROL
 
+@OptIn(ExperimentalTime::class)
 private fun getCurrentMaxDateInstantEnabled(): kotlinx.datetime.Instant =
     getCurrentMinDateInstantEnabled()
         .plus(DateTimePeriod(months = ONE), currentSystemDefault())
 
+@OptIn(ExperimentalTime::class)
 fun getCurrentMinDateMillsEnabled() =
     getCurrentMinDateInstantEnabled()
         .toEpochMilliseconds()
 
+@OptIn(ExperimentalTime::class)
 fun getCurrentMaxDateMillsEnabled() =
     getCurrentMaxDateInstantEnabled()
         .toEpochMilliseconds()
 
+@OptIn(ExperimentalTime::class)
 fun getCurrentMinDateEnabled(): LocalDate =
     getCurrentMinDateInstantEnabled()
         .toLocalDateTime(currentSystemDefault())
         .date
 
+@OptIn(ExperimentalTime::class)
 fun getCurrentMaxDateEnabled(): LocalDate =
     getCurrentMaxDateInstantEnabled()
         .toLocalDateTime(currentSystemDefault())
         .date
 
+@OptIn(ExperimentalTime::class)
 fun java.time.LocalDate.getCurrentMinDateTimeMillsEnabled(): Long =
     this.atStartOfDay()
         .toKotlinLocalDateTime()
         .toInstant(currentSystemDefault())
         .toEpochMilliseconds()
 
+@OptIn(ExperimentalTime::class)
 fun java.time.LocalDate.getEndMinDateTimeMillsEnabled(daysUntil: java.time.LocalDate): Long =
     this.minusDays(daysUntil.toEpochDay())
         .atStartOfDay()
@@ -514,6 +516,7 @@ fun java.time.LocalDate.getEndMinDateTimeMillsEnabled(daysUntil: java.time.Local
 /**
  * we're adding 30 days instead of adding 1 month
  */
+@OptIn(ExperimentalTime::class)
 fun java.time.LocalDate.getCurrentMaxDateTimeMillsEnabled(days: Int = THIRTY): Long =
     this.plusDays(days.toLong())
         .atStartOfDay()
@@ -521,15 +524,8 @@ fun java.time.LocalDate.getCurrentMaxDateTimeMillsEnabled(days: Int = THIRTY): L
         .toInstant(currentSystemDefault())
         .toEpochMilliseconds()
 
-fun isDayOff(timestamp: Long): Boolean =
-    Instant
-        .ofEpochMilli(timestamp)
-        .atZone(ZoneId.systemDefault())
-        .dayOfWeek
-        .let {
-            it == DayOfWeek.SATURDAY || it == DayOfWeek.SUNDAY
-        }
 
+@OptIn(ExperimentalTime::class)
 fun String.parseToLocalDate(): LocalDate? = try {
     this
         .takeIf { it.isNotEmpty() }
@@ -648,36 +644,25 @@ fun LocalDateTime.toStringFormat(format: String): String? = try {
     null
 }
 
-fun String.toCurrentDateTime(): LocalDateTime? = try {
-    ZonedDateTime.of(
-        this.takeIf { it.isNotEmpty() }
-            ?.toInstant()
-            ?.toLocalDateTime(currentSystemDefault())
-            ?.toJavaLocalDateTime(),
-        currentSystemDefault().toJavaZoneId()
-    )
-        .toLocalDateTime()
-        .toKotlinLocalDateTime()
-} catch (e: Exception) {
-    Timber.e("[toCurrentDateTime] %s", e.message)
-    null
-}
-
+@OptIn(ExperimentalTime::class)
 fun LocalDateTime.plusSeconds(seconds: Long): LocalDateTime =
     this.toInstant(currentSystemDefault())
         .plus(seconds, DateTimeUnit.SECOND)
         .toLocalDateTime(currentSystemDefault())
 
+@OptIn(ExperimentalTime::class)
 fun LocalDateTime.plusMillis(millis: Long): LocalDateTime =
     this.toInstant(currentSystemDefault())
         .plus(millis, DateTimeUnit.MILLISECOND)
         .toLocalDateTime(currentSystemDefault())
 
+@OptIn(ExperimentalTime::class)
 fun Date.toWevLocalDateTime() =
     this.toInstant()
         .toKotlinInstant()
         .toLocalDateTime(currentSystemDefault())
 
+@OptIn(ExperimentalTime::class)
 fun String?.parseToLocalDate2() =
     this?.parseToLocalDate()
         ?.atStartOfDayIn(currentSystemDefault())

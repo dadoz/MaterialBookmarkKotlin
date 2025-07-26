@@ -204,7 +204,8 @@ dependencies {
     ksp(libs.room.compiler)
 
     //Destinations Library
-    implementation(libs.destinations.animations.core)
+    implementation(libs.destinations.core)
+    implementation(libs.destinations.bottomsheet)
     ksp(libs.destinations.ksp)
 
     //Jetpack Datastore
@@ -225,8 +226,8 @@ dependencies {
     implementation(libs.lottie)
 
     //firebase auth
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
 
     //coil
     implementation(libs.coil.compose)

@@ -6,56 +6,56 @@
 generativeai = "0.9.0"
 #generativeaiVersion = "0.7.0"
 gsonAdapter = "2.11.0"
-androidGradlePlugin = "8.11.0"
-coilCompose = "2.6.0"
+androidGradlePlugin = "8.11.1"
+coilCompose = "2.7.0"
 #firebaseUiAuth = "8.0.2"
 #junitVersion = "4.13.2"
 #khronos = "0.9.0"
-kotlin = "2.1.10"
-hilt = "2.55"
-mapsCompose = "4.3.3"
-material3Android = "1.4.0-alpha17"
+kotlin = "2.2.0"
+hilt = "2.57"
+mapsCompose = "6.7.0"
+material3Android = "1.4.0-alpha18"
 materialIconsExtended = "1.7.8"
-navigationCompose = "2.9.0"
+navigationCompose = "2.9.2"
 #recyclerview = "1.4.0"
 #recyclerviewSelection = "1.2.0"
-room = "2.7.1"
-googleServicePlugin = "4.4.2"
+room = "2.7.2"
+googleServicePlugin = "4.4.3"
 #firebasePerfPlugin = "4.3.15"
-firebaseCrashlyticsPlugin = "3.0.4"
-ksp = "2.1.10-1.0.31"
+firebaseCrashlyticsPlugin = "3.0.5"
+ksp = "2.2.0-2.0.2"
 kotlinCompiler = "1.5.11"
 secretsGradlePluginVersion = "2.0.1"
 #version-junit5-plugin = "1.9.3.0"
 
 #libraries version
-compose = "2025.06.00"
-firebase = "33.15.0"
+compose = "2025.07.00"
+firebase = "34.0.0"
 activityCompose = "1.10.1"
-retrofit = "2.11.0"
-moshi = "1.15.1"
+retrofit = "3.0.0"
+moshi = "1.15.2"
 hiltWork = "1.2.0"
 hiltNavigation = "1.2.0"
-destinations = "1.10.2"
-accompanistPager = "0.34.0"
+destinations = "2.2.0"
+accompanistPager = "0.36.0"
 datastorePreferences = "1.1.7"
-kotlinxDatetime = "0.6.0"
+kotlinxDatetime = "0.7.1"
 junit = "4.13.2"
 junitExt = "1.2.1"
 espresso = "3.6.1"
-composeUi = "1.8.2"
+composeUi = "1.8.3"
 coreKtx = "1.16.0"
-lifecycleRuntime = "2.9.1"
+lifecycleRuntime = "2.9.2"
 #kotlinxCoroutines = "1.9.0"
 constraintlayoutCompose = "1.1.1"
 viewpager2 = "1.1.0"
-workRuntime = "2.10.1"
+workRuntime = "2.10.2"
 timber = "5.0.1"
-okhttp = "4.12.0"
-kotlinxSerialization = "1.7.3"
-lottie = "6.4.0"
+okhttp = "5.1.0"
+kotlinxSerialization = "1.9.0"
+lottie = "6.6.7"
 material = "1.12.0"
-gson = "2.11.0"
+gson = "2.13.1"
 
 #version-junit5
 #version-junit5 = "5.10.2"
@@ -119,13 +119,13 @@ work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "w
 
 #firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-perf = { module = "com.google.firebase:firebase-perf" }
-firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx" }
-firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
-firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-firebase-auth-ktx = { module = "com.google.firebase:firebase-auth" }
-firebase-database-ktx = { module = "com.google.firebase:firebase-database-ktx" }
+firebase-config = { module = "com.google.firebase:firebase-config" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-database = { module = "com.google.firebase:firebase-database" }
 
 #timber
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
@@ -153,8 +153,9 @@ room-core = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 #compose destination
-destinations-animations-core = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "destinations" }
+destinations-core = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "destinations" }
 destinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "destinations" }
+destinations-bottomsheet = { module = "io.github.raamcosta.compose-destinations:bottom-sheet", version.ref = "destinations" }
 
 #jetpack datastore
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -217,10 +218,10 @@ retrofit = [
 # firebase
 firebase = [
     "firebase-perf",
-    "firebase-analytics-ktx",
-    "firebase-config-ktx",
-    "firebase-messaging-ktx",
-    "firebase-crashlytics-ktx"
+    "firebase-analytics",
+    "firebase-config",
+    "firebase-messaging",
+    "firebase-crashlytics"
 ]
 
 # compose
