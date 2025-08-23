@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -31,6 +32,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
+import com.application.material.bookmarkswallet.app.features.hp.configurator.getTabMenuItemList
+import com.application.material.bookmarkswallet.app.navigation.HomeNavHost
+import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
@@ -55,6 +59,13 @@ fun HpScaffoldView() {
     //nav item selected state
     val navItemSelectedState = remember { mutableStateOf(NavRoute.BookmarkList) }
 
+    //search state
+    val textFieldState = rememberTextFieldState()
+    val onSearch: (String) -> Unit = {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    val searchResultList = listOf<String>()
+
     LaunchedEffect(key1 = isLoading.value) {
         if (isLoading.value) {
             launch(Dispatchers.Main) {
@@ -69,8 +80,14 @@ fun HpScaffoldView() {
             .fillMaxSize()
             .background(color = mbGrayLightColorBackground())
             .windowInsetsPadding(insets = WindowInsets.systemBars),
-//        topBar = { //todo move header here and change values on a UI STATE please <3
-//},
+        topBar = {
+            SearchBarHeaderView(
+                modifier = Modifier,
+                textFieldState = textFieldState,
+                onSearch = onSearch,
+                searchResults = searchResultList
+            )
+        },
         bottomBar = {
             NavigationBar(
                 modifier = Modifier,

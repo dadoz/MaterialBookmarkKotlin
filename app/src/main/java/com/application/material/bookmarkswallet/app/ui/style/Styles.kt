@@ -19,21 +19,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
 
 const val densityResizeFactor = 1f
 
 @Composable
 fun mbTitleBoldTextStyle() = TextStyle(
-    color = MbColor.Yellow,
-    fontSize = 38.sp,// myVeTitleMedium(),
+    color = MbColor.GrayBlueMiddleSea,
+    fontSize = 28.sp,// myVeTitleMedium(),
     fontFamily = MbYantramanavRegularFontFamily,
     fontWeight = FontWeight.Light
 )
 
 @Composable
-fun mbTitleMediumBoldTextStyle() = mbTitleBoldTextStyle()
+fun mbTitleMediumBoldTextStyle(
+    color: Color = MbColor.GrayBlueMiddleSea,
+) = mbTitleBoldTextStyle()
     .copy(
         fontSize = 30.sp,
+        color = color
     )
 
 @Composable
@@ -46,7 +50,7 @@ fun mbTitleSmallBoldTextStyle() = mbTitleBoldTextStyle()
 fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(
     color = when (isSystemInDarkTheme()) {
         true -> colorResource(R.color.colorAccent)
-        else -> MbColor.DarkYellow
+        else -> MbColor.DarkLemonYellow
     },
     fontFamily = MbYantramanavRegularFontFamily
 )
@@ -64,7 +68,7 @@ fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
             true -> MbColor.White
-            else -> MbColor.GrayDarkNight
+            else -> MbColor.GrayBlueDarkNight
         },
         fontSize = 14.sp,
         fontFamily = MbYantramanavThinFontFamily,
@@ -73,13 +77,13 @@ fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle()
 @Composable
 fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
     true -> when {
-        isSelected -> MbColor.GrayDarkNight
+        isSelected -> MbColor.GrayBlueDarkNight
         else -> MbColor.White
     }
 
     else -> when {
-        isSelected -> MbColor.GrayDarkNight
-        else -> MbColor.GrayDarkNight
+        isSelected -> MbColor.GrayBlueDarkNight
+        else -> MbColor.GrayBlueDarkNight
     }
 }
 
@@ -125,8 +129,8 @@ fun mbGrayLightColor2(): Color {
 @Composable
 fun mbGrayLightColor(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.GrayDarkNight//MaterialTheme.colorScheme.onSurface
-        else -> MaterialTheme.colorScheme.surfaceContainerLow
+        true -> MbColor.GrayBlueDarkNight//MaterialTheme.colorScheme.onSurface
+        else -> MbColor.White
     }
 }
 
@@ -134,7 +138,7 @@ fun mbGrayLightColor(): Color {
 fun mbGrayLightColorBackground(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.DarkGray2
-        else -> MbColor.White
+        else -> MbColor.LightLemonYellow
     }
 }
 

@@ -1,8 +1,9 @@
-package com.application.material.bookmarkswallet.app.features.hp
+package com.application.material.bookmarkswallet.app.features.hp.configurator
 
 import android.content.Context
 import androidx.annotation.Keep
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.navigation.NavRoute
 
 fun getTabMenuItemList(context: Context) = listOf<TabItem>(
     TabItem(

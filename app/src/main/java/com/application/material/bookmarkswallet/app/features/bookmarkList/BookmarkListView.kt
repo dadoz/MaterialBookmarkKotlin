@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -97,15 +99,6 @@ fun BookmarkListView(
             value = USER_MOCK
         )
     }
-    var checked by remember { mutableStateOf(false) }
-    val rotation: Float by animateFloatAsState(
-        targetValue = when (checked) {
-            true -> 180f
-
-            else -> 0f
-        },
-        label = "Trailing Icon Rotation"
-    )
     LaunchedEffect(key1 = null) {
         //this is wrong move on VM TODO in right VM please
         coroutineScope
@@ -135,17 +128,22 @@ fun BookmarkListView(
         ) {
             //items on title and subtitle
             Row(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(
+                        bottom = Dimen.paddingMedium16dp
+                    ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     modifier = Modifier
-                        .padding(end = Dimen.paddingMedium16dp),
+                        .padding(end = Dimen.paddingMedium16dp)
+                        .weight(2f),
                     style = mbTitleBoldTextStyle(),
                     text = stringResource(R.string.bookmarks_title),
                 )
                 UserLoginCardView(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .weight(1.5f),
                     user = user
                 )
             }
@@ -309,9 +307,9 @@ fun BookmarkAddModalInternalView(
                         },
                         colors = ButtonColors(
                             containerColor = MbColor.Yellow,
-                            contentColor = MbColor.GrayBlueMildSea,
+                            contentColor = MbColor.GrayBlueMiddleSea,
                             disabledContainerColor = MbColor.Yellow,
-                            disabledContentColor = MbColor.GrayBlueMildSea
+                            disabledContentColor = MbColor.GrayBlueMiddleSea
                         ),
                     ) {
                         Icon(
@@ -357,9 +355,9 @@ fun BookmarkAddModalInternalView(
                         checked = checked,
                         colors = ButtonColors(
                             containerColor = MbColor.Yellow,
-                            contentColor = MbColor.GrayBlueMildSea,
+                            contentColor = MbColor.GrayBlueMiddleSea,
                             disabledContainerColor = MbColor.Yellow,
-                            disabledContentColor = MbColor.GrayBlueMildSea
+                            disabledContentColor = MbColor.GrayBlueMiddleSea
                         ),
                         onCheckedChange = { checked = it },
                     ) {
@@ -421,11 +419,15 @@ fun BookmarkFilterView(
             items = filterItems
         ) { id, item ->
             FilterChip(
+                modifier = Modifier,
                 onClick = {
                     selectedItem.intValue = id
                 },
+                shape = RoundedCornerShape(size = Dimen.mbModalRoundedCornerSize),
                 label = {
                     Text(
+                        modifier = Modifier
+                            .padding(vertical = 12.dp),
                         text = item,
                         style = mbSubtitleTextStyle()
                     )
@@ -457,7 +459,7 @@ fun BookmarkFilterViewPreview() {
     MaterialBookmarkMaterialTheme {
         BookmarkFilterView(
             modifier = Modifier,
-            filterItems = listOf<String>("Filter 1", "Filter 2", "Filter 3")
+            filterItems = listOf("Filter 1", "Filter 2", "Filter 3")
         )
     }
 }
@@ -492,7 +494,7 @@ fun BookmarkListViewPreview2() {
 
 
 const val COLUMN_GRID_SIZE = 1
-internal val filterList = listOf<String>("list", "sort by date", "pinned")
+internal val filterList = listOf("list", "sort by date", "pinned")
 internal val bookmarkList = listOf(
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -569,7 +571,7 @@ internal val bookmarkList = listOf(
 )
 
 val USER_MOCK = User(
-    name = "davide",
+    name = "Davide",
     surname = "bllalal",
     username = "blla",
 //    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",

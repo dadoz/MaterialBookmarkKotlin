@@ -37,6 +37,7 @@ import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPrevie
  * create an instance of this fragment.
  *
  */
+@Deprecated("not used")
 class AddBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentAddBookmarkBinding
     private val newBookmarkEditTitleViewBinding by lazy {

@@ -1,9 +1,8 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
 import android.content.res.Configuration
-import android.icu.text.DateFormat
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
@@ -24,11 +24,8 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
-import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
-import kotlinx.datetime.format
 import java.util.Date
 
 @Composable
@@ -50,49 +47,66 @@ fun BookmarkCardView(
                 onOpenAction?.invoke(bookmark)
             }
     ) {
-        //title
-        Text(
-            modifier = Modifier
-                .align(
-                    alignment = Alignment.CenterHorizontally
-                )
-                .padding(bottom = Dimen.paddingSmall8dp),
-            style = mbTitleMediumBoldTextStyle(),
-            maxLines = 2,
-            text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
-        )
 
-        //description
-        Text(
+        Column(
             modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally),
-            style = mbSubtitleTextStyle(color = MbColor.GrayBlueMildSea),
-            text = bookmark.url
-        )
+                .fillMaxWidth(),
+        ) {
+            //image icon
+            AsyncImage(
+                model = bookmark.iconUrl,
+                error = fallbackIcon,
+                placeholder = fallbackIcon,
+                contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.tint(
+                    color = MbColor.GrayBlueMiddleSea
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(
+                        alignment = Alignment.Start
+                    )
+                    .padding(bottom = Dimen.paddingMedium16dp)
+                    .size(size = Dimen.sizeExtraLarge64dp)
+                    .clip(CircleShape)
+                    .padding(Dimen.sizeExtraSmall4dp),
+            )
 
-        //image icon
-        AsyncImage(
-            model = bookmark.iconUrl,
-            error = fallbackIcon,
-            placeholder = fallbackIcon,
-            contentScale = ContentScale.Fit,
-            contentDescription = null,
-            modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally)
-                .padding(Dimen.paddingMedium16dp)
-                .size(size = Dimen.sizeExtraLarge64dp)
-                .clip(CircleShape)
-                .padding(Dimen.sizeExtraSmall4dp),
-        )
+            //title
+            Text(
+                modifier = Modifier
+                    .align(
+                        alignment = Alignment.Start
+                    )
+                    .padding(bottom = Dimen.paddingSmall8dp),
+                style = mbTitleMediumBoldTextStyle(
+                    color = MbColor.DarkLemonYellow
+                ),
+                maxLines = 2,
+                text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
+            )
 
-        //timestampe
-        Text(
-            modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally),
-            maxLines = 1,
-            style = mbSubtitleLightTextStyle(),
-            text = bookmark.getLocalDate().toString()
-        )
+            //description
+            Text(
+                modifier = Modifier
+                    .align(
+                        alignment = Alignment.Start
+                    ),
+                style = mbSubtitleTextStyle(color = MbColor.GrayBlueMiddleSea),
+                text = bookmark.url
+            )
+
+            //timestampe
+            Text(
+                modifier = Modifier
+                    .align(
+                        alignment = Alignment.End
+                    ),
+                maxLines = 1,
+                style = mbSubtitleLightTextStyle(),
+                text = bookmark.getLocalDate().toString()
+            )
+        }
     }
 }
 

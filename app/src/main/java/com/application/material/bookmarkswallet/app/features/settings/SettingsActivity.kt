@@ -19,6 +19,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.adapte
 import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity.SettingsAdapter.SettingsViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 
+@Deprecated("not used")
 @AndroidEntryPoint
 class SettingsActivity : AppCompatActivity(), LifecycleOwner {
     private lateinit var binding: ActivitySettingsBinding

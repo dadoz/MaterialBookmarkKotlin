@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.features.hp
+package com.application.material.bookmarkswallet.app.navigation
 
 
 import androidx.compose.foundation.ScrollState

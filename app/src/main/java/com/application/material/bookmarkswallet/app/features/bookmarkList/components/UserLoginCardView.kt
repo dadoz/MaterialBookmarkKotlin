@@ -3,16 +3,20 @@ package com.application.material.bookmarkswallet.app.features.bookmarkList.compo
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,7 +25,7 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleSmallBoldTextStyle
 
 @Composable
@@ -38,15 +42,16 @@ fun UserLoginCardView(
 
     MbCardView(
         modifier = modifier
-            .size(96.dp)
+            .wrapContentHeight()
+            .wrapContentWidth()
             .clickable {
                 onOpenAction?.invoke(user)
             }
     ) {
-        Column(
+        Row(
             modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+                .wrapContentWidth(),
+            horizontalArrangement = Arrangement.Center
         ) {
             //image icon
             AsyncImage(
@@ -54,22 +59,27 @@ fun UserLoginCardView(
                 error = fallbackIcon,
                 placeholder = fallbackIcon,
                 contentScale = ContentScale.Fit,
+                colorFilter = ColorFilter.tint(
+                    color = MbColor.GrayBlueMiddleSea
+                ),
                 contentDescription = null,
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(Dimen.paddingExtraSmall2dp)
-                    .size(size = Dimen.sizeExtraLarge64dp)
+                    .align(
+                        alignment = Alignment.CenterVertically
+                    )
+                    .size(size = 38.dp)
                     .clip(CircleShape)
-                    .padding(Dimen.sizeExtraSmall4dp),
             )
 
             //title
             Text(
                 modifier = Modifier
                     .align(
-                        alignment = Alignment.CenterHorizontally
+                        alignment = Alignment.CenterVertically
                     )
-                    .padding(bottom = Dimen.paddingSmall8dp),
+                    .padding(
+                        start = Dimen.paddingSmall8dp
+                    ),
                 style = mbTitleSmallBoldTextStyle(),
                 maxLines = 2,
                 text = user.name
