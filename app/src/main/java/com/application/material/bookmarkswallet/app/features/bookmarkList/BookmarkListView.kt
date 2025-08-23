@@ -66,7 +66,7 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.MbBo
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
-import com.application.material.bookmarkswallet.app.network.models.Response
+import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor

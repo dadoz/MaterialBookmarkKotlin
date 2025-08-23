@@ -18,7 +18,7 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkSimple
-import com.application.material.bookmarkswallet.app.network.models.Response
+import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.ONE
 import com.application.material.bookmarkswallet.app.utils.ZERO

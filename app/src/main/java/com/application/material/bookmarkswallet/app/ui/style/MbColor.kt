@@ -14,7 +14,7 @@ object MbColor {
     val White: Color = Color.White
     val Black: Color = Color.Black
     val GrayDarkNight: Color = Color(0xFF181C21)
-    val GrayBlueMildSea: Color = Color(0xFF434E68)
+    val GrayBlueMildSea: Color = Color(0xFFDADCEA)
     val EmeraldGreen: Color = Color(0xFFB1FBF3)
     val DarkEmeraldGreen: Color = Color(0xFF3BB1A5)
     val red: Color = Color(0xFFE60000)

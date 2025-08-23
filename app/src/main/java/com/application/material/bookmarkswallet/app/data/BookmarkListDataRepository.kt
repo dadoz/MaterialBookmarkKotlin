@@ -4,7 +4,7 @@ import com.application.material.bookmarkswallet.app.data.local.BookmarkDataSourc
 import com.application.material.bookmarkswallet.app.data.remote.BookmarkDataSourceRemote
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
-import com.application.material.bookmarkswallet.app.network.models.Response
+import com.application.material.bookmarkswallet.app.di.models.Response
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

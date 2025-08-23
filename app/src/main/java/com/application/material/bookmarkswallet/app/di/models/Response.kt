@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.network.models
+package com.application.material.bookmarkswallet.app.di.models
 
 import com.google.errorprone.annotations.Keep
 

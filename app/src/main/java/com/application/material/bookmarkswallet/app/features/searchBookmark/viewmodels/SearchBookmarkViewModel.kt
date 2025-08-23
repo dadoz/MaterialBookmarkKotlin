@@ -13,7 +13,7 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.models.BookmarkSimple
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
-import com.application.material.bookmarkswallet.app.network.models.Response
+import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.google.ai.client.generativeai.type.TextPart
 import com.squareup.moshi.JsonAdapter
