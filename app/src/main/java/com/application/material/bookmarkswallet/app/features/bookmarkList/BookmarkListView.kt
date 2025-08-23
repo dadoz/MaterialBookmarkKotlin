@@ -56,6 +56,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkAddModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCard
@@ -66,7 +67,6 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.MbBo
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
-import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
@@ -80,94 +80,6 @@ import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
-
-const val COLUMN_GRID_SIZE = 1
-internal val filterList = listOf<String>("list", "sort by date", "pinned")
-internal val bookmarkList = listOf(
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Google",
-        iconUrl = "www.google.it",
-        url = "www.google.it",
-        timestamp = Date(),//Dates.today,
-        isLike = false
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Google",
-        iconUrl = "www.google.it",
-        url = "www.google.it",
-        timestamp = Date(),//Dates.today,
-        isLike = false
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Google",
-        iconUrl = "www.google.it",
-        url = "www.google.it",
-        timestamp = Date(),//Dates.today,
-        isLike = false
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Facebook",
-        iconUrl = "www.facebook.it",
-        url = "www.facebook.it",
-        timestamp = Date(),//Dates.today,
-        isLike = true
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Google",
-        iconUrl = "www.google.it",
-        url = "www.google.it",
-        timestamp = Date(),//Dates.today,
-        isLike = false
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Facebook",
-        iconUrl = "www.facebook.it",
-        url = "www.facebook.it",
-        timestamp = Date(),//Dates.today,
-        isLike = true
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Google",
-        iconUrl = "www.google.it",
-        url = "www.google.it",
-        timestamp = Date(),//Dates.today,
-        isLike = false
-    ),
-    Bookmark(
-        appId = getBookmarkId("www.google.it"),
-        siteName = EMPTY,
-        title = "Facebook",
-        iconUrl = "www.facebook.it",
-        url = "www.facebook.it",
-        timestamp = Date(),//Dates.today,
-        isLike = true
-    )
-)
-
-val USER_MOCK = User(
-    name = "davide",
-    surname = "bllalal",
-    username = "blla",
-//    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",
-    age = 40
-)
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-val BookmarkListButtonContainerHeight = ButtonDefaults.MediumContainerHeight
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -286,7 +198,7 @@ fun BookmarkListView(
                 bottomSheetVisible.value = true
             }
         )
-}
+    }
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -577,3 +489,92 @@ fun BookmarkListViewPreview2() {
         }
     }
 }
+
+
+const val COLUMN_GRID_SIZE = 1
+internal val filterList = listOf<String>("list", "sort by date", "pinned")
+internal val bookmarkList = listOf(
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Google",
+        iconUrl = "www.google.it",
+        url = "www.google.it",
+        timestamp = Date(),//Dates.today,
+        isLike = false
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Google",
+        iconUrl = "www.google.it",
+        url = "www.google.it",
+        timestamp = Date(),//Dates.today,
+        isLike = false
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Google",
+        iconUrl = "www.google.it",
+        url = "www.google.it",
+        timestamp = Date(),//Dates.today,
+        isLike = false
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Facebook",
+        iconUrl = "www.facebook.it",
+        url = "www.facebook.it",
+        timestamp = Date(),//Dates.today,
+        isLike = true
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Google",
+        iconUrl = "www.google.it",
+        url = "www.google.it",
+        timestamp = Date(),//Dates.today,
+        isLike = false
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Facebook",
+        iconUrl = "www.facebook.it",
+        url = "www.facebook.it",
+        timestamp = Date(),//Dates.today,
+        isLike = true
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Google",
+        iconUrl = "www.google.it",
+        url = "www.google.it",
+        timestamp = Date(),//Dates.today,
+        isLike = false
+    ),
+    Bookmark(
+        appId = getBookmarkId("www.google.it"),
+        siteName = EMPTY,
+        title = "Facebook",
+        iconUrl = "www.facebook.it",
+        url = "www.facebook.it",
+        timestamp = Date(),//Dates.today,
+        isLike = true
+    )
+)
+
+val USER_MOCK = User(
+    name = "davide",
+    surname = "bllalal",
+    username = "blla",
+//    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",
+    age = 40
+)
+
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+val BookmarkListButtonContainerHeight = ButtonDefaults.MediumContainerHeight

@@ -17,8 +17,8 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.adapte
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
+@Deprecated("not used")
 @AndroidEntryPoint
 class BookmarkListFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentBookmarkListBinding
@@ -107,7 +107,6 @@ class BookmarkListFragment : Fragment(), MenuProvider {
 
         binding.mbBookmarkAddNewButtonId.setOnClickListener {
             bookmarkFilters.starFilterType = IS_DEFAULT_VIEW
-            findNavController().navigate(R.id.searchBookmarkFragment)
         }
     }
 

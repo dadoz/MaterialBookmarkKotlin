@@ -2,7 +2,6 @@ package com.application.material.bookmarkswallet.app.features.hp
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -44,7 +43,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HpView() {
+fun HpScaffoldView() {
     val context = LocalContext.current
     val navController = rememberNavController()
 
