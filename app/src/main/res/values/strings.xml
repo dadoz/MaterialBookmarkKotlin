@@ -9,6 +9,7 @@
     <string name="tap_to_edit_label_string">Tap to edit your bookmark info</string>
     <string name="update_label_button">UPDATE</string>
     <string name="save_label_button">SAVE</string>
+    <string name="save_ai_label_button">SAVE WITH AI</string>
     <string name="search_actionbar_string">Search Bookmarks</string>
     <string name="add_actionbar_string">Add new Bookmark</string>
     <string name="delete_fulle_descr_label_text">Sure you want delete your bookmark permanently?</string>

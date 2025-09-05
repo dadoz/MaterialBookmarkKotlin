@@ -153,17 +153,30 @@ fun BookmarkListView(
                 bottomSheetVisible = bottomSheetVisible
             ) {
                 SearchBookmarkView(
-                    modifier = Modifier
-                ) {
-                    searchBookmarkViewModel?.saveBookmark(
-                        title = "hey this is a title",
-                        description = null,
-                        iconUrl = null,
-                        url = it
-                    )
-                    //close dialog
-//                    bottomSheetVisible.value = false
-                }
+                    modifier = Modifier,
+                    onSearchBookmarkWithAIAction = {
+                        searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
+                            url = it,
+                            onCompletion = {
+                                Timber.d("stored on list")
+                            }
+                        )
+//                        //close dialog
+//                        bottomSheetVisible.value = false
+                    },
+                    onSearchBookmarkAction = {
+
+                        searchBookmarkViewModel?.saveBookmark(
+                            title = "hey this is a title",
+                            description = null,
+                            iconUrl = null,
+                            url = it
+                        )
+
+//                        //close dialog
+//                        bottomSheetVisible.value = false
+                    }
+                )
             }
         }
 

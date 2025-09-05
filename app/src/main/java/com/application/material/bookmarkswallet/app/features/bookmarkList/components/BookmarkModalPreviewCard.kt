@@ -15,27 +15,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.asAndroidColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,9 +42,6 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.comp
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
-import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
@@ -58,10 +49,7 @@ import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import java.util.Date
 import java.util.Locale
 
@@ -111,7 +99,10 @@ fun BookmarkPreviewCard(
     onOpenAction: ((String) -> Unit)? = null,
 ) {
     //fallbackIcon
-    val fallbackIcon = rememberDrawablePainterWithColor(res = R.drawable.ic_bookmark_light)
+    val fallbackIcon = rememberDrawablePainterWithColor(
+        res = R.drawable.ic_bookmark_light,
+        colorRes = R.color.colorPrimary
+    )
     MbCardView(
         modifier = modifier
     ) {
@@ -163,7 +154,7 @@ fun BookmarkPreviewCard(
                 .padding(Dimen.paddingMedium16dp)
                 .width(Dimen.sizeExtraLarge96dp)
                 .height(Dimen.sizeExtraLarge96dp)
-                .clip(CircleShape)
+//                .clip(CircleShape)
                 .padding(Dimen.sizeExtraSmall4dp),
         )
 
@@ -277,7 +268,24 @@ fun rememberDrawablePainterWithColor(res: Int, colorRes: Int = R.color.colorPrim
                 ContextCompat.getColor(LocalContext.current, colorRes),
                 PorterDuff.Mode.SRC_ATOP
             )
-        })
+        }
+    )
+
+@Composable
+fun rememberDrawablePainterWithColor(
+    res: Int,
+    color: Color = Color.White
+): Painter =
+    rememberDrawablePainter(
+        drawable = AppCompatResources.getDrawable(
+            LocalContext.current,
+            res
+        ).also {
+            it?.colorFilter = ColorFilter.tint(
+                color = color
+            ).asAndroidColorFilter()
+        }
+    )
 
 @Composable
 @Preview

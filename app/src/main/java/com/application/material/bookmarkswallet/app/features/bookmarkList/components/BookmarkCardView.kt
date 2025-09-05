@@ -2,6 +2,7 @@ package com.application.material.bookmarkswallet.app.features.bookmarkList.compo
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightText
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
+import com.google.ai.client.generativeai.type.content
 import java.util.Date
 
 @Composable
@@ -37,7 +39,10 @@ fun BookmarkCardView(
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark,
-        colorRes = R.color.colorAccent
+        color = when (isSystemInDarkTheme()) {
+            true -> MbColor.DarkLemonYellow
+            false -> MbColor.GrayBlueMiddleSea
+        }
     )
 
     MbCardView(
@@ -58,9 +63,6 @@ fun BookmarkCardView(
                 error = fallbackIcon,
                 placeholder = fallbackIcon,
                 contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(
-                    color = MbColor.GrayBlueMiddleSea
-                ),
                 contentDescription = null,
                 modifier = Modifier
                     .align(
@@ -68,7 +70,7 @@ fun BookmarkCardView(
                     )
                     .padding(bottom = Dimen.paddingMedium16dp)
                     .size(size = Dimen.sizeExtraLarge64dp)
-                    .clip(CircleShape)
+//                    .clip(CircleShape)
                     .padding(Dimen.sizeExtraSmall4dp),
             )
 

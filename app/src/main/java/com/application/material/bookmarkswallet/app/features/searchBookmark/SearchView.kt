@@ -136,6 +136,7 @@ fun SearchAndAddBookmarkInternalView(
                 )
             }
         )
+
         ExtendedFloatingActionButton(
             onClick = {
                 Toast.makeText(
@@ -256,7 +257,8 @@ fun SearchAndAddBookmarkInternalView(
 fun SearchBookmarkView(
     modifier: Modifier,
 //    searchedBookmarkState: StateFlow<Bookmark?>,
-    onSearchBookmarkAction: (url: String) -> Unit
+    onSearchBookmarkAction: (url: String) -> Unit,
+    onSearchBookmarkWithAIAction: (url: String) -> Unit,
 ) {
     val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
     val bookmarkTitle = remember { mutableStateOf(TextFieldValue(EMPTY)) }
@@ -358,6 +360,31 @@ fun SearchBookmarkView(
             }
         )
 
+        ExtendedFloatingActionButton(
+            modifier = Modifier
+                .padding(bottom = Dimen.paddingMedium16dp),
+            containerColor = MbColor.Yellow,
+            text = {
+                Text(
+                    modifier = Modifier,
+                    style = mbButtonTextStyle(),
+                    text = stringResource(id = R.string.save_ai_label_button)
+                )
+            },
+            icon = {
+                Icon(
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                    painter = painterResource(R.drawable.ic_star),
+                    contentDescription = EMPTY
+                )
+            },
+            onClick = {
+                onSearchBookmarkWithAIAction.invoke(searchUrlTextState.value.text)
+            }
+        )
+
     }
 }
 
@@ -383,7 +410,8 @@ fun SearchBookmarkViewPreview() {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
             SearchBookmarkView(
                 modifier = Modifier,
-                onSearchBookmarkAction = {}
+                onSearchBookmarkAction = {},
+                onSearchBookmarkWithAIAction = {}
             )
         }
     }
