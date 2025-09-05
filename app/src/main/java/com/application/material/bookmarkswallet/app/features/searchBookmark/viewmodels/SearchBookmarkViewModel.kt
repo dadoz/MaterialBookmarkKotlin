@@ -39,7 +39,6 @@ class SearchBookmarkViewModel @Inject constructor(
 ) : AndroidViewModel(app) {
     val bookmarkInfoLiveData: MutableLiveData<BookmarkInfo> = MutableLiveData()
     val bookmarkInfoLiveError: MutableLiveData<String> = MutableLiveData()
-    val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
     val bookmarkSearchedUrlLiveData: MutableLiveData<String> = MutableLiveData()
     val updateBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -115,21 +114,18 @@ class SearchBookmarkViewModel @Inject constructor(
         }
     }
 
-    /**
-     * get bookamrk on db
-     *
-     */
-    fun getBookmarksFlow() = bookmarkListDataRepository.getBookmarks()
 
     /**
      * add bookamrk on db
-     *
+     * handle with state instead of cbs (legacy mode but still like it)
      */
     fun saveBookmark(
         title: String,
         description: String?,
         iconUrl: String?,
-        url: String
+        url: String,
+        onSuccessCallback: (bookmark: Bookmark) -> Unit = { bookmark -> },
+        onErrorCallback: (e: Throwable) -> Unit = { e -> }
     ) {
         viewModelScope.launch {
             try {
@@ -145,17 +141,23 @@ class SearchBookmarkViewModel @Inject constructor(
                     .also {
                         Timber.e(it.toString())
                         bookmarkListDataRepository.addBookmark(it)
-                        saveBookmarkStatus.value = true
+                        onSuccessCallback.invoke(it)
                     }
             } catch (e: Exception) {
                 // handle error
                 Timber.e(e.message ?: "ERROR")
-                saveBookmarkStatus.value = false
+                onErrorCallback.invoke(e)
             }
         }
     }
 
-    fun searchUrlInfoByUrlGenAI(url: String, onCompletion: () -> Unit = {}) {
+    fun searchUrlInfoByUrlGenAI(
+        url: String,
+        onCompletion: () -> Unit = {},
+        onSuccessCallback: (bookmark: Bookmark) -> Unit = { bookmark -> },
+        onErrorCallback: (e: Throwable) -> Unit = { e -> }
+
+    ) {
         val prompt0 = "get title, public icon, url, description $url in JSON format"
         val prompt =
             "generate site_name, title, image, url, description for $url ONLY in JSON format and find the image on web"
@@ -187,7 +189,13 @@ class SearchBookmarkViewModel @Inject constructor(
                                 title = bookmark.title ?: EMPTY_BOOKMARK_LABEL,
                                 iconUrl = bookmark.icon,
                                 description = bookmark.description,
-                                url = bookmark.url
+                                url = bookmark.url,
+                                onErrorCallback = {
+                                    onErrorCallback.invoke(it)
+                                },
+                                onSuccessCallback = {
+                                    onSuccessCallback.invoke(it)
+                                }
                             )
                             //main thread
                             viewModelScope.launch {
@@ -197,6 +205,7 @@ class SearchBookmarkViewModel @Inject constructor(
 
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    onErrorCallback.invoke(e)
                 }
             }
     }

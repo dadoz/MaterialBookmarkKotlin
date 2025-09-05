@@ -92,7 +92,9 @@ fun HpScaffoldView() {
                 modifier = Modifier,
                 containerColor = mbGrayLightColorBackground()
             ) {
-                getTabMenuItemList(context = context)
+                getTabMenuItemList(
+                    context = context
+                )
                     .forEach {
                         //check is selected
                         val isSelected = it.navRoute == navItemSelectedState.value

@@ -24,6 +24,11 @@ import com.application.material.bookmarkswallet.app.ui.style.MbColor
 const val densityResizeFactor = 1f
 
 @Composable
+fun mbTitleHExtraBigBoldTextStyle() = mbTitleBoldTextStyle().copy(
+    fontSize = 36.sp
+)
+
+@Composable
 fun mbTitleBoldTextStyle() = TextStyle(
     color = MbColor.GrayBlueMiddleSea,
     fontSize = 28.sp,// myVeTitleMedium(),

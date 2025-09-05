@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -53,12 +52,12 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
+import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
-import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardGrayBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
@@ -74,7 +73,9 @@ import timber.log.Timber
 @Composable
 fun SearchAndAddBookmarkInternalView(
     modifier: Modifier = Modifier,
-    searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel<SearchBookmarkViewModel>(),
+    searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel(),
+    onSuccessCallback: (bookmark: Bookmark) -> Unit = { bookmark -> },
+    onErrorCallback: (e: Throwable) -> Unit = { e -> }
 ) {
     var checked by remember { mutableStateOf(value = false) }
     val rotation by animateFloatAsState(
@@ -112,13 +113,16 @@ fun SearchAndAddBookmarkInternalView(
             contentDescription = EMPTY
         )
 
+        //MbExtendedFab
         ExtendedFloatingActionButton(
             onClick = {
                 searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
                     url = bookmarkUrl.value.text,
                     onCompletion = {
                         Timber.d("stored on list")
-                    }
+                    },
+                    onErrorCallback = onErrorCallback,
+                    onSuccessCallback = onSuccessCallback
                 )
             },
             modifier = Modifier
@@ -137,6 +141,7 @@ fun SearchAndAddBookmarkInternalView(
             }
         )
 
+        //MbExtendedFab
         ExtendedFloatingActionButton(
             onClick = {
                 Toast.makeText(
@@ -256,7 +261,6 @@ fun SearchAndAddBookmarkInternalView(
 @Composable
 fun SearchBookmarkView(
     modifier: Modifier,
-//    searchedBookmarkState: StateFlow<Bookmark?>,
     onSearchBookmarkAction: (url: String) -> Unit,
     onSearchBookmarkWithAIAction: (url: String) -> Unit,
 ) {
@@ -309,19 +313,19 @@ fun SearchBookmarkView(
                     .padding(vertical = Dimen.paddingSmall8dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-            Icon(
-                modifier = Modifier
-                    .width(24.dp)
-                    .height(24.dp),
-                painter = painterResource(R.drawable.ic_star),
-                contentDescription = EMPTY
-            )
+                Icon(
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                    painter = painterResource(R.drawable.ic_star),
+                    contentDescription = EMPTY
+                )
 
-            Text(
-                modifier = Modifier,
-                style = mbSubtitleTextAccentStyle(),
-                text = stringResource(R.string.paste_clipboard)
-            )
+                Text(
+                    modifier = Modifier,
+                    style = mbSubtitleTextAccentStyle(),
+                    text = stringResource(R.string.paste_clipboard)
+                )
             }
         }
 
@@ -334,7 +338,7 @@ fun SearchBookmarkView(
             contentDescription = EMPTY
         )
 
-        //open cta
+        //open cta MbExtendedFab
         ExtendedFloatingActionButton(
             modifier = Modifier
                 .padding(bottom = Dimen.paddingMedium16dp),
@@ -359,7 +363,7 @@ fun SearchBookmarkView(
                 onSearchBookmarkAction.invoke(searchUrlTextState.value.text)
             }
         )
-
+//MbExtendedFab
         ExtendedFloatingActionButton(
             modifier = Modifier
                 .padding(bottom = Dimen.paddingMedium16dp),

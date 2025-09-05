@@ -6,8 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.application.material.bookmarkswallet.app.GenAIManager
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
+import com.application.material.bookmarkswallet.app.di.models.Response
+import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortOrderListEnum.IS_ASCENDING
@@ -17,14 +18,9 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.SortTy
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
-import com.application.material.bookmarkswallet.app.models.BookmarkSimple
-import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.ONE
 import com.application.material.bookmarkswallet.app.utils.ZERO
-import com.google.ai.client.generativeai.type.TextPart
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -34,6 +30,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
@@ -65,8 +62,52 @@ class BookmarkViewModel @Inject constructor(
     var bookmarkPreviewModalState: StateFlow<Boolean> =
         this.bookmarkPreviewModalMutableState.asStateFlow()
 
-    fun setBookmarkPreviewModal(hasToShown: Boolean) {
-        bookmarkPreviewModalMutableState.value = hasToShown
+    private val bookmarkListMutableState = MutableStateFlow(BookmarkListUIState())
+    val bookmarkListUIState = bookmarkListMutableState.asStateFlow()
+
+    /**
+     * retrieve bookmark list version new please refer to retrieveBookmarkList
+     *
+     */
+    fun getBookmarkList() {
+        Timber.w("[BOOKMARK LIST] - get all bookmark list")
+        //loading state
+        bookmarkListMutableState.value = BookmarkListUIState(
+            itemList = emptyList(),
+            isLoading = true
+        )
+
+        //this is wrong move on VM TODO in right VM please with a collectAsState
+        viewModelScope
+            .launch {
+                //retrieve items
+                bookmarkListDataRepository.getBookmarks()
+                    .collect { result ->
+                        when (result) {
+                            is Response.Success -> {
+                                Timber.d("item ${result.data.joinToString()}")
+                                //set new state
+                                bookmarkListMutableState
+                                    .update {
+                                        it.copy(
+                                            itemList = result.data
+                                        )
+                                    }
+                            }
+
+                            is Response.Error -> {
+                                Timber.d("ERROR - retrieve list ")
+                                bookmarkListMutableState
+                                    .update {
+                                        it.copy(
+                                            error = result.exception
+                                        )
+                                    }
+                            }
+                        }
+                    }
+            }
+
     }
 
     /**
@@ -74,11 +115,12 @@ class BookmarkViewModel @Inject constructor(
      */
     fun retrieveBookmarkList(bookmarkFilter: BookmarkFilter) {
         bookmarkFilter.isSearchViewType = false
+        //retrieve function
         viewModelScope.launch {
             bookmarkListDataRepository.getBookmarks()
                 .catch {
                     //todo handle error
-                    Timber.e(it.message)
+                    Timber.e(it)
                 }
                 .collect {
                     when (it) {
@@ -110,6 +152,11 @@ class BookmarkViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    ///whatttt donno
+    fun setBookmarkPreviewModal(hasToShown: Boolean) {
+        bookmarkPreviewModalMutableState.value = hasToShown
     }
 
     /**
