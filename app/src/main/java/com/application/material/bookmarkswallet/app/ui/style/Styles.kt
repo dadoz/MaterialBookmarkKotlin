@@ -117,6 +117,11 @@ fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbGrayLightColor()
     )
+@Composable
+fun mbBasicCardGrayBackgroundColors(): CardColors =
+    CardDefaults.cardColors(
+        containerColor = MbColor.GrayBlueDarkNight
+    )
 
 @Composable
 fun mbGrayLightColor2(): Color {

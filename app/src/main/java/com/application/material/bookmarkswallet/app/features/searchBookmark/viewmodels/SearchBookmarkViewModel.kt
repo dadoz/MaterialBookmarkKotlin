@@ -9,11 +9,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.GenAIManager
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
+import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.models.BookmarkSimple
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
-import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.google.ai.client.generativeai.type.TextPart
 import com.squareup.moshi.JsonAdapter
@@ -21,7 +21,6 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -115,8 +114,9 @@ class SearchBookmarkViewModel @Inject constructor(
                 }
         }
     }
+
     /**
-     * add bookamrk on db
+     * get bookamrk on db
      *
      */
     fun getBookmarksFlow() = bookmarkListDataRepository.getBookmarks()
@@ -125,7 +125,12 @@ class SearchBookmarkViewModel @Inject constructor(
      * add bookamrk on db
      *
      */
-    fun saveBookmark(title: String, description: String?, iconUrl: String?, url: String) {
+    fun saveBookmark(
+        title: String,
+        description: String?,
+        iconUrl: String?,
+        url: String
+    ) {
         viewModelScope.launch {
             try {
                 Bookmark(

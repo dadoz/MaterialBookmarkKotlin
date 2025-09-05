@@ -19,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
-import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.PositionalThreshold
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -159,7 +158,7 @@ fun HpScaffoldView() {
                         .align(Alignment.TopCenter),
                     state = pullToRefreshState,
                     isRefreshing = isLoading.value,
-                    threshold = PositionalThreshold,
+//                    threshold = PositionalThreshold,
                     color = mbGrayLightColor(),
                 )
             }

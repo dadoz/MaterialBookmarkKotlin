@@ -48,5 +48,6 @@
 
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Settings</string>
+    <string name="add_title_manually">add title manually</string>
 
 </resources>

@@ -57,3 +57,5 @@ freeline/
 freeline_project_description.json
 
 app/keystores/*
+
+.DS_Store

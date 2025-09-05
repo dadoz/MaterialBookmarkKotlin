@@ -1,140 +1,109 @@
 package com.application.material.bookmarkswallet.app.features.searchBookmark
 
 import android.content.res.Configuration
+import android.widget.Toast
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SplitButtonDefaults
+import androidx.compose.material3.SplitButtonDefaults.leadingButtonContentPaddingFor
+import androidx.compose.material3.SplitButtonDefaults.leadingButtonShapesFor
+import androidx.compose.material3.SplitButtonLayout
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
-import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
+import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardGrayBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun SearchBookmarkView(
-    modifier: Modifier,
-    searchedBookmarkState: StateFlow<Bookmark?>,
-    onSearchBookmarkAction: (url: String) -> Unit
+fun SearchAndAddBookmarkInternalView(
+    modifier: Modifier = Modifier,
+    searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel<SearchBookmarkViewModel>(),
 ) {
-    val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
-    val bookmark by searchedBookmarkState.collectAsState()
-
+    var checked by remember { mutableStateOf(value = false) }
+    val rotation by animateFloatAsState(
+        targetValue = if (checked) 180f else 0f,
+        label = "Trailing Icon Rotation"
+    )
+    val bookmarkUrl = remember { mutableStateOf(value = TextFieldValue()) }
+    val bookmarkTitle = remember { mutableStateOf(value = TextFieldValue()) }
+    val context = LocalContext.current
     Column(
         modifier = modifier
-            .padding(Dimen.sizeMedium16dp)
+            .padding(horizontal = Dimen.paddingMedium16dp)
+            .padding(bottom = Dimen.paddingMedium16dp),
     ) {
         Text(
             modifier = Modifier,
             style = mbTitleBoldTextStyle(),
-            text = stringResource(id = R.string.search_nbookmark)
+            text = "New Search"
         )
-        Text(
+        MbBookmarkTextFieldView(
             modifier = Modifier,
-            style = mbSubtitleTextStyle(),
-            text = stringResource(id = R.string.search_your_bookmark)
+            textLabel = "Title",
+            searchUrlTextState = bookmarkTitle
         )
-        MbCardView(
-            modifier = Modifier
-                .padding(vertical = Dimen.paddingMedium16dp)
-        ) {
-
-            //search text field
-            MbBookmarkTextFieldView(
-                modifier = Modifier,
-                searchUrlTextState = searchUrlTextState
-            )
-
-            //clipboard
-            Text(
-                modifier = Modifier
-                    .padding(vertical = Dimen.paddingExtraSmall4dp),
-                style = mbSubtitleTextAccentStyle(),
-                text = "Hey Search with GEMINI"
-            )
-            //clipboard
-            Text(
-                modifier = Modifier
-                    .padding(vertical = Dimen.paddingExtraSmall4dp),
-                style = mbSubtitleTextAccentStyle(),
-                text = "Hey Search with ChatGPT"
-            )
-            //clipboard
-            Text(
-                modifier = Modifier
-                    .padding(vertical = Dimen.paddingMedium16dp),
-                style = mbSubtitleTextStyle(),
-                text = stringResource(id = R.string.paste_clipboard)
-            )
-
-            //open cta
-            ExtendedFloatingActionButton(
-                modifier = Modifier
-                    .padding(bottom = Dimen.paddingMedium16dp),
-                containerColor = MbColor.Yellow,
-                text = {
-                    Text(
-                        modifier = Modifier,
-                        style = mbButtonTextStyle(),
-                        text = stringResource(id = R.string.search_nbookmark)
-                    )
-                },
-                icon = {
-                    Icon(
-                        modifier = Modifier
-                            .width(24.dp)
-                            .height(24.dp),
-                        painter = painterResource(R.drawable.ic_star),
-                        contentDescription = EMPTY
-                    )
-                },
-                onClick = {
-                    onSearchBookmarkAction.invoke(searchUrlTextState.value.text)
-                }
-            )
-        }
-
-        bookmark?.let {
-            BookmarkPreviewCard(
-                modifier = Modifier,
-                bookmark = it
-            )
-        }
+        MbBookmarkTextFieldView(
+            modifier = Modifier,
+            textLabel = "Bookmark Url",
+            searchUrlTextState = bookmarkUrl
+        )
         Image(
             modifier = Modifier
                 .padding(vertical = Dimen.paddingMedium16dp)
@@ -142,6 +111,253 @@ fun SearchBookmarkView(
             painter = painterResource(id = R.drawable.ic_bear_illustration),
             contentDescription = EMPTY
         )
+
+        ExtendedFloatingActionButton(
+            onClick = {
+                searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
+                    url = bookmarkUrl.value.text,
+                    onCompletion = {
+                        Timber.d("stored on list")
+                    }
+                )
+            },
+            modifier = Modifier
+                .padding(top = Dimen.paddingMedium16dp),
+            content = {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Icon"
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(start = Dimen.paddingSmall8dp),
+                    text = "Search with Gemini",
+                    style = mbButtonTextStyle()
+                )
+            }
+        )
+        ExtendedFloatingActionButton(
+            onClick = {
+                Toast.makeText(
+                    context, R.string.search_nbookmark, Toast.LENGTH_LONG
+                ).show()
+            },
+            modifier = Modifier
+                .padding(top = Dimen.paddingMedium16dp),
+            content = {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Icon"
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(start = Dimen.paddingSmall8dp),
+                    text = "Search your own",
+                    style = mbButtonTextStyle()
+                )
+            }
+        )
+
+        SplitButtonLayout(
+            modifier = Modifier
+                .padding(bottom = Dimen.paddingMedium16dp)
+                .padding(end = Dimen.paddingMedium16dp),
+            leadingButton = {
+                SplitButtonDefaults
+                    .ElevatedLeadingButton(
+                        modifier = Modifier.defaultMinSize(
+                            minHeight = BookmarkListButtonContainerHeight,
+                        ),
+                        shapes = leadingButtonShapesFor(
+                            buttonHeight = BookmarkListButtonContainerHeight
+                        ),
+                        contentPadding = leadingButtonContentPaddingFor(
+                            buttonHeight = BookmarkListButtonContainerHeight
+                        ),
+                        onClick = {
+                        },
+                        colors = ButtonColors(
+                            containerColor = MbColor.Yellow,
+                            contentColor = MbColor.GrayBlueMiddleSea,
+                            disabledContainerColor = MbColor.Yellow,
+                            disabledContentColor = MbColor.GrayBlueMiddleSea
+                        ),
+                    ) {
+                        Icon(
+                            Icons.Filled.Add,
+                            modifier = Modifier
+                                .size(
+                                    size = SplitButtonDefaults
+                                        .leadingButtonIconSizeFor(
+                                            buttonHeight = BookmarkListButtonContainerHeight
+                                        )
+                                ),
+                            contentDescription = "Localized description",
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(start = 4.dp),
+                            text = "Save or Gemini",
+                            style = mbButtonTextDarkStyle()
+                            //ButtonDefaults.textStyleFor(BookmarkListButtonContainerHeight)
+                        )
+                    }
+            },
+            trailingButton = {
+                SplitButtonDefaults
+                    .ElevatedTrailingButton(
+                        modifier =
+                            Modifier
+                                .defaultMinSize(
+                                    minHeight = BookmarkListButtonContainerHeight,
+                                )
+                                .semantics {
+                                    stateDescription =
+                                        when (checked) {
+                                            true -> "Add"
+
+                                            else -> "Collapsed"
+                                        }
+                                    contentDescription = "Toggle Button"
+                                },
+                        contentPadding = leadingButtonContentPaddingFor(
+                            buttonHeight = BookmarkListButtonContainerHeight
+                        ),
+                        checked = checked,
+                        colors = ButtonColors(
+                            containerColor = MbColor.Yellow,
+                            contentColor = MbColor.GrayBlueMiddleSea,
+                            disabledContainerColor = MbColor.Yellow,
+                            disabledContentColor = MbColor.GrayBlueMiddleSea
+                        ),
+                        onCheckedChange = { checked = it },
+                    ) {
+                        Icon(
+                            Icons.Filled.KeyboardArrowDown,
+                            modifier = Modifier
+                                .size(
+                                    size = SplitButtonDefaults
+                                        .leadingButtonIconSizeFor(
+                                            buttonHeight = BookmarkListButtonContainerHeight
+                                        )
+                                )
+                                .graphicsLayer {
+                                    this.rotationZ = rotation
+                                },
+                            contentDescription = "Localized description"
+                        )
+                    }
+            }
+        )
+    }
+}
+
+@Composable
+fun SearchBookmarkView(
+    modifier: Modifier,
+//    searchedBookmarkState: StateFlow<Bookmark?>,
+    onSearchBookmarkAction: (url: String) -> Unit
+) {
+    val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
+    val bookmarkTitle = remember { mutableStateOf(TextFieldValue(EMPTY)) }
+//    val bookmark by searchedBookmarkState.collectAsState()
+
+    Column(
+        modifier = modifier
+            .padding(Dimen.sizeMedium16dp)
+    ) {
+        //title
+        Text(
+            modifier = Modifier,
+            style = mbTitleBoldTextStyle(),
+            text = stringResource(id = R.string.search_nbookmark)
+        )
+
+        //search text field
+        MbBookmarkTextFieldView(
+            modifier = Modifier,
+            searchUrlTextState = searchUrlTextState
+        )
+        //title text field
+//        MbBookmarkTextFieldView(
+//            modifier = Modifier,
+//            textLabel = "Title",
+//            searchUrlTextState = bookmarkTitle
+//        )
+
+        //clipboard
+        Text(
+            modifier = Modifier
+                .padding(vertical = Dimen.paddingExtraSmall4dp),
+            textDecoration = TextDecoration.Underline,
+            style = mbSubtitleTextStyle(),
+            text = stringResource(R.string.add_title_manually)
+        )
+
+        //clipboard
+        MbCardView(
+            modifier = Modifier
+                .width(180.dp)
+                .padding(vertical = Dimen.paddingMedium16dp),
+            roundCornerSize = 34.dp,
+            colors = mbBasicCardGrayBackgroundColors()
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(vertical = Dimen.paddingSmall8dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+            Icon(
+                modifier = Modifier
+                    .width(24.dp)
+                    .height(24.dp),
+                painter = painterResource(R.drawable.ic_star),
+                contentDescription = EMPTY
+            )
+
+            Text(
+                modifier = Modifier,
+                style = mbSubtitleTextAccentStyle(),
+                text = stringResource(R.string.paste_clipboard)
+            )
+            }
+        }
+
+        //icon image
+        Image(
+            modifier = Modifier
+                .padding(vertical = Dimen.paddingMedium16dp)
+                .align(alignment = Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.ic_bear_illustration),
+            contentDescription = EMPTY
+        )
+
+        //open cta
+        ExtendedFloatingActionButton(
+            modifier = Modifier
+                .padding(bottom = Dimen.paddingMedium16dp),
+            containerColor = MbColor.Yellow,
+            text = {
+                Text(
+                    modifier = Modifier,
+                    style = mbButtonTextStyle(),
+                    text = stringResource(id = R.string.save_label_button)
+                )
+            },
+            icon = {
+                Icon(
+                    modifier = Modifier
+                        .width(24.dp)
+                        .height(24.dp),
+                    painter = painterResource(R.drawable.ic_star),
+                    contentDescription = EMPTY
+                )
+            },
+            onClick = {
+                onSearchBookmarkAction.invoke(searchUrlTextState.value.text)
+            }
+        )
+
     }
 }
 
@@ -167,9 +383,6 @@ fun SearchBookmarkViewPreview() {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
             SearchBookmarkView(
                 modifier = Modifier,
-                searchedBookmarkState = remember {
-                    MutableStateFlow(null)
-                },
                 onSearchBookmarkAction = {}
             )
         }
@@ -196,5 +409,21 @@ fun MbBookmarkTextFieldView(
         },
         onValueChange = {
             searchUrlTextState.value = it
-        })
+        }
+    )
 }
+
+@Composable
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun BookmarkListViewPreview2() {
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+            SearchAndAddBookmarkInternalView(
+                modifier = Modifier,
+                searchBookmarkViewModel = null
+            )
+        }
+    }
+}
+

@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.features.bookmarkList.components
+package com.application.material.bookmarkswallet.app.features.searchBookmark.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -8,7 +8,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.application.material.bookmarkswallet.app.features.searchBookmark.components.WevBaseBottomSheetView
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import kotlinx.coroutines.launch
 
