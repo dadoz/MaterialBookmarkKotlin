@@ -111,7 +111,7 @@ fun BookmarkListView(
             //items on title and subtitle
             Row(
                 modifier = Modifier
-                    .padding(vertical = Dimen.paddingMedium16dp),
+                    .padding(vertical = Dimen.paddingLarge32dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(

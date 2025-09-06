@@ -1,12 +1,9 @@
 package com.application.material.bookmarkswallet.app.features.settings
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,7 +26,6 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.compon
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
@@ -41,164 +37,165 @@ fun SettingsView() {
             value = USER_MOCK
         )
     }
-        Column(
+    Column(
+        modifier = Modifier
+            .verticalScroll(state = rememberScrollState())
+            .padding(all = Dimen.paddingMedium16dp),
+        verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+    ) {
+        Row(
             modifier = Modifier
-                .verticalScroll(state =rememberScrollState())
-                .padding(all = Dimen.paddingMedium16dp),
-            verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+                .padding(top = Dimen.paddingMedium16dp,
+                    bottom = Dimen.paddingMedium16dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            Text(
                 modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(end = Dimen.paddingMedium16dp),
-                    style = mbTitleHExtraBigBoldTextStyle(),
-                    text = stringResource(R.string.settings),
-                )
-            }
-
-            UserLoginCardView(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                user = user
+                style = mbTitleHExtraBigBoldTextStyle(),
+                text = stringResource(R.string.settings),
             )
+        }
 
-            MbCardView(
+        UserLoginCardView(
+            modifier = Modifier
+                .fillMaxWidth(),
+            user = user
+        )
+
+        MbCardView(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(all = Dimen.paddingMedium16dp),
-                ) {
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.CenterHorizontally
-                            )
-                            .padding(bottom = Dimen.paddingSmall8dp),
-                        style = mbTitleMediumBoldTextStyle(),
-                        maxLines = 2,
-                        text = "Rate on Playstore"
-                    )
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.Start
-                            )
-                            .padding(bottom = Dimen.paddingSmall8dp),
-                        style = mbSubtitleTextStyle(),
-                        maxLines = 2,
-                        text = "rate us and leave a feedback"
-                    )
-                }
-
-                //row 2 - create a component please
-                Column(
-                    modifier = Modifier
-                        .padding(all = Dimen.paddingMedium16dp),
-                ) {
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.Start
-                            )
-                            .padding(bottom = Dimen.paddingSmall8dp),
-                        style = mbTitleMediumBoldTextStyle(),
-                        maxLines = 2,
-                        text = "Contacts"
-                    )
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.Start
-                            )
-                            .padding(bottom = Dimen.paddingSmall8dp),
-                        style = mbSubtitleTextStyle(),
-                        maxLines = 2,
-                        text = "check to send us an email"
-                    )
-                }
-
-                //row 2 - create a component please
-                Column(
-                    modifier = Modifier
-                        .padding(all = Dimen.paddingMedium16dp),
-                ) {
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.Start
-                            )
-                            .padding(bottom = Dimen.paddingSmall8dp),
-                        style = mbTitleMediumBoldTextStyle(),
-                        maxLines = 2,
-                        text = "App Version"
-                    )
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.Start
-                            )
-                            .padding(bottom = Dimen.paddingSmall8dp),
-                        style = mbSubtitleTextStyle(),
-                        maxLines = 2,
-                        text = "2.2.0"
-                    )
-                }
-            }
-
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(all = Dimen.paddingMedium16dp),
             ) {
                 //title
                 Text(
                     modifier = Modifier
-                        .weight(2F)
+                        .align(
+                            alignment = Alignment.CenterHorizontally
+                        )
+                        .padding(bottom = Dimen.paddingSmall8dp),
+                    style = mbTitleMediumBoldTextStyle(),
+                    maxLines = 2,
+                    text = "Rate on Playstore"
+                )
+                //title
+                Text(
+                    modifier = Modifier
+                        .align(
+                            alignment = Alignment.Start
+                        )
                         .padding(bottom = Dimen.paddingSmall8dp),
                     style = mbSubtitleTextStyle(),
-                    text = "Just donate a coffee for the developer support",
-                )
-                MBExtendedFab(
-                    modifier = Modifier
-                        .weight(1F)
-                        .padding(top = Dimen.paddingMedium16dp),
-                    title ="Donate",
-                    iconRes = R.drawable.ic_tab_user_dark,
-                    onClickAction = {
-                    }
+                    maxLines = 2,
+                    text = "rate us and leave a feedback"
                 )
             }
 
+            //row 2 - create a component please
+            Column(
+                modifier = Modifier
+                    .padding(all = Dimen.paddingMedium16dp),
+            ) {
+                //title
+                Text(
+                    modifier = Modifier
+                        .align(
+                            alignment = Alignment.Start
+                        )
+                        .padding(bottom = Dimen.paddingSmall8dp),
+                    style = mbTitleMediumBoldTextStyle(),
+                    maxLines = 2,
+                    text = "Contacts"
+                )
+                //title
+                Text(
+                    modifier = Modifier
+                        .align(
+                            alignment = Alignment.Start
+                        )
+                        .padding(bottom = Dimen.paddingSmall8dp),
+                    style = mbSubtitleTextStyle(),
+                    maxLines = 2,
+                    text = "check to send us an email"
+                )
+            }
+
+            //row 2 - create a component please
+            Column(
+                modifier = Modifier
+                    .padding(all = Dimen.paddingMedium16dp),
+            ) {
+                //title
+                Text(
+                    modifier = Modifier
+                        .align(
+                            alignment = Alignment.Start
+                        )
+                        .padding(bottom = Dimen.paddingSmall8dp),
+                    style = mbTitleMediumBoldTextStyle(),
+                    maxLines = 2,
+                    text = "App Version"
+                )
+                //title
+                Text(
+                    modifier = Modifier
+                        .align(
+                            alignment = Alignment.Start
+                        )
+                        .padding(bottom = Dimen.paddingSmall8dp),
+                    style = mbSubtitleTextStyle(),
+                    maxLines = 2,
+                    text = "2.2.0"
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             //title
             Text(
                 modifier = Modifier
-                    .align(
-                        alignment = Alignment.Start
-                    )
+                    .weight(2F)
                     .padding(bottom = Dimen.paddingSmall8dp),
                 style = mbSubtitleTextStyle(),
-                text = "Something more here...\n" +
-                        "Thanks for illustration in app due to a dedicated work."
+                text = "Just donate a coffee for the developer support",
             )
-            Image(
+            MBExtendedFab(
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(vertical = Dimen.paddingMedium16dp)
-                    .align(alignment = Alignment.CenterHorizontally),
-                painter = painterResource(id = R.drawable.ic_fox_illustration),
-                contentDescription = EMPTY
+                    .weight(1F)
+                    .padding(top = Dimen.paddingMedium16dp),
+                title = "Donate",
+                iconRes = R.drawable.ic_tab_user_dark,
+                onClickAction = {
+                }
             )
-
         }
+
+        //title
+        Text(
+            modifier = Modifier
+                .align(
+                    alignment = Alignment.Start
+                )
+                .padding(bottom = Dimen.paddingSmall8dp),
+            style = mbSubtitleTextStyle(),
+            text = "Something more here...\n" +
+                    "Thanks for illustration in app due to a dedicated work."
+        )
+        Image(
+            modifier = Modifier
+                .size(200.dp)
+                .padding(vertical = Dimen.paddingMedium16dp)
+                .align(alignment = Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.ic_fox_illustration),
+            contentDescription = EMPTY
+        )
+
+    }
 }

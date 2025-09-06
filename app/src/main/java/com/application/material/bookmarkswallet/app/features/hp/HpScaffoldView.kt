@@ -80,12 +80,24 @@ fun HpScaffoldView() {
             .background(color = mbGrayLightColorBackground())
             .windowInsetsPadding(insets = WindowInsets.systemBars),
         topBar = {
-            SearchBarHeaderView(
-                modifier = Modifier,
-                textFieldState = textFieldState,
-                onSearch = onSearch,
-                searchResults = searchResultList
-            )
+            when (navItemSelectedState.value) {
+                NavRoute.BookmarkList ->
+                    SearchBarHeaderView(
+                        modifier = Modifier,
+                        textFieldState = textFieldState,
+                        onSearch = onSearch,
+                        searchResults = searchResultList
+                    )
+                else -> {
+                    SearchBarHeaderView(
+                        modifier = Modifier,
+                        textFieldState = textFieldState,
+                        onSearch = onSearch,
+                        searchResults = searchResultList
+                    )
+                    //please animate otw is horribleeeeee
+                }
+            }
         },
         bottomBar = {
             NavigationBar(
