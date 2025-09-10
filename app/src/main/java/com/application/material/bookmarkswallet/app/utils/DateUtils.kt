@@ -30,6 +30,7 @@ import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
+import java.time.temporal.TemporalAccessor
 import java.util.Date
 import kotlin.time.ExperimentalTime
 import kotlin.time.toJavaInstant
@@ -849,4 +850,11 @@ fun String.extractDate(): String? {
         e.printStackTrace()
         this.parseDateLocalToString()
     }
+}
+
+
+fun Date?.formatDateToStringNew(): String {
+    return this?.convert()
+        .toString()
+        .formatZonedDateTime() ?: "-"
 }

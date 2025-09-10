@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,10 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-
+import com.application.material.bookmarkswallet.app.ui.style.mbFilterChipColors
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextColor
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextSmallStyle
 
 @Composable
 fun BookmarkFilterView(
@@ -32,7 +30,8 @@ fun BookmarkFilterView(
         mutableIntStateOf(value = -1)
     }
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(Dimen.paddingSmall8dp),
+        horizontalArrangement = Arrangement
+            .spacedBy(space = Dimen.paddingSmall8dp),
         modifier = modifier
     ) {
         itemsIndexed(
@@ -49,11 +48,10 @@ fun BookmarkFilterView(
                         modifier = Modifier
                             .padding(vertical = 12.dp),
                         text = item,
-                        style = mbSubtitleTextStyle(
-                            color = when (selectedItem.intValue == id) {
-                                true -> MbColor.White
-                                else -> MbColor.GrayBlueDarkNight
-                            }
+                        style = mbSubtitleTextSmallStyle(
+                            color = mbSubtitleTextColor(
+                                isSelected = selectedItem.intValue == id
+                            )
                         )
                     )
                 },
@@ -61,11 +59,7 @@ fun BookmarkFilterView(
                     enabled = false,
                     borderWidth = 0.dp
                 ),
-                colors = FilterChipDefaults.filterChipColors()
-                    .copy(
-                        containerColor = mbGrayLightColor(),
-                        selectedContainerColor = MbColor.GrayBlueMiddleSea
-                    ),
+                colors = mbFilterChipColors(),
                 selected = selectedItem.intValue == id,
                 leadingIcon = { }
 //                Icon(
@@ -79,6 +73,7 @@ fun BookmarkFilterView(
         }
     }
 }
+
 
 @Composable
 @Preview

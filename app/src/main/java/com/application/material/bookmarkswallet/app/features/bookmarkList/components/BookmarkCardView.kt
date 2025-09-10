@@ -2,18 +2,14 @@ package com.application.material.bookmarkswallet.app.features.bookmarkList.compo
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
@@ -22,12 +18,12 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.getLocalDate
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.mbBlueGrayDarkWhiteColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
-import com.google.ai.client.generativeai.type.content
 import java.util.Date
 
 @Composable
@@ -39,10 +35,7 @@ fun BookmarkCardView(
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark,
-        color = when (isSystemInDarkTheme()) {
-            true -> MbColor.DarkLemonYellow
-            false -> MbColor.GrayBlueMiddleSea
-        }
+        color = mbYellowLemonDarkLightColor()
     )
 
     MbCardView(
@@ -81,9 +74,7 @@ fun BookmarkCardView(
                         alignment = Alignment.Start
                     )
                     .padding(bottom = Dimen.paddingSmall8dp),
-                style = mbTitleMediumBoldTextStyle(
-                    color = MbColor.DarkLemonYellow
-                ),
+                style = mbTitleMediumBoldYellowLightDarkTextStyle(),
                 maxLines = 2,
                 text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
             )
@@ -93,12 +84,16 @@ fun BookmarkCardView(
                 modifier = Modifier
                     .align(
                         alignment = Alignment.Start
-                    ),
-                style = mbSubtitleTextStyle(color = MbColor.GrayBlueMiddleSea),
+                    )
+                    .padding(bottom = Dimen.paddingMedium16dp),
+                style = mbSubtitleTextStyle(
+                    color =
+                        mbBlueGrayDarkWhiteColor()
+                ),
                 text = bookmark.url
             )
 
-            //timestampe
+            //timestamp
             Text(
                 modifier = Modifier
                     .align(
@@ -123,7 +118,7 @@ fun BookmarkCardPreview() {
             siteName = "Blalallallalala",
             timestamp = Date(),
             iconUrl = "",
-            url = "www.google.it",
+            url = "http://www.google.it",
             appId = null,
             isLike = false,
         ),

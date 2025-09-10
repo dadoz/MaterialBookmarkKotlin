@@ -1,5 +1,6 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -10,6 +11,9 @@ import androidx.compose.ui.res.painterResource
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 @Composable
@@ -21,11 +25,14 @@ fun MBExtendedFab(
 ) {
     ExtendedFloatingActionButton(
         modifier = modifier,
-        containerColor = MbColor.Yellow,
+        containerColor = mbYellowLemonDarkLightColor(),
+        contentColor = mbGrayLightColor(),
         text = {
             Text(
                 modifier = Modifier,
-                style = mbButtonTextDarkStyle(),
+                style = mbButtonTextDarkStyle(
+                    color = mbGrayLightColor()
+                ),
                 text = title
             )
         },

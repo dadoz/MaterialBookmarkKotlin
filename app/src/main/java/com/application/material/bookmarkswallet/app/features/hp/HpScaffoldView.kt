@@ -2,21 +2,16 @@ package com.application.material.bookmarkswallet.app.features.hp
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -28,18 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
-import com.application.material.bookmarkswallet.app.features.hp.configurator.getTabMenuItemList
+import com.application.material.bookmarkswallet.app.features.hp.components.MbNavigationBar
 import com.application.material.bookmarkswallet.app.navigation.HomeNavHost
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
-import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColorBackground
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTabIconColor
+import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
+import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -61,8 +52,8 @@ fun HpScaffoldView() {
     //search state
     val textFieldState = rememberTextFieldState()
     val onSearch: (String) -> Unit = {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
+        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+    }
     val searchResultList = listOf<String>()
 
     LaunchedEffect(key1 = isLoading.value) {
@@ -77,7 +68,6 @@ fun HpScaffoldView() {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = mbGrayLightColorBackground())
             .windowInsetsPadding(insets = WindowInsets.systemBars),
         topBar = {
             when (navItemSelectedState.value) {
@@ -86,8 +76,10 @@ fun HpScaffoldView() {
                         modifier = Modifier,
                         textFieldState = textFieldState,
                         onSearch = onSearch,
+                        appBarContainerColor = mbAppBarContainerColor(),
                         searchResults = searchResultList
                     )
+
                 else -> {
                     SearchBarHeaderView(
                         modifier = Modifier,
@@ -100,57 +92,24 @@ fun HpScaffoldView() {
             }
         },
         bottomBar = {
-            NavigationBar(
+            MbNavigationBar(
                 modifier = Modifier,
-                containerColor = mbGrayLightColorBackground()
+                containerColor = when (isSystemInDarkTheme()) {
+                    true -> MbColor.GrayBlueDarkNight
+                    else -> MbColor.LemonYellowTertiary
+                },
+                navItemSelectedState = navItemSelectedState
             ) {
-                getTabMenuItemList(
-                    context = context
-                )
-                    .forEach {
-                        //check is selected
-                        val isSelected = it.navRoute == navItemSelectedState.value
-
-                        NavigationBarItem(
-                            modifier = Modifier,
-                            colors = NavigationBarItemDefaults
-                                .colors(
-                                    indicatorColor = MbColor.Yellow
-                                ),
-                            icon = {
-                                Icon(
-                                    modifier = Modifier
-                                        .size(size = Dimen.sizeMedium24dp),
-                                    painter = painterResource(
-                                        id = it.icon
-                                    ),
-                                    contentDescription = "item",
-                                    tint = mbTabIconColor(
-                                        isSelected = isSelected
-                                    )
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = it.label,
-                                    style = mbSubtitleLightTextStyle()
-                                )
-                            },
-                            selected = isSelected,
-                            onClick = {
-                                navController.navigate(route = it.navRoute.route) {
-                                    //change selected state item
-                                    navItemSelectedState.value = it.navRoute
-                                    //popup item from controller
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    restoreState = true
-                                    launchSingleTop = true
-                                }
-                            }
-                        )
+                navController.navigate(route = it.navRoute.route) {
+                    //change selected state item
+                    navItemSelectedState.value = it.navRoute
+                    //popup item from controller
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
                     }
+                    restoreState = true
+                    launchSingleTop = true
+                }
             }
         },
         floatingActionButton = { },
@@ -173,14 +132,17 @@ fun HpScaffoldView() {
                     state = pullToRefreshState,
                     isRefreshing = isLoading.value,
 //                    threshold = PositionalThreshold,
-                    color = mbGrayLightColor(),
+                    color = MbColor.GrayBlueMiddleSea,
                 )
             }
         ) {
             //pull to refresh content
             HomeNavHost(
                 modifier = Modifier
-                    .background(mbGrayLightColorBackground())
+                    .background(
+                        brush = homeBackgroundBrushColor()
+                    )
+//                    .background(mbGrayLightColorBackground())
                     .clipToBounds()
                     .padding(paddingValues = innerPadding)
                     .fillMaxSize(),

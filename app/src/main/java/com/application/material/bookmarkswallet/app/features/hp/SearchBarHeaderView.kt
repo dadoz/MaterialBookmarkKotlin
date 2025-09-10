@@ -36,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
@@ -56,6 +57,7 @@ fun SearchBarHeaderView(
     modifier: Modifier = Modifier,
     textFieldState: TextFieldState,
     onSearch: (String) -> Unit,
+    appBarContainerColor: Color = MbColor.White,
     searchResults: List<String>,
 ) {
     // Controls expansion state of the search bar
@@ -165,10 +167,7 @@ fun SearchBarHeaderView(
                         disabledContainerColor = MbColor.White,
                     ),
                 ),
-                appBarContainerColor = when (isSystemInDarkTheme()) {
-                    true -> MbColor.GrayBlueDarkNight
-                    else -> MbColor.LightLemonYellow
-                }
+                appBarContainerColor = appBarContainerColor
             ),
             state = searchBarState,
             inputField = inputField,

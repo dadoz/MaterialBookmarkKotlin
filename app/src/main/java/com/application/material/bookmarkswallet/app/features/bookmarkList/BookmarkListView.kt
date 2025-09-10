@@ -8,23 +8,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -32,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
@@ -48,12 +40,8 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -118,7 +106,7 @@ fun BookmarkListView(
                     modifier = Modifier
                         .padding(end = Dimen.paddingMedium16dp)
                         .weight(2f),
-                    style = mbTitleHExtraBigBoldTextStyle(),
+                    style = mbTitleHExtraBigBoldYellowTextStyle(),
                     text = stringResource(R.string.bookmarks_title),
                 )
             }
@@ -212,7 +200,10 @@ fun BookmarkItemsView(
 ) {
     LazyVerticalGrid(
         modifier = modifier
-            .padding(vertical = Dimen.paddingMedium16dp),
+            .padding(
+                top = Dimen.paddingMedium16dp,
+                bottom = Dimen.paddingLarge32dp
+            ),
         columns = GridCells.Fixed(COLUMN_GRID_SIZE),
         verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp),
         horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)

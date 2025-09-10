@@ -5,10 +5,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
@@ -19,14 +22,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
 
 const val densityResizeFactor = 1f
 
+
 @Composable
-fun mbTitleHExtraBigBoldTextStyle() = mbTitleBoldTextStyle().copy(
-    fontSize = 36.sp
-)
+fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.Yellow
+    else -> MbColor.DarkLemonYellow
+}
+
+@Composable
+fun mbTitleHExtraBigBoldYellowTextStyle(
+    color: Color = mbYellowLemonDarkLightColor()
+) =
+    mbTitleHExtraBigBoldTextStyle(
+        color = color
+    )
+
+@Composable
+fun mbTitleHExtraBigBoldTextStyle(color: Color = MbColor.GrayBlueMiddleSea) =
+    mbTitleBoldTextStyle().copy(
+        fontSize = 36.sp,
+        color = color,
+    )
 
 @Composable
 fun mbTitleBoldTextStyle() = TextStyle(
@@ -37,11 +56,17 @@ fun mbTitleBoldTextStyle() = TextStyle(
 )
 
 @Composable
+fun mbTitleMediumBoldYellowLightDarkTextStyle() =
+    mbTitleMediumBoldTextStyle(
+        color = mbYellowLemonDarkLightColor()
+    )
+
+@Composable
 fun mbTitleMediumBoldTextStyle(
     color: Color = MbColor.GrayBlueMiddleSea,
 ) = mbTitleBoldTextStyle()
     .copy(
-        fontSize = 30.sp,
+        fontSize = 26.sp,
         color = color
     )
 
@@ -61,19 +86,87 @@ fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(
 )
 
 @Composable
+fun mbSubtitleTextColor(isSelected: Boolean) =
+    when (isSelected) {
+        true -> MbColor.White
+        else ->
+            when (isSystemInDarkTheme()) {
+                true -> MbColor.White
+                else -> MbColor.DarkLemonYellow
+            }
+    }
+
+@Composable
+fun mbSubtitleTextSmallStyle(color: Color = colorResource(R.color.colorPrimary)) =
+    mbSubtitleTextStyle()
+        .copy(
+            color = color,
+            fontSize = 16.sp
+        )
+
+@Composable
 fun mbSubtitleTextStyle(color: Color = colorResource(R.color.colorPrimary)) = TextStyle(
     color = color,
-    fontSize = 18.sp,// myVeTitleMedium(),
+    fontSize = 20.sp,// myVeTitleMedium(),
     fontFamily = MbYantramanavLightFontFamily,
     fontWeight = FontWeight.Normal
 )
 
 @Composable
-fun mbSubtitleLightTextStyle() = mbSubtitleTextStyle()
+fun homeBackgroundBrushColor(): Brush = when (isSystemInDarkTheme()) {
+    true ->
+        Brush.verticalGradient(
+            colors = listOf(
+                MbColor.DarkGray2,
+                MbColor.DarkGray2
+            )
+        )
+
+    else ->
+        Brush.verticalGradient(
+            colors = listOf(
+                MbColor.White,
+                MbColor.White,
+                MbColor.LemonYellowQuater
+            ),
+            startY = .9f
+        )
+}
+
+@Composable
+fun mbAppBarContainerColor(): Color =
+    when (isSystemInDarkTheme()) {
+        true -> MbColor.GrayBlueDarkNight
+        else -> MbColor.White
+    }
+
+@Composable
+fun mbBlueGrayDarkWhiteColor(): Color =
+    when (isSystemInDarkTheme()) {
+        true -> MbColor.White
+        else -> MbColor.GrayBlueMiddleSea
+    }
+
+@Composable
+fun mbFilterChipColors(): SelectableChipColors =
+    FilterChipDefaults.filterChipColors()
+        .copy(
+            containerColor = mbGrayLightColor(),
+            selectedContainerColor = mbYellowLemonDarkLightColor()
+        )
+
+@Composable
+fun mbSubtitleLightYellowTextStyle(color: Color = MbColor.DarkLemonYellow) =
+    mbSubtitleLightTextStyle(
+        color = color
+    )
+
+@Composable
+fun mbSubtitleLightTextStyle(color: Color = MbColor.GrayBlueDarkNight) = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
             true -> MbColor.White
-            else -> MbColor.GrayBlueDarkNight
+            else -> color
         },
         fontSize = 14.sp,
         fontFamily = MbYantramanavThinFontFamily,
@@ -87,8 +180,8 @@ fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
     }
 
     else -> when {
-        isSelected -> MbColor.GrayBlueDarkNight
-        else -> MbColor.GrayBlueDarkNight
+        isSelected -> MbColor.White
+        else -> MbColor.DarkLemonYellow
     }
 }
 
@@ -101,8 +194,10 @@ fun mbButtonTextStyle() = TextStyle(
 )
 
 @Composable
-fun mbButtonTextDarkStyle() = TextStyle(
-    color = MbColor.DarkGray,
+fun mbButtonTextDarkStyle(
+    color: Color = MbColor.DarkGray,
+) = TextStyle(
+    color = color,
     fontSize = MaterialTheme.typography.labelLarge.fontSize,
     fontFamily = MbYantramanavBoldFontFamily,
     fontWeight = FontWeight.Normal
@@ -118,10 +213,17 @@ fun mbWhiteLightBlackFilter(isEnabled: Boolean = true) =
     )
 
 @Composable
+fun mbPreviewCardBackgroundColors(): CardColors =
+    CardDefaults.cardColors(
+        containerColor = mbGrayLightExtraBlueDarkColor()
+    )
+
+@Composable
 fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbGrayLightColor()
     )
+
 @Composable
 fun mbBasicCardGrayBackgroundColors(): CardColors =
     CardDefaults.cardColors(
@@ -140,7 +242,22 @@ fun mbGrayLightColor2(): Color {
 fun mbGrayLightColor(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight//MaterialTheme.colorScheme.onSurface
+        else -> MbColor.ExtraLightGray
+    }
+}
+
+@Composable
+fun mbGrayLightExtraBlueDarkColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.BlueBlackExtraDark
         else -> MbColor.White
+    }
+}
+@Composable
+fun mbActionBookmarkCardBackgroundColors(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.GrayBlueDarkNight
+        else -> MbColor.LightLemonYellow
     }
 }
 
@@ -149,6 +266,14 @@ fun mbGrayLightColorBackground(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.DarkGray2
         else -> MbColor.LightLemonYellow
+    }
+}
+
+@Composable
+fun mbNavBarBackground(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.DarkGray2
+        else -> MbColor.White
     }
 }
 

@@ -148,6 +148,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     runtimeOnly(libs.work.runtime.ktx)
+    implementation(libs.accompanist.systemuicontroller)
     //maps
     implementation(libs.maps.compose)
     // Optionally, you can include the Compose utils library for Clustering,
