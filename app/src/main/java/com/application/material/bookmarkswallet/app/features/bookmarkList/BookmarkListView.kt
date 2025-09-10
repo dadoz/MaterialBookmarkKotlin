@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -70,6 +71,8 @@ fun BookmarkListView(
     //bookmark list state
     val bookmarkListState = bookmarkViewModel?.bookmarkListUIState?.collectAsState()
     val saveStatusState = remember { mutableStateOf<Boolean?>(null) }
+
+    val localUriHandler = LocalUriHandler.current
 
     //init status
     LaunchedEffect(key1 = null) {
@@ -131,8 +134,12 @@ fun BookmarkListView(
                     BookmarkModalPreviewCard(
                         modifier = Modifier,
                         bookmark = it,
-                        onDeleteCallback = { },
-                        onOpenAction = { },
+                        onDeleteCallback = {
+                            bookmarkViewModel?.deleteBookmark(it)
+                        },
+                        onOpenAction = {
+                            localUriHandler.openUri(it)
+                        },
                         bottomSheetVisible = isPreviewModalBottomSheetVisible
                     )
                 }
@@ -147,7 +154,6 @@ fun BookmarkListView(
                         searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
                             url = it,
                             onCompletion = {
-
                                 Timber.d("stored on list")
                             },
                             onSuccessCallback = { bookmark ->
@@ -161,7 +167,6 @@ fun BookmarkListView(
 //                        bottomSheetVisible.value = false
                     },
                     onSearchBookmarkAction = {
-
                         searchBookmarkViewModel?.saveBookmark(
                             title = "hey this is a title",
                             description = null,

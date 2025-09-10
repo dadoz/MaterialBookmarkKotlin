@@ -3,6 +3,7 @@ package com.application.material.bookmarkswallet.app.features.bookmarkList.compo
 import android.content.res.Configuration
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -41,6 +43,9 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.EDIT_ACTION
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.PIN_ACTION
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.SHARE_ACTION
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.WevBaseBottomSheetView
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
@@ -55,6 +60,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLi
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.application.material.bookmarkswallet.app.utils.formatDateToStringNew
+import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -175,6 +181,8 @@ fun BookmarkPreviewCard(
                     text = bookmark.timestamp.formatDateToStringNew()
                 )
             }
+            val context = LocalContext.current
+
             ConstraintLayout(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -211,26 +219,56 @@ fun BookmarkPreviewCard(
                     horizontalArrangement = Arrangement.spacedBy(Dimen.paddingSmall8dp)
                 ) {
                     listOf(
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.ic_edit_light_square
+                        Pair(
+                            first = EDIT_ACTION,
+                            second = AppCompatResources.getDrawable(
+                                LocalContext.current,
+                                R.drawable.ic_edit_light_square
+                            )
                         ),
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.ic_pin
+                        Pair(
+                            first = PIN_ACTION,
+                            second =
+                                AppCompatResources.getDrawable(
+                                    LocalContext.current,
+                                    R.drawable.ic_pin
+                                )
                         ),
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.ic_share_light
+                        Pair(
+                            first = SHARE_ACTION,
+                            second =
+                                AppCompatResources.getDrawable(
+                                    LocalContext.current,
+                                    R.drawable.ic_share_light
+                                )
                         )
-                    ).onEach {
+                    ).onEach { actionItem ->
                         Image(
                             modifier = Modifier
                                 .padding(horizontal = Dimen.paddingExtraSmall4dp)
-                                .width(Dimen.sizeLarge32dp)
-                                .height(Dimen.sizeLarge32dp),
-                            painter = rememberDrawablePainter(drawable = it),
-                            colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
+                                .size(size = Dimen.sizeLarge32dp)
+                                .clickable {
+                                    when (actionItem.first) {
+                                        SHARE_ACTION -> {
+                                            context.startActivity(
+                                                shareContentIntentBuilder(
+                                                    url = bookmark.url
+                                                )
+                                            )
+                                        }
+
+                                        else -> {
+                                            Toast.makeText(
+                                                context,
+                                                "hey you tap -> ${actionItem.first.name}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                },
+                            painter = rememberDrawablePainter(drawable = actionItem.second),
+                            colorFilter = ColorFilter
+                                .tint(color = colorResource(R.color.colorPrimary)),
                             contentDescription = ""
                         )
                     }
@@ -350,3 +388,4 @@ fun BookmarkPreviewCardPreview() {
         onDeleteAction = {}
     ) {}
 }
+
