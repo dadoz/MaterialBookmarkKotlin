@@ -188,12 +188,13 @@ fun SettingsView() {
             text = "Something more here...\n" +
                     "Thanks for illustration in app due to a dedicated work."
         )
+
         Image(
             modifier = Modifier
                 .size(200.dp)
                 .padding(vertical = Dimen.paddingMedium16dp)
                 .align(alignment = Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.ic_fox_illustration),
+            painter = painterResource(id = R.drawable.ic_fox_illustration_200),
             contentDescription = EMPTY
         )
 

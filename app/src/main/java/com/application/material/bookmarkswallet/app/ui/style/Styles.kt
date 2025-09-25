@@ -262,14 +262,6 @@ fun mbActionBookmarkCardBackgroundColors(): Color {
 }
 
 @Composable
-fun mbGrayLightColorBackground(): Color {
-    return when (isSystemInDarkTheme()) {
-        true -> MbColor.DarkGray2
-        else -> MbColor.LightLemonYellow
-    }
-}
-
-@Composable
 fun mbNavBarBackground(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.DarkGray2

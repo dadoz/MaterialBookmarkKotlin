@@ -5,15 +5,17 @@ import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -36,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,27 +47,32 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
-import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
-import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardGrayBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import timber.log.Timber
 
@@ -105,14 +113,19 @@ fun SearchAndAddBookmarkInternalView(
             textLabel = "Bookmark Url",
             searchUrlTextState = bookmarkUrl
         )
-        Image(
+        Box(
             modifier = Modifier
-                .padding(vertical = Dimen.paddingMedium16dp)
-                .align(alignment = Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.ic_bear_illustration),
-            contentDescription = EMPTY
-        )
-
+                .clip(shape = RoundedCornerShape(22.dp))
+                .align(alignment = Alignment.CenterHorizontally)
+                .background(color = mbGrayLightColor())
+                .padding(all = Dimen.paddingMedium16dp),
+        ) {
+            Image(
+                modifier = Modifier,
+                painter = painterResource(id = R.drawable.ic_bear_illustration_200),
+                contentDescription = EMPTY
+            )
+        }
         //MbExtendedFab
         ExtendedFloatingActionButton(
             onClick = {
@@ -145,7 +158,7 @@ fun SearchAndAddBookmarkInternalView(
         ExtendedFloatingActionButton(
             onClick = {
                 Toast.makeText(
-                    context, R.string.search_nbookmark, Toast.LENGTH_LONG
+                    context, R.string.search_bookmark, Toast.LENGTH_LONG
                 ).show()
             },
             modifier = Modifier
@@ -267,128 +280,154 @@ fun SearchBookmarkView(
     val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
     val bookmarkTitle = remember { mutableStateOf(TextFieldValue(EMPTY)) }
 //    val bookmark by searchedBookmarkState.collectAsState()
+    val context = LocalContext.current
 
-    Column(
+    ConstraintLayout(
         modifier = modifier
-            .padding(Dimen.sizeMedium16dp)
     ) {
-        //title
-        Text(
-            modifier = Modifier,
-            style = mbTitleBoldTextStyle(),
-            text = stringResource(id = R.string.search_nbookmark)
-        )
+        val (content, cta) = createRefs()
 
-        //search text field
-        MbBookmarkTextFieldView(
-            modifier = Modifier,
-            searchUrlTextState = searchUrlTextState
-        )
-        //title text field
+        Column(
+            modifier = Modifier
+                .constrainAs(content) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .padding(Dimen.sizeMedium16dp),
+            verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingSmall8dp)
+        ) {
+            //title
+            Text(
+                modifier = Modifier
+                    .padding(bottom = Dimen.paddingMedium16dp),
+                style = mbTitleHExtraBigBoldYellowTextStyle(),
+                text = stringResource(id = R.string.search_bookmark)
+            )
+
+            //search text field
+            MbBookmarkTextFieldView(
+                modifier = Modifier,
+                searchUrlTextState = searchUrlTextState
+            )
+            //title text field
 //        MbBookmarkTextFieldView(
 //            modifier = Modifier,
 //            textLabel = "Title",
 //            searchUrlTextState = bookmarkTitle
 //        )
 
-        //clipboard
-        Text(
-            modifier = Modifier
-                .padding(vertical = Dimen.paddingExtraSmall4dp),
-            textDecoration = TextDecoration.Underline,
-            style = mbSubtitleTextStyle(),
-            text = stringResource(R.string.add_title_manually)
-        )
-
-        //clipboard
-        MbCardView(
-            modifier = Modifier
-                .width(180.dp)
-                .padding(vertical = Dimen.paddingMedium16dp),
-            roundCornerSize = 34.dp,
-            colors = mbBasicCardGrayBackgroundColors()
-        ) {
-            Row(
+            //clipboard
+            Text(
                 modifier = Modifier
-                    .padding(vertical = Dimen.paddingSmall8dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth()
+                    .padding(vertical = Dimen.paddingMedium16dp)
+                    .clickable {
+                        Toast.makeText(
+                            context, R.string.search_bookmark, Toast.LENGTH_LONG
+                        ).show()
+                    },
+                textAlign = TextAlign.End,
+                textDecoration = TextDecoration.Underline,
+                style = mbSubtitleTextStyle(),
+                text = stringResource(R.string.add_title_manually)
+            )
+
+            //clipboard
+            Box(
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(22.dp))
+                    .background(
+                        color = mbActionBookmarkCardBackgroundColors()
+                    )
+                    .clickable {
+                        Toast.makeText(
+                            context, R.string.search_bookmark, Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    .padding(all = Dimen.paddingMedium16dp)
+                    .wrapContentWidth(),
             ) {
-                Icon(
-                    modifier = Modifier
-                        .width(24.dp)
-                        .height(24.dp),
-                    painter = painterResource(R.drawable.ic_star),
+                Row(
+                    modifier = Modifier,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(size = 32.dp),
+                        painter = painterResource(R.drawable.ic_pin),
+                        contentDescription = EMPTY,
+                        tint = MbColor.DarkLemonYellow
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = Dimen.paddingMedium16dp),
+                        style = mbSubtitleTextAccentStyle(),
+                        text = stringResource(R.string.paste_clipboard)
+                    )
+                }
+            }
+
+            //icon image
+            Box(
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(22.dp))
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .background(color = mbGrayLightColor())
+                    .padding(all = Dimen.paddingMedium16dp),
+            ) {
+                Image(
+                    modifier = Modifier,
+                    painter = painterResource(id = R.drawable.ic_bear_illustration_200),
                     contentDescription = EMPTY
                 )
-
-                Text(
-                    modifier = Modifier,
-                    style = mbSubtitleTextAccentStyle(),
-                    text = stringResource(R.string.paste_clipboard)
-                )
             }
+
+            //open cta MbExtendedFab
+//        ExtendedFloatingActionButton(
+//            modifier = Modifier
+//                .padding(bottom = Dimen.paddingMedium16dp),
+//            containerColor = MbColor.Yellow,
+//            text = {
+//                Text(
+//                    modifier = Modifier,
+//                    style = mbButtonTextStyle(),
+//                    text = stringResource(id = R.string.save_label_button)
+//                )
+//            },
+//            icon = {
+//                Icon(
+//                    modifier = Modifier
+//                        .width(24.dp)
+//                        .height(24.dp),
+//                    painter = painterResource(R.drawable.ic_star),
+//                    contentDescription = EMPTY
+//                )
+//            },
+//            onClick = {
+//                onSearchBookmarkAction.invoke(searchUrlTextState.value.text)
+//            }
+//        )
         }
 
-        //icon image
-        Image(
+        //MbExtendedFab
+        MBExtendedFab(
             modifier = Modifier
-                .padding(vertical = Dimen.paddingMedium16dp)
-                .align(alignment = Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.ic_bear_illustration),
-            contentDescription = EMPTY
-        )
-
-        //open cta MbExtendedFab
-        ExtendedFloatingActionButton(
-            modifier = Modifier
+                .constrainAs(
+                    ref = cta
+                ) {
+                    top.linkTo(content.bottom)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end, Dimen.paddingMedium16dp)
+                }
                 .padding(bottom = Dimen.paddingMedium16dp),
-            containerColor = MbColor.Yellow,
-            text = {
-                Text(
-                    modifier = Modifier,
-                    style = mbButtonTextStyle(),
-                    text = stringResource(id = R.string.save_label_button)
-                )
-            },
-            icon = {
-                Icon(
-                    modifier = Modifier
-                        .width(24.dp)
-                        .height(24.dp),
-                    painter = painterResource(R.drawable.ic_star),
-                    contentDescription = EMPTY
-                )
-            },
-            onClick = {
-                onSearchBookmarkAction.invoke(searchUrlTextState.value.text)
-            }
-        )
-//MbExtendedFab
-        ExtendedFloatingActionButton(
-            modifier = Modifier
-                .padding(bottom = Dimen.paddingMedium16dp),
-            containerColor = MbColor.Yellow,
-            text = {
-                Text(
-                    modifier = Modifier,
-                    style = mbButtonTextStyle(),
-                    text = stringResource(id = R.string.save_ai_label_button)
-                )
-            },
-            icon = {
-                Icon(
-                    modifier = Modifier
-                        .width(24.dp)
-                        .height(24.dp),
-                    painter = painterResource(R.drawable.ic_star),
-                    contentDescription = EMPTY
-                )
-            },
-            onClick = {
+            title = stringResource(id = R.string.save_ai_label_button),
+            iconRes = R.drawable.ic_star,
+            onClickAction = {
                 onSearchBookmarkWithAIAction.invoke(searchUrlTextState.value.text)
             }
         )
-
     }
 }
 
@@ -431,14 +470,28 @@ fun MbBookmarkTextFieldView(
         modifier = modifier
             .fillMaxWidth(),
         textStyle = mbSubtitleTextStyle(),
+        shape = RoundedCornerShape(22.dp),
         value = searchUrlTextState.value,
-        label = {
+        placeholder = {
             Text(
                 modifier = Modifier,
                 style = mbSubtitleTextStyle(),
                 text = textLabel
             )
         },
+//        colors = OutlinedTextFieldDefaults.colors().copy(
+//            textSelectionColors = TextSelectionColors(
+//                handleColor = MbColor.Black,
+//                backgroundColor = MbColor.Black
+//            )
+//        ),
+//        label = {
+//            Text(
+//                modifier = Modifier,
+//                style = mbSubtitleTextStyle(),
+//                text = textLabel
+//            )
+//        },
         onValueChange = {
             searchUrlTextState.value = it
         }

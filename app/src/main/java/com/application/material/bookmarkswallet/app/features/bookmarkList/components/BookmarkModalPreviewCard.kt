@@ -5,10 +5,12 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,8 +42,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
@@ -52,6 +54,7 @@ import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -181,35 +184,59 @@ fun BookmarkPreviewCard(
                     text = bookmark.timestamp.formatDateToStringNew()
                 )
             }
-            val context = LocalContext.current
 
-            ConstraintLayout(
+            MbActionMenuBookmarkPreviewView(
+                modifier = modifier,
+                bookmark = bookmark,
+                onDeleteAction = onDeleteAction
+            )
+        }
+
+
+        //open action
+        MBExtendedFab(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = Dimen.paddingMedium16dp),
+            title = stringResource(id = R.string.open_bookmark),
+            iconRes = R.drawable.ic_send,
+            onClickAction = {
+                onOpenAction?.invoke("$HTTPS_SCHEMA${bookmark.url}")
+            }
+        )
+    }
+}
+
+@Composable
+fun MbActionMenuBookmarkPreviewView(
+    modifier: Modifier,
+    bookmark: Bookmark,
+    onDeleteAction: ((Bookmark) -> Unit)? = null,
+) {
+    val context = LocalContext.current
+    val isActionMenuVisible = remember { mutableStateOf(false) }
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+    ) {
+        AnimatedVisibility(
+            modifier = Modifier.wrapContentWidth(),
+            visible = isActionMenuVisible.value
+        ) {
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentWidth(),
+                horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
             ) {
-                val (deleteButtonRef, openButtonRef) = createRefs()
-
                 //delete cta
                 MbDeleteBookmarkButtonView(
-                    modifier = Modifier
-                        .constrainAs(ref = deleteButtonRef) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                            bottom.linkTo(parent.bottom)
-                            width = Dimension.fillToConstraints
-
-                        },
+                    modifier = Modifier,
                     bookmark = bookmark,
                     onDeleteCallback = onDeleteAction ?: {}
                 )
                 //action item row
                 Row(
                     modifier = Modifier
-                        .constrainAs(ref = openButtonRef) {
-                            top.linkTo(parent.top)
-                            end.linkTo(parent.end)
-                            bottom.linkTo(parent.bottom)
-                        }
                         .clip(shape = RoundedCornerShape(22.dp))
                         .background(
                             color = mbActionBookmarkCardBackgroundColors()
@@ -242,52 +269,75 @@ fun BookmarkPreviewCard(
                                     R.drawable.ic_share_light
                                 )
                         )
-                    ).onEach { actionItem ->
-                        Image(
-                            modifier = Modifier
-                                .padding(horizontal = Dimen.paddingExtraSmall4dp)
-                                .size(size = Dimen.sizeLarge32dp)
-                                .clickable {
-                                    when (actionItem.first) {
-                                        SHARE_ACTION -> {
-                                            context.startActivity(
-                                                shareContentIntentBuilder(
-                                                    url = bookmark.url
+                    )
+                        .onEach { actionItem ->
+                            Image(
+                                modifier = Modifier
+                                    .padding(horizontal = Dimen.paddingExtraSmall4dp)
+                                    .size(size = Dimen.sizeLarge32dp)
+                                    .clickable {
+                                        when (actionItem.first) {
+                                            SHARE_ACTION -> {
+                                                context.startActivity(
+                                                    shareContentIntentBuilder(
+                                                        url = bookmark.url
+                                                    )
                                                 )
-                                            )
-                                        }
+                                            }
 
-                                        else -> {
-                                            Toast.makeText(
-                                                context,
-                                                "hey you tap -> ${actionItem.first.name}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            else -> {
+                                                Toast.makeText(
+                                                    context,
+                                                    "hey you tap -> ${actionItem.first.name}",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                         }
-                                    }
-                                },
-                            painter = rememberDrawablePainter(drawable = actionItem.second),
-                            colorFilter = ColorFilter
-                                .tint(color = colorResource(R.color.colorPrimary)),
-                            contentDescription = ""
-                        )
-                    }
+                                    },
+                                painter = rememberDrawablePainter(drawable = actionItem.second),
+                                colorFilter = ColorFilter
+                                    .tint(color = colorResource(R.color.colorPrimary)),
+                                contentDescription = ""
+                            )
+                        }
                 }
             }
         }
-
-
-        //open action
-        MBExtendedFab(
+        //action item row
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = Dimen.paddingMedium16dp),
-            title = stringResource(id = R.string.open_bookmark),
-            iconRes = R.drawable.ic_send,
-            onClickAction = {
-                onOpenAction?.invoke("$HTTPS_SCHEMA${bookmark.url}")
-            }
-        )
+                .clip(shape = RoundedCornerShape(22.dp))
+                .background(
+                    color = mbGrayLightColor()
+                )
+                .padding(all = Dimen.paddingMedium16dp)
+                .wrapContentWidth(),
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(horizontal = Dimen.paddingExtraSmall4dp)
+                    .size(size = Dimen.sizeLarge32dp)
+                    .clickable {
+                        //toggle status
+                        isActionMenuVisible.value = isActionMenuVisible.value.not()
+                        //show text
+                        Toast.makeText(
+                            context,
+                            "hey you tap more",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                painter = rememberDrawablePainter(
+                    drawable = AppCompatResources.getDrawable(
+                        LocalContext.current,
+                        R.drawable.ic_apps
+                    )
+                ),
+                colorFilter = ColorFilter
+                    .tint(color = colorResource(R.color.colorPrimary)),
+                contentDescription = ""
+            )
+        }
     }
 }
 
@@ -317,14 +367,14 @@ fun MbDeleteBookmarkButtonView(
             colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
             contentDescription = ""
         )
-        Text(
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(start = Dimen.paddingSmall8dp),
-            style = mbSubtitleLightTextStyle(),
-            text = stringResource(id = R.string.delete_label_text)
-                .lowercase(Locale.getDefault())
-        )
+//        Text(
+//            modifier = Modifier
+//                .align(Alignment.CenterVertically)
+//                .padding(start = Dimen.paddingSmall8dp),
+//            style = mbSubtitleLightTextStyle(),
+//            text = stringResource(id = R.string.delete_label_text)
+//                .lowercase(Locale.getDefault())
+//        )
     }
 }
 
