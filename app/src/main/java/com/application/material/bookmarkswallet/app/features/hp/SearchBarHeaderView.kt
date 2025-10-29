@@ -1,6 +1,5 @@
 package com.application.material.bookmarkswallet.app.features.hp
 
-import android.R
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

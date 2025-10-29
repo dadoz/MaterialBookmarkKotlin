@@ -19,7 +19,6 @@ enum class NavRoute(val route: String) {
 @Composable
 fun HomeNavHost(
     modifier: Modifier,
-    verticalScrollState: ScrollState,
     navController: NavHostController,
 ) {
     NavHost(

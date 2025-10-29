@@ -66,7 +66,6 @@ import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuil
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import kotlinx.coroutines.launch
 import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

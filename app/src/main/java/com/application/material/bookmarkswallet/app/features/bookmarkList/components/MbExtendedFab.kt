@@ -1,6 +1,5 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
@@ -11,7 +10,6 @@ import androidx.compose.ui.res.painterResource
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor1
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 

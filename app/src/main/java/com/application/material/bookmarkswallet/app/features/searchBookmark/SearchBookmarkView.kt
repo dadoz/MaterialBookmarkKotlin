@@ -74,7 +74,6 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSuccessBookmarkCa
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
-import com.application.material.bookmarkswallet.app.ui.views.MbBookmarkPreviewView
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 @Composable

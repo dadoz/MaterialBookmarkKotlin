@@ -81,12 +81,6 @@ fun mbTitleMediumBoldTextStyle(
     )
 
 @Composable
-fun mbTitleSmallBoldTextStyle() = mbTitleBoldTextStyle()
-    .copy(
-        fontSize = 18.sp,
-    )
-
-@Composable
 fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
@@ -168,20 +162,6 @@ fun mbAppBarContainerColor(): Color =
         else -> MbColor.LemonYellowQuater
     }
 
-
-@Composable
-fun mbStatusBarColor(): Color = when (isSystemInDarkTheme()) {
-    true -> MbColor.GrayBlueDarkNight
-    else -> MbColor.LemonYellowQuater
-}
-
-@Composable
-fun mbNavigationBarColor(): Color = when (isSystemInDarkTheme()) {
-    true -> MbColor.GrayBlueDarkNight
-    else -> MbColor.LemonYellowTertiary
-}
-
-
 @Composable
 fun mbBlueGrayDarkWhiteColor(): Color =
     when (isSystemInDarkTheme()) {
@@ -246,15 +226,6 @@ fun mbButtonTextDarkStyle(
 )
 
 @Composable
-fun mbWhiteLightBlackFilter(isEnabled: Boolean = true) =
-    ColorFilter.tint(
-        when (isEnabled) {
-            true -> MbColor.Black
-            else -> MbColor.Yellow
-        }
-    )
-
-@Composable
 fun mbPreviewCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbGrayLightExtraBlueDarkColor()
@@ -264,12 +235,6 @@ fun mbPreviewCardBackgroundColors(): CardColors =
 fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbGrayLightColor()
-    )
-
-@Composable
-fun mbBasicCardGrayBackgroundColors(): CardColors =
-    CardDefaults.cardColors(
-        containerColor = MbColor.GrayBlueDarkNight
     )
 
 @Composable
