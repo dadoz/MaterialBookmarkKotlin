@@ -161,8 +161,8 @@ fun homeBackgroundBrushColor(): Brush =
 @Composable
 fun mbAppBarContainerColor(): Color =
     when (isSystemInDarkTheme()) {
-        true -> MbColor.GrayBlueDarkNight
-        else -> MbColor.LemonYellowQuater
+        true -> Color.Transparent//MbColor.GrayBlueDarkNight
+        else -> Color.Transparent//MbColor.LemonYellowQuater
     }
 
 @Composable

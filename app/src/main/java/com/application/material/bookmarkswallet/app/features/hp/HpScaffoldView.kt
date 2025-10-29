@@ -65,10 +65,10 @@ fun HpScaffoldView() {
 
     Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(
-                insets = WindowInsets.systemBars
-            ),
+            .fillMaxSize(),
+//            .windowInsetsPadding(
+//                insets = WindowInsets.systemBars
+//            ),
         topBar = {
             when (navItemSelectedState.value) {
                 NavRoute.BookmarkList ->

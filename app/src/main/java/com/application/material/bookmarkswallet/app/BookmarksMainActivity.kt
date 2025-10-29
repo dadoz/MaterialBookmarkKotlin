@@ -16,15 +16,6 @@ class BookmarksMainActivity : ComponentActivity(),
         super.onCreate(savedInstanceState)
         setContent {
             MaterialBookmarkMaterialTheme {
-
-//                val systemUiController = rememberSystemUiController()
-//                DisposableEffect(systemUiController) {
-//                    //set status and nav bar color
-//                    systemUiController.setSystemBarsColor(
-//                        color = MbColor.DarkGray
-//                    )
-//                    onDispose {}
-//                }
                 //init hp view
                 HpScaffoldView()
             }
