@@ -1,7 +1,5 @@
 package com.application.material.bookmarkswallet.app.navigation
 
-
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

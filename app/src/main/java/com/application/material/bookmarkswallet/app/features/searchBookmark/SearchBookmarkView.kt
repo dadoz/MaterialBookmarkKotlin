@@ -434,20 +434,16 @@ fun SearchAndAddBookmarkWithFullAIView(
 
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
 fun BookmarkPreview() {
     BookmarkModalBottomSheetView(
         modifier = Modifier,
         bottomSheetState = expandedBottomSheetState(),
         url = "https://www.ecosia.com",
-        onCloseCallback = {
-//todo
-
-
-        }
+        onCloseCallback = {}
     )
 }
-
 
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)

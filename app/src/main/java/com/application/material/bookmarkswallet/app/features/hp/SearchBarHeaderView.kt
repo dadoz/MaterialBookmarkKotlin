@@ -78,7 +78,7 @@ fun SearchBarHeaderView(
                 Icon(
                     modifier = Modifier
                         .size(size = Dimen.size20dp),
-                    painter = painterResource(R.drawable.ic_menu_search),
+                    painter = painterResource(id = android.R.drawable.ic_menu_search),
                     contentDescription = EMPTY
                 )
             }

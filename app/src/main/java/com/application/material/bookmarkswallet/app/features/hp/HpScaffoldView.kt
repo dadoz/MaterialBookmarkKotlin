@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -43,7 +42,6 @@ fun HpScaffoldView() {
 
     //pull to refresh config
     val pullToRefreshState = rememberPullToRefreshState()
-    val verticalScrollState = rememberScrollState()
     val isLoading = remember { mutableStateOf(value = false) }
 
     //nav item selected state
@@ -146,7 +144,6 @@ fun HpScaffoldView() {
                     .clipToBounds()
                     .padding(paddingValues = innerPadding)
                     .fillMaxSize(),
-                verticalScrollState = verticalScrollState,
                 navController = navController
             )
         }
