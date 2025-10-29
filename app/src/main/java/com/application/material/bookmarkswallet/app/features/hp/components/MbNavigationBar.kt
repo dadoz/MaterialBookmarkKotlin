@@ -1,6 +1,5 @@
 package com.application.material.bookmarkswallet.app.features.hp.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -17,12 +16,10 @@ import com.application.material.bookmarkswallet.app.features.hp.configurator.Tab
 import com.application.material.bookmarkswallet.app.features.hp.configurator.getTabMenuItemList
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightYellowTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTabIconColor
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 
 @Composable
 fun MbNavigationBar(
@@ -48,7 +45,7 @@ fun MbNavigationBar(
                     modifier = Modifier,
                     colors = NavigationBarItemDefaults
                         .colors(
-                            indicatorColor = mbYellowLemonDarkLightColor()
+                            indicatorColor = mbYellowLemonLightMustardDarkColor()
                         ),
                     icon = {
                         Icon(

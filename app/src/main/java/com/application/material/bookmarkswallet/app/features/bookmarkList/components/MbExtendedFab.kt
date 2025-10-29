@@ -11,7 +11,8 @@ import androidx.compose.ui.res.painterResource
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor1
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 @Composable
@@ -23,7 +24,7 @@ fun MBExtendedFab(
 ) {
     ExtendedFloatingActionButton(
         modifier = modifier,
-        containerColor = mbYellowLemonDarkLightColor(),
+        containerColor = mbYellowLemonLightColor(),
         contentColor = mbGrayLightColor(),
         text = {
             Text(

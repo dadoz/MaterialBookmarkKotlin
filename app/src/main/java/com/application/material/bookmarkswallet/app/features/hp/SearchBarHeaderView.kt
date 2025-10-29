@@ -3,7 +3,6 @@ package com.application.material.bookmarkswallet.app.features.hp
 import android.R
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -154,7 +153,6 @@ fun SearchBarHeaderView(
 
         AppBarWithSearch(
             modifier = Modifier
-                .background(color = MbColor.Yellow)
                 .align(Alignment.TopCenter)
                 .semantics { traversalIndex = 0f },
             colors = SearchBarDefaults.appBarWithSearchColors(

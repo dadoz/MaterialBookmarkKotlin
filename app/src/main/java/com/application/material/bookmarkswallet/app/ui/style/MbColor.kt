@@ -6,10 +6,16 @@ object MbColor {
     val Gray = Color(0xFF4A4D4E)
     val Yellow = Color(0xFFEED500)
     val LightLemonYellow = Color(0xFFFFF287)
-    val LemonYellowTertiary = Color(0xFFE5DEA5)
-    val LemonYellowQuater = Color(0xFFFFF9CB)
-    val DarkLemonYellow = Color(0xFF8F8013) //C7AF00) //8F8013)//
+    val LemonYellowTertiary = Color(0xFFFFF6AF)
+    val LemonYellowQuater = Color(0xFFE4C900)
+    val DarkLemonYellow = Color(0xFF8F8013)
+    val DarkMustardYellow = Color(0xFF413400)
     val RedVermillion = Color(0xFFC4133D)
+    val GreenRubin = Color(0xFF0EE081)
+    val DarkGreenRubin = Color(0xFF196E3B)
+    val LightGreenRubin = Color(0xFFCEF6DE)
+    val LightGreenCobalt = Color(0xFFC4133D)
+    val LightRedVermillion = Color(0xFFFFC0C0)
     val LightGray = Color(0xFFBEBEBE)
     val DarkGray: Color = Color(0xFF262B2B)
     val DarkGray2: Color = Color(0xFF121316)
@@ -22,6 +28,7 @@ object MbColor {
     val BlueBlackExtraDark: Color = Color(0xFF1E243A)
     val GrayBlueDarkNight: Color = Color(0xFF181C21)
     val GrayBlueMiddleSea: Color = Color(0xFF434E68)
+    val ExtraDarkLemonYellow: Color = Color(0xFF2F2D1C)
 }
 
 //light theme

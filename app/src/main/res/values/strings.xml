@@ -17,6 +17,7 @@
     <string name="no_bookmark_string">Still no Bookmarks in list,\n seem so sad!</string>
     <string name="add_new_string">Add new</string>
     <string name="add_bookmark">Add Bookmark</string>
+    <string name="add_bookmark_with_success">Hey! Added Bookmark with success!!!</string>
     <string name="no_bookmark_star_string">Still no favorite bookmarks\nhere!</string>
     <string name="search_your_bookmarks_string">Search your bookmark</string>
     <string name="save_your_bookmark_label">Save your bookmark</string>
@@ -30,7 +31,7 @@
         \nBookmarksWallet@2020</string>
     <string name="last_update">Last update:</string>
     <string name="search">SEARCH</string>
-    <string name="settings">Profile Settings</string>
+    <string name="settings">Settings</string>
     <string name="with">with</string>
     <string name="stored_in_your_list">stored in your list</string>
     <string name="saved_in_nyour_list">saved in\nyour list</string>

@@ -8,7 +8,7 @@ import javax.inject.Singleton
 class GenAIManager @Inject constructor() {
     val generativeModel = GenerativeModel(
         // The Gemini 1.5 models are versatile and work with most use cases
-        modelName = "gemini-1.5-flash-8b-latest",
+        modelName = "gemini-2.5-flash-lite",
         // Access your API key as a Build Configuration variable (see "Set up your API key" above)
         apiKey = BuildConfig.apiKey
     )

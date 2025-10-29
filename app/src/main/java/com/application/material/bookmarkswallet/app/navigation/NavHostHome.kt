@@ -25,7 +25,8 @@ fun HomeNavHost(
     NavHost(
         navController = navController,
         startDestination = NavRoute.BookmarkList.route,
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
     ) {
         //home screen
         composable(route = NavRoute.BookmarkList.route) {
@@ -33,7 +34,9 @@ fun HomeNavHost(
         }
 
         composable(route = NavRoute.Settings.route) {
-            SettingsView()
+            SettingsView(
+                modifier = Modifier
+            )
         }
     }
 }

@@ -59,9 +59,8 @@ import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgr
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
-import com.application.material.bookmarkswallet.app.utils.HTTPS_SCHEMA
 import com.application.material.bookmarkswallet.app.utils.formatDateToStringNew
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
@@ -118,7 +117,7 @@ fun BookmarkPreviewCard(
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark_light,
-        color = mbYellowLemonDarkLightColor()
+        color = mbYellowLemonLightMustardDarkColor()
     )
     MbCardView(
         modifier = modifier
@@ -201,7 +200,7 @@ fun BookmarkPreviewCard(
             title = stringResource(id = R.string.open_bookmark),
             iconRes = R.drawable.ic_send,
             onClickAction = {
-                onOpenAction?.invoke("$HTTPS_SCHEMA${bookmark.url}")
+                onOpenAction?.invoke(bookmark.url)
             }
         )
     }

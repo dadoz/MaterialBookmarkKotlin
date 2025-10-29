@@ -1,7 +1,10 @@
 package com.application.material.bookmarkswallet.app.features.settings
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,72 +21,77 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.USER_MOCK
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.UserLoginCardView
+import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 @Composable
-fun SettingsView() {
+fun SettingsView(
+    modifier: Modifier
+) {
     val user by remember {
         mutableStateOf(
             value = USER_MOCK
         )
     }
     Column(
-        modifier = Modifier
+        modifier = modifier
             .verticalScroll(state = rememberScrollState())
             .padding(all = Dimen.paddingMedium16dp),
         verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
     ) {
         Row(
-            modifier = Modifier
-                .padding(top = Dimen.paddingMedium16dp,
-                    bottom = Dimen.paddingMedium16dp),
+            modifier = modifier
+                .padding(
+                    top = Dimen.paddingMedium16dp,
+                    bottom = Dimen.paddingMedium16dp
+                ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier,
-                style = mbTitleHExtraBigBoldTextStyle(),
+                modifier = modifier,
+                style = mbTitleHExtraBigBoldYellowTextStyle(),
                 text = stringResource(R.string.settings),
             )
         }
 
         UserLoginCardView(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             user = user
         )
 
         MbCardView(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .padding(all = Dimen.paddingMedium16dp),
             ) {
                 //title
                 Text(
-                    modifier = Modifier
-                        .align(
-                            alignment = Alignment.CenterHorizontally
-                        )
+                    modifier = modifier
                         .padding(bottom = Dimen.paddingSmall8dp),
-                    style = mbTitleMediumBoldTextStyle(),
+                    style = mbTitleMediumBoldYellowLightDarkTextStyle(),
                     maxLines = 2,
                     text = "Rate on Playstore"
                 )
                 //title
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .align(
                             alignment = Alignment.Start
                         )
@@ -96,23 +104,23 @@ fun SettingsView() {
 
             //row 2 - create a component please
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .padding(all = Dimen.paddingMedium16dp),
             ) {
                 //title
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .align(
                             alignment = Alignment.Start
                         )
                         .padding(bottom = Dimen.paddingSmall8dp),
-                    style = mbTitleMediumBoldTextStyle(),
+                    style = mbTitleMediumBoldYellowLightDarkTextStyle(),
                     maxLines = 2,
                     text = "Contacts"
                 )
                 //title
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .align(
                             alignment = Alignment.Start
                         )
@@ -125,23 +133,23 @@ fun SettingsView() {
 
             //row 2 - create a component please
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .padding(all = Dimen.paddingMedium16dp),
             ) {
                 //title
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .align(
                             alignment = Alignment.Start
                         )
                         .padding(bottom = Dimen.paddingSmall8dp),
-                    style = mbTitleMediumBoldTextStyle(),
+                    style = mbTitleMediumBoldYellowLightDarkTextStyle(),
                     maxLines = 2,
                     text = "App Version"
                 )
                 //title
                 Text(
-                    modifier = Modifier
+                    modifier = modifier
                         .align(
                             alignment = Alignment.Start
                         )
@@ -154,20 +162,20 @@ fun SettingsView() {
         }
 
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             //title
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .weight(2F)
                     .padding(bottom = Dimen.paddingSmall8dp),
                 style = mbSubtitleTextStyle(),
                 text = "Just donate a coffee for the developer support",
             )
             MBExtendedFab(
-                modifier = Modifier
+                modifier = modifier
                     .weight(1F)
                     .padding(top = Dimen.paddingMedium16dp),
                 title = "Donate",
@@ -179,7 +187,7 @@ fun SettingsView() {
 
         //title
         Text(
-            modifier = Modifier
+            modifier = modifier
                 .align(
                     alignment = Alignment.Start
                 )
@@ -190,7 +198,7 @@ fun SettingsView() {
         )
 
         Image(
-            modifier = Modifier
+            modifier = modifier
                 .size(200.dp)
                 .padding(vertical = Dimen.paddingMedium16dp)
                 .align(alignment = Alignment.CenterHorizontally),
@@ -198,5 +206,18 @@ fun SettingsView() {
             contentDescription = EMPTY
         )
 
+    }
+}
+
+@Composable
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun BookmarkModalView2Preview3() {
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+            SettingsView(
+                modifier = Modifier,
+            )
+        }
     }
 }

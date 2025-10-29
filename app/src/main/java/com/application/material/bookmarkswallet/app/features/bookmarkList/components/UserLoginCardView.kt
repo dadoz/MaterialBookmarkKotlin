@@ -25,8 +25,8 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.mbTitleSmallBoldTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 
 @Composable
 fun UserLoginCardView(
@@ -60,7 +60,7 @@ fun UserLoginCardView(
                 placeholder = fallbackIcon,
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(
-                    color = MbColor.GrayBlueMiddleSea
+                    color = mbYellowLemonLightMustardDarkColor()
                 ),
                 contentDescription = null,
                 modifier = Modifier
@@ -80,7 +80,7 @@ fun UserLoginCardView(
                     .padding(
                         start = Dimen.paddingSmall8dp
                     ),
-                style = mbTitleSmallBoldTextStyle(),
+                style = mbTitleMediumBoldYellowLightDarkTextStyle(),
                 maxLines = 2,
                 text = user.name
             )

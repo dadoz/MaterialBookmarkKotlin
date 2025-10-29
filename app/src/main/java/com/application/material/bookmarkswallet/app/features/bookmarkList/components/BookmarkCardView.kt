@@ -22,7 +22,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbBlueGrayDarkWhite
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import java.util.Date
 
@@ -35,7 +35,7 @@ fun BookmarkCardView(
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark,
-        color = mbYellowLemonDarkLightColor()
+        color = mbYellowLemonLightMustardDarkColor()
     )
 
     MbCardView(

@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkFilterView
@@ -34,7 +34,8 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.compon
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
-import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchBookmarkView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkAddModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
@@ -70,9 +71,11 @@ fun BookmarkListView(
 
     //bookmark list state
     val bookmarkListState = bookmarkViewModel?.bookmarkListUIState?.collectAsState()
-    val saveStatusState = remember { mutableStateOf<Boolean?>(null) }
 
     val localUriHandler = LocalUriHandler.current
+
+    val searchResultUIState = searchBookmarkViewModel?.searchResultUIState?.collectAsState()
+        ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
     //init status
     LaunchedEffect(key1 = null) {
@@ -82,12 +85,14 @@ fun BookmarkListView(
     }
 
     //update
-    LaunchedEffect(key1 = saveStatusState.value) {
+    LaunchedEffect(key1 = searchResultUIState.value) {
         //only with success status
-        if (saveStatusState.value == true) {
+        if (searchResultUIState.value.bookmark != null) {
             coroutineScope.launch {
+                //update bookmark list
                 bookmarkViewModel?.getBookmarkList()
-                saveStatusState.value = null
+                //TODO clear state - move on closing modal please
+//                searchBookmarkViewModel?.clearSearchResultUIState()
             }
         }
     }
@@ -108,7 +113,9 @@ fun BookmarkListView(
                 Text(
                     modifier = Modifier
                         .padding(end = Dimen.paddingMedium16dp)
-                        .weight(2f),
+                        .weight(
+                            weight = 2f
+                        ),
                     style = mbTitleHExtraBigBoldYellowTextStyle(),
                     text = stringResource(R.string.bookmarks_title),
                 )
@@ -144,39 +151,22 @@ fun BookmarkListView(
                     )
                 }
 
+            Timber.e("--------->>>>>")
+            Timber.e(searchResultUIState.value.toString())
             BookmarkAddModalBottomSheetView(
                 modifier = Modifier,
                 bottomSheetVisible = bottomSheetVisible
             ) {
-                SearchBookmarkView(
+                SearchAndAddBookmarkView(
                     modifier = Modifier,
                     onSearchBookmarkWithAIAction = {
                         searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
-                            url = it,
-                            onCompletion = {
-                                Timber.d("stored on list")
-                            },
-                            onSuccessCallback = { bookmark ->
-                                saveStatusState.value = true
-                            },
-                            onErrorCallback = { e ->
-                                saveStatusState.value = false
-                            },
+                            url = it
                         )
 //                        //close dialog
 //                        bottomSheetVisible.value = false
                     },
-                    onSearchBookmarkAction = {
-                        searchBookmarkViewModel?.saveBookmark(
-                            title = "hey this is a title",
-                            description = null,
-                            iconUrl = null,
-                            url = it
-                        )
-
-//                        //close dialog
-//                        bottomSheetVisible.value = false
-                    }
+                    searchResultUIState = searchResultUIState.value
                 )
             }
         }

@@ -2,7 +2,6 @@ package com.application.material.bookmarkswallet.app.features.hp
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -31,6 +30,7 @@ import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
 import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,10 +44,10 @@ fun HpScaffoldView() {
     //pull to refresh config
     val pullToRefreshState = rememberPullToRefreshState()
     val verticalScrollState = rememberScrollState()
-    val isLoading = remember { mutableStateOf(false) }
+    val isLoading = remember { mutableStateOf(value = false) }
 
     //nav item selected state
-    val navItemSelectedState = remember { mutableStateOf(NavRoute.BookmarkList) }
+    val navItemSelectedState = remember { mutableStateOf(value = NavRoute.BookmarkList) }
 
     //search state
     val textFieldState = rememberTextFieldState()
@@ -68,7 +68,9 @@ fun HpScaffoldView() {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .windowInsetsPadding(insets = WindowInsets.systemBars),
+            .windowInsetsPadding(
+                insets = WindowInsets.systemBars
+            ),
         topBar = {
             when (navItemSelectedState.value) {
                 NavRoute.BookmarkList ->
@@ -85,19 +87,17 @@ fun HpScaffoldView() {
                         modifier = Modifier,
                         textFieldState = textFieldState,
                         onSearch = onSearch,
+                        appBarContainerColor = mbAppBarContainerColor(),
                         searchResults = searchResultList
                     )
-                    //please animate otw is horribleeeeee
+                    //todo please animate otw is horribleeeeee
                 }
             }
         },
         bottomBar = {
             MbNavigationBar(
                 modifier = Modifier,
-                containerColor = when (isSystemInDarkTheme()) {
-                    true -> MbColor.GrayBlueDarkNight
-                    else -> MbColor.LemonYellowTertiary
-                },
+                containerColor = mbGrayLightColor(),//color navbar
                 navItemSelectedState = navItemSelectedState
             ) {
                 navController.navigate(route = it.navRoute.route) {
@@ -115,6 +115,7 @@ fun HpScaffoldView() {
         floatingActionButton = { },
         floatingActionButtonPosition = androidx.compose.material3.FabPosition.End,
     ) { innerPadding ->
+        //todo move in a component
         PullToRefreshBox(
             modifier = Modifier
                 .fillMaxSize(),
@@ -142,7 +143,6 @@ fun HpScaffoldView() {
                     .background(
                         brush = homeBackgroundBrushColor()
                     )
-//                    .background(mbGrayLightColorBackground())
                     .clipToBounds()
                     .padding(paddingValues = innerPadding)
                     .fillMaxSize(),

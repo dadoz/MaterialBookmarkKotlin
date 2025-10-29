@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         applicationId = "com.application.material.bookmarkswallet.app"
-
+        targetSdk = 36
         minSdk = 30
         versionCode = versionCodeTimestamp
         versionName = "$major.$minor.$patch"
@@ -108,9 +108,6 @@ android {
         }
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlinCompiler.get()
-    }
     buildFeatures {
         viewBinding = true
         dataBinding = true

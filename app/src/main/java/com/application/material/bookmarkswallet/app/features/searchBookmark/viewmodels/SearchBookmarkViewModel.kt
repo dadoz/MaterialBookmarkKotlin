@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.GenAIManager
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
+import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchResultUIState
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.models.BookmarkSimple
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
@@ -44,12 +46,19 @@ class SearchBookmarkViewModel @Inject constructor(
 
     //first state :)
     private val bookmarkIconUrl: MutableState<String> = mutableStateOf("bla")
-    private val searchedBookmarkMutableState: MutableStateFlow<Bookmark?> = MutableStateFlow(null)
-    val searchedBookmarkState: StateFlow<Bookmark?> = searchedBookmarkMutableState.asStateFlow()
+    private val searchResultMutableState: MutableStateFlow<SearchResultUIState> =
+        MutableStateFlow(value = SearchResultUIState())
+    val searchResultUIState: StateFlow<SearchResultUIState> =
+        searchResultMutableState.asStateFlow()
 
     // TODO please !!!!!!!!!!!!!!!!!!!!!!
     override fun onCleared() {
         super.onCleared()
+    }
+
+    // clear state
+    fun clearSearchResultUIState() {
+        searchResultMutableState.value = SearchResultUIState()
     }
 
     /**
@@ -151,13 +160,19 @@ class SearchBookmarkViewModel @Inject constructor(
         }
     }
 
+    /**
+     * IMPORTANT -------->> the one used by search
+     *
+     */
     fun searchUrlInfoByUrlGenAI(
-        url: String,
-        onCompletion: () -> Unit = {},
-        onSuccessCallback: (bookmark: Bookmark) -> Unit = { bookmark -> },
-        onErrorCallback: (e: Throwable) -> Unit = { e -> }
-
+        url: String
     ) {
+        //loading state
+        searchResultMutableState.update {
+            it.copy(
+                isLoading = true
+            )
+        }
         val prompt0 = "get title, public icon, url, description $url in JSON format"
         val prompt =
             "generate site_name, title, image, url, description for $url ONLY in JSON format and find the image on web"
@@ -167,9 +182,9 @@ class SearchBookmarkViewModel @Inject constructor(
                     .generateContent(
                         prompt = prompt
                     )
-                Timber.e(response.candidates.map {
-                    it.content.parts.map { (it as TextPart).text }.joinToString()
-                }.joinToString())
+                Timber.e(response.candidates.joinToString {
+                    it.content.parts.joinToString { (it as TextPart).text }
+                })
 
                 try {
                     (response.candidates.first().content.parts.first() as TextPart).text.replace(
@@ -190,22 +205,41 @@ class SearchBookmarkViewModel @Inject constructor(
                                 iconUrl = bookmark.icon,
                                 description = bookmark.description,
                                 url = bookmark.url,
-                                onErrorCallback = {
-                                    onErrorCallback.invoke(it)
+                                onErrorCallback = { error ->
+                                    viewModelScope.launch { //as ui thread
+                                        searchResultMutableState.update {
+                                            it.copy(
+                                                isLoading = false,
+                                                error = error
+                                            )
+                                        }
+                                    }
                                 },
-                                onSuccessCallback = {
-                                    onSuccessCallback.invoke(it)
+                                onSuccessCallback = { res ->
+                                    viewModelScope.launch { //as ui thread
+                                        searchResultMutableState.update {
+                                            it.copy(
+                                                isLoading = false,
+                                                error = null,
+                                                bookmark = res
+                                            )
+                                        }
+                                    }
                                 }
                             )
                             //main thread
-                            viewModelScope.launch {
-                                onCompletion.invoke()
-                            }
                         }
 
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    onErrorCallback.invoke(e)
+                    viewModelScope.launch { //as ui thread
+                        searchResultMutableState.update {
+                            it.copy(
+                                isLoading = false,
+                                error = e
+                            )
+                        }
+                    }
                 }
             }
     }

@@ -27,14 +27,24 @@ const val densityResizeFactor = 1f
 
 
 @Composable
-fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
+fun mbYellowLemonDarkLightColor1() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkLemonYellow
+}
+@Composable
+fun mbYellowLemonLightColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.Yellow
+    else -> MbColor.Yellow
+}
+@Composable
+fun mbYellowLemonLightMustardDarkColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.Yellow
+    else -> MbColor.DarkMustardYellow//DarkLemonYellow
 }
 
 @Composable
 fun mbTitleHExtraBigBoldYellowTextStyle(
-    color: Color = mbYellowLemonDarkLightColor()
+    color: Color = mbYellowLemonLightMustardDarkColor()
 ) =
     mbTitleHExtraBigBoldTextStyle(
         color = color
@@ -58,7 +68,7 @@ fun mbTitleBoldTextStyle() = TextStyle(
 @Composable
 fun mbTitleMediumBoldYellowLightDarkTextStyle() =
     mbTitleMediumBoldTextStyle(
-        color = mbYellowLemonDarkLightColor()
+        color = mbYellowLemonDarkLightColor1()
     )
 
 @Composable
@@ -77,12 +87,29 @@ fun mbTitleSmallBoldTextStyle() = mbTitleBoldTextStyle()
     )
 
 @Composable
-fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle().copy(
+fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
+    .copy(
+        color = when (isSystemInDarkTheme()) {
+            true -> colorResource(R.color.colorAccent)
+            else -> MbColor.DarkLemonYellow
+        },
+        fontFamily = MbYantramanavRegularFontFamily
+    )
+
+@Composable
+fun mbErrorSubtitleTextAccentStyle() = mbSubtitleTextAccentStyle().copy(
     color = when (isSystemInDarkTheme()) {
-        true -> colorResource(R.color.colorAccent)
-        else -> MbColor.DarkLemonYellow
+        true -> MbColor.LightRedVermillion
+        else -> MbColor.LightRedVermillion
     },
-    fontFamily = MbYantramanavRegularFontFamily
+)
+
+@Composable
+fun mbSuccessSubtitleTextAccentStyle() = mbSubtitleTextAccentStyle().copy(
+    color = when (isSystemInDarkTheme()) {
+        true -> MbColor.DarkGreenRubin
+        else -> MbColor.DarkGreenRubin
+    },
 )
 
 @Composable
@@ -113,32 +140,47 @@ fun mbSubtitleTextStyle(color: Color = colorResource(R.color.colorPrimary)) = Te
 )
 
 @Composable
-fun homeBackgroundBrushColor(): Brush = when (isSystemInDarkTheme()) {
-    true ->
-        Brush.verticalGradient(
-            colors = listOf(
-                MbColor.DarkGray2,
-                MbColor.DarkGray2
+fun homeBackgroundBrushColor(): Brush =
+    when (isSystemInDarkTheme()) {
+        true ->
+            Brush.verticalGradient(
+                colors = listOf(
+                    MbColor.DarkGray2,
+                    MbColor.DarkGray2
+                )
             )
-        )
 
-    else ->
-        Brush.verticalGradient(
-            colors = listOf(
-                MbColor.White,
-                MbColor.White,
-                MbColor.LemonYellowQuater
-            ),
-            startY = .9f
-        )
-}
+        else ->
+            Brush.verticalGradient(
+                colors = listOf(
+                    MbColor.LemonYellowQuater,
+                    MbColor.White,
+                    MbColor.White
+                ),
+                startY = .9f
+            )
+    }
 
 @Composable
 fun mbAppBarContainerColor(): Color =
     when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
-        else -> MbColor.White
+        else -> MbColor.LemonYellowQuater
     }
+
+
+@Composable
+fun mbStatusBarColor(): Color = when (isSystemInDarkTheme()) {
+    true -> MbColor.GrayBlueDarkNight
+    else -> MbColor.LemonYellowQuater
+}
+
+@Composable
+fun mbNavigationBarColor(): Color = when (isSystemInDarkTheme()) {
+    true -> MbColor.GrayBlueDarkNight
+    else -> MbColor.LemonYellowTertiary
+}
+
 
 @Composable
 fun mbBlueGrayDarkWhiteColor(): Color =
@@ -152,7 +194,7 @@ fun mbFilterChipColors(): SelectableChipColors =
     FilterChipDefaults.filterChipColors()
         .copy(
             containerColor = mbGrayLightColor(),
-            selectedContainerColor = mbYellowLemonDarkLightColor()
+            selectedContainerColor = mbYellowLemonDarkLightColor1()
         )
 
 @Composable
@@ -253,11 +295,28 @@ fun mbGrayLightExtraBlueDarkColor(): Color {
         else -> MbColor.White
     }
 }
+
 @Composable
 fun mbActionBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.GrayBlueDarkNight
+        true -> MbColor.ExtraDarkLemonYellow
         else -> MbColor.LightLemonYellow
+    }
+}
+
+@Composable
+fun mbErrorBookmarkCardBackgroundColors(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.RedVermillion
+        else -> MbColor.RedVermillion
+    }
+}
+
+@Composable
+fun mbSuccessBookmarkCardBackgroundColors(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.LightGreenRubin
+        else -> MbColor.LightGreenRubin
     }
 }
 
