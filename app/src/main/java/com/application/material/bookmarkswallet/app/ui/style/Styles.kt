@@ -26,7 +26,7 @@ const val densityResizeFactor = 1f
 
 
 @Composable
-fun mbYellowLemonDarkLightColor1() = when (isSystemInDarkTheme()) {
+fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkLemonYellow
 }
@@ -55,21 +55,21 @@ fun mbTitleHExtraBigBoldYellowTextStyle(
 fun mbTitleHExtraBigBoldTextStyle(color: Color = MbColor.GrayBlueMiddleSea) =
     mbTitleBoldTextStyle().copy(
         fontSize = 36.sp,
-        color = color,
+        color = color
     )
 
 @Composable
 fun mbTitleBoldTextStyle() = TextStyle(
     color = MbColor.GrayBlueMiddleSea,
     fontSize = 28.sp,// myVeTitleMedium(),
-    fontFamily = MbYantramanavRegularFontFamily,
-    fontWeight = FontWeight.Light
+    fontFamily = MbYantramanavBoldFontFamily,
+    fontWeight = FontWeight.Bold
 )
 
 @Composable
 fun mbTitleMediumBoldYellowLightDarkTextStyle() =
     mbTitleMediumBoldTextStyle(
-        color = mbYellowLemonDarkLightColor1()
+        color = mbYellowLemonDarkLightColor()
     )
 
 @Composable
@@ -114,7 +114,7 @@ fun mbSubtitleTextColor(isSelected: Boolean) =
         else ->
             when (isSystemInDarkTheme()) {
                 true -> MbColor.White
-                else -> MbColor.DarkLemonYellow
+                else -> MbColor.DarkMustardYellow
             }
     }
 
@@ -123,11 +123,13 @@ fun mbSubtitleTextSmallStyle(color: Color = colorResource(R.color.colorPrimary))
     mbSubtitleTextStyle()
         .copy(
             color = color,
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            fontFamily = MbYantramanavBoldFontFamily,
+            fontWeight = FontWeight.Bold
         )
 
 @Composable
-fun mbSubtitleTextStyle(color: Color = colorResource(R.color.colorPrimary)) = TextStyle(
+fun mbSubtitleTextStyle(color: Color = mbMustardDarkWhiteColor()) = TextStyle(
     color = color,
     fontSize = 20.sp,// myVeTitleMedium(),
     fontFamily = MbYantramanavLightFontFamily,
@@ -164,10 +166,10 @@ fun mbAppBarContainerColor(): Color =
     }
 
 @Composable
-fun mbBlueGrayDarkWhiteColor(): Color =
+fun mbMustardDarkWhiteColor(): Color =
     when (isSystemInDarkTheme()) {
         true -> MbColor.White
-        else -> MbColor.GrayBlueMiddleSea
+        else -> MbColor.DarkMustardYellow
     }
 
 @Composable
@@ -175,7 +177,7 @@ fun mbFilterChipColors(): SelectableChipColors =
     FilterChipDefaults.filterChipColors()
         .copy(
             containerColor = mbGrayLightColor(),
-            selectedContainerColor = mbYellowLemonDarkLightColor1()
+            selectedContainerColor = mbYellowLemonLightMustardDarkColor()
         )
 
 @Composable
@@ -185,14 +187,23 @@ fun mbSubtitleLightYellowTextStyle(color: Color = MbColor.DarkLemonYellow) =
     )
 
 @Composable
-fun mbSubtitleLightTextStyle(color: Color = MbColor.GrayBlueDarkNight) = mbSubtitleTextStyle()
+fun mbSubtitleMustardYellowDarkLightTextStyle() =
+    mbSubtitleLightTextStyle(
+        color = when (isSystemInDarkTheme()) {
+            true -> MbColor.Yellow
+            else -> MbColor.DarkMustardYellow
+        }
+    )
+
+@Composable
+fun mbSubtitleLightTextStyle(color: Color = MbColor.DarkMustardYellow) = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
             true -> MbColor.White
             else -> color
         },
         fontSize = 14.sp,
-        fontFamily = MbYantramanavThinFontFamily,
+        fontFamily = MbYantramanavThinFontFamily
     )
 
 @Composable
@@ -204,7 +215,7 @@ fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
 
     else -> when {
         isSelected -> MbColor.White
-        else -> MbColor.DarkLemonYellow
+        else -> MbColor.DarkMustardYellow
     }
 }
 
@@ -249,8 +260,16 @@ fun mbGrayLightColor2(): Color {
 @Composable
 fun mbGrayLightColor(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.GrayBlueDarkNight//MaterialTheme.colorScheme.onSurface
+        true -> MbColor.GrayBlueDarkNight
         else -> MbColor.ExtraLightGray
+    }
+}
+
+@Composable
+fun mbMustardGrayBlueLightDarkColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.GrayBlueDarkNight
+        else -> MbColor.DarkMustardYellow
     }
 }
 

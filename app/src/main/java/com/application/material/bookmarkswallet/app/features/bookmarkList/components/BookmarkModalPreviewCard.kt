@@ -59,7 +59,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgr
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.formatDateToStringNew
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
@@ -115,8 +115,8 @@ fun BookmarkPreviewCard(
 ) {
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
-        res = R.drawable.ic_bookmark_light,
-        color = mbYellowLemonLightMustardDarkColor()
+        res = R.drawable.ic_bookmark,
+        color = mbYellowLemonDarkLightColor()
     )
     MbCardView(
         modifier = modifier

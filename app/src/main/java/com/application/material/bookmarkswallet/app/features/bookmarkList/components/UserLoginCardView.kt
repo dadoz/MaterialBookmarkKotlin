@@ -24,7 +24,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 
 @Composable
 fun UserLoginCardView(
@@ -58,7 +58,7 @@ fun UserLoginCardView(
                 placeholder = fallbackIcon,
                 contentScale = ContentScale.Fit,
                 colorFilter = ColorFilter.tint(
-                    color = mbYellowLemonLightMustardDarkColor()
+                    color = mbYellowLemonDarkLightColor()
                 ),
                 contentDescription = null,
                 modifier = Modifier

@@ -107,7 +107,7 @@ fun BookmarkListView(
             //items on title and subtitle
             Row(
                 modifier = Modifier
-                    .padding(vertical = Dimen.paddingLarge32dp),
+                    .padding(vertical = Dimen.paddingMedium24dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -151,8 +151,6 @@ fun BookmarkListView(
                     )
                 }
 
-            Timber.e("--------->>>>>")
-            Timber.e(searchResultUIState.value.toString())
             BookmarkAddModalBottomSheetView(
                 modifier = Modifier,
                 bottomSheetVisible = bottomSheetVisible

@@ -31,6 +31,7 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
+import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkWhiteColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
@@ -54,7 +55,7 @@ fun SettingsView(
         Row(
             modifier = modifier
                 .padding(
-                    top = Dimen.paddingMedium16dp,
+                    top = Dimen.paddingSmall8dp,
                     bottom = Dimen.paddingMedium16dp
                 ),
             verticalAlignment = Alignment.CenterVertically

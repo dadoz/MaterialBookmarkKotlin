@@ -10,6 +10,7 @@ import androidx.compose.ui.res.painterResource
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbMustardGrayBlueLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
@@ -28,7 +29,7 @@ fun MBExtendedFab(
             Text(
                 modifier = Modifier,
                 style = mbButtonTextDarkStyle(
-                    color = mbGrayLightColor()
+                    color = mbMustardGrayBlueLightDarkColor()
                 ),
                 text = title
             )
@@ -38,7 +39,8 @@ fun MBExtendedFab(
                 modifier = Modifier
                     .size(size = Dimen.size20dp),
                 painter = painterResource(iconRes),
-                contentDescription = EMPTY
+                contentDescription = EMPTY,
+                tint = mbMustardGrayBlueLightDarkColor()
             )
         },
         onClick = onClickAction

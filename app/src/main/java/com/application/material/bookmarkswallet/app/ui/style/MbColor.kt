@@ -8,7 +8,7 @@ object MbColor {
     val LightLemonYellow = Color(0xFFFFF287)
     val LemonYellowTertiary = Color(0xFFFFF6AF)
     val LemonYellowQuater = Color(0xFFE4C900)
-    val DarkLemonYellow = Color(0xFF8F8013)
+    val DarkLemonYellow = Color(0xFF887B00)
     val DarkMustardYellow = Color(0xFF413400)
     val RedVermillion = Color(0xFFC4133D)
     val GreenRubin = Color(0xFF0EE081)
