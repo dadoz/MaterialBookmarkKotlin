@@ -4,7 +4,6 @@ import com.application.material.bookmarkswallet.app.BuildConfig
 import com.application.material.bookmarkswallet.app.models.BookmarkIconInfo
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface BookmarkInfoService {

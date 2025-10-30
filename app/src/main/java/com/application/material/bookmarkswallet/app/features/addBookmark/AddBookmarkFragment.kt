@@ -24,7 +24,6 @@ import com.application.material.bookmarkswallet.app.extensions.hideKeyboardIfNee
 import com.application.material.bookmarkswallet.app.extensions.showKeyboard
 import com.application.material.bookmarkswallet.app.features.addBookmark.viewmodels.AddBookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.settings.SettingsActivity
-import com.application.material.bookmarkswallet.app.ui.*
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.SEARCH
 import com.application.material.bookmarkswallet.app.ui.views.MbAddBookmarkPreviewView.MbPreviewStatus.UPDATE
 
@@ -216,7 +215,7 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer { bookmarkInfo ->
             binding.mbAddBookmarkPreviewId.setTitleAndIconImage(
                 bookmarkInfo.name,
-                bookmarkInfo.favicon
+                bookmarkInfo.logoUrl
             )
         })
 

@@ -17,7 +17,6 @@ import com.application.material.bookmarkswallet.app.features.hp.configurator.get
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightYellowTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleMustardYellowDarkLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTabIconColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor

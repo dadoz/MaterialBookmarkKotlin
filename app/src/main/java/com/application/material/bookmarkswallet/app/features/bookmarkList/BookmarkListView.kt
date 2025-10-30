@@ -45,9 +45,7 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

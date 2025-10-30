@@ -3,21 +3,25 @@ package com.application.material.bookmarkswallet.app.features.searchBookmark
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.application.material.bookmarkswallet.app.databinding.FragmentSearchBookmarkComposeBinding
 import com.application.material.bookmarkswallet.app.features.addBookmark.AddBookmarkFragment
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
 import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.ui.*
+import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.navigation.findNavController
 
 /**
  * A simple [Fragment] subclass.

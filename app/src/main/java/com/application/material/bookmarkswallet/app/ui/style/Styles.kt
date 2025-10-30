@@ -159,11 +159,7 @@ fun homeBackgroundBrushColor(): Brush =
     }
 
 @Composable
-fun mbAppBarContainerColor(): Color =
-    when (isSystemInDarkTheme()) {
-        true -> Color.Transparent//MbColor.GrayBlueDarkNight
-        else -> Color.Transparent//MbColor.LemonYellowQuater
-    }
+fun mbAppBarContainerColor(): Color = Color.Transparent
 
 @Composable
 fun mbMustardDarkWhiteColor(): Color =
@@ -179,12 +175,6 @@ fun mbFilterChipColors(): SelectableChipColors =
             containerColor = mbGrayLightColor(),
             selectedContainerColor = mbYellowLemonLightMustardDarkColor()
         )
-
-@Composable
-fun mbSubtitleLightYellowTextStyle(color: Color = MbColor.DarkLemonYellow) =
-    mbSubtitleLightTextStyle(
-        color = color
-    )
 
 @Composable
 fun mbSubtitleMustardYellowDarkLightTextStyle() =
