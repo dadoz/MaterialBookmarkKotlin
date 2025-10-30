@@ -24,8 +24,7 @@ class BookmarkDataSourceRemote @Inject constructor(var bookmarkInfoService: Book
         emit(
             Response.Success(
                 bookmarkInfoService.retrieveBookmarkInfo(
-                    query = url,
-                    auth = "Bearer " + BuildConfig.LOGODEV_API_KEY
+                    query = url
                 )
             ) as Response<List<BookmarkIconInfo>>
         )

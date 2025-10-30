@@ -138,8 +138,9 @@ fun BookmarkPreviewCard(
                 )
                 .width(Dimen.sizeExtraLarge96dp)
                 .height(Dimen.sizeExtraLarge96dp)
-//                .clip(CircleShape)
-                .padding(Dimen.sizeExtraSmall4dp),
+                .clip(
+                    shape = RoundedCornerShape(size = Dimen.size22dp)
+                ),
         )
 
 

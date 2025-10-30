@@ -65,7 +65,7 @@ android {
         buildConfigField(
             "String",
             "LOGODEV_API_KEY",
-            "\"sk_HqO95c7PSqaXqNxSjs_NGg\""
+            "\"sk_RRIZIs2xRra0U7aTGjwdhA\""
         )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

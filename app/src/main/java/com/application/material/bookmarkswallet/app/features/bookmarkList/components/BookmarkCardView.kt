@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
@@ -61,10 +63,15 @@ fun BookmarkCardView(
                     .align(
                         alignment = Alignment.Start
                     )
-                    .padding(bottom = Dimen.paddingMedium16dp)
-                    .size(size = Dimen.sizeExtraLarge64dp)
-//                    .clip(CircleShape)
-                    .padding(Dimen.sizeExtraSmall4dp),
+                    .padding(
+                        bottom = Dimen.paddingMedium16dp
+                    )
+                    .clip(
+                        shape = RoundedCornerShape(size = Dimen.size22dp)
+                    )
+                    .size(
+                        size = Dimen.sizeExtraLarge64dp
+                    ),
             )
 
             //title
