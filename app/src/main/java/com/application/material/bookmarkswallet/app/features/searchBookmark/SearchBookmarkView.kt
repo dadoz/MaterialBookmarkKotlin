@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,13 +48,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
-import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
@@ -62,7 +61,6 @@ import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSec
 import com.application.material.bookmarkswallet.app.ui.components.MbLoaderView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCardBackgroundColors
@@ -86,122 +84,109 @@ fun SearchAndAddBookmarkView(
     val bookmarkTitle = remember { mutableStateOf(TextFieldValue(EMPTY)) }
     val context = LocalContext.current
 
-    when {
-        searchResultUIState.isLoading -> {
-            MbLoaderView(
-                modifier = Modifier
-            )
-        }
+    Column(
+        modifier = modifier
+            .padding(Dimen.sizeMedium16dp),
+        verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
+    ) {
+        //title
+        Text(
+            modifier = Modifier,
+            style = mbTitleHExtraBigBoldYellowTextStyle(),
+            text = stringResource(id = R.string.search_bookmark)
+        )
 
-        //success
-        searchResultUIState.bookmark != null -> {
-            SearchAndAddBookmarkSuccessView(
-                modifier = Modifier,
-                bookmark = searchResultUIState.bookmark
-            )
-        }
-
-        else -> {
-            ConstraintLayout(
-                modifier = modifier
-            ) {
-                val (content, cta) = createRefs()
-
-                Column(
+        when {
+            searchResultUIState.isLoading -> {
+                MbLoaderView(
                     modifier = Modifier
-                        .constrainAs(content) {
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                        }
-                        .padding(Dimen.sizeMedium16dp),
-                    verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingSmall8dp)
-                ) {
-                    if (searchResultUIState.error != null) {
-                        MbBoxActionSecondaryButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = Dimen.paddingSmall8dp),
-                            iconRes = R.drawable.ic_star,
-                            text = stringResource(R.string.oh_snap_error_string),
-                            backgroundColor = mbErrorBookmarkCardBackgroundColors(),
-                            textStyle = mbErrorSubtitleTextAccentStyle(),
-                            iconTintColor = MbColor.LightRedVermillion,
-                        )
-                    }
+                        .height(height = Dimen.sizeExtraLarge128dp)
+                        .fillMaxWidth()
+                )
+            }
 
-                    //title
-                    Text(
-                        modifier = Modifier
-                            .padding(bottom = Dimen.paddingMedium16dp),
-                        style = mbTitleHExtraBigBoldYellowTextStyle(),
-                        text = stringResource(id = R.string.search_bookmark)
-                    )
-                    //search text field
-                    MbBookmarkTextFieldView(
-                        modifier = Modifier,
-                        searchUrlTextState = searchUrlTextState
-                    )
-                    //title text field
-                    MbBookmarkTextFieldView(
-                        modifier = Modifier,
-                        textLabel = "Title",
-                        searchUrlTextState = bookmarkTitle
-                    )
-                    //add title manually
-                    Text(
+            //success
+            searchResultUIState.bookmark != null -> {
+                SearchAndAddBookmarkSuccessView(
+                    modifier = Modifier,
+                    bookmark = searchResultUIState.bookmark,
+                    isActionMenuVisible = false
+                )
+            }
+
+            else -> {
+                if (searchResultUIState.error != null) {
+                    MbBoxActionSecondaryButton(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = Dimen.paddingMedium16dp)
-                            .clickable {
-                                Toast.makeText(
-                                    context, R.string.search_bookmark, Toast.LENGTH_LONG
-                                ).show()
-                            },
-                        textAlign = TextAlign.End,
-                        textDecoration = TextDecoration.Underline,
-                        style = mbSubtitleTextStyle(),
-                        text = stringResource(R.string.add_title_manually)
+                            .padding(bottom = Dimen.paddingSmall8dp),
+                        iconRes = R.drawable.ic_star,
+                        text = stringResource(R.string.oh_snap_error_string),
+                        backgroundColor = mbErrorBookmarkCardBackgroundColors(),
+                        textStyle = mbErrorSubtitleTextAccentStyle(),
+                        iconTintColor = MbColor.LightRedVermillion,
                     )
+                }
 
-                    //clipboard
-                    MbBoxActionSecondaryButton(
+                //search text field
+                MbBookmarkTextFieldView(
+                    modifier = Modifier
+                        .padding(top = Dimen.paddingMedium16dp),
+                    searchUrlTextState = searchUrlTextState
+                )
+                //title text field
+                MbBookmarkTextFieldView(
+                    modifier = Modifier,
+                    textLabel = "Title",
+                    searchUrlTextState = bookmarkTitle
+                )
+                //add title manually
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Dimen.paddingMedium16dp)
+                        .clickable {
+                            Toast.makeText(
+                                context, R.string.search_bookmark, Toast.LENGTH_LONG
+                            ).show()
+                        },
+                    textAlign = TextAlign.End,
+                    textDecoration = TextDecoration.Underline,
+                    style = mbSubtitleTextStyle(),
+                    text = stringResource(R.string.add_title_manually)
+                )
+
+                //clipboard
+                MbBoxActionSecondaryButton(
+                    modifier = Modifier,
+                    iconRes = R.drawable.ic_pin,
+                    text = stringResource(R.string.paste_clipboard),
+                ) {
+                    Toast.makeText(
+                        context, R.string.search_bookmark, Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                //icon image
+                Box(
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(22.dp))
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .background(color = mbGrayLightColor())
+                        .padding(all = Dimen.paddingMedium16dp),
+                ) {
+                    Image(
                         modifier = Modifier,
-                        iconRes = R.drawable.ic_pin,
-                        text = stringResource(R.string.paste_clipboard),
-                    ) {
-                        Toast.makeText(
-                            context, R.string.search_bookmark, Toast.LENGTH_LONG
-                        ).show()
-                    }
-
-                    //icon image
-                    Box(
-                        modifier = Modifier
-                            .clip(shape = RoundedCornerShape(22.dp))
-                            .align(alignment = Alignment.CenterHorizontally)
-                            .background(color = mbGrayLightColor())
-                            .padding(all = Dimen.paddingMedium16dp),
-                    ) {
-                        Image(
-                            modifier = Modifier,
-                            painter = painterResource(id = R.drawable.ic_bear_illustration_200),
-                            contentDescription = EMPTY
-                        )
-                    }
+                        painter = painterResource(id = R.drawable.ic_bear_illustration_200),
+                        contentDescription = EMPTY
+                    )
                 }
 
                 //Search and Add button
                 MBExtendedFab(
                     modifier = Modifier
-                        .constrainAs(
-                            ref = cta
-                        ) {
-                            top.linkTo(content.bottom)
-                            bottom.linkTo(parent.bottom)
-                            end.linkTo(parent.end, Dimen.paddingMedium16dp)
-                        }
-                        .padding(bottom = Dimen.paddingMedium16dp),
+                        .padding(bottom = Dimen.paddingMedium16dp)
+                        .align(alignment = Alignment.End),
                     title = stringResource(id = R.string.save_ai_label_button),
                     iconRes = R.drawable.ic_star,
                     onClickAction = {
@@ -216,11 +201,14 @@ fun SearchAndAddBookmarkView(
 @Composable
 fun SearchAndAddBookmarkSuccessView(
     modifier: Modifier,
-    bookmark: Bookmark
+    bookmark: Bookmark,
+    isActionMenuVisible: Boolean = true
 ) {
     Column(
         modifier = modifier
-            .padding(Dimen.sizeMedium16dp),
+            .padding(
+                all = Dimen.sizeMedium16dp
+            ),
         verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingSmall8dp)
     ) {
         MbBoxActionSecondaryButton(
@@ -236,11 +224,8 @@ fun SearchAndAddBookmarkSuccessView(
         BookmarkPreviewCard(
             modifier = Modifier,
             bookmark = bookmark,
+            isActionMenuVisible = isActionMenuVisible
         )
-//        MbBookmarkPreviewView(§
-//            modifier = Modifier,
-//            bookmark = bookmark
-//        )
     }
 }
 
@@ -435,14 +420,51 @@ fun SearchAndAddBookmarkWithFullAIView(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun BookmarkPreview2() {
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+            SearchAndAddBookmarkView(
+                modifier = Modifier,
+                onSearchBookmarkWithAIAction = {},
+                searchResultUIState =
+                    SearchResultUIState(
+                        isLoading = true,
+                        error = Throwable("blbl")
+                    )
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BookmarkPreview() {
-    BookmarkModalBottomSheetView(
-        modifier = Modifier,
-        bottomSheetState = expandedBottomSheetState(),
-        url = "https://www.ecosia.com",
-        onCloseCallback = {}
-    )
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+            SearchAndAddBookmarkView(
+                modifier = Modifier,
+                onSearchBookmarkWithAIAction = {},
+                searchResultUIState =
+                    SearchResultUIState(
+                        isLoading = false,
+                        error = Throwable("blbl"),
+                        bookmark = Bookmark(
+                            title = "Dribble blal bll al balalbalalb",
+                            url = "www.dribble.com",
+                            siteName = "",
+                            iconUrl = "",
+                            appId = "",
+                            timestamp = java.util.Date(),
+                            isLike = false,
+                        )
+                    )
+            )
+        }
+    }
 }
 
 @Preview
@@ -458,20 +480,6 @@ fun SearchBookmarkViewPreview() {
                     SearchResultUIState(
                         isLoading = false
                     )
-            )
-        }
-    }
-}
-
-@Composable
-@Preview
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun BookmarkListViewPreview2() {
-    MaterialBookmarkMaterialTheme {
-        Box(modifier = Modifier.background(mbGrayLightColor2())) {
-            SearchAndAddBookmarkWithFullAIView(
-                modifier = Modifier,
-                searchBookmarkViewModel = null
             )
         }
     }

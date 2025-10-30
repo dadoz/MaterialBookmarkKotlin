@@ -100,7 +100,7 @@ fun BookmarkModalPreviewCard(
                 modifier = modifier,
                 bookmark = bookmark,
                 onDeleteAction = onDeleteCallback,
-                onOpenAction = onOpenAction
+                onOpenAction = onOpenAction,
             )
         }
     }
@@ -112,6 +112,7 @@ fun BookmarkPreviewCard(
     bookmark: Bookmark,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
     onOpenAction: ((String) -> Unit)? = null,
+    isActionMenuVisible: Boolean = true,
 ) {
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
@@ -183,11 +184,13 @@ fun BookmarkPreviewCard(
                 )
             }
 
-            MbActionMenuBookmarkPreviewView(
-                modifier = modifier,
-                bookmark = bookmark,
-                onDeleteAction = onDeleteAction
-            )
+            if (isActionMenuVisible) {
+                MbActionMenuBookmarkPreviewView(
+                    modifier = modifier,
+                    bookmark = bookmark,
+                    onDeleteAction = onDeleteAction
+                )
+            }
         }
 
 
@@ -433,7 +436,8 @@ fun BookmarkPreviewCardPreview() {
                 appId = null,
                 isLike = false,
             ),
-        onDeleteAction = {}
-    ) {}
+        onDeleteAction = {},
+        {},
+    )
 }
 

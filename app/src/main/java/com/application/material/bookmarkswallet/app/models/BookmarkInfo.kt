@@ -1,19 +1,29 @@
 package com.application.material.bookmarkswallet.app.models
 
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.JsonClass
 
-data class BookmarkInfo(
-
-//	@SerializedName("meta") val meta: Meta?,
-//	@SerializedName("result") val result: Result?,
-	@SerializedName("title") val title: String,
-	@SerializedName("description") val description: String,
-	@SerializedName("images") val images: Any,
-	@SerializedName("sitename") val sitename: String,
-	@SerializedName("favicon") var favicon: String,
-	@SerializedName("duration") val duration: String,
-	@SerializedName("domain") val domain: String,
-	@SerializedName("url") val url: String,
+//data class BookmarkInfo(
+//
+////	@SerializedName("meta") val meta: Meta?,
+////	@SerializedName("result") val result: Result?,
+//	@SerializedName("title") val title: String,
+//	@SerializedName("description") val description: String,
+//	@SerializedName("images") val images: Any,
+//	@SerializedName("name") val name: String,
+//	@SerializedName("favicon") var favicon: String,
+//	@SerializedName("duration") val duration: String,
+//	@SerializedName("domain") val domain: String,
+//	@SerializedName("url") val url: String,
+//)
+@JsonClass(generateAdapter = true)
+data class BookmarkIconInfo(
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("domain")
+    val domain: String,
+    @SerializedName("logo_url")
+    var favicon: String //@TODO replace to val
 )
 
 data class Meta(

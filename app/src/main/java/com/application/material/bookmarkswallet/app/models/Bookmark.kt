@@ -31,10 +31,8 @@ data class Bookmark(
     @SerializedName("url")
     var url: String,
     @SerializedName("timestamp")
-//        @ContextualSerialization
     var timestamp: Date?,
     @SerializedName("is_star")
-//        @ContextualSerialization
     var isLike: Boolean = false
 ) : BookmarkType {
 }
@@ -68,12 +66,14 @@ fun setImageViewSquaredResource(imageView: ImageView, url: String?) {
 
 @JsonClass(generateAdapter = true)
 data class BookmarkSimple(
-    @Json(name = "title")
+    @param:Json(name = "site_name")
+    var siteName: String?,
+    @param:Json(name = "title")
     var title: String?,
-    @Json(name = "image")
+    @param:Json(name = "image")
     var icon: String?,
-    @Json(name = "url")
+    @param:Json(name = "url")
     var url: String,
-    @Json(name = "description")
+    @param:Json(name = "description")
     var description: String
 )

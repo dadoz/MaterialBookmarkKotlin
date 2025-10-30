@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 fun BookmarkAddModalBottomSheetView(
     modifier: Modifier = Modifier,
     bottomSheetVisible: MutableState<Boolean>,
+    onDismissCallback: () -> Unit,
     content: @Composable () -> Unit
 ) {
     val bottomSheetState = expandedBottomSheetState()
@@ -34,6 +35,7 @@ fun BookmarkAddModalBottomSheetView(
                 coroutineScope.launch {
                     bottomSheetState.hide()
                 }
+                onDismissCallback.invoke()
             }
         ) {
             content()

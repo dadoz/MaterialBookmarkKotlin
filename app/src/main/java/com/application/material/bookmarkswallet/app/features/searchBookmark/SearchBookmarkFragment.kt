@@ -17,6 +17,7 @@ import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.navigation.findNavController
 
 /**
  * A simple [Fragment] subclass.
@@ -32,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchBookmarkFragment : Fragment(), MenuProvider {
     private lateinit var binding: FragmentSearchBookmarkComposeBinding
     private val navigation: NavController? by lazy {
-        view?.let { Navigation.findNavController(it) }
+        view?.findNavController()
     }
 
     override fun onCreateView(
@@ -68,8 +69,6 @@ class SearchBookmarkFragment : Fragment(), MenuProvider {
                         BookmarkPreviewCard(
                             modifier = Modifier,
                             bookmark = bookmark,
-                            onDeleteAction = null,
-                            onOpenAction = null,
                         )
                     }
                 }

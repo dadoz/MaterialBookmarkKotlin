@@ -86,7 +86,7 @@ fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
             true -> colorResource(R.color.colorAccent)
-            else -> MbColor.DarkLemonYellow
+            else -> MbColor.DarkMustardYellow
         },
         fontFamily = MbYantramanavRegularFontFamily
     )
@@ -285,7 +285,7 @@ fun mbGrayLightExtraBlueDarkColor(): Color {
 fun mbActionBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.ExtraDarkLemonYellow
-        else -> MbColor.LightLemonYellow
+        else -> MbColor.UltraLightGray
     }
 }
 

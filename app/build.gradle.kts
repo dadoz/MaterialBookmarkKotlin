@@ -59,23 +59,13 @@ android {
         )
         buildConfigField(
             "String",
-            "API_URLMETA_USER",
-            "\"da-doz@hotmail.it\""
+            "LOGODEV_BASE_URL",
+            "\"https://api.logo.dev/\""
         )
         buildConfigField(
             "String",
-            "API_URLMETA_PWD",
-            "\"INuNPW7T5eZdYe6EFyw8\""
-        )
-        buildConfigField(
-            "String",
-            "JSONLINK_BASE_URL",
-            "\"https://jsonlink.io/api/\""
-        )
-        buildConfigField(
-            "String",
-            "JSONLINK_API_KEY",
-            "\"pk_d1a3c2c5051ccc8e5970e37a1284962f7236632c\""
+            "LOGODEV_API_KEY",
+            "\"sk_HqO95c7PSqaXqNxSjs_NGg\""
         )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

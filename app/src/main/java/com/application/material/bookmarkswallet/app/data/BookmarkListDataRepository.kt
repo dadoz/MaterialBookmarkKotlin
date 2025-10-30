@@ -2,9 +2,9 @@ package com.application.material.bookmarkswallet.app.data
 
 import com.application.material.bookmarkswallet.app.data.local.BookmarkDataSourceLocal
 import com.application.material.bookmarkswallet.app.data.remote.BookmarkDataSourceRemote
-import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.models.BookmarkInfo
 import com.application.material.bookmarkswallet.app.di.models.Response
+import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.models.BookmarkIconInfo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,7 +20,7 @@ class BookmarkListDataRepository @Inject constructor(
         bookmarkDataSourceLocal.insertBookmark(bookmark)
     }
 
-    fun findBookmarkInfo(url: String): Flow<Response<BookmarkInfo>> =
+    fun findBookmarkInfo(url: String): Flow<Response<List<BookmarkIconInfo>>> =
         bookmarkDataSourceRemote.getBookmarkInfo(url)
 
     fun updateBookmark(bookmark: Bookmark): Flow<Boolean> =
@@ -31,4 +31,8 @@ class BookmarkListDataRepository @Inject constructor(
 
     fun deleteBookmark(bookmark: Bookmark): Flow<Boolean> =
         bookmarkDataSourceLocal.deleteBookmark(bookmark)
+
+    fun findIconInfoByUrl(url: String) = bookmarkDataSourceRemote.getBookmarkInfoNew(
+        url = url
+    )
 }

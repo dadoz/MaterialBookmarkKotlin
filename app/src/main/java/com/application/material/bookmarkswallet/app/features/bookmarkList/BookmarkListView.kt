@@ -45,6 +45,7 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
@@ -153,7 +154,11 @@ fun BookmarkListView(
 
             BookmarkAddModalBottomSheetView(
                 modifier = Modifier,
-                bottomSheetVisible = bottomSheetVisible
+                bottomSheetVisible = bottomSheetVisible,
+                onDismissCallback = {
+                    //clear state
+                    searchBookmarkViewModel?.clearSearchResultUIState()
+                }
             ) {
                 SearchAndAddBookmarkView(
                     modifier = Modifier,
@@ -161,8 +166,9 @@ fun BookmarkListView(
                         searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
                             url = it
                         )
-//                        //close dialog
-//                        bottomSheetVisible.value = false
+//                        searchBookmarkViewModel?.findIconInfoByUrl(
+//                            url = it
+//                        )
                     },
                     searchResultUIState = searchResultUIState.value
                 )
@@ -183,7 +189,6 @@ fun BookmarkListView(
         )
     }
 }
-
 
 @Composable
 fun BookmarkItemsView(

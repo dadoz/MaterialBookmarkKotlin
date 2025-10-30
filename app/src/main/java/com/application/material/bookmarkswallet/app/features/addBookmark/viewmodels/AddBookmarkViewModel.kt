@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.models.BookmarkInfo
+import com.application.material.bookmarkswallet.app.models.BookmarkIconInfo
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,7 @@ import java.util.Date
 @Deprecated("not used anymore")
 class AddBookmarkViewModel(application: Application) :
     AndroidViewModel(application = application) {
-    val bookmarkInfoLiveData: MutableLiveData<BookmarkInfo> = MutableLiveData()
+    val bookmarkInfoLiveData: MutableLiveData<BookmarkIconInfo> = MutableLiveData()
     val bookmarkInfoLiveError: MutableLiveData<String> = MutableLiveData()
     private lateinit var bookmarkListDataRepository: BookmarkListDataRepository
     val saveBookmarkStatus: MutableLiveData<Boolean> = MutableLiveData()

@@ -215,7 +215,7 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
 
         addBookmarkViewModel.bookmarkInfoLiveData.observe(this, Observer { bookmarkInfo ->
             binding.mbAddBookmarkPreviewId.setTitleAndIconImage(
-                bookmarkInfo.sitename,
+                bookmarkInfo.name,
                 bookmarkInfo.favicon
             )
         })
@@ -380,8 +380,8 @@ class AddBookmarkFragment : Fragment(), MenuProvider {
                 addBookmarkViewModel.updateWebviewByUrl(url)
                 addBookmarkViewModel.findBookmarkInfoByUrl(url)
                 addBookmarkViewModel.bookmarkInfoLiveData.observe(viewLifecycleOwner) {
-                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = it.sitename
-                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.setText(it.sitename)
+                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleTextViewId.text = it.name
+                    newBookmarkEditTitleViewBinding.mbNewBookmarkTitleEditTextId.setText(it.name)
                 }
             }
     }

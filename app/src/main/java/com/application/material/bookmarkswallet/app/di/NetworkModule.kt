@@ -2,12 +2,10 @@ package com.application.material.bookmarkswallet.app.network
 
 import com.application.material.bookmarkswallet.app.BuildConfig
 import com.application.material.bookmarkswallet.app.data.remote.BookmarkInfoService
-import com.google.common.net.HttpHeaders.AUTHORIZATION
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -22,8 +20,8 @@ import javax.inject.Qualifier
 @InstallIn(SingletonComponent::class)
 class NetworkModule @Inject constructor() {
     //credentials
-    private val authToken =
-        Credentials.basic(BuildConfig.API_URLMETA_USER, BuildConfig.API_URLMETA_PWD)
+    private val authToken = ""
+//        Credentials.basic(BuildConfig.API_URLMETA_USER, BuildConfig.API_URLMETA_PWD)
 
     @Provides
     fun provideAuthenticationInterceptor(): AuthenticationInterceptor =
@@ -85,11 +83,10 @@ class NetworkModule @Inject constructor() {
         retrofit.create(BookmarkInfoService::class.java)
 
     private fun getRetrofitByUrl(
-        url: String = BuildConfig.JSONLINK_BASE_URL,
+        url: String = BuildConfig.LOGODEV_BASE_URL,
         okHttpClient: OkHttpClient
     ): Retrofit =
         Retrofit.Builder()
-//            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(url)
@@ -112,7 +109,7 @@ class AuthenticationInterceptor(private val authToken: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response = chain.request()
         .newBuilder()
-        .header(AUTHORIZATION, authToken)
+//        .header(AUTHORIZATION, authToken)
         .build().let {
             chain.proceed(it)
         }
