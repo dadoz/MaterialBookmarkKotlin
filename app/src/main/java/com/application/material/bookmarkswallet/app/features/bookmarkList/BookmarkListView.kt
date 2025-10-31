@@ -36,7 +36,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchResultUIState
-import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkAddModalBottomSheetView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
@@ -70,6 +70,7 @@ fun BookmarkListView(
 
     //bookmark list state
     val bookmarkListState = bookmarkViewModel?.bookmarkListUIState?.collectAsState()
+    val bookmarkDeletionState = bookmarkViewModel?.bookmarkDeletionState?.collectAsState()
 
     val localUriHandler = LocalUriHandler.current
 
@@ -80,6 +81,18 @@ fun BookmarkListView(
     LaunchedEffect(key1 = null) {
         coroutineScope.launch {
             bookmarkViewModel?.getBookmarkList()
+        }
+    }
+
+    //delete status
+    LaunchedEffect(key1 = bookmarkDeletionState?.value) {
+        coroutineScope.launch {
+            if (bookmarkDeletionState?.value == true) {
+                //retrieve bookmarks
+                bookmarkViewModel.getBookmarkList()
+                //clear state
+                bookmarkViewModel.clearDeleteStatus()
+            }
         }
     }
 
@@ -149,28 +162,6 @@ fun BookmarkListView(
                         bottomSheetVisible = isPreviewModalBottomSheetVisible
                     )
                 }
-
-            BookmarkAddModalBottomSheetView(
-                modifier = Modifier,
-                bottomSheetVisible = bottomSheetVisible,
-                onDismissCallback = {
-                    //clear state
-                    searchBookmarkViewModel?.clearSearchResultUIState()
-                }
-            ) {
-                SearchAndAddBookmarkView(
-                    modifier = Modifier,
-                    onSearchBookmarkWithAIAction = {
-                        searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
-                            url = it
-                        )
-//                        searchBookmarkViewModel?.findIconInfoByUrl(
-//                            url = it
-//                        )
-                    },
-                    searchResultUIState = searchResultUIState.value
-                )
-            }
         }
 
         //fab button
@@ -184,6 +175,25 @@ fun BookmarkListView(
             onClickAction = {
                 bottomSheetVisible.value = true
             }
+        )
+    }
+
+    MbAddBookmarkModalBottomSheetView(
+        modifier = Modifier,
+        bottomSheetVisible = bottomSheetVisible,
+        onDismissCallback = {
+            //clear state
+            searchBookmarkViewModel?.clearSearchResultUIState()
+        }
+    ) {
+        SearchAndAddBookmarkView(
+            modifier = Modifier,
+            onSearchBookmarkWithAIAction = {
+                searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
+                    url = it
+                )
+            },
+            searchResultUIState = searchResultUIState.value
         )
     }
 }

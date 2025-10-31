@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookmarkAddModalBottomSheetView(
+fun MbAddBookmarkModalBottomSheetView(
     modifier: Modifier = Modifier,
     bottomSheetVisible: MutableState<Boolean>,
     onDismissCallback: () -> Unit,

@@ -51,6 +51,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.WevBaseBottomSheetView
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
+import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
@@ -196,12 +197,11 @@ fun BookmarkPreviewCard(
 
 
         //open action
-        MBExtendedFab(
+        MbPrimaryButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = Dimen.paddingMedium16dp),
-            title = stringResource(id = R.string.open_bookmark),
-            iconRes = R.drawable.ic_send,
+            text = stringResource(id = R.string.open_bookmark),
             onClickAction = {
                 onOpenAction?.invoke(bookmark.url)
             }
@@ -367,7 +367,9 @@ fun MbDeleteBookmarkButtonView(
                     LocalContext.current, R.drawable.ic_delete
                 )
             ),
-            colorFilter = ColorFilter.tint(color = colorResource(R.color.colorPrimary)),
+            colorFilter = ColorFilter.tint(
+                color = MbColor.White
+            ),
             contentDescription = ""
         )
 //        Text(

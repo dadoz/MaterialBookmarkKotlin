@@ -2,6 +2,7 @@ package com.application.material.bookmarkswallet.app.ui.style
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +12,8 @@ import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -184,6 +187,45 @@ fun mbSubtitleMustardYellowDarkLightTextStyle() =
             else -> MbColor.DarkMustardYellow
         }
     )
+
+fun Modifier.mbEnableAlpha(isEnabled: Boolean): Modifier =
+    this.alpha(
+        alpha = when {
+            isEnabled -> 1f
+            else -> 0.5f
+        }
+    )
+
+@Composable
+fun mbButtonRoundedCornerShape() =
+    RoundedCornerShape(
+        Dimen.size22dp
+    )
+
+@Composable
+fun mbButtonYellowDarkLightColor() = mbButtonColorStyle(
+    lightColor = MbColor.Yellow,
+    darkColor = MbColor.DarkMustardYellow,
+)
+
+@Composable
+fun mbButtonColorStyle(
+    lightColor: Color,
+    darkColor: Color,
+    disabledLightColor: Color = Color.LightGray,
+    disabledDarkColor: Color = Color.LightGray
+) =
+    when (isSystemInDarkTheme()) {
+        true -> Pair(darkColor, disabledDarkColor)
+        else -> Pair(lightColor, disabledLightColor)
+    }.let {
+        ButtonDefaults.buttonColors(
+            containerColor = it.first,
+            contentColor = it.first,
+            disabledContainerColor = it.second,
+            disabledContentColor = it.second
+        )
+    }
 
 @Composable
 fun mbSubtitleLightTextStyle(color: Color = MbColor.DarkMustardYellow) = mbSubtitleTextStyle()

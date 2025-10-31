@@ -9,13 +9,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.databinding.EmptyViewBinding
-import com.application.material.bookmarkswallet.app.models.BookmarkFilter
-import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
-import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.extensions.setColorByRes
 import com.application.material.bookmarkswallet.app.extensions.setImageDrawableByRes
 import com.application.material.bookmarkswallet.app.extensions.toggleVisibilty
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
+import com.application.material.bookmarkswallet.app.models.BookmarkFilter
+import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
+import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 
 class MbEmptyView : FrameLayout {
     private lateinit var viewModel: BookmarkViewModel
@@ -43,7 +43,7 @@ class MbEmptyView : FrameLayout {
         bookmarkFilter: BookmarkFilter,
         recyclerView: RecyclerView
     ) {
-        viewModel.sizeEmptyDataPair.observe(owner) {
+        viewModel.bookmarksLiveData.observe(owner) {
             //search mode
             visibility = when (bookmarkFilter.isSearchViewType) {
                 true -> {
@@ -51,8 +51,7 @@ class MbEmptyView : FrameLayout {
                     binding.mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_rabbit_and_fox_illustration)
                     binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
                     binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_search_result_string)
-                    when (it.first) {
-                        0 -> VISIBLE
+                    when (it) {
                         else -> GONE
                     }
                 }
@@ -63,8 +62,7 @@ class MbEmptyView : FrameLayout {
                         binding.mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_fox_sleep_illustration)
                         binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
                         binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
-                        when (it.first) {
-                            0 -> VISIBLE
+                        when (it) {
                             else -> GONE
                         }
                     }
@@ -76,8 +74,7 @@ class MbEmptyView : FrameLayout {
                         binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
 //                        views[1].visibility = View.VISIBLE
 //                        views[2].visibility = View.VISIBLE
-                        when (it.second) {
-                            0 -> VISIBLE
+                        when (it) {
                             else -> GONE
                         }
                     }

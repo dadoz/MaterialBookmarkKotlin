@@ -5,8 +5,8 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.application.material.bookmarkswallet.app.data.local.db.AppDatabase
-import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.di.models.Response
+import com.application.material.bookmarkswallet.app.models.Bookmark
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -61,7 +61,7 @@ class BookmarkDataSourceLocal @Inject constructor(val application: Application) 
     fun deleteBookmark(bookmark: Bookmark): Flow<Boolean> = flow {
         database.bookmarkDao.deleteBookmark(bookmark)
             .also {
-                emit(it.toString().toBoolean())
+                emit(value = true)
             }
     }
 }

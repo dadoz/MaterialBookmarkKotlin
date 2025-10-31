@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -52,13 +54,13 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbBookmarkTextFieldView
 import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSecondaryButton
 import com.application.material.bookmarkswallet.app.ui.components.MbLoaderView
+import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
@@ -86,7 +88,11 @@ fun SearchAndAddBookmarkView(
 
     Column(
         modifier = modifier
-            .padding(Dimen.sizeMedium16dp),
+            .padding(Dimen.sizeMedium16dp)
+            .verticalScroll(
+                state = rememberScrollState(),
+                enabled = true
+            ),
         verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
     ) {
         //title
@@ -134,12 +140,14 @@ fun SearchAndAddBookmarkView(
                         .padding(top = Dimen.paddingMedium16dp),
                     searchUrlTextState = searchUrlTextState
                 )
+
                 //title text field
                 MbBookmarkTextFieldView(
                     modifier = Modifier,
                     textLabel = "Title",
                     searchUrlTextState = bookmarkTitle
                 )
+
                 //add title manually
                 Text(
                     modifier = Modifier
@@ -167,28 +175,27 @@ fun SearchAndAddBookmarkView(
                     ).show()
                 }
 
-                //icon image
-                Box(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(22.dp))
-                        .align(alignment = Alignment.CenterHorizontally)
-                        .background(color = mbGrayLightColor())
-                        .padding(all = Dimen.paddingMedium16dp),
-                ) {
-                    Image(
-                        modifier = Modifier,
-                        painter = painterResource(id = R.drawable.ic_bear_illustration_200),
-                        contentDescription = EMPTY
-                    )
-                }
+//                //icon image
+//                Box(
+//                    modifier = Modifier
+//                        .clip(shape = RoundedCornerShape(22.dp))
+//                        .align(alignment = Alignment.CenterHorizontally)
+//                        .background(color = mbGrayLightColor())
+//                        .padding(all = Dimen.paddingMedium16dp),
+//                ) {
+//                    Image(
+//                        modifier = Modifier,
+//                        painter = painterResource(id = R.drawable.ic_bear_illustration_200),
+//                        contentDescription = EMPTY
+//                    )
+//                }
 
                 //Search and Add button
-                MBExtendedFab(
+                MbPrimaryButton(
                     modifier = Modifier
-                        .padding(bottom = Dimen.paddingMedium16dp)
-                        .align(alignment = Alignment.End),
-                    title = stringResource(id = R.string.save_ai_label_button),
-                    iconRes = R.drawable.ic_star,
+                        .fillMaxWidth()
+                        .padding(bottom = Dimen.paddingMedium16dp),
+                    text = stringResource(id = R.string.save_ai_label_button),
                     onClickAction = {
                         onSearchBookmarkWithAIAction.invoke(searchUrlTextState.value.text)
                     }

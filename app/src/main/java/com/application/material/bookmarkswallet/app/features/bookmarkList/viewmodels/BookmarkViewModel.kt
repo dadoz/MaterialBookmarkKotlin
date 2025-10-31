@@ -2,9 +2,7 @@ package com.application.material.bookmarkswallet.app.features.bookmarkList.viewm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
@@ -19,16 +17,12 @@ import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFi
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_DEFAULT_VIEW
 import com.application.material.bookmarkswallet.app.models.BookmarkFilter.StarFilterTypeEnum.IS_STAR_VIEW
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import com.application.material.bookmarkswallet.app.utils.ONE
-import com.application.material.bookmarkswallet.app.utils.ZERO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -49,12 +43,10 @@ class BookmarkViewModel @Inject constructor(
     val bookmarkIconUrl: MutableLiveData<String> = MutableLiveData()
 
     //delete status
-    private val bookmarkDeletionSuccess: MutableLiveData<Boolean> = MutableLiveData()
-
-    //empty view //total and star
-    var sizeEmptyDataPair:
-            LiveData<Pair<Int, Int>> = bookmarksLiveData
-        .map { Pair(ONE, ZERO) }
+    private val bookmarkDeletionMutableState: MutableStateFlow<Boolean?> =
+        MutableStateFlow(null)
+    var bookmarkDeletionState: StateFlow<Boolean?> =
+        this.bookmarkDeletionMutableState.asStateFlow()
 
     //state to handle
     private val bookmarkPreviewModalMutableState: MutableStateFlow<Boolean> =
@@ -167,73 +159,10 @@ class BookmarkViewModel @Inject constructor(
     fun deleteBookmark(bookmark: Bookmark) {
         viewModelScope.launch {
             bookmarkListDataRepository.deleteBookmark(bookmark = bookmark)
-                .also {
-                    bookmarkListSize.value =
-                        bookmarkListSize.value?.toInt()?.minus(1).toString()
-                }
-                .flatMapLatest { bookmarkListDataRepository.getBookmarks() }.collect {
-                    //todo handle response
-                    bookmarkDeletionSuccess.value = when (it) {
-                        is Response.Success -> true
-                        is Response.Error -> false
-                    }
-                }
-
-        }
-    }
-
-    /**
-     * composable to add Header on bookmark
-     */
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun setStarBookmark(bookmark: Bookmark) {
-        viewModelScope.launch {
-            bookmarkListDataRepository.updateBookmark(bookmark = bookmark)
-                .flatMapLatest {
-                    bookmarkListDataRepository.getBookmarks()
-                }
-                .catch { error ->
-                    bookmarkDeletionSuccess.value = false;
-                }.collect { success ->
-                    bookmarkDeletionSuccess.value = true
-                }
-        }
-    }
-
-    /**
-     * composable to add Header on bookmark
-     */
-    @OptIn(FlowPreview::class)
-    fun searchBookmarkByTitle(bookmarkFilter: BookmarkFilter, query: String) {
-        bookmarkFilter.isSearchViewType = true
-        viewModelScope.launch {
-            bookmarkListDataRepository.getBookmarks()
-                .debounce(500)
-                .catch {
-                    //todo handle error
-                    Timber.e(it.message)
-                }
                 .collect {
-                    when (it) {
-                        is Response.Success -> {
-                            it.data
-                                .filterByStarTypeComposable(starFilterType = bookmarkFilter.starFilterType)
-                                .filterSearchByTitleComposable(query)
-                                .sortListByTitleOrDateComposable(
-                                    sortOrderList = bookmarkFilter.sortOrderList,
-                                    sortTypeList = bookmarkFilter.sortTypeList
-                                )
-                                .getBookmarkWithHeadersListComposable(
-                                    starFilterType = bookmarkFilter.starFilterType,
-                                    sortTypeList = bookmarkFilter.sortTypeList
-                                ).let {
-                                    bookmarksLiveData.value = it
-                                }
-                        }
-
-                        is Response.Error -> it.exception
-                    }
+                    bookmarkDeletionMutableState.value = it
                 }
+
         }
     }
 
@@ -286,34 +215,8 @@ class BookmarkViewModel @Inject constructor(
         super.onCleared()
     }
 
-    /**
-     * delete bookmark
-     */
-    fun deleteBookmarkFromList(position: Int) {
-        var labelPos = -1
-        bookmarksLiveData.value
-            ?.toMutableList()
-            ?.let {
-                ///TODO PLEASE I DONT KNOW WHAT THIS IS :( :( :( :( :(
-                it.removeAt(position)
-                if (position > 0 && position < it.size
-//                    it[position - 1] is BookmarkHeader &&
-//                    it[position] is BookmarkHeader
-                ) {
-                    it.removeAt(position - 1)
-                    labelPos = position - 1
-                }
-                if (position == it.size
-//                    it[position - 1] is BookmarkHeader
-                ) {
-                    it.removeAt(position - 1)
-                    labelPos = position - 1
-                }
-
-                //set data
-                bookmarksRemovedBookmarkPairData.value =
-                    Pair(listOf(position, labelPos), it)
-            }
+    fun clearDeleteStatus() {
+        bookmarkDeletionMutableState.value = null
     }
 }
 
@@ -463,18 +366,5 @@ fun List<Bookmark>.filterByStarTypeComposable(
                 IS_STAR_VIEW -> bookmark.isLike
                 else -> true
             }
-        }
-        .toList()
-
-/**
- * composable to add Header on bookmark
- */
-fun List<Bookmark>.filterSearchByTitleComposable(query: String) =
-    this
-        .filter { bookmark ->
-            (bookmark.title ?: EMPTY).contains(
-                query,
-                true
-            )
         }
         .toList()

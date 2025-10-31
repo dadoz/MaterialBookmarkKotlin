@@ -131,14 +131,6 @@ class BookmarkListPageFragment :
                             )
                         },
                         onBookmarkStarClicked = { position, bookmark ->
-                            bookmark.isLike = !bookmark.isLike
-                            //toggling status
-                            bookmarkViewModel.setStarBookmark(bookmark)
-                            adapter?.notifyDataSetChanged()
-                            if (bookmarkFilters.starFilterType == IS_STAR_VIEW) {
-                                adapter?.notifyItemRemoved(position)
-                                bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
-                            }
                         }
                     )
                 }
@@ -236,22 +228,22 @@ class BookmarkListPageFragment :
                             remember { mutableStateOf(false) }
                         val localUriHandler = LocalUriHandler.current
 
-                        BookmarkModalPreviewCard(
-                            modifier = Modifier,
-                            bookmark = bookmark,
-                            bottomSheetVisible = showBottomSheet,
-                            onDeleteCallback = {
-                                //on close callback
-                                bookmarkViewModel.setBookmarkPreviewModal(hasToShown = false)
-                                //delete action
-                                bookmarkViewModel.deleteBookmark(bookmark = bookmark)
-                                //update list
-                                notifyItemRemoved(position = position)
-                            },
-                            onOpenAction = {
-                                localUriHandler.openUri(it)
-                            }
-                        )
+//                        BookmarkModalPreviewCard(
+//                            modifier = Modifier,
+//                            bookmark = bookmark,
+//                            bottomSheetVisible = showBottomSheet,
+//                            onDeleteCallback = {
+//                                //on close callback
+//                                bookmarkViewModel.setBookmarkPreviewModal(hasToShown = false)
+//                                //delete action
+//                                bookmarkViewModel.deleteBookmark(bookmark = bookmark)
+//                                //update list
+//                                notifyItemRemoved(position = position)
+//                            },
+//                            onOpenAction = {
+//                                localUriHandler.openUri(it)
+//                            }
+//                        )
                     }
                 }
             }
