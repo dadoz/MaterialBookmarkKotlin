@@ -22,7 +22,6 @@
             android:layout_width="@dimen/bookmark_icon_preview_size"
             android:layout_height="@dimen/bookmark_icon_preview_size"
             android:layout_alignParentStart="true"
-            app:iconSrc="@{bookmarkViewModel.bookmarkIconUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_bookmark_light" />

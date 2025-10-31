@@ -38,6 +38,6 @@ class MbBookmarkDetailsHeaderView : RelativeLayout {
     }
 
     fun setIcon(iconUrl: String?) {
-        viewModel?.bookmarkIconUrl?.postValue(iconUrl)
+//        viewModel?.bookmarkIconUrl?.postValue(iconUrl)
     }
 }

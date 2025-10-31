@@ -43,56 +43,57 @@ class MbEmptyView : FrameLayout {
         bookmarkFilter: BookmarkFilter,
         recyclerView: RecyclerView
     ) {
-        viewModel.bookmarksLiveData.observe(owner) {
-            //search mode
-            visibility = when (bookmarkFilter.isSearchViewType) {
-                true -> {
-                    binding.mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
-                    binding.mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_rabbit_and_fox_illustration)
-                    binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
-                    binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_search_result_string)
-                    when (it) {
-                        else -> GONE
-                    }
-                }
-
-                else -> when (bookmarkFilter.starFilterType) {
-                    IS_DEFAULT_VIEW -> {
-                        binding.mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
-                        binding.mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_fox_sleep_illustration)
-                        binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
-                        binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
-                        when (it) {
-                            else -> GONE
-                        }
-                    }
-
-                    IS_STAR_VIEW -> {
-                        binding.mbBookmarkEmptyImageViewId.visibility = View.GONE
-//                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
-                        binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorAccent)
-                        binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
-//                        views[1].visibility = View.VISIBLE
-//                        views[2].visibility = View.VISIBLE
-                        when (it) {
-                            else -> GONE
-                        }
-                    }
-                }
-            }
-
-            //handled custom logic to hide views on main view
-            if (bookmarkFilter.starFilterType == IS_DEFAULT_VIEW &&
-                !bookmarkFilter.isSearchViewType
-            ) {
-//                views.forEach{
-//                    it.toggleVisibilty(this.visibility)
-//                }
-            }
-
-            recyclerView.toggleVisibilty(this.visibility)
-        }
     }
+//        viewModel.bookmarksLiveData.observe(owner) {
+//            //search mode
+//            visibility = when (bookmarkFilter.isSearchViewType) {
+//                true -> {
+//                    binding.mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
+//                    binding.mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_rabbit_and_fox_illustration)
+//                    binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
+//                    binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_search_result_string)
+//                    when (it) {
+//                        else -> GONE
+//                    }
+//                }
+//
+//                else -> when (bookmarkFilter.starFilterType) {
+//                    IS_DEFAULT_VIEW -> {
+//                        binding.mbBookmarkEmptyImageViewId.visibility = View.VISIBLE
+//                        binding.mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_fox_sleep_illustration)
+//                        binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorPrimary)
+//                        binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_string)
+//                        when (it) {
+//                            else -> GONE
+//                        }
+//                    }
+//
+//                    IS_STAR_VIEW -> {
+//                        binding.mbBookmarkEmptyImageViewId.visibility = View.GONE
+////                        mbBookmarkEmptyImageViewId.setImageDrawableByRes(R.drawable.ic_lamp_illustration)
+//                        binding.mbBookmarkEmptyLabelTextViewId.setColorByRes(R.color.colorAccent)
+//                        binding.mbBookmarkEmptyLabelTextViewId.setText(R.string.no_bookmark_star_string)
+////                        views[1].visibility = View.VISIBLE
+////                        views[2].visibility = View.VISIBLE
+//                        when (it) {
+//                            else -> GONE
+//                        }
+//                    }
+//                }
+//            }
+
+//            //handled custom logic to hide views on main view
+//            if (bookmarkFilter.starFilterType == IS_DEFAULT_VIEW &&
+//                !bookmarkFilter.isSearchViewType
+//            ) {
+////                views.forEach{
+////                    it.toggleVisibilty(this.visibility)
+////                }
+//            }
+//
+//            recyclerView.toggleVisibilty(this.visibility)
+//        }
+//    }
 }
 
 

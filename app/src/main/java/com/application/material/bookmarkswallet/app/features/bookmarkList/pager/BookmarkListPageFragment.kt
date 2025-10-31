@@ -63,14 +63,9 @@ class BookmarkListPageFragment :
         super.onViewCreated(view, savedInstanceState)
         viewType = arguments?.getInt("MB_VIEWPAGER_TYPE") ?: ZERO
         //init data
-        loadData()
+//        loadData()
         //init view
         initView()
-    }
-
-    //todo move to vm
-    private fun loadData() {
-        bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
     }
 
     private fun notifyItemRemoved(position: Int) {
@@ -88,65 +83,65 @@ class BookmarkListPageFragment :
         binding.mbBookmarkHeaderTotBookmarkCardId.setStarColor(IS_DEFAULT_VIEW)
 
         //event update list
-        bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(viewLifecycleOwner) { pairData ->
-            val positionList = pairData.first
-            pairData.second
-                ?.let { list ->
-                    (binding.mbBookmarkRecyclerViewId.adapter as? BookmarkListAdapter)
-                        ?.apply {
-                            setItems(list)
-                            notifyItemRemoved(positionList[0])
-                            if (positionList[1] != -1) {
-                                notifyItemRemoved(positionList[1])
-                            }
-                            notifyItemRangeChanged(
-                                positionList[0],
-                                list.size - positionList[0]
-                            )
-                        }
-                }
-        }
+//        bookmarkViewModel.bookmarksRemovedBookmarkPairData.observe(viewLifecycleOwner) { pairData ->
+//            val positionList = pairData.first
+//            pairData.second
+//                ?.let { list ->
+//                    (binding.mbBookmarkRecyclerViewId.adapter as? BookmarkListAdapter)
+//                        ?.apply {
+//                            setItems(list)
+//                            notifyItemRemoved(positionList[0])
+//                            if (positionList[1] != -1) {
+//                                notifyItemRemoved(positionList[1])
+//                            }
+//                            notifyItemRangeChanged(
+//                                positionList[0],
+//                                list.size - positionList[0]
+//                            )
+//                        }
+//                }
+//        }
 
         //event retrieve list
-        bookmarkViewModel.bookmarksLiveData.observe(viewLifecycleOwner) { list ->
-            //set recyclerview
-            binding.mbBookmarkRecyclerViewId
-                .apply {
-                    //set layout manager
-                    layoutManager = GridLayoutManager(context, N_COUNT_GRID_BOOKMARKS)
+//        bookmarkViewModel.bookmarksLiveData.observe(viewLifecycleOwner) { list ->
+//            //set recyclerview
+//            binding.mbBookmarkRecyclerViewId
+//                .apply {
+//                    //set layout manager
+//                    layoutManager = GridLayoutManager(context, N_COUNT_GRID_BOOKMARKS)
+//
+//                    //set grid layout
+//                    setGridOrListLayout(listViewType = ListViewTypeEnum.entries[bookmarkFilters.listViewType])
+//
+//                    //set adapter
+//                    adapter = BookmarkListAdapter(
+//                        items = list,
+//                        bookmarkFilter = bookmarkFilters,
+//                        onBookmarkItemClicked = { position, bookmark ->
+//                            //set preview to has been show
+//                            bookmarkViewModel.setBookmarkPreviewModal(hasToShown = true)
+//
+//                            openPreviewView(
+//                                position, bookmark
+//                            )
+//                        },
+//                        onBookmarkStarClicked = { position, bookmark ->
+//                        }
+//                    )
+//                }
+//        }
 
-                    //set grid layout
-                    setGridOrListLayout(listViewType = ListViewTypeEnum.entries[bookmarkFilters.listViewType])
-
-                    //set adapter
-                    adapter = BookmarkListAdapter(
-                        items = list,
-                        bookmarkFilter = bookmarkFilters,
-                        onBookmarkItemClicked = { position, bookmark ->
-                            //set preview to has been show
-                            bookmarkViewModel.setBookmarkPreviewModal(hasToShown = true)
-
-                            openPreviewView(
-                                position, bookmark
-                            )
-                        },
-                        onBookmarkStarClicked = { position, bookmark ->
-                        }
-                    )
-                }
-        }
-
-        bookmarkViewModel.bookmarkListSize.observe(viewLifecycleOwner) {
-            binding.mbBookmarkHeaderTotBookmarkLabelId
-                .apply { text = it }
-        }
+//        bookmarkViewModel.bookmarkListSize.observe(viewLifecycleOwner) {
+//            binding.mbBookmarkHeaderTotBookmarkLabelId
+//                .apply { text = it }
+//        }
 
         binding.mbBookmarkHeaderSortFilterIconId
             .apply {
                 setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
                 setOnClickListener {
                     bookmarkFilters.toggleSortAscending()
-                    bookmarkViewModel.sortBookmarkAscending(bookmarkFilters = bookmarkFilters)
+//                    bookmarkViewModel.sortBookmarkAscending(bookmarkFilters = bookmarkFilters)
                     setIconDependingOnSortAscending(bookmarkFilters.isSortAscending())
                 }
             }
@@ -156,7 +151,7 @@ class BookmarkListPageFragment :
                 visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_TITLE)
                 setOnClickListener {
                     bookmarkFilters.setSortByTitle()
-                    bookmarkViewModel.sortBookmarkByTitle(bookmarkFilters = bookmarkFilters)
+//                    bookmarkViewModel.sortBookmarkByTitle(bookmarkFilters = bookmarkFilters)
                     it.toggleVisibiltyWithView(binding.mbBookmarkHeaderSortFilterByDateChipId)
                 }
             }
@@ -166,7 +161,7 @@ class BookmarkListPageFragment :
                 visibility = bookmarkFilters.getVisibilityBySortType(IS_BY_DATE)
                 setOnClickListener {
                     bookmarkFilters.setSortByDate()
-                    bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
+//                    bookmarkViewModel.sortBookmarkByDate(bookmarkFilters = bookmarkFilters)
                     it.toggleVisibiltyWithView(binding.mbBookmarkHeaderSortFilterByTitleChipId)
                 }
             }
@@ -179,9 +174,9 @@ class BookmarkListPageFragment :
                     binding.mbBookmarkRecyclerViewId.setGridOrListLayout(IS_LIST)
                     it.toggleVisibiltyWithView(binding.mbBookmarkHeaderCardFilterIconId)
 
-                    //TODO is really bad this updated
-                    bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
-                    bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+//                    //TODO is really bad this updated
+//                    bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
+//                    bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                 }
 
             }
@@ -196,8 +191,8 @@ class BookmarkListPageFragment :
                     binding.mbBookmarkRecyclerViewId.adapter?.notifyDataSetChanged()
 
                     //TODO is really bad this updated
-                    bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
-                    bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
+//                    bookmarkViewModel.bookmarksLiveData.value?.toMutableList()?.clear()
+//                    bookmarkViewModel.retrieveBookmarkList(bookmarkFilter = bookmarkFilters)
                 }
             }
 
