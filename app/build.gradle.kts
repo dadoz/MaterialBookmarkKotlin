@@ -25,11 +25,12 @@ plugins {
 val major = 2
 val minor = 2
 val patch = 1
-val versionCodeTimestamp = SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
-    .format(Date())
-    .let { dateStr ->
-        Integer.parseInt(dateStr.substring(0, dateStr.length - 1))
-    }
+val versionCodeTimestamp = "1299251930" //big issue please
+//    SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
+//    .format(Date())
+//    .let { dateStr ->
+//        Integer.parseInt(dateStr)
+//    }
 
 // KeyStore
 val keystoreProperties = Properties().apply {
@@ -49,7 +50,7 @@ android {
         applicationId = "com.application.material.bookmarkswallet.app"
         targetSdk = 36
         minSdk = 30
-        versionCode = versionCodeTimestamp
+        versionCode = versionCodeTimestamp.toInt()
         versionName = "$major.$minor.$patch"
         buildConfigField("String", "BOOKMARK_INFO_URL", "\"https://api.urlmeta.org\"")
 
