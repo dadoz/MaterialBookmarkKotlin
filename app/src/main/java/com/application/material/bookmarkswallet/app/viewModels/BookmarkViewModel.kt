@@ -91,7 +91,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             }
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .compose(setListSizeComposable())
-            .subscribe({ success -> bookmarkDeletionSuccess.value = true },
+            .subscribe(
+                { success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
         compositeDisposable.add(disposable)
 
@@ -107,7 +108,8 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
             .map(bookmarkListDataRepository::updateBookmark)
             .flatMap { bookmarkListDataRepository.getBookmarks() }
             .compose(setListSizeComposable())
-            .subscribe({ success -> bookmarkDeletionSuccess.value = true },
+            .subscribe(
+                { success -> bookmarkDeletionSuccess.value = true },
                 { error -> bookmarkDeletionSuccess.value = false; })
 
         compositeDisposable.add(disposable)
@@ -301,11 +303,11 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                 .flatMap { list -> Observable.fromIterable(list) }
                 .sorted { item1, item2 ->
                     when (sortOrderList) {
-                        IS_ASCENDING.ordinal -> (item1.title?.toLowerCase()
-                            ?: "").compareTo(item2.title?.toLowerCase() ?: "")
+                        IS_ASCENDING.ordinal -> (item1.title?.lowercase()
+                            ?: "").compareTo(item2.title?.lowercase() ?: "")
 
-                        IS_DESCENDING.ordinal -> (item2.title?.toLowerCase()
-                            ?: "").compareTo(item1.title?.toLowerCase() ?: "")
+                        IS_DESCENDING.ordinal -> (item2.title?.lowercase()
+                            ?: "").compareTo(item1.title?.lowercase() ?: "")
 
                         else -> 0
                     }
@@ -380,7 +382,7 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
                     when (sortTypeList) {
                         IS_BY_TITLE.ordinal -> {
                             bookmark.title?.let {
-                                if (it.isBlank()) "..." else it.toLowerCase(Locale.ROOT)[0].toString()
+                                if (it.isBlank()) "..." else it.lowercase()[0].toString()
                             } ?: "..."
                         }
 

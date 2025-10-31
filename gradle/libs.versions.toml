@@ -1,9 +1,9 @@
 [versions]
-adapterRxjava3 = "2.11.0"
-androidGradlePlugin = "8.3.1"
-firebaseUiAuth = "8.0.2"
+adapterRxjava3 = "3.0.0"
+androidGradlePlugin = "8.13.0"
+firebaseUiAuth = "9.1.1"
 khronos = "0.9.0"
-kotlin = "1.9.23"
+kotlin = "2.2.21"
 hilt = "2.51"
 mapsCompose = "4.3.0"
 navigationCompose = "2.7.7"
@@ -11,14 +11,14 @@ room = "2.6.1"
 googleServicePlugin = "4.4.1"
 firebasePerfPlugin = "4.3.15"
 firebaseCrashlyticsPlugin = "2.9.9"
-ksp = "1.9.23-1.0.19"
+ksp = "2.2.20-2.0.3"
 kotlinCompiler = "1.5.11"
 rxandroid = "3.0.2"
 rxjava = "3.0.2"
 version-junit5-plugin = "1.9.3.0"
 
 #libraries version
-compose = "2024.04.00"
+compose = "2025.10.01"
 firebase = "32.8.0"
 activityCompose = "1.8.2"
 retrofit = "2.9.0"
@@ -253,7 +253,7 @@ junit5-engines = ["junit5-engine"]
 
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+#android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 #firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "googleServicePlugin" }
@@ -262,8 +262,10 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+segrets-gradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"}
 #to handle datepicker
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-junit5-plugin = { id = "de.mannodermaus.android-junit5", version.ref = "version-junit5-plugin" }
+#junit5-plugin = { id = "de.mannodermaus.android-junit5", version.ref = "version-junit5-plugin" }
 #protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 #secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }

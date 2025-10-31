@@ -1,3 +1,9 @@
+import java.io.FileInputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.kapt)
@@ -11,31 +17,51 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
 //    id("com.google.firebase.appdistribution")
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
+//    alias(libs.plugins.segrets.gradle)
 }
 
 //release version
-val MAJOR = 2
-val MINOR = 2
-val PATCH = 0
+val major = 2
+val minor = 2
+val patch = 1
+val versionCodeTimestamp = SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
+    .format(Date())
+    .let { dateStr ->
+        Integer.parseInt(dateStr.substring(0, dateStr.length - 1))
+    }
+
+// KeyStore
+val keystoreProperties = Properties().apply {
+    load(FileInputStream(rootProject.file("keystore.properties")))
+}
 
 android {
-    compileSdk = 34
-    buildToolsVersion = "34.0.0"
+    compileSdk = 36
+    buildToolsVersion = "36.0.0"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     defaultConfig {
         applicationId = "com.application.material.bookmarkswallet.app"
+        targetSdk = 36
         minSdk = 30
-        targetSdk = 34
-        versionCode = MAJOR * 10000 + MINOR * 100 + PATCH
-        versionName = "$MAJOR.$MINOR.$PATCH"
+        versionCode = versionCodeTimestamp
+        versionName = "$major.$minor.$patch"
         buildConfigField("String", "BOOKMARK_INFO_URL", "\"https://api.urlmeta.org\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        create("releaseConfig") {
+            storeFile = file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
+        }
     }
 
     buildTypes {
@@ -49,6 +75,7 @@ android {
 
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("releaseConfig")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -56,15 +83,18 @@ android {
         }
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlinCompiler.get()
-    }
     buildFeatures {
         viewBinding = true
         dataBinding = true
         compose = true
+        buildConfig = true
     }
     namespace = "com.application.material.bookmarkswallet.app"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
