@@ -234,7 +234,7 @@ fun MbActionMenuBookmarkPreviewView(
                 MbDeleteBookmarkButtonView(
                     modifier = Modifier,
                     bookmark = bookmark,
-                    onDeleteCallback = onDeleteAction ?: {}
+                    onDeleteCallback = onDeleteAction
                 )
                 //action item row
                 Row(
@@ -347,16 +347,17 @@ fun MbActionMenuBookmarkPreviewView(
 fun MbDeleteBookmarkButtonView(
     modifier: Modifier,
     bookmark: Bookmark,
-    onDeleteCallback: (Bookmark) -> Unit,
+    onDeleteCallback: ((Bookmark) -> Unit)?,
 ) {
-    Row(
+    Box(
         modifier = modifier
-            .clip(shape = RoundedCornerShape(22.dp))
+            .clip(shape = RoundedCornerShape(Dimen.size22dp))
             .background(MbColor.RedVermillion)
             .padding(Dimen.paddingMedium16dp)
             .clickable {
-                onDeleteCallback.invoke(bookmark)
-            }) {
+                onDeleteCallback?.invoke(bookmark)
+            }
+    ) {
         Image(
             modifier = Modifier
                 .width(Dimen.sizeLarge32dp)

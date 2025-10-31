@@ -134,27 +134,10 @@ class SearchBookmarkViewModel @Inject constructor(
                             jsonAdapter.fromJson(it)
                         }
                         ?.also { bookmark ->
-
-                            //@TODO temp - test to handle temporary pic
-                            bookmark.siteName
-                                ?.let { siteName ->
-                                    bookmarkListDataRepository.findIconInfoByUrl(
-                                        url = siteName
-                                    )
-                                        .first()
-                                        .let {
-                                            when {
-                                                it is Response.Success -> {
-                                                    bookmark.icon = it.data.first().logoUrl
-                                                }
-
-                                                else -> {}
-                                            }
-                                        }
-                                }
-                            //@TODO
-
                             bookmark
+                                .apply {
+                                    this.icon = this.filterFirstResultFromFindIconUrl()
+                                }
                         }
                         ?.also { bookmark ->
                             saveBookmark(
@@ -200,6 +183,39 @@ class SearchBookmarkViewModel @Inject constructor(
                 }
             }
     }
+
+    private suspend fun BookmarkSimple.filterFirstResultFromFindIconUrl(): String? = this.siteName
+            ?.let { siteName ->
+                bookmarkListDataRepository.findIconInfoByUrl(
+                    url = siteName
+                ).first()
+                    .let {
+                        when {
+                            it is Response.Success -> {
+                                it.data
+                                    .firstOrNull {
+                                        it.domain
+                                            .equals(
+                                                other = this.url
+                                                    .split("www.")[1]
+                                                    .replace(
+                                                        oldValue = "/",
+                                                        newValue = ""
+                                                    ),
+                                                ignoreCase = true
+                                            )
+                                    }
+                                    ?.logoUrl
+                                    ?: it.data
+                                        .first()
+                                        .logoUrl
+                            }
+
+                            else -> null
+                        }
+                    }
+            }
+
 
     /**
      *
