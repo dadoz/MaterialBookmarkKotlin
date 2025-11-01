@@ -56,7 +56,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.Bookma
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
-import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbBookmarkTextFieldView
 import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSecondaryButton
@@ -66,6 +66,7 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
@@ -132,7 +133,7 @@ fun SearchAndAddBookmarkView(
                         text = stringResource(R.string.oh_snap_error_string),
                         backgroundColor = mbErrorBookmarkCardBackgroundColors(),
                         textStyle = mbErrorSubtitleTextAccentStyle(),
-                        iconTintColor = MbColor.LightRedVermillion,
+                        iconTintColor = MbColor.RedVermilionLight,
                     )
                 }
 
@@ -180,7 +181,7 @@ fun SearchAndAddBookmarkView(
 //                //icon image
 //                Box(
 //                    modifier = Modifier
-//                        .clip(shape = RoundedCornerShape(22.dp))
+//                        .clip(shape = mbCardRoundedCornerShape())
 //                        .align(alignment = Alignment.CenterHorizontally)
 //                        .background(color = mbGrayLightColor())
 //                        .padding(all = Dimen.paddingMedium16dp),
@@ -275,7 +276,7 @@ fun SearchAndAddBookmarkWithFullAIView(
         )
         Box(
             modifier = Modifier
-                .clip(shape = RoundedCornerShape(22.dp))
+                .clip(shape = mbCardRoundedCornerShape())
                 .align(alignment = Alignment.CenterHorizontally)
                 .background(color = mbGrayLightColor())
                 .padding(all = Dimen.paddingMedium16dp),

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +24,7 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
@@ -42,7 +42,7 @@ fun MbBoxActionSecondaryButton(
 ) {
     Box(
         modifier = modifier
-            .clip(shape = RoundedCornerShape(size = Dimen.size22dp))
+            .clip(shape = mbCardRoundedCornerShape())
             .background(
                 color = backgroundColor
             )

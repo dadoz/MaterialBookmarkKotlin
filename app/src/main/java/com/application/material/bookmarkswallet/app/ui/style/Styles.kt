@@ -33,6 +33,16 @@ fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkLemonYellow
 }
+@Composable
+fun mbErrorWhiteRedLightDarkColor(): Color = when(isSystemInDarkTheme()) {
+    true -> MbColor.White
+    else -> MbColor.RedVermilion
+}
+@Composable
+fun mbRedVermilionLightDarkColor(): Color = when(isSystemInDarkTheme()) {
+        true -> MbColor.RedVermilion
+        else -> MbColor.RedVermilionLight
+    }
 
 @Composable
 fun mbYellowLemonLightColor() = when (isSystemInDarkTheme()) {
@@ -97,8 +107,8 @@ fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
 @Composable
 fun mbErrorSubtitleTextAccentStyle() = mbSubtitleTextAccentStyle().copy(
     color = when (isSystemInDarkTheme()) {
-        true -> MbColor.LightRedVermillion
-        else -> MbColor.LightRedVermillion
+        true -> MbColor.RedVermilionLight
+        else -> MbColor.RedVermilionLight
     },
 )
 
@@ -195,6 +205,9 @@ fun Modifier.mbEnableAlpha(isEnabled: Boolean): Modifier =
             else -> 0.5f
         }
     )
+
+@Composable
+fun mbCardRoundedCornerShape() = mbButtonRoundedCornerShape()
 
 @Composable
 fun mbButtonRoundedCornerShape() =
@@ -324,8 +337,8 @@ fun mbActionBookmarkCardBackgroundColors(): Color {
 @Composable
 fun mbErrorBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.RedVermillion
-        else -> MbColor.RedVermillion
+        true -> MbColor.RedVermilion
+        else -> MbColor.RedVermilion
     }
 }
 

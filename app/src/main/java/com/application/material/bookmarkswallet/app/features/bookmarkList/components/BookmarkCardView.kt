@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,10 +15,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.models.getLocalDate
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getLocalDate
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkWhiteColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -67,7 +67,7 @@ fun BookmarkCardView(
                         bottom = Dimen.paddingMedium16dp
                     )
                     .clip(
-                        shape = RoundedCornerShape(size = Dimen.size22dp)
+                        shape = mbCardRoundedCornerShape()
                     )
                     .size(
                         size = Dimen.sizeExtraLarge64dp

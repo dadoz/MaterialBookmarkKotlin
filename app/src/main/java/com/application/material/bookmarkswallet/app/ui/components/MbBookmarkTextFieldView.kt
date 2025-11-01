@@ -2,7 +2,6 @@ package com.application.material.bookmarkswallet.app.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -13,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.BookmarkModalBottomSheetView
+import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 
 @Composable
@@ -28,7 +27,7 @@ fun MbBookmarkTextFieldView(
         modifier = modifier
             .fillMaxWidth(),
         textStyle = mbSubtitleTextStyle(),
-        shape = RoundedCornerShape(22.dp),
+        shape = mbCardRoundedCornerShape(),
         value = searchUrlTextState.value,
         placeholder = {
             Text(

@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 
 @Dao
 interface BookmarkDao {

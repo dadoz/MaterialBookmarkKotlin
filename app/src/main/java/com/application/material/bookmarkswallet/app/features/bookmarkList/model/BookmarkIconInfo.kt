@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.models
+package com.application.material.bookmarkswallet.app.features.bookmarkList.model
 
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.JsonClass

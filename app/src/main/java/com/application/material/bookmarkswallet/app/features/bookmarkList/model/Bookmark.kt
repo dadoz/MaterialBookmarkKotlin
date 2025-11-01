@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.models
+package com.application.material.bookmarkswallet.app.features.bookmarkList.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

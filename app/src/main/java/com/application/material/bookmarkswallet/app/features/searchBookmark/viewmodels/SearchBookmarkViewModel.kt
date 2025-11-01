@@ -7,9 +7,9 @@ import com.application.material.bookmarkswallet.app.GenAIManager
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
-import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.models.BookmarkSimple
-import com.application.material.bookmarkswallet.app.models.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkSimple
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.TextPart

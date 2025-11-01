@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,14 +20,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,25 +36,28 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.EDIT_ACTION
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.PIN_ACTION
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.SHARE_ACTION
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.WevBaseBottomSheetView
-import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
+import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
+import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightExtraBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbRedVermilionLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
@@ -70,7 +71,7 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookmarkModalPreviewCard(
+fun BookmarkModalPreviewCardView(
     modifier: Modifier,
     bookmark: Bookmark,
     onDeleteCallback: (Bookmark) -> Unit,
@@ -100,6 +101,7 @@ fun BookmarkModalPreviewCard(
             BookmarkPreviewCard(
                 modifier = modifier,
                 bookmark = bookmark,
+                isActionMenuVisible = true,
                 onDeleteAction = onDeleteCallback,
                 onOpenAction = onOpenAction,
             )
@@ -140,7 +142,7 @@ fun BookmarkPreviewCard(
                 .width(Dimen.sizeExtraLarge96dp)
                 .height(Dimen.sizeExtraLarge96dp)
                 .clip(
-                    shape = RoundedCornerShape(size = Dimen.size22dp)
+                    shape = mbCardRoundedCornerShape()
                 ),
         )
 
@@ -174,7 +176,7 @@ fun BookmarkPreviewCard(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(
-                        vertical = Dimen.paddingLarge32dp
+                        top = Dimen.paddingLarge32dp
                     ),
             ) {
                 Text(
@@ -185,16 +187,15 @@ fun BookmarkPreviewCard(
                     text = bookmark.timestamp.formatDateToStringNew()
                 )
             }
-
-            if (isActionMenuVisible) {
-                MbActionMenuBookmarkPreviewView(
-                    modifier = modifier,
-                    bookmark = bookmark,
-                    onDeleteAction = onDeleteAction
-                )
-            }
         }
 
+        MbActionMenuBookmarkPreviewView(
+            modifier = Modifier
+                .padding(top = Dimen.paddingMedium16dp),
+            isActionMenuVisible = isActionMenuVisible,
+            bookmark = bookmark,
+            onDeleteAction = onDeleteAction
+        )
 
         //open action
         MbPrimaryButton(
@@ -213,132 +214,77 @@ fun BookmarkPreviewCard(
 fun MbActionMenuBookmarkPreviewView(
     modifier: Modifier,
     bookmark: Bookmark,
+    backgroundColor: Color = mbGrayLightExtraBlueDarkColor(),
+    isActionMenuVisible: Boolean = false,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
 ) {
     val context = LocalContext.current
-    val isActionMenuVisible = remember { mutableStateOf(false) }
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+
+    AnimatedVisibility(
+        modifier = modifier
+            .wrapContentWidth(),
+        visible = isActionMenuVisible
     ) {
-        AnimatedVisibility(
-            modifier = Modifier.wrapContentWidth(),
-            visible = isActionMenuVisible.value
+        Row(
+            modifier = Modifier
+                .clip(
+                    shape = mbCardRoundedCornerShape()
+                )
+                .background(
+                    color = backgroundColor
+                )
+                .padding(all = Dimen.paddingMedium16dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
         ) {
+            //delete cta
+            MbDeleteBookmarkButtonView(
+                modifier = Modifier,
+                bookmark = bookmark,
+                onDeleteCallback = onDeleteAction
+            )
+            //action item row
             Row(
                 modifier = Modifier
                     .wrapContentWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+                horizontalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp),
             ) {
-                //delete cta
-                MbDeleteBookmarkButtonView(
-                    modifier = Modifier,
-                    bookmark = bookmark,
-                    onDeleteCallback = onDeleteAction
-                )
-                //action item row
-                Row(
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(22.dp))
-                        .background(
-                            color = mbActionBookmarkCardBackgroundColors()
-                        )
-                        .padding(all = Dimen.paddingMedium16dp)
-                        .wrapContentWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Dimen.paddingSmall8dp)
-                ) {
-                    listOf(
-                        Pair(
-                            first = EDIT_ACTION,
-                            second = AppCompatResources.getDrawable(
-                                LocalContext.current,
-                                R.drawable.ic_edit_light_square
-                            )
-                        ),
-                        Pair(
-                            first = PIN_ACTION,
-                            second =
-                                AppCompatResources.getDrawable(
-                                    LocalContext.current,
-                                    R.drawable.ic_pin
-                                )
-                        ),
-                        Pair(
-                            first = SHARE_ACTION,
-                            second =
-                                AppCompatResources.getDrawable(
-                                    LocalContext.current,
-                                    R.drawable.ic_share_light
-                                )
-                        )
-                    )
-                        .onEach { actionItem ->
+                actionPreviewBookmarkList
+                    .onEach { actionItem ->
+                        MbActionBoxButtonView(
+                            modifier = Modifier,
+                            color = mbActionBookmarkCardBackgroundColors(),
+                            onClickAction = {
+                                when (actionItem.first) {
+                                    SHARE_ACTION -> {
+                                        context.startActivity(
+                                            shareContentIntentBuilder(
+                                                url = bookmark.url
+                                            )
+                                        )
+                                    }
+
+                                    else -> {
+                                        Toast.makeText(
+                                            context,
+                                            "hey you tap -> ${actionItem.first.name}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            },
+                        ) {
                             Image(
                                 modifier = Modifier
-                                    .padding(horizontal = Dimen.paddingExtraSmall4dp)
-                                    .size(size = Dimen.sizeLarge32dp)
-                                    .clickable {
-                                        when (actionItem.first) {
-                                            SHARE_ACTION -> {
-                                                context.startActivity(
-                                                    shareContentIntentBuilder(
-                                                        url = bookmark.url
-                                                    )
-                                                )
-                                            }
-
-                                            else -> {
-                                                Toast.makeText(
-                                                    context,
-                                                    "hey you tap -> ${actionItem.first.name}",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        }
-                                    },
-                                painter = rememberDrawablePainter(drawable = actionItem.second),
+                                    .size(size = Dimen.sizeLarge32dp),
+                                painter = painterResource(id = actionItem.second),
                                 colorFilter = ColorFilter
                                     .tint(color = colorResource(R.color.colorPrimary)),
                                 contentDescription = ""
                             )
                         }
-                }
+                    }
             }
-        }
-        //action item row
-        Box(
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(22.dp))
-                .background(
-                    color = mbGrayLightColor()
-                )
-                .padding(all = Dimen.paddingMedium16dp)
-                .wrapContentWidth(),
-        ) {
-            Image(
-                modifier = Modifier
-                    .padding(horizontal = Dimen.paddingExtraSmall4dp)
-                    .size(size = Dimen.sizeLarge32dp)
-                    .clickable {
-                        //toggle status
-                        isActionMenuVisible.value = isActionMenuVisible.value.not()
-                        //show text
-                        Toast.makeText(
-                            context,
-                            "hey you tap more",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                painter = rememberDrawablePainter(
-                    drawable = AppCompatResources.getDrawable(
-                        LocalContext.current,
-                        R.drawable.ic_apps
-                    )
-                ),
-                colorFilter = ColorFilter
-                    .tint(color = colorResource(R.color.colorPrimary)),
-                contentDescription = ""
-            )
         }
     }
 }
@@ -349,14 +295,12 @@ fun MbDeleteBookmarkButtonView(
     bookmark: Bookmark,
     onDeleteCallback: ((Bookmark) -> Unit)?,
 ) {
-    Box(
-        modifier = modifier
-            .clip(shape = RoundedCornerShape(Dimen.size22dp))
-            .background(MbColor.RedVermillion)
-            .padding(Dimen.paddingMedium16dp)
-            .clickable {
-                onDeleteCallback?.invoke(bookmark)
-            }
+    MbActionBoxButtonView(
+        modifier = modifier,
+        color = mbRedVermilionLightDarkColor(),
+        onClickAction = {
+            onDeleteCallback?.invoke(bookmark)
+        }
     ) {
         Image(
             modifier = Modifier
@@ -368,20 +312,39 @@ fun MbDeleteBookmarkButtonView(
                 )
             ),
             colorFilter = ColorFilter.tint(
-                color = MbColor.White
+                color = mbErrorWhiteRedLightDarkColor()
             ),
             contentDescription = ""
         )
-//        Text(
-//            modifier = Modifier
-//                .align(Alignment.CenterVertically)
-//                .padding(start = Dimen.paddingSmall8dp),
-//            style = mbSubtitleLightTextStyle(),
-//            text = stringResource(id = R.string.delete_label_text)
-//                .lowercase(Locale.getDefault())
-//        )
     }
 }
+
+@Composable
+fun MbActionBoxButtonView(
+    modifier: Modifier,
+    color: Color = mbGrayLightColor(),
+    onClickAction: (() -> Unit)? = null,
+    item: @Composable (BoxScope.() -> Unit),
+) {
+    Box(
+        modifier = modifier
+            .clip(
+                shape = mbCardRoundedCornerShape()
+            )
+            .background(
+                color = color
+            )
+            .clickable(
+                enabled = onClickAction != null,
+                onClick = onClickAction ?: {}
+            )
+            .padding(
+                all = Dimen.paddingMedium16dp
+            ),
+        content = item
+    )
+}
+
 
 @Composable
 fun rememberDrawablePainterWithColor(res: Int, colorRes: Int = R.color.colorPrimary): Painter =
@@ -417,31 +380,62 @@ fun rememberDrawablePainterWithColor(
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun MbDeleteBookmarkButtonViewPreview() {
-    MbDeleteBookmarkButtonView(
-        modifier = Modifier,
-        bookmark = Bookmark("blal", "blal", "", "", "", Date(), false),
-        onDeleteCallback = {}
-    )
+    MaterialBookmarkMaterialTheme {
+        Box(
+            modifier = Modifier
+                .background(color = mbYellowLemonDarkLightColor())
+                .padding(all = Dimen.paddingMedium16dp)
+        ) {
+            MbDeleteBookmarkButtonView(
+                modifier = Modifier,
+                bookmark = Bookmark("blal", "blal", "", "", "", Date(), false),
+                onDeleteCallback = {}
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun MbDeleteBookmarkButtonViewPreview2() {
+    MaterialBookmarkMaterialTheme {
+        Box(
+            modifier = Modifier
+                .background(color = mbYellowLemonDarkLightColor())
+                .padding(all = Dimen.paddingMedium16dp)
+        ) {
+            MbActionMenuBookmarkPreviewView(
+                modifier = Modifier,
+                bookmark = Bookmark("blal", "blal", "", "", "", Date(), false),
+                isActionMenuVisible = true
+            )
+        }
+    }
 }
 
 @Composable
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun BookmarkPreviewCardPreview() {
-    BookmarkPreviewCard(
-        modifier = Modifier,
-        bookmark =
-            Bookmark(
-                title = "Outlook, Email Calendar Office and People",
-                siteName = "Blalallallalala",
-                timestamp = Date(),
-                iconUrl = "",
-                url = "http://outlook.com.ddd.dddddd.ddddd.sdssd/sdafasd/asdfasdf",
-                appId = null,
-                isLike = false,
-            ),
-        onDeleteAction = {},
-        {},
-    )
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+            BookmarkPreviewCard(
+                modifier = Modifier,
+                bookmark =
+                    Bookmark(
+                        title = "Outlook, Email Calendar Office and People",
+                        siteName = "Blalallallalala",
+                        timestamp = Date(),
+                        iconUrl = "",
+                        url = "http://outlook.com.ddd.dddddd.ddddd.sdssd/sdafasd/asdfasdf",
+                        appId = null,
+                        isLike = false,
+                    ),
+                onDeleteAction = {},
+                {},
+            )
+        }
+    }
 }
 

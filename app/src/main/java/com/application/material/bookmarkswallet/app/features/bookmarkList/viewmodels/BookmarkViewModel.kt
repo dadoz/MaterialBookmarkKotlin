@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
-import com.application.material.bookmarkswallet.app.models.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

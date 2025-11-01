@@ -1,7 +1,7 @@
 package com.application.material.bookmarkswallet.app.data.remote
 
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.models.BookmarkIconInfo
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkIconInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

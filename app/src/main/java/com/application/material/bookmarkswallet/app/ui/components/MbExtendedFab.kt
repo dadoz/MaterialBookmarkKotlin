@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.features.bookmarkList.components
+package com.application.material.bookmarkswallet.app.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExtendedFloatingActionButton

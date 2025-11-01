@@ -1,7 +1,7 @@
 package com.application.material.bookmarkswallet.app.data.remote
 
 import com.application.material.bookmarkswallet.app.BuildConfig
-import com.application.material.bookmarkswallet.app.models.BookmarkIconInfo
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkIconInfo
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query

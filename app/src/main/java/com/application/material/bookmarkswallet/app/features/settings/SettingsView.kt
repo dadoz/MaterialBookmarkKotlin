@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.USER_MOCK
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
+import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.UserLoginCardView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView

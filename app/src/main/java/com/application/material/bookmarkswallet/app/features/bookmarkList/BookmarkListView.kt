@@ -30,16 +30,16 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkFilterView
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCard
-import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MBExtendedFab
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCardView
+import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
-import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.models.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
@@ -150,7 +150,7 @@ fun BookmarkListView(
 
             selectedBookmark.value
                 ?.let {
-                    BookmarkModalPreviewCard(
+                    BookmarkModalPreviewCardView(
                         modifier = Modifier,
                         bookmark = it,
                         onDeleteCallback = {

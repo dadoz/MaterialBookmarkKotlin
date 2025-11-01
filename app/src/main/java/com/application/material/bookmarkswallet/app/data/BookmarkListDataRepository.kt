@@ -3,8 +3,8 @@ package com.application.material.bookmarkswallet.app.data
 import com.application.material.bookmarkswallet.app.data.local.BookmarkDataSourceLocal
 import com.application.material.bookmarkswallet.app.data.remote.BookmarkDataSourceRemote
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.models.Bookmark
-import com.application.material.bookmarkswallet.app.models.BookmarkIconInfo
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkIconInfo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
