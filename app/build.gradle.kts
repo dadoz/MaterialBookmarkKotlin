@@ -22,14 +22,15 @@ plugins {
 }
 
 //release version
-val major = 2
-val minor = 2
+val major = 3
+val minor = 0
 val patch = 0
-val versionCodeTimestamp = SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
-    .format(Date())
-    .let { dateStr ->
-        Integer.parseInt(dateStr.substring(0, dateStr.length - 1))
-    }
+val versionCodeTimestamp = "1299251930" //todo big issue please max resolution 2147483647
+//val versionCodeTimestamp = SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
+//    .format(Date())
+//    .let { dateStr ->
+//        Integer.parseInt(dateStr.substring(0, dateStr.length - 1))
+//    }
 
 // KeyStore
 val keystoreProperties = Properties().apply {
