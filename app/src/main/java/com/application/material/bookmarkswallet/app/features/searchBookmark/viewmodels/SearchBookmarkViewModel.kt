@@ -1,14 +1,12 @@
 package com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels
 
 import android.app.Application
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.GenAIManager
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchResultUIState
+import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.models.BookmarkSimple
 import com.application.material.bookmarkswallet.app.models.getBookmarkId
@@ -23,7 +21,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,7 +36,6 @@ class SearchBookmarkViewModel @Inject constructor(
     private val genAIManager: GenAIManager
 ) : AndroidViewModel(app) {
     //first state :)
-    private val bookmarkIconUrl: MutableState<String> = mutableStateOf("bla")
     private val searchResultMutableState: MutableStateFlow<SearchResultUIState> =
         MutableStateFlow(value = SearchResultUIState())
     val searchResultUIState: StateFlow<SearchResultUIState> =
@@ -185,54 +181,36 @@ class SearchBookmarkViewModel @Inject constructor(
     }
 
     private suspend fun BookmarkSimple.filterFirstResultFromFindIconUrl(): String? = this.siteName
-            ?.let { siteName ->
-                bookmarkListDataRepository.findIconInfoByUrl(
-                    url = siteName
-                ).first()
-                    .let {
-                        when {
-                            it is Response.Success -> {
-                                it.data
-                                    .firstOrNull {
-                                        it.domain
-                                            .equals(
-                                                other = this.url
-                                                    .split("www.")[1]
-                                                    .replace(
-                                                        oldValue = "/",
-                                                        newValue = ""
-                                                    ),
-                                                ignoreCase = true
-                                            )
-                                    }
-                                    ?.logoUrl
-                                    ?: it.data
-                                        .first()
-                                        .logoUrl
-                            }
-
-                            else -> null
-                        }
-                    }
-            }
-
-
-    /**
-     *
-     */
-    fun findIconInfoByUrl(url: String) {
-        viewModelScope.launch {
+        ?.let { siteName ->
             bookmarkListDataRepository.findIconInfoByUrl(
-                url = url
-            )
-                .catch {
-                    Timber.e(it)
-                }
-                .collect {
-                    Timber.e(it.toString())
+                url = siteName
+            ).first()
+                .let {
+                    when {
+                        it is Response.Success -> {
+                            it.data
+                                .firstOrNull {
+                                    it.domain
+                                        .equals(
+                                            other = this.url
+                                                .split("www.")[1]
+                                                .replace(
+                                                    oldValue = "/",
+                                                    newValue = ""
+                                                ),
+                                            ignoreCase = true
+                                        )
+                                }
+                                ?.logoUrl
+                                ?: it.data
+                                    .first()
+                                    .logoUrl
+                        }
+
+                        else -> null
+                    }
                 }
         }
-    }
 
     override fun onCleared() {
         super.onCleared()

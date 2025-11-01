@@ -1,12 +1,7 @@
 package com.application.material.bookmarkswallet.app.models
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import coil.load
-import coil.transform.CircleCropTransformation
-import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.utils.convert
 import com.application.material.bookmarkswallet.app.utils.formatZonedDateTime
 import com.google.gson.annotations.SerializedName
@@ -42,27 +37,6 @@ fun getBookmarkId(url: String): String = UUID.randomUUID().toString()
 fun Bookmark.getLocalDate(): String? = timestamp?.convert()
     .toString()
     .formatZonedDateTime()
-
-@BindingAdapter("iconSrc")
-fun setImageViewResource(imageView: ImageView, url: String?) {
-    imageView.load(url) {
-        crossfade(true)
-        placeholder(R.drawable.ic_bookmark_light)
-        error(R.drawable.ic_bookmark_light)
-        transformations(CircleCropTransformation())
-    }
-}
-
-@BindingAdapter("iconSquaredSrc")
-fun setImageViewSquaredResource(imageView: ImageView, url: String?) {
-    imageView.load(url) {
-        crossfade(true)
-        placeholder(R.drawable.ic_bookmark_light)
-        error(R.drawable.ic_bookmark_light)
-//                        .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(32)))
-        transformations(CircleCropTransformation())
-    }
-}
 
 @JsonClass(generateAdapter = true)
 data class BookmarkSimple(

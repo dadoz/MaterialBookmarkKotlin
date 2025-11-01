@@ -8,16 +8,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.ksp)
-    //hilt plugin
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.gms)
-    //Apply the App Distribution Gradle plugin
     alias(libs.plugins.firebase.crashlytics)
-//    id("com.google.firebase.appdistribution")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.segrets.gradle)
+//    id("com.google.firebase.appdistribution")
 }
 
 //release version
@@ -165,15 +163,11 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
 
-//    implementation(libs.rxjava)
-//    implementation(libs.rxandroid)
-
     //timber log
     implementation(libs.timber)
 
     //retrofit
     implementation(libs.bundles.retrofit)
-//    implementation(libs.adapter.rxjava3)
     implementation(libs.converter.gson)
 
     //moshi
@@ -221,13 +215,10 @@ dependencies {
 
     //coil
     implementation(libs.coil.compose)
-    //glide
-//    implementation(libs.glide)
 
     implementation(libs.generativeai)
 
     //test
     testImplementation(libs.junit)
-//    testImplementation(libs.compose.ui.test.manifest)
     androidTestImplementation(libs.bundles.androidTest)
 }

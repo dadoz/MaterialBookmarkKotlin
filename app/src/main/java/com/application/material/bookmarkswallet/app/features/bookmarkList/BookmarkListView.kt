@@ -35,7 +35,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.compon
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
-import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchResultUIState
+import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark

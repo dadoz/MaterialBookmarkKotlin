@@ -54,6 +54,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
+import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.models.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
@@ -75,6 +76,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSuccessSubtitleTe
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import java.util.Date
 
 @Composable
 fun SearchAndAddBookmarkView(
@@ -465,7 +467,7 @@ fun BookmarkPreview() {
                             siteName = "",
                             iconUrl = "",
                             appId = "",
-                            timestamp = java.util.Date(),
+                            timestamp = Date(),
                             isLike = false,
                         )
                     )
