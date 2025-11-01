@@ -22,11 +22,11 @@ plugins {
 
 //release version
 val appVersionName = "3.0.0"
-val versionCodeTimestamp = SimpleDateFormat("yyMMddHHmm", Locale.ITALY)
+val versionCodeTimestamp = SimpleDateFormat("ddMMyyHHmm", Locale.ITALY)
     .format(Date())
     .let { dateStr ->
         //1299251930 //todo big issue please max resolution 2147483647
-        "12" + dateStr
+        "13" + dateStr
             .substring(startIndex = 2, endIndex = dateStr.length)
     }
     .let {
