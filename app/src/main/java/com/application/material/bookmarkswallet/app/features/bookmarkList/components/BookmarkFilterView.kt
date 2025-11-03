@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
@@ -13,10 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbChipRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbFilterChipColors
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextSmallStyle
@@ -24,7 +26,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextSmall
 @Composable
 fun BookmarkFilterView(
     modifier: Modifier = Modifier,
-    filterItems: List<String>
+    filterItems: List<FilterHp>
 ) {
     val selectedItem = remember {
         mutableIntStateOf(value = -1)
@@ -42,12 +44,14 @@ fun BookmarkFilterView(
                 onClick = {
                     selectedItem.intValue = id
                 },
-                shape = RoundedCornerShape(size = Dimen.mbModalRoundedCornerSize),
+                shape = mbChipRoundedCornerShape(),
                 label = {
                     Text(
                         modifier = Modifier
-                            .padding(vertical = 12.dp),
-                        text = item,
+                            .padding(
+                                vertical = Dimen.paddingMedium12dp
+                            ),
+                        text = stringResource(id = item.labelRes),
                         style = mbSubtitleTextSmallStyle(
                             color = mbSubtitleTextColor(
                                 isSelected = selectedItem.intValue == id
@@ -82,7 +86,11 @@ fun BookmarkFilterViewPreview() {
     MaterialBookmarkMaterialTheme {
         BookmarkFilterView(
             modifier = Modifier,
-            filterItems = listOf("Filter 1", "Filter 2", "Filter 3")
+            filterItems =
+                listOf(
+                    FilterHp.SORT_BY_DATE,
+                    FilterHp.PINNED
+                )
         )
     }
 }

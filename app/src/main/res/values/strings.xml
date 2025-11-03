@@ -48,6 +48,11 @@
     <string name="open_bookmark">Open</string>
     <string name="bookmark_url">Bookmark Url</string>
 
+    <!--    hp filters-->
+    <string name="filter_hp_list">List</string>
+    <string name="filter_hp_sort_by_date">Sort by date</string>
+    <string name="filter_hp_pinned">Pinned</string>
+
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
     <string name="add_title_manually">add title manually</string>

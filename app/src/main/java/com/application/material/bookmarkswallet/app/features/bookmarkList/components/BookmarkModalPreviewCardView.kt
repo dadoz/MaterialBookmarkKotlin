@@ -51,6 +51,7 @@ import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
@@ -63,6 +64,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.application.material.bookmarkswallet.app.utils.formatDateToStringNew
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
@@ -215,6 +217,7 @@ fun MbActionMenuBookmarkPreviewView(
     modifier: Modifier,
     bookmark: Bookmark,
     backgroundColor: Color = mbGrayLightExtraBlueDarkColor(),
+    actionItemBackgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
     isActionMenuVisible: Boolean = false,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
 ) {
@@ -233,9 +236,11 @@ fun MbActionMenuBookmarkPreviewView(
                 .background(
                     color = backgroundColor
                 )
-                .padding(all = Dimen.paddingMedium16dp)
+                .padding(
+                    all = Dimen.paddingMedium16dp
+                )
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+            horizontalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
         ) {
             //delete cta
             MbDeleteBookmarkButtonView(
@@ -246,14 +251,25 @@ fun MbActionMenuBookmarkPreviewView(
             //action item row
             Row(
                 modifier = Modifier
-                    .wrapContentWidth(),
-                horizontalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp),
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
             ) {
                 actionPreviewBookmarkList
-                    .onEach { actionItem ->
+                    .onEachIndexed { index, actionItem ->
                         MbActionBoxButtonView(
-                            modifier = Modifier,
-                            color = mbActionBookmarkCardBackgroundColors(),
+                            modifier = Modifier
+                                .let {
+                                    when (index) {
+                                        ZERO -> it
+
+                                        actionPreviewBookmarkList.size - 1 -> it
+
+                                        else -> it.padding(
+                                            horizontal = Dimen.paddingMedium16dp
+                                        )
+                                    }
+                                },
+                            color = actionItemBackgroundColor,
                             onClickAction = {
                                 when (actionItem.first) {
                                     SHARE_ACTION -> {
@@ -329,7 +345,7 @@ fun MbActionBoxButtonView(
     Box(
         modifier = modifier
             .clip(
-                shape = mbCardRoundedCornerShape()
+                shape = mbButtonRoundedCornerShape()
             )
             .background(
                 color = color

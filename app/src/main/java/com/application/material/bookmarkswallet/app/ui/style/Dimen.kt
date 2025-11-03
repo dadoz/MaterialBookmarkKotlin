@@ -82,8 +82,9 @@ object Dimen {
     val loginCardViewCornerShape = 20.dp
     val loginLayoutPadding200Dp = 200.dp
     val cardViewElevation = 10.dp
-    val cardViewCornerShape = 11.dp
-    val loginCheckBoxMargin = (-8).dp
+    val mbChipRoundCornerSize = 16.dp
+    val mbButtonRoundCornerSize = 22.dp
+    val mbCardRoundCornerSize = 34.dp
 
     //error
     val errorAnimatedOffset: Dp = (-40).dp
@@ -127,7 +128,7 @@ object Dimen {
     val sizeAlignmentDashboard: Dp = (-12).dp
 
     //wev modal web view
-    val mbModalRoundedCornerSize = 22.dp
+    val mbModalRoundedCornerSize = 34.dp
 
     val stepsContentCardHeightIn = 250.dp
 

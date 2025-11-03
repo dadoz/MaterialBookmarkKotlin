@@ -33,16 +33,18 @@ fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkLemonYellow
 }
+
 @Composable
-fun mbErrorWhiteRedLightDarkColor(): Color = when(isSystemInDarkTheme()) {
+fun mbErrorWhiteRedLightDarkColor(): Color = when (isSystemInDarkTheme()) {
     true -> MbColor.White
     else -> MbColor.RedVermilion
 }
+
 @Composable
-fun mbRedVermilionLightDarkColor(): Color = when(isSystemInDarkTheme()) {
-        true -> MbColor.RedVermilion
-        else -> MbColor.RedVermilionLight
-    }
+fun mbRedVermilionLightDarkColor(): Color = when (isSystemInDarkTheme()) {
+    true -> MbColor.RedVermilion
+    else -> MbColor.RedVermilionLight
+}
 
 @Composable
 fun mbYellowLemonLightColor() = when (isSystemInDarkTheme()) {
@@ -207,12 +209,15 @@ fun Modifier.mbEnableAlpha(isEnabled: Boolean): Modifier =
     )
 
 @Composable
-fun mbCardRoundedCornerShape() = mbButtonRoundedCornerShape()
+fun mbCardRoundedCornerShape() =
+    RoundedCornerShape(
+        size = Dimen.mbCardRoundCornerSize
+    )
 
 @Composable
 fun mbButtonRoundedCornerShape() =
     RoundedCornerShape(
-        Dimen.size22dp
+        size = Dimen.mbButtonRoundCornerSize
     )
 
 @Composable
@@ -329,7 +334,7 @@ fun mbGrayLightExtraBlueDarkColor(): Color {
 @Composable
 fun mbActionBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.ExtraDarkLemonYellow
+        true -> MbColor.GrayBlueDarkNight
         else -> MbColor.UltraLightGray
     }
 }
@@ -365,6 +370,11 @@ fun mbWhiteDarkColor(): Color {
         else -> MbColor.DarkGray
     }
 }
+
+@Composable
+fun mbChipRoundedCornerShape() = RoundedCornerShape(
+    size = Dimen.mbChipRoundCornerSize
+)
 
 @Composable
 fun mbBottomSheetRoundedCornerShape() = RoundedCornerShape(

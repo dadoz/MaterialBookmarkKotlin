@@ -31,16 +31,17 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkFilterView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCardView
-import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
+import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
-import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
+import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
@@ -135,7 +136,7 @@ fun BookmarkListView(
             //filers
             BookmarkFilterView(
                 modifier = Modifier,
-                filterItems = filterList
+                filterItems = filterHpList
             )
 
             BookmarkItemsView(
@@ -243,7 +244,6 @@ fun BookmarkListViewPreview() {
 
 
 const val COLUMN_GRID_SIZE = 1
-internal val filterList = listOf("list", "sort by date", "pinned")
 internal val bookmarkListMock = listOf(
     Bookmark(
         appId = getBookmarkId("www.google.it"),

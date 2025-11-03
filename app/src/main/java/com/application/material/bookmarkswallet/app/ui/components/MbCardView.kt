@@ -22,7 +22,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardBackgrou
 @Composable
 fun MbCardView(
     modifier: Modifier,
-    roundCornerSize: Dp = Dimen.size22dp,
+    roundCornerSize: Dp = Dimen.mbCardRoundCornerSize,
     colors: CardColors = mbBasicCardBackgroundColors(),
     content: @Composable ColumnScope.() -> Unit
 ) {
