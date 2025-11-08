@@ -46,6 +46,7 @@ import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.SHARE_ACTION
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getTimestampFormatted
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.WevBaseBottomSheetView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
@@ -66,7 +67,6 @@ import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYe
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.ZERO
-import com.application.material.bookmarkswallet.app.utils.formatDateToStringNew
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import kotlinx.coroutines.launch
@@ -120,6 +120,7 @@ fun BookmarkPreviewCard(
     onOpenAction: ((String) -> Unit)? = null,
     isActionMenuVisible: Boolean = true,
 ) {
+    val context = LocalContext.current
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark,
@@ -187,7 +188,9 @@ fun BookmarkPreviewCard(
                         .fillMaxWidth(),
                     textAlign = TextAlign.End,
                     style = mbSubtitleLightTextStyle(),
-                    text = bookmark.timestamp.formatDateToStringNew()
+                    text = bookmark.getTimestampFormatted(
+                        context = context
+                    )
                 )
             }
         }

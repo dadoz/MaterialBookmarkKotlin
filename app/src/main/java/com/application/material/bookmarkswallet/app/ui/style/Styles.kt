@@ -286,8 +286,8 @@ fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
 }
 
 @Composable
-fun mbButtonTextStyle() = TextStyle(
-    color = mbWhiteDarkColor(),
+fun mbButtonTextStyle(color: Color = mbWhiteDarkColor()) = TextStyle(
+    color = color,
     fontSize = MaterialTheme.typography.labelLarge.fontSize,
     fontFamily = MbYantramanavBoldFontFamily,
     fontWeight = FontWeight.Normal

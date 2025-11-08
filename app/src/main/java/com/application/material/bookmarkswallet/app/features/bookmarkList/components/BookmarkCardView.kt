@@ -12,11 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getLocalDate
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getTimestampFormatted
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
@@ -34,6 +35,7 @@ fun BookmarkCardView(
     bookmark: Bookmark,
     onOpenAction: ((Bookmark) -> Unit)? = null,
 ) {
+    val context = LocalContext.current
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark,
@@ -108,7 +110,9 @@ fun BookmarkCardView(
                     ),
                 maxLines = 1,
                 style = mbSubtitleLightTextStyle(),
-                text = bookmark.getLocalDate().toString()
+                text = bookmark.getTimestampFormatted(
+                    context = context
+                )
             )
         }
     }

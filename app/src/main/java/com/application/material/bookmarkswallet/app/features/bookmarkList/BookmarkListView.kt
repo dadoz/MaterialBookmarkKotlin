@@ -76,7 +76,7 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun BookmarkListView(
+fun BookmarkListComponentView(
     modifier: Modifier = Modifier,
     bookmarkViewModel: BookmarkViewModel? = hiltViewModel(), //nullable only for preview
     searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel(),
@@ -176,10 +176,7 @@ fun BookmarkListView(
         Column(
             modifier = Modifier
                 .padding(
-                    horizontal = Dimen.paddingMedium16dp
-                )
-                .padding(
-                    bottom = Dimen.paddingMedium16dp
+                    all = Dimen.paddingMedium16dp
                 )
         ) {
             //items on title and subtitle
@@ -203,10 +200,10 @@ fun BookmarkListView(
             )
 
             //main container view of all bookmarks
-            BookmarkListView(
+            BookmarkListComponentView(
                 modifier = Modifier
                     .padding(
-                        bottom = Dimen.paddingLarge32dp
+                        top = Dimen.paddingMedium16dp
                     )
                     .fillMaxSize(),
                 bookmarkListType = selectedFilterListType.value.first(),
@@ -241,7 +238,7 @@ fun BookmarkListView(
                     alignment = Alignment.BottomEnd
                 )
                 .padding(
-                    bottom = Dimen.paddingLarge32dp
+                    bottom = Dimen.paddingMedium16dp
                 )
                 .padding(
                     end = Dimen.paddingMedium16dp
@@ -400,18 +397,14 @@ fun MbFilterBookmarkHpView(
 }
 
 @Composable
-fun BookmarkListView(
+fun BookmarkListComponentView(
     modifier: Modifier = Modifier,
     bookmarkListType: BookmarkListType = GRID,
     bookmarkItems: List<Bookmark> = emptyList(),
     onOpenAction: (Bookmark) -> Unit = {}
 ) {
     LazyVerticalGrid(
-        modifier = modifier
-            .padding(
-                top = Dimen.paddingMedium16dp,
-                bottom = Dimen.paddingLarge32dp
-            ),
+        modifier = modifier,
         columns = GridCells.Fixed(
             count = when (bookmarkListType) {
                 GRID -> BOOKMARK_COLUMN_GRID_SIZE
@@ -429,6 +422,15 @@ fun BookmarkListView(
                 onOpenAction = onOpenAction
             )
         }
+        //spacing last item
+        item {
+            Box(
+                modifier = Modifier
+                    .padding(
+                        all = Dimen.paddingMedium16dp
+                    )
+            ) {}
+        }
     }
 }
 
@@ -439,7 +441,7 @@ fun BookmarkListView(
 fun BookmarkListViewPreview() {
     MaterialBookmarkMaterialTheme {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
-            BookmarkListView(
+            BookmarkListComponentView(
                 modifier = Modifier,
                 searchBookmarkViewModel = null,
                 bookmarkViewModel = null

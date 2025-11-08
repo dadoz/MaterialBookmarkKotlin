@@ -1,8 +1,10 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.model
 
+import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.application.material.bookmarkswallet.app.utils.convert
+import com.application.material.bookmarkswallet.app.utils.NO_TIMESTAMP
+import com.application.material.bookmarkswallet.app.utils.convertToLocalDateTime
 import com.application.material.bookmarkswallet.app.utils.formatZonedDateTime
 import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
@@ -29,14 +31,16 @@ data class Bookmark(
     var timestamp: Date?,
     @SerializedName("is_star")
     var isLike: Boolean = false
-) : BookmarkType {
-}
+) : BookmarkType
+
+fun Bookmark?.getTimestampFormatted(context: Context): String = this?.timestamp
+    ?.convertToLocalDateTime()
+    .formatZonedDateTime(
+        context = context
+    ) ?: NO_TIMESTAMP
 
 fun getBookmarkId(url: String): String = UUID.randomUUID().toString()
 
-fun Bookmark.getLocalDate(): String? = timestamp?.convert()
-    .toString()
-    .formatZonedDateTime()
 
 @JsonClass(generateAdapter = true)
 data class BookmarkSimple(

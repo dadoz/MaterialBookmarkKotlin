@@ -1,9 +1,9 @@
 package com.application.material.bookmarkswallet.app.utils
 
-import kotlin.time.Clock
+import android.content.Context
+import com.application.material.bookmarkswallet.app.R
 import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone.Companion.UTC
@@ -30,8 +30,8 @@ import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.time.temporal.TemporalAccessor
 import java.util.Date
+import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.toJavaInstant
 import kotlin.time.toKotlinInstant
@@ -54,16 +54,19 @@ const val ITALIAN_SHORT_FORMAT_DATE_CARD = "dd MMM yyyy"
 const val FORMAT_TIME_DATE = "HH:mm - dd/MM/yyyy"
 const val FORMAT_DATE_EXPLICIT_TIMEZONE = "yyyy-MM-dd'T'HH:mm:ss[xxx]"
 const val FORMAT_DATE_NO_TIMEZONE = "yyyy-MM-dd'T'HH:mm:ss"
-const val FORMAT_DATE_LITE = "yyyy-MM-dd"
+const val FORMAT_DATE_LITE = "dd MMM - HH:mm"
 const val FORMAT_TIME = "HH:mm"
 const val FORMAT_TIME_EXTENDED = "HH:mm:ss"
 const val FORMAT_PARAMS = "%02d:%02d"
 
-@OptIn(ExperimentalTime::class)
-fun Date.convert(): LocalDateTime? = this.toInstant()
-    .toKotlinInstant()
-    .toLocalDateTime(currentSystemDefault())
-
+fun Date.convertToLocalDateTime(): java.time.LocalDateTime? = this.toInstant()
+    .let {
+        java.time.LocalDateTime.ofInstant(it, ZoneId.systemDefault())
+    }
+//    .toKotlinInstant()
+//    .toLocalDateTime(
+//        timeZone = currentSystemDefault()
+//    )
 
 /**
  * DateUtils to handle date from and to BTP (BE) considering BE is always UTC time (always convert
@@ -110,17 +113,12 @@ fun String.parseDateToZonedDateTimeUTC(): ZonedDateTime? = try {
 /**
  * format string zoned date time with yyyy-MM-dd
  * */
-fun String.formatZonedDateTime(): String? = try {
-    this.takeIf { it.isNotEmpty() }
-        ?.let {
-            when {
-                (it.contains(PLUS) || it.contains(TIMEZONE_Z)) -> ZonedDateTime
-                    .parse(it)
-                    .format(DateTimeFormatter.ofPattern(FORMAT_DATE_LITE))
-
-                else -> it.substringBefore(TIMEZONE_T)
-            }
+fun java.time.LocalDateTime?.formatZonedDateTime(context: Context): String? = try {
+    DateTimeFormatter.ofPattern(FORMAT_DATE_LITE)
+        .let { dateTimeFormatter ->
+            this?.format(dateTimeFormatter)
         }
+        ?.replace(DASH, context.getString(R.string.at_label))
 } catch (e: Exception) {
     Timber.e("[formatZonedDateTime] %s", e.message)
     null
@@ -850,11 +848,4 @@ fun String.extractDate(): String? {
         e.printStackTrace()
         this.parseDateLocalToString()
     }
-}
-
-
-fun Date?.formatDateToStringNew(): String {
-    return this?.convert()
-        .toString()
-        .formatZonedDateTime() ?: "-"
 }

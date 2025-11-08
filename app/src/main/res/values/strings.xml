@@ -59,10 +59,11 @@
     <!--    empty bookmark list view-->
     <string name="empty_bookmark_list_label">Still no Bookmarks in your list.</string>
 
+    <!--    bookmark card-->
+    <string name="at_label">at</string>
+
     <!--    bookmark list item-->
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
     <string name="add_title_manually">add title manually</string>
-
-
 </resources>

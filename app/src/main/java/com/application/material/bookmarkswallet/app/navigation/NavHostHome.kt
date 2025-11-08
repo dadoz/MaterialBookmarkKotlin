@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListComponentView
 import com.application.material.bookmarkswallet.app.features.settings.SettingsView
 
 enum class NavRoute(val route: String) {
@@ -27,7 +27,7 @@ fun HomeNavHost(
     ) {
         //home screen
         composable(route = NavRoute.BookmarkList.route) {
-            BookmarkListView()
+            BookmarkListComponentView()
         }
 
         composable(route = NavRoute.Settings.route) {
