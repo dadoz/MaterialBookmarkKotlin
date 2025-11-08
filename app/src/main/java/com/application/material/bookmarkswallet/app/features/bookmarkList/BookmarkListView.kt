@@ -1,6 +1,8 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,7 +10,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -17,8 +23,10 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,7 +35,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -40,6 +50,8 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.config
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.GRID
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.LIST
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
@@ -49,10 +61,14 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.comp
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
+import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbExtendedFab
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
+import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_GRID_SIZE
+import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_LIST_SIZE
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -88,17 +104,28 @@ fun BookmarkListView(
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
     //filter list on hp
-    val selectedFilterHpMap = rememberSaveable {
-        mutableMapOf(
+    val selectedFilterHpMap = remember { //todo rememberSaveable custom saver for map :(
+        mutableStateMapOf(
             FilterHp.PINNED to false,
             FilterHp.SORT_BY_DATE to false
         )
     }
     //filter on list type
-    var selectedFilterListType by rememberSaveable {
+    val selectedFilterListType = rememberSaveable {
         mutableStateOf(
             value = filterDefaultListType
         )
+    }
+
+    //bookmark list empty check
+    var isBookmarkListEmpty by rememberSaveable {
+        mutableStateOf(
+            value = false
+        )
+    }
+
+    LaunchedEffect(key1 = bookmarkListState?.value?.itemList) {
+        isBookmarkListEmpty = bookmarkListState?.value?.itemList.isNullOrEmpty()
     }
 
     //init status
@@ -134,7 +161,7 @@ fun BookmarkListView(
     }
 
     //filter update
-    LaunchedEffect(key1 = selectedFilterHpMap) {
+    LaunchedEffect(key1 = selectedFilterHpMap.values.toList()) {
         coroutineScope.launch {
             //update bookmark list
             bookmarkViewModel?.updateListByFilter(
@@ -148,70 +175,41 @@ fun BookmarkListView(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = Dimen.paddingMedium16dp)
+                .padding(
+                    horizontal = Dimen.paddingMedium16dp
+                )
+                .padding(
+                    bottom = Dimen.paddingMedium16dp
+                )
         ) {
             //items on title and subtitle
-            Row(
+            MbHeaderBookmarkList(
                 modifier = Modifier
-                    .padding(vertical = Dimen.paddingMedium24dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(end = Dimen.paddingMedium16dp)
-                        .weight(
-                            weight = 2f
-                        ),
-                    style = mbTitleHExtraBigBoldYellowTextStyle(),
-                    text = stringResource(R.string.bookmarks_title),
-                )
-            }
-            //filers
-            ConstraintLayout(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                val (filterHpRef, filterListTypeRef) = createRefs()
-                //filter fot the bookmark
-                BookmarkFilterView(
-                    modifier = Modifier
-                        .constrainAs(ref = filterHpRef) {
-                            top.linkTo(anchor = parent.top)
-                            bottom.linkTo(anchor = parent.bottom)
-                            start.linkTo(anchor = parent.start)
-                            end.linkTo(
-                                anchor = filterListTypeRef.start,
-                                margin = Dimen.paddingMedium16dp
-                            )
-                            width = Dimension.fillToConstraints
-                        },
-                    filterItems = filterHpList,
-                    onSelectedFilter = { selectedFilter, newValue ->
-                        selectedFilterHpMap[selectedFilter] = newValue
-                    }
-                )
+            )
 
-                //list type
-                BookmarkFilterView(
-                    modifier = Modifier
-                        .constrainAs(ref = filterListTypeRef) {
-                            top.linkTo(anchor = parent.top)
-                            bottom.linkTo(anchor = parent.bottom)
-                            end.linkTo(anchor = parent.end)
-                        },
-                    filterItems = selectedFilterListType,
-                    onSelectedFilter = { selectedFilter, newValue ->
-                        selectedFilterListType = when {
-                            newValue -> listOf(BookmarkListType.GRID)
-                            else -> listOf(BookmarkListType.LIST)
-                        }
-                    }
-                )
-            }
+            //filter configuration in HP
+            MbFilterBookmarkHpView(
+                modifier = Modifier,
+                selectedFilterHpMap = selectedFilterHpMap,
+                selectedFilterListType = selectedFilterListType
+            )
 
-            BookmarkItemsView(
+            MbEmptyBookmarkListView(
                 modifier = Modifier
+                    .padding(
+                        vertical = Dimen.paddingMedium16dp
+                    ),
+                isVisible = isBookmarkListEmpty
+            )
+
+            //main container view of all bookmarks
+            BookmarkListView(
+                modifier = Modifier
+                    .padding(
+                        bottom = Dimen.paddingLarge32dp
+                    )
                     .fillMaxSize(),
+                bookmarkListType = selectedFilterListType.value.first(),
                 bookmarkItems = bookmarkListState?.value?.itemList ?: listOf(),
                 onOpenAction = { bookmark ->
                     isPreviewModalBottomSheetVisible.value = true
@@ -219,6 +217,7 @@ fun BookmarkListView(
                 }
             )
 
+            //preview only if is selected
             selectedBookmark.value
                 ?.let {
                     BookmarkModalPreviewCardView(
@@ -238,17 +237,24 @@ fun BookmarkListView(
         //fab button
         MbExtendedFab(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(bottom = Dimen.paddingLarge32dp)
-                .padding(end = Dimen.paddingMedium16dp),
+                .align(
+                    alignment = Alignment.BottomEnd
+                )
+                .padding(
+                    bottom = Dimen.paddingLarge32dp
+                )
+                .padding(
+                    end = Dimen.paddingMedium16dp
+                ),
             title = stringResource(R.string.add_new_string),
-            iconRes = R.drawable.ic_add,
+            iconRes = android.R.drawable.ic_input_add,
             onClickAction = {
                 bottomSheetVisible.value = true
             }
         )
     }
 
+    //modal to show add new Bookmark
     MbAddBookmarkModalBottomSheetView(
         modifier = Modifier,
         bottomSheetVisible = bottomSheetVisible,
@@ -270,8 +276,133 @@ fun BookmarkListView(
 }
 
 @Composable
-fun BookmarkItemsView(
+fun MbEmptyBookmarkListView(
     modifier: Modifier = Modifier,
+    isVisible: Boolean
+) {
+    AnimatedVisibility(
+        modifier = modifier
+            .wrapContentWidth(),
+        visible = isVisible
+    ) {
+        MbCardView(
+            modifier = Modifier
+                .width(
+                    width = Dimen.size240dp
+                )
+                .heightIn(
+                    min = Dimen.size180dp
+                )
+        ) {
+            Column(
+                modifier = Modifier
+                    .heightIn(
+                        min = Dimen.size180dp
+                    ),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(
+                            size = Dimen.size160dp
+                        ),
+                    painter = painterResource(id = R.drawable.ic_sleep_foz_illustration_200),
+                    contentDescription = ""
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            top = Dimen.paddingMedium16dp
+                        ),
+                    textAlign = TextAlign.Center,
+                    style = mbSubtitleTextStyle(),
+                    text = stringResource(R.string.empty_bookmark_list_label),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MbHeaderBookmarkList(modifier: Modifier.Companion) {
+    Row(
+        modifier = modifier
+            .padding(vertical = Dimen.paddingMedium24dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(end = Dimen.paddingMedium16dp),
+            style = mbTitleHExtraBigBoldYellowTextStyle(),
+            text = stringResource(R.string.bookmarks_title),
+        )
+    }
+}
+
+@Composable
+fun MbFilterBookmarkHpView(
+    modifier: Modifier,
+    selectedFilterHpMap: MutableMap<FilterHp, Boolean>,
+    selectedFilterListType: MutableState<List<BookmarkListType>>,
+    isVisible: Boolean = true
+) {
+    AnimatedVisibility(
+        modifier = modifier
+            .wrapContentWidth(),
+        visible = isVisible
+    ) {
+
+        //filers move in a component small maybe
+        ConstraintLayout(
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
+            val (filterHpRef, filterListTypeRef) = createRefs()
+            //filter fot the bookmark
+            BookmarkFilterView(
+                modifier = Modifier
+                    .constrainAs(ref = filterHpRef) {
+                        top.linkTo(anchor = parent.top)
+                        bottom.linkTo(anchor = parent.bottom)
+                        start.linkTo(anchor = parent.start)
+                        end.linkTo(
+                            anchor = filterListTypeRef.start,
+                            margin = Dimen.paddingMedium16dp
+                        )
+                        width = Dimension.fillToConstraints
+                    },
+                filterItems = filterHpList,
+                onSelectedFilter = { selectedFilter, newValue ->
+                    selectedFilterHpMap[selectedFilter] = newValue
+                }
+            )
+
+            //list type
+            BookmarkFilterView(
+                modifier = Modifier
+                    .constrainAs(ref = filterListTypeRef) {
+                        top.linkTo(anchor = parent.top)
+                        bottom.linkTo(anchor = parent.bottom)
+                        end.linkTo(anchor = parent.end)
+                    },
+                isSelectedOverride = selectedFilterListType.value.first() == GRID, //list is only for generic type
+                filterItems = selectedFilterListType.value,
+                onSelectedFilter = { selectedFilter, newValue ->
+                    selectedFilterListType.value = when {
+                        selectedFilter == GRID -> listOf(LIST)
+                        else -> listOf(GRID)
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun BookmarkListView(
+    modifier: Modifier = Modifier,
+    bookmarkListType: BookmarkListType = GRID,
     bookmarkItems: List<Bookmark> = emptyList(),
     onOpenAction: (Bookmark) -> Unit = {}
 ) {
@@ -281,7 +412,12 @@ fun BookmarkItemsView(
                 top = Dimen.paddingMedium16dp,
                 bottom = Dimen.paddingLarge32dp
             ),
-        columns = GridCells.Fixed(COLUMN_GRID_SIZE),
+        columns = GridCells.Fixed(
+            count = when (bookmarkListType) {
+                GRID -> BOOKMARK_COLUMN_GRID_SIZE
+                LIST -> BOOKMARK_COLUMN_LIST_SIZE
+            }
+        ),
         verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp),
         horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
     ) {
@@ -312,8 +448,6 @@ fun BookmarkListViewPreview() {
     }
 }
 
-
-const val COLUMN_GRID_SIZE = 1
 internal val bookmarkListMock = listOf(
     Bookmark(
         appId = getBookmarkId("www.google.it"),

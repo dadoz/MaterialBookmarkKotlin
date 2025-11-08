@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -318,18 +319,13 @@ fun MbDeleteBookmarkButtonView(
             onDeleteCallback?.invoke(bookmark)
         }
     ) {
-        Image(
+        Icon(
             modifier = Modifier
-                .width(Dimen.sizeLarge32dp)
-                .height(Dimen.sizeLarge32dp),
-            painter = rememberDrawablePainter(
-                drawable = AppCompatResources.getDrawable(
-                    LocalContext.current, R.drawable.ic_delete
-                )
+                .size(size = Dimen.sizeLarge32dp),
+            painter = painterResource(
+                id = R.drawable.ic_delete_dark
             ),
-            colorFilter = ColorFilter.tint(
-                color = mbErrorWhiteRedLightDarkColor()
-            ),
+            tint = mbErrorWhiteRedLightDarkColor(),
             contentDescription = ""
         )
     }

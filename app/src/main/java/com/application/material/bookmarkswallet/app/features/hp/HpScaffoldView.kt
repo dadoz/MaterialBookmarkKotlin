@@ -26,7 +26,6 @@ import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
 import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
-import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

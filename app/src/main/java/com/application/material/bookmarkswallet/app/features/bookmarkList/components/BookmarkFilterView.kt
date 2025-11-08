@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -26,20 +27,25 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbChipRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbFilterChipColors
+import com.application.material.bookmarkswallet.app.ui.style.mbFilterIconColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextSmallStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbTabIconColor
 
 @Composable
 fun <T : FilterType> BookmarkFilterView(
     modifier: Modifier = Modifier,
     filterItems: List<T>,
+    isSelectedOverride: Boolean = false,
     onSelectedFilter: (T, Boolean) -> Unit
 ) {
     //single state of filter
-    val isSelectedMap = remember {
+    val isSelectedMap: MutableMap<Int, Boolean> = remember {
         mutableStateMapOf<Int, Boolean>() //<3 mutableStateMap remember
+    }.apply {
+        filterItems.forEachIndexed { index, _ ->
+            this[index] = false
+        }
     }
 
     LazyRow(
@@ -50,6 +56,12 @@ fun <T : FilterType> BookmarkFilterView(
         itemsIndexed(
             items = filterItems
         ) { id, item ->
+
+            //!!!!!!!important take for each item new value
+            val isSelected = isSelectedOverride
+                .takeIf { it }
+                ?: isSelectedMap[id] ?: false
+
             //item please clean up this stuff
             FilterChip(
                 modifier = Modifier,
@@ -58,7 +70,7 @@ fun <T : FilterType> BookmarkFilterView(
                     isSelectedMap[id] = isSelectedMap[id]?.not() ?: false
                     //callback to handle view
                     onSelectedFilter.invoke(
-                        item, isSelectedMap[id] ?: false
+                        item, isSelected
                     )
                 },
                 shape = mbChipRoundedCornerShape(),
@@ -71,14 +83,14 @@ fun <T : FilterType> BookmarkFilterView(
                         text = stringResource(id = item.labelRes),
                         style = mbSubtitleTextSmallStyle(
                             color = mbSubtitleTextColor(
-                                isSelected = isSelectedMap[id] ?: false
+                                isSelected = isSelected
                             )
                         )
                     )
                 },
                 border = null,
                 colors = mbFilterChipColors(),
-                selected = isSelectedMap[id] ?: false,
+                selected = isSelected,
                 trailingIcon = {
                     item.iconRes
                         ?.let {
@@ -89,8 +101,8 @@ fun <T : FilterType> BookmarkFilterView(
                                     .size(
                                         size = FilterChipDefaults.IconSize
                                     ),
-                                tint = mbTabIconColor(
-                                    isSelected = isSelectedMap[id] ?: false
+                                tint = mbFilterIconColor(
+                                    isSelected = isSelected
                                 )
                             )
                         }
@@ -107,11 +119,19 @@ fun <T : FilterType> BookmarkFilterView(
 fun BookmarkFilterViewPreview() {
     MaterialBookmarkMaterialTheme {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
-            BookmarkFilterView(
-                modifier = Modifier,
-                filterItems = FilterHp.entries,
-                onSelectedFilter = { _, _ -> },
-            )
+            Column() {
+                BookmarkFilterView(
+                    modifier = Modifier,
+                    filterItems = FilterHp.entries,
+                    onSelectedFilter = { _, _ -> },
+                )
+                BookmarkFilterView(
+                    modifier = Modifier,
+                    isSelectedOverride = true,
+                    filterItems = FilterHp.entries,
+                    onSelectedFilter = { _, _ -> },
+                )
+            }
         }
     }
 }
@@ -121,11 +141,21 @@ fun BookmarkFilterViewPreview() {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun BookmarkFilterViewPreview2() {
     MaterialBookmarkMaterialTheme {
-        BookmarkFilterView(
-            modifier = Modifier,
-            filterItems =
-                BookmarkListType.entries,
-            onSelectedFilter = { _, _ -> },
-        )
+        Column() {
+            BookmarkFilterView(
+                modifier = Modifier,
+                isSelectedOverride = true,
+                filterItems =
+                    BookmarkListType.entries,
+                onSelectedFilter = { _, _ -> },
+            )
+            BookmarkFilterView(
+                modifier = Modifier,
+                isSelectedOverride = false,
+                filterItems =
+                    BookmarkListType.entries,
+                onSelectedFilter = { _, _ -> },
+            )
+        }
     }
 }

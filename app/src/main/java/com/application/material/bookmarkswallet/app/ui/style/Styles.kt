@@ -125,7 +125,11 @@ fun mbSuccessSubtitleTextAccentStyle() = mbSubtitleTextAccentStyle().copy(
 @Composable
 fun mbSubtitleTextColor(isSelected: Boolean) =
     when (isSelected) {
-        true -> MbColor.White
+        true ->
+            when (isSystemInDarkTheme()) {
+                true -> MbColor.GrayBlueDarkNight
+                else -> MbColor.White
+            }
         else ->
             when (isSystemInDarkTheme()) {
                 true -> MbColor.White
@@ -256,6 +260,18 @@ fun mbSubtitleLightTextStyle(color: Color = MbColor.DarkMustardYellow) = mbSubti
         fontFamily = MbYantramanavThinFontFamily
     )
 
+@Composable
+fun mbFilterIconColor(isSelected: Boolean) = when {
+    isSystemInDarkTheme() -> when {
+        isSelected -> MbColor.GrayBlueDarkNight
+        else -> MbColor.White
+    }
+
+    else -> when {
+        isSelected -> MbColor.White
+        else -> MbColor.DarkMustardYellow
+    }
+}
 @Composable
 fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
     true -> when {

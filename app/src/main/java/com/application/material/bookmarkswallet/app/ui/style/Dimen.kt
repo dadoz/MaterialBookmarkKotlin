@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 object Dimen {
+
     //default values
     val zeroDp = 0.dp
 
@@ -119,11 +120,14 @@ object Dimen {
     val size11dp = 11.dp
     val size48dp = 48.dp
     val size36dp = 36.dp
-    val size180dp = 180.dp
     val size20dp = 20.dp
     val size22dp = 22.dp
     val size28dp = 28.dp
     val size32dp = 32.dp
+    val size160dp: Dp = 160.dp
+    val size180dp = 180.dp
+    val size200dp = 200.dp
+    val size240dp = 240.dp
 
     val sizeAlignmentDashboard: Dp = (-12).dp
 

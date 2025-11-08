@@ -104,30 +104,49 @@ class BookmarkViewModel @Inject constructor(
             it.copy(
                 itemList = it.itemList
                     .let { list ->
+                        //composition of all filter
+                        //filter sort by DATE
                         when {
-                            filterHpMap[FilterHp.SORT_BY_DATE] == true -> {
+                            filterHpMap[FilterHp.SORT_BY_DATE] == true ->
                                 list.sortedByDescending { bookmark ->
                                     bookmark.timestamp
                                 }
-                            }
 
-                            filterHpMap[FilterHp.SORT_BY_NAME] == true -> {
+                            else ->
                                 list.sortedBy { bookmark ->
-                                    bookmark.title
+                                    bookmark.timestamp
                                 }
-                            }
-
-                            filterHpMap[FilterHp.PINNED] == true -> {
-                                list.sortedBy { bookmark ->
-                                    bookmark.isLike
-                                }
-                            }
-
-                            else -> {
-                                list
-                            }
                         }
                     }
+                    //TODO make it exclusive
+//                    .let { list ->
+//                        //filter sort by NAME
+//                        when {
+//                            filterHpMap[FilterHp.SORT_BY_NAME] == true ->
+//                                list.sortedByDescending { bookmark ->
+//                                    bookmark.title
+//                                }
+//
+//                            else ->
+//                                list.sortedBy { bookmark ->
+//                                    bookmark.title
+//                                }
+//                        }
+//                    }
+//                    .let { list ->
+//                        //filter sort by PINNED
+//                        when {
+//                            filterHpMap[FilterHp.PINNED] == true ->
+//                                list.sortedByDescending { bookmark ->
+//                                    bookmark.isLike
+//                                }
+//
+//                            else ->
+//                                list.sortedBy { bookmark ->
+//                                    bookmark.isLike
+//                                }
+//                        }
+//                    }
             )
         }
     }
