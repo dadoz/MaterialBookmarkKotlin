@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -21,18 +22,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkFilterView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCardView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
@@ -41,13 +49,14 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.comp
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
-import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
+import com.application.material.bookmarkswallet.app.ui.components.MbExtendedFab
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.launch
 import java.util.Date
+
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -57,6 +66,8 @@ fun BookmarkListView(
     searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel(),
 ) {
     val coroutineScope = rememberCoroutineScope()
+    //local uri handler
+    val localUriHandler = LocalUriHandler.current
     //bottom sheet state
     val bottomSheetVisible = remember { mutableStateOf(value = false) }
     val isPreviewModalBottomSheetVisible = remember { mutableStateOf(value = false) }
@@ -72,11 +83,23 @@ fun BookmarkListView(
     //bookmark list state
     val bookmarkListState = bookmarkViewModel?.bookmarkListUIState?.collectAsState()
     val bookmarkDeletionState = bookmarkViewModel?.bookmarkDeletionState?.collectAsState()
-
-    val localUriHandler = LocalUriHandler.current
-
+    //search ui state
     val searchResultUIState = searchBookmarkViewModel?.searchResultUIState?.collectAsState()
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
+
+    //filter list on hp
+    val selectedFilterHpMap = rememberSaveable {
+        mutableMapOf(
+            FilterHp.PINNED to false,
+            FilterHp.SORT_BY_DATE to false
+        )
+    }
+    //filter on list type
+    var selectedFilterListType by rememberSaveable {
+        mutableStateOf(
+            value = filterDefaultListType
+        )
+    }
 
     //init status
     LaunchedEffect(key1 = null) {
@@ -110,6 +133,16 @@ fun BookmarkListView(
         }
     }
 
+    //filter update
+    LaunchedEffect(key1 = selectedFilterHpMap) {
+        coroutineScope.launch {
+            //update bookmark list
+            bookmarkViewModel?.updateListByFilter(
+                filterHpMap = selectedFilterHpMap
+            )
+        }
+    }
+
     Box(
         modifier = modifier
     ) {
@@ -134,10 +167,47 @@ fun BookmarkListView(
                 )
             }
             //filers
-            BookmarkFilterView(
-                modifier = Modifier,
-                filterItems = filterHpList
-            )
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                val (filterHpRef, filterListTypeRef) = createRefs()
+                //filter fot the bookmark
+                BookmarkFilterView(
+                    modifier = Modifier
+                        .constrainAs(ref = filterHpRef) {
+                            top.linkTo(anchor = parent.top)
+                            bottom.linkTo(anchor = parent.bottom)
+                            start.linkTo(anchor = parent.start)
+                            end.linkTo(
+                                anchor = filterListTypeRef.start,
+                                margin = Dimen.paddingMedium16dp
+                            )
+                            width = Dimension.fillToConstraints
+                        },
+                    filterItems = filterHpList,
+                    onSelectedFilter = { selectedFilter, newValue ->
+                        selectedFilterHpMap[selectedFilter] = newValue
+                    }
+                )
+
+                //list type
+                BookmarkFilterView(
+                    modifier = Modifier
+                        .constrainAs(ref = filterListTypeRef) {
+                            top.linkTo(anchor = parent.top)
+                            bottom.linkTo(anchor = parent.bottom)
+                            end.linkTo(anchor = parent.end)
+                        },
+                    filterItems = selectedFilterListType,
+                    onSelectedFilter = { selectedFilter, newValue ->
+                        selectedFilterListType = when {
+                            newValue -> listOf(BookmarkListType.GRID)
+                            else -> listOf(BookmarkListType.LIST)
+                        }
+                    }
+                )
+            }
 
             BookmarkItemsView(
                 modifier = Modifier
@@ -166,7 +236,7 @@ fun BookmarkListView(
         }
 
         //fab button
-        MBExtendedFab(
+        MbExtendedFab(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = Dimen.paddingLarge32dp)

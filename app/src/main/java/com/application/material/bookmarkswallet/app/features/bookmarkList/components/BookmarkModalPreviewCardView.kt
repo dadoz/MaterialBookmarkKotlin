@@ -54,7 +54,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCar
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightExtraBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgroundColors
@@ -338,7 +338,7 @@ fun MbDeleteBookmarkButtonView(
 @Composable
 fun MbActionBoxButtonView(
     modifier: Modifier,
-    color: Color = mbGrayLightColor(),
+    color: Color = mbExtraLightGrayGrayBlueDarkColor(),
     onClickAction: (() -> Unit)? = null,
     item: @Composable (BoxScope.() -> Unit),
 ) {

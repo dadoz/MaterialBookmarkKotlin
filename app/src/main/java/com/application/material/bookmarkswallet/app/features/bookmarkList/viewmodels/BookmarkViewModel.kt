@@ -5,8 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
+import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -97,6 +98,40 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
+    //sort and filter and update state
+    fun updateListByFilter(filterHpMap: Map<FilterHp, Boolean>) {
+        bookmarkListMutableState.update {
+            it.copy(
+                itemList = it.itemList
+                    .let { list ->
+                        when {
+                            filterHpMap[FilterHp.SORT_BY_DATE] == true -> {
+                                list.sortedByDescending { bookmark ->
+                                    bookmark.timestamp
+                                }
+                            }
+
+                            filterHpMap[FilterHp.SORT_BY_NAME] == true -> {
+                                list.sortedBy { bookmark ->
+                                    bookmark.title
+                                }
+                            }
+
+                            filterHpMap[FilterHp.PINNED] == true -> {
+                                list.sortedBy { bookmark ->
+                                    bookmark.isLike
+                                }
+                            }
+
+                            else -> {
+                                list
+                            }
+                        }
+                    }
+            )
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
     }
@@ -104,4 +139,5 @@ class BookmarkViewModel @Inject constructor(
     fun clearDeleteStatus() {
         bookmarkDeletionMutableState.value = null
     }
+
 }

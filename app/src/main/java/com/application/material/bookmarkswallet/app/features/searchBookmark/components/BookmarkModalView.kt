@@ -29,7 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import com.application.material.bookmarkswallet.app.ui.style.getResizedDensity
 import com.application.material.bookmarkswallet.app.ui.style.mbBottomSheetRoundedCornerShape
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.utils.ZERO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -115,7 +115,7 @@ fun WevBaseBottomSheetView(
     modifier: Modifier = Modifier,
     hasDragHandle: Boolean = false,
     bottomSheetState: SheetState,
-    containerColor: Color = mbGrayLightColor(),
+    containerColor: Color = mbExtraLightGrayGrayBlueDarkColor(),
     onCloseCallback: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {

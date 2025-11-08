@@ -69,7 +69,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorSubtitleTextAccentStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessBookmarkCardBackgroundColors
@@ -278,7 +278,7 @@ fun SearchAndAddBookmarkWithFullAIView(
             modifier = Modifier
                 .clip(shape = mbCardRoundedCornerShape())
                 .align(alignment = Alignment.CenterHorizontally)
-                .background(color = mbGrayLightColor())
+                .background(color = mbExtraLightGrayGrayBlueDarkColor())
                 .padding(all = Dimen.paddingMedium16dp),
         ) {
             Image(

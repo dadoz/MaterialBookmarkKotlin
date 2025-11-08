@@ -34,7 +34,7 @@ import com.application.material.bookmarkswallet.app.utils.EMPTY
 fun MbBoxActionSecondaryButton(
     modifier: Modifier = Modifier,
     iconRes: Int,
-    text: String,
+    text: String? = null,
     backgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
     textStyle: TextStyle = mbSubtitleTextAccentStyle(),
     iconTintColor: Color = MbColor.DarkLemonYellow,
@@ -65,12 +65,15 @@ fun MbBoxActionSecondaryButton(
                 tint = iconTintColor
             )
 
-            Text(
-                modifier = Modifier
-                    .padding(horizontal = Dimen.paddingMedium16dp),
-                style = textStyle,
-                text = text
-            )
+            text
+                ?.let {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = Dimen.paddingMedium16dp),
+                        style = textStyle,
+                        text = text
+                    )
+                }
         }
     }
 }

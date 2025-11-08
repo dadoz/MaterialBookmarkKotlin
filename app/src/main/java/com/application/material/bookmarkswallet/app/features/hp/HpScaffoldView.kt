@@ -26,7 +26,8 @@ import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
 import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -92,7 +93,7 @@ fun HpScaffoldView() {
         bottomBar = {
             MbNavigationBar(
                 modifier = Modifier,
-                containerColor = mbGrayLightColor(),//color navbar
+                containerColor = mbNavBarBackground(),
                 navItemSelectedState = navItemSelectedState
             ) {
                 navController.navigate(route = it.navRoute.route) {

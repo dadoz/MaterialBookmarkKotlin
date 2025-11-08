@@ -187,7 +187,7 @@ fun mbMustardDarkWhiteColor(): Color =
 fun mbFilterChipColors(): SelectableChipColors =
     FilterChipDefaults.filterChipColors()
         .copy(
-            containerColor = mbGrayLightColor(),
+            containerColor = mbExtraLightGrayGrayBlueDarkColor(),
             selectedContainerColor = mbYellowLemonLightMustardDarkColor()
         )
 
@@ -259,7 +259,7 @@ fun mbSubtitleLightTextStyle(color: Color = MbColor.DarkMustardYellow) = mbSubti
 @Composable
 fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
     true -> when {
-        isSelected -> MbColor.GrayBlueDarkNight
+        isSelected -> MbColor.DarkMustardYellow
         else -> MbColor.White
     }
 
@@ -296,7 +296,7 @@ fun mbPreviewCardBackgroundColors(): CardColors =
 @Composable
 fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
-        containerColor = mbGrayLightColor()
+        containerColor = mbExtraLightGrayGrayBlueDarkColor()
     )
 
 @Composable
@@ -308,12 +308,19 @@ fun mbGrayLightColor2(): Color {
 }
 
 @Composable
-fun mbGrayLightColor(): Color {
+fun mbExtraLightGrayGrayBlueDarkColor(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
         else -> MbColor.ExtraLightGray
     }
 }
+//@Composable
+//fun mbExtraLightMustardYellowGrayBlueColor(): Color {
+//    return when (isSystemInDarkTheme()) {
+//        true -> MbColor.GrayBlueDarkNight
+//        else -> MbColor.ExtraLightMustardYellow
+//    }
+//}
 
 @Composable
 fun mbMustardGrayBlueLightDarkColor(): Color {
@@ -356,12 +363,7 @@ fun mbSuccessBookmarkCardBackgroundColors(): Color {
 }
 
 @Composable
-fun mbNavBarBackground(): Color {
-    return when (isSystemInDarkTheme()) {
-        true -> MbColor.DarkGray2
-        else -> MbColor.White
-    }
-}
+fun mbNavBarBackground(): Color = mbExtraLightGrayGrayBlueDarkColor()//color navbar
 
 @Composable
 fun mbWhiteDarkColor(): Color {
