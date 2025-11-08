@@ -176,7 +176,10 @@ fun BookmarkListComponentView(
         Column(
             modifier = Modifier
                 .padding(
-                    all = Dimen.paddingMedium16dp
+                    horizontal = Dimen.paddingMedium16dp
+                )
+                .padding(
+                    bottom = Dimen.paddingMedium16dp
                 )
         ) {
             //items on title and subtitle

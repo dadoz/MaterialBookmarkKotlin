@@ -52,6 +52,7 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundAlternativeColors
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
@@ -221,7 +222,7 @@ fun MbActionMenuBookmarkPreviewView(
     modifier: Modifier,
     bookmark: Bookmark,
     backgroundColor: Color = mbGrayLightExtraBlueDarkColor(),
-    actionItemBackgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
+    actionItemBackgroundColor: Color = mbActionBookmarkCardBackgroundAlternativeColors(),
     isActionMenuVisible: Boolean = false,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
 ) {

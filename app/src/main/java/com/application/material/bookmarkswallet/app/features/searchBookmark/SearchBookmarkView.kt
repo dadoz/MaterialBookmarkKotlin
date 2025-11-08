@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -66,6 +65,7 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonYellowColor
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorSubtitleTextAccentStyle
@@ -140,13 +140,16 @@ fun SearchAndAddBookmarkView(
                 //search text field
                 MbBookmarkTextFieldView(
                     modifier = Modifier
-                        .padding(top = Dimen.paddingMedium16dp),
+                        .padding(
+                            top = Dimen.paddingSmall8dp
+                        ),
                     searchUrlTextState = searchUrlTextState
                 )
 
                 //title text field
                 MbBookmarkTextFieldView(
                     modifier = Modifier,
+                    isVisible = false,
                     textLabel = "Title",
                     searchUrlTextState = bookmarkTitle
                 )
@@ -170,7 +173,7 @@ fun SearchAndAddBookmarkView(
                 //clipboard
                 MbBoxActionSecondaryButton(
                     modifier = Modifier,
-                    iconRes = R.drawable.ic_pin,
+                    iconRes = R.drawable.ic_pin_new_dark,
                     text = stringResource(R.string.paste_clipboard),
                 ) {
                     Toast.makeText(
@@ -198,6 +201,7 @@ fun SearchAndAddBookmarkView(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = Dimen.paddingMedium16dp),
+                    colors = mbButtonYellowColor(),
                     text = stringResource(id = R.string.save_ai_label_button),
                     onClickAction = {
                         onSearchBookmarkWithAIAction.invoke(searchUrlTextState.value.text)
@@ -353,9 +357,9 @@ fun SearchAndAddBookmarkWithFullAIView(
                         },
                         colors = ButtonColors(
                             containerColor = MbColor.Yellow,
-                            contentColor = MbColor.GrayBlueMiddleSea,
+                            contentColor = MbColor.GrayBlueAlternativeDark,
                             disabledContainerColor = MbColor.Yellow,
-                            disabledContentColor = MbColor.GrayBlueMiddleSea
+                            disabledContentColor = MbColor.GrayBlueAlternativeDark
                         ),
                     ) {
                         Icon(
@@ -401,9 +405,9 @@ fun SearchAndAddBookmarkWithFullAIView(
                         checked = checked,
                         colors = ButtonColors(
                             containerColor = MbColor.Yellow,
-                            contentColor = MbColor.GrayBlueMiddleSea,
+                            contentColor = MbColor.GrayBlueAlternativeDark,
                             disabledContainerColor = MbColor.Yellow,
-                            disabledContentColor = MbColor.GrayBlueMiddleSea
+                            disabledContentColor = MbColor.GrayBlueAlternativeDark
                         ),
                         onCheckedChange = { checked = it },
                     ) {

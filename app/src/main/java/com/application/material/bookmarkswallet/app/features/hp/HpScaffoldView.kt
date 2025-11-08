@@ -128,7 +128,7 @@ fun HpScaffoldView() {
                     state = pullToRefreshState,
                     isRefreshing = isLoading.value,
 //                    threshold = PositionalThreshold,
-                    color = MbColor.GrayBlueMiddleSea,
+                    color = MbColor.GrayBlueAlternativeDark,
                 )
             }
         ) {

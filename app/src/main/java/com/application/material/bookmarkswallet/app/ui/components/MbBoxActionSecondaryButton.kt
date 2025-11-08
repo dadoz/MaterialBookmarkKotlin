@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbWhiteYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 
@@ -37,7 +37,7 @@ fun MbBoxActionSecondaryButton(
     text: String? = null,
     backgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
     textStyle: TextStyle = mbSubtitleTextAccentStyle(),
-    iconTintColor: Color = MbColor.DarkLemonYellow,
+    iconTintColor: Color = mbWhiteYellowLemonDarkLightColor(),
     onClickAction: (() -> Unit)? = null
 ) {
     Box(
@@ -69,7 +69,9 @@ fun MbBoxActionSecondaryButton(
                 ?.let {
                     Text(
                         modifier = Modifier
-                            .padding(horizontal = Dimen.paddingMedium16dp),
+                            .padding(
+                                horizontal = Dimen.paddingMedium16dp
+                            ),
                         style = textStyle,
                         text = text
                     )
@@ -86,7 +88,7 @@ fun SearchBookmarkView2Preview() {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
             MbBoxActionSecondaryButton(
                 modifier = Modifier,
-                iconRes = R.drawable.ic_pin,
+                iconRes = R.drawable.ic_pin_new_dark,
                 text = "Add title manually",
                 onClickAction = {}
             )

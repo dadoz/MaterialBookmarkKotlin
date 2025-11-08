@@ -28,7 +28,7 @@ object MbColor {
     //new colors
     val BlueBlackExtraDark: Color = Color(0xFF1E243A)
     val GrayBlueDarkNight: Color = Color(0xFF181C21)
-    val GrayBlueMiddleSea: Color = Color(0xFF434E68)
+    val GrayBlueAlternativeDark: Color = Color(0xFF253262) //434E68
     val ExtraDarkLemonYellow: Color = Color(0xFF2F2D1C)
 }
 

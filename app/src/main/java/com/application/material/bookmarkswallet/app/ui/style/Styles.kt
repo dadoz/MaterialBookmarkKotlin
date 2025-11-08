@@ -33,6 +33,11 @@ fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkLemonYellow
 }
+@Composable
+fun mbWhiteYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.Yellow
+    else -> MbColor.White
+}
 
 @Composable
 fun mbErrorWhiteRedLightDarkColor(): Color = when (isSystemInDarkTheme()) {
@@ -57,6 +62,11 @@ fun mbYellowLemonLightMustardDarkColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkMustardYellow//DarkLemonYellow
 }
+@Composable
+fun mbWhiteMustardDarkColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.White
+    else -> MbColor.DarkMustardYellow//DarkLemonYellow
+}
 
 @Composable
 fun mbTitleHExtraBigBoldYellowTextStyle(
@@ -67,7 +77,7 @@ fun mbTitleHExtraBigBoldYellowTextStyle(
     )
 
 @Composable
-fun mbTitleHExtraBigBoldTextStyle(color: Color = MbColor.GrayBlueMiddleSea) =
+fun mbTitleHExtraBigBoldTextStyle(color: Color = MbColor.GrayBlueAlternativeDark) =
     mbTitleBoldTextStyle().copy(
         fontSize = 36.sp,
         color = color
@@ -75,7 +85,7 @@ fun mbTitleHExtraBigBoldTextStyle(color: Color = MbColor.GrayBlueMiddleSea) =
 
 @Composable
 fun mbTitleBoldTextStyle() = TextStyle(
-    color = MbColor.GrayBlueMiddleSea,
+    color = MbColor.GrayBlueAlternativeDark,
     fontSize = 28.sp,// myVeTitleMedium(),
     fontFamily = MbYantramanavBoldFontFamily,
     fontWeight = FontWeight.Bold
@@ -89,7 +99,7 @@ fun mbTitleMediumBoldYellowLightDarkTextStyle() =
 
 @Composable
 fun mbTitleMediumBoldTextStyle(
-    color: Color = MbColor.GrayBlueMiddleSea,
+    color: Color = MbColor.GrayBlueAlternativeDark,
 ) = mbTitleBoldTextStyle()
     .copy(
         fontSize = 26.sp,
@@ -100,8 +110,8 @@ fun mbTitleMediumBoldTextStyle(
 fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
-            true -> colorResource(R.color.colorAccent)
-            else -> MbColor.DarkMustardYellow
+            true -> MbColor.Yellow
+            else -> MbColor.White
         },
         fontFamily = MbYantramanavRegularFontFamily
     )
@@ -228,6 +238,11 @@ fun mbButtonRoundedCornerShape() =
 fun mbButtonYellowDarkLightColor() = mbButtonColorStyle(
     lightColor = MbColor.Yellow,
     darkColor = MbColor.DarkMustardYellow,
+)
+@Composable
+fun mbButtonYellowColor() = mbButtonColorStyle(
+    lightColor = MbColor.Yellow,
+    darkColor = MbColor.Yellow,
 )
 
 @Composable
@@ -357,8 +372,15 @@ fun mbGrayLightExtraBlueDarkColor(): Color {
 @Composable
 fun mbActionBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
+        true -> MbColor.BlueBlackExtraDark
+        else -> MbColor.DarkMustardYellow
+    }
+}
+@Composable
+fun mbActionBookmarkCardBackgroundAlternativeColors(): Color {
+    return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
-        else -> MbColor.UltraLightGray
+        else -> MbColor.ExtraLightGray
     }
 }
 
