@@ -89,10 +89,10 @@ import java.util.Date
 fun SearchAndAddBookmarkView(
     modifier: Modifier,
     searchResultUIState: SearchResultUIState,
-    onSearchBookmarkWithAIAction: (url: String) -> Unit,
+    onSearchBookmarkWithAIAction: (url: String, title: String?) -> Unit,
 ) {
     val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
-    val bookmarkTitle = remember { mutableStateOf(TextFieldValue(EMPTY)) }
+    val searchTitleTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
     val context = LocalContext.current
 
     Column(
@@ -147,7 +147,7 @@ fun SearchAndAddBookmarkView(
                 MbBoxUrlFieldAndTitleSearchView(
                     modifier = Modifier,
                     searchUrlTextState = searchUrlTextState,
-                    bookmarkTitle = bookmarkTitle
+                    searchTitleTextState = searchTitleTextState,
                 )
 
                 //clipboard
@@ -169,7 +169,10 @@ fun SearchAndAddBookmarkView(
                     colors = mbButtonYellowColor(),
                     text = stringResource(id = R.string.save_ai_label_button),
                     onClickAction = {
-                        onSearchBookmarkWithAIAction.invoke(searchUrlTextState.value.text)
+                        onSearchBookmarkWithAIAction.invoke(
+                            searchUrlTextState.value.text,
+                            searchTitleTextState.value.text
+                        )
                     }
                 )
             }
@@ -181,7 +184,7 @@ fun SearchAndAddBookmarkView(
 fun MbBoxUrlFieldAndTitleSearchView(
     modifier: Modifier,
     searchUrlTextState: MutableState<TextFieldValue>,
-    bookmarkTitle: MutableState<TextFieldValue>
+    searchTitleTextState: MutableState<TextFieldValue>
 ) {
     val context = LocalContext.current
     var isTitleBoxVisible by remember {
@@ -198,7 +201,7 @@ fun MbBoxUrlFieldAndTitleSearchView(
                 .padding(
                     top = Dimen.paddingSmall8dp
                 ),
-            searchUrlTextState = searchUrlTextState
+            textFieldState = searchUrlTextState
         )
 
         //add title manually
@@ -248,12 +251,11 @@ fun MbBoxUrlFieldAndTitleSearchView(
         //title text field
         MbBookmarkTextFieldView(
             modifier = Modifier,
+            textFieldState = searchTitleTextState,
             isVisible = isTitleBoxVisible,
             titleLabel = stringResource(id = R.string.bookmark_title_label),
-            subtitleLabel = stringResource(id = R.string.bookmark_title_description),
-            searchUrlTextState = bookmarkTitle,
-
-            )
+            subtitleLabel = stringResource(id = R.string.bookmark_title_description)
+        )
     }
 }
 
@@ -317,12 +319,12 @@ fun SearchAndAddBookmarkWithFullAIView(
         MbBookmarkTextFieldView(
             modifier = Modifier,
             titleLabel = "Title",
-            searchUrlTextState = bookmarkTitle
+            textFieldState = bookmarkTitle
         )
         MbBookmarkTextFieldView(
             modifier = Modifier,
             titleLabel = "Bookmark Url",
-            searchUrlTextState = bookmarkUrl
+            textFieldState = bookmarkUrl
         )
         Box(
             modifier = Modifier
@@ -486,7 +488,7 @@ fun BookmarkPreview2() {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
             SearchAndAddBookmarkView(
                 modifier = Modifier,
-                onSearchBookmarkWithAIAction = {},
+                onSearchBookmarkWithAIAction = { _, _ -> },
                 searchResultUIState =
                     SearchResultUIState(
                         isLoading = true,
@@ -506,7 +508,7 @@ fun BookmarkPreview() {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
             SearchAndAddBookmarkView(
                 modifier = Modifier,
-                onSearchBookmarkWithAIAction = {},
+                onSearchBookmarkWithAIAction = { _, _ -> },
                 searchResultUIState =
                     SearchResultUIState(
                         isLoading = false,
@@ -534,7 +536,7 @@ fun SearchBookmarkViewPreview() {
         Box(modifier = Modifier.background(mbGrayLightColor2())) {
             SearchAndAddBookmarkView(
                 modifier = Modifier,
-                onSearchBookmarkWithAIAction = {},
+                onSearchBookmarkWithAIAction = { _, _ -> },
                 searchResultUIState =
                     SearchResultUIState(
                         isLoading = false

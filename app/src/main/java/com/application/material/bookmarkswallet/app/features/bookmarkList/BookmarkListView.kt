@@ -265,9 +265,10 @@ fun BookmarkListComponentView(
     ) {
         SearchAndAddBookmarkView(
             modifier = Modifier,
-            onSearchBookmarkWithAIAction = {
+            onSearchBookmarkWithAIAction = { url, title ->
                 searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
-                    url = it
+                    url = url,
+                    customTitle  = title
                 )
             },
             searchResultUIState = searchResultUIState.value

@@ -34,10 +34,10 @@ import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightM
 @Composable
 fun MbBookmarkTextFieldView(
     modifier: Modifier,
+    textFieldState: MutableState<TextFieldValue>,
     isVisible: Boolean = true,
     titleLabel: String = stringResource(id = R.string.bookmark_url),
-    subtitleLabel: String? = null,
-    searchUrlTextState: MutableState<TextFieldValue>
+    subtitleLabel: String? = null
 ) {
     val focusRequester = remember {
         FocusRequester()
@@ -64,7 +64,7 @@ fun MbBookmarkTextFieldView(
                     .fillMaxWidth(),
                 textStyle = mbSubtitleTextStyle(),
                 shape = mbCardRoundedCornerShape(),
-                value = searchUrlTextState.value,
+                value = textFieldState.value,
                 placeholder = {
                     Text(
                         modifier = Modifier,
@@ -77,7 +77,7 @@ fun MbBookmarkTextFieldView(
                     unfocusedBorderColor = mbWhiteMustardDarkColor(),
                 ),
                 onValueChange = {
-                    searchUrlTextState.value = it
+                    textFieldState.value = it
                 }
             )
 
@@ -104,9 +104,9 @@ fun MbBookmarkTextFieldViewPreview() {
                 isVisible = true,
                 titleLabel = "blalalalla",
                 subtitleLabel = "hey description",
-                searchUrlTextState = mutableStateOf(
+                textFieldState = mutableStateOf(
                     TextFieldValue()
-                )
+                ),
             )
         }
     }

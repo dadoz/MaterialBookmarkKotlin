@@ -6,10 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.GenAIManager
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkSimple
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.TextPart
@@ -93,7 +93,8 @@ class SearchBookmarkViewModel @Inject constructor(
      */
     fun searchUrlInfoByUrlGenAI(
         url: String,
-        coroutineContext: CoroutineContext = Dispatchers.IO
+        customTitle: String? = null,
+        coroutineContext: CoroutineContext = Dispatchers.IO,
     ) {
         //loading state
         searchResultMutableState.update {
@@ -137,7 +138,7 @@ class SearchBookmarkViewModel @Inject constructor(
                         }
                         ?.also { bookmark ->
                             saveBookmark(
-                                title = bookmark.title ?: EMPTY_BOOKMARK_LABEL,
+                                title = customTitle ?: (bookmark.title ?: EMPTY_BOOKMARK_LABEL),
                                 iconUrl = bookmark.icon,
                                 description = bookmark.description,
                                 url = bookmark.url,
