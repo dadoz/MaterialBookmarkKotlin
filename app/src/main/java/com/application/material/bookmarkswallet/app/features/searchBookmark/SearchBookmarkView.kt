@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,6 +31,7 @@ import androidx.compose.material3.SplitButtonDefaults.leadingButtonShapesFor
 import androidx.compose.material3.SplitButtonLayout
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,20 +48,19 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbBookmarkTextFieldView
 import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSecondaryButton
+import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbLoaderView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
@@ -76,7 +78,11 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSuccessBookmarkCa
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkGreyCardBackgroundColors
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import com.application.material.bookmarkswallet.app.utils.NINETY_F
+import com.application.material.bookmarkswallet.app.utils.TWOHUNDRED_SEVENTY_F
 import java.util.Date
 
 @Composable
@@ -137,37 +143,11 @@ fun SearchAndAddBookmarkView(
                     )
                 }
 
-                //search text field
-                MbBookmarkTextFieldView(
-                    modifier = Modifier
-                        .padding(
-                            top = Dimen.paddingSmall8dp
-                        ),
-                    searchUrlTextState = searchUrlTextState
-                )
-
-                //title text field
-                MbBookmarkTextFieldView(
+                //search box and text field
+                MbBoxUrlFieldAndTitleSearchView(
                     modifier = Modifier,
-                    isVisible = false,
-                    textLabel = "Title",
-                    searchUrlTextState = bookmarkTitle
-                )
-
-                //add title manually
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = Dimen.paddingMedium16dp)
-                        .clickable {
-                            Toast.makeText(
-                                context, R.string.search_bookmark, Toast.LENGTH_LONG
-                            ).show()
-                        },
-                    textAlign = TextAlign.End,
-                    textDecoration = TextDecoration.Underline,
-                    style = mbSubtitleTextStyle(),
-                    text = stringResource(R.string.add_title_manually)
+                    searchUrlTextState = searchUrlTextState,
+                    bookmarkTitle = bookmarkTitle
                 )
 
                 //clipboard
@@ -180,21 +160,6 @@ fun SearchAndAddBookmarkView(
                         context, R.string.search_bookmark, Toast.LENGTH_LONG
                     ).show()
                 }
-
-//                //icon image
-//                Box(
-//                    modifier = Modifier
-//                        .clip(shape = mbCardRoundedCornerShape())
-//                        .align(alignment = Alignment.CenterHorizontally)
-//                        .background(color = mbGrayLightColor())
-//                        .padding(all = Dimen.paddingMedium16dp),
-//                ) {
-//                    Image(
-//                        modifier = Modifier,
-//                        painter = painterResource(id = R.drawable.ic_bear_illustration_200),
-//                        contentDescription = EMPTY
-//                    )
-//                }
 
                 //Search and Add button
                 MbPrimaryButton(
@@ -209,6 +174,86 @@ fun SearchAndAddBookmarkView(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun MbBoxUrlFieldAndTitleSearchView(
+    modifier: Modifier,
+    searchUrlTextState: MutableState<TextFieldValue>,
+    bookmarkTitle: MutableState<TextFieldValue>
+) {
+    val context = LocalContext.current
+    var isTitleBoxVisible by remember {
+        mutableStateOf(value = false)
+    }
+
+    MbCardView(
+        modifier = modifier,
+        colors = mbWhiteDarkGreyCardBackgroundColors()
+    ) {
+        //search text field
+        MbBookmarkTextFieldView(
+            modifier = Modifier
+                .padding(
+                    top = Dimen.paddingSmall8dp
+                ),
+            searchUrlTextState = searchUrlTextState
+        )
+
+        //add title manually
+        Row(
+            modifier = Modifier
+                .clickable {
+                    isTitleBoxVisible = isTitleBoxVisible.not()
+                }
+                .padding(
+                    all = Dimen.paddingMedium16dp
+                )
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier
+                    .clickable {
+                        Toast.makeText(
+                            context, R.string.search_bookmark, Toast.LENGTH_LONG
+                        ).show()
+                    },
+                style = mbSubtitleTextStyle(),
+                text = stringResource(R.string.add_title_manually)
+            )
+
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow_right_dark),
+                contentDescription = EMPTY,
+                modifier = Modifier
+                    .padding(
+                        start = Dimen.paddingMedium16dp,
+                    )
+                    .size(Dimen.size20dp)
+                    .rotate(
+                        degrees =
+                            when {
+                                isTitleBoxVisible -> TWOHUNDRED_SEVENTY_F
+
+                                else -> NINETY_F
+                            }
+                    ),
+                tint = mbWhiteDarkColor()
+            )
+        }
+
+        //title text field
+        MbBookmarkTextFieldView(
+            modifier = Modifier,
+            isVisible = isTitleBoxVisible,
+            titleLabel = stringResource(id = R.string.bookmark_title_label),
+            subtitleLabel = stringResource(id = R.string.bookmark_title_description),
+            searchUrlTextState = bookmarkTitle,
+
+            )
     }
 }
 
@@ -238,7 +283,8 @@ fun SearchAndAddBookmarkSuccessView(
         BookmarkPreviewCard(
             modifier = Modifier,
             bookmark = bookmark,
-            isActionMenuVisible = isActionMenuVisible
+            isActionMenuVisible = isActionMenuVisible,
+            isOpenButtonVisible = false
         )
     }
 }
@@ -270,12 +316,12 @@ fun SearchAndAddBookmarkWithFullAIView(
         )
         MbBookmarkTextFieldView(
             modifier = Modifier,
-            textLabel = "Title",
+            titleLabel = "Title",
             searchUrlTextState = bookmarkTitle
         )
         MbBookmarkTextFieldView(
             modifier = Modifier,
-            textLabel = "Bookmark Url",
+            titleLabel = "Bookmark Url",
             searchUrlTextState = bookmarkUrl
         )
         Box(
@@ -378,7 +424,6 @@ fun SearchAndAddBookmarkWithFullAIView(
                                 .padding(start = 4.dp),
                             text = "Save or Gemini",
                             style = mbButtonTextDarkStyle()
-                            //ButtonDefaults.textStyleFor(BookmarkListButtonContainerHeight)
                         )
                     }
             },

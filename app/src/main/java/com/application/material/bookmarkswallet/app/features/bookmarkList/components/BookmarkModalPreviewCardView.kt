@@ -53,7 +53,6 @@ import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundAlternativeColors
-import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
@@ -120,6 +119,7 @@ fun BookmarkPreviewCard(
     onDeleteAction: ((Bookmark) -> Unit)? = null,
     onOpenAction: ((String) -> Unit)? = null,
     isActionMenuVisible: Boolean = true,
+    isOpenButtonVisible: Boolean = true,
 ) {
     val context = LocalContext.current
     //fallbackIcon
@@ -205,15 +205,17 @@ fun BookmarkPreviewCard(
         )
 
         //open action
-        MbPrimaryButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = Dimen.paddingMedium16dp),
-            text = stringResource(id = R.string.open_bookmark),
-            onClickAction = {
-                onOpenAction?.invoke(bookmark.url)
-            }
-        )
+        if (isOpenButtonVisible) {
+            MbPrimaryButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimen.paddingMedium16dp),
+                text = stringResource(id = R.string.open_bookmark),
+                onClickAction = {
+                    onOpenAction?.invoke(bookmark.url)
+                }
+            )
+        }
     }
 }
 

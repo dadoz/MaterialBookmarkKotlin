@@ -3,7 +3,9 @@ package com.application.material.bookmarkswallet.app.ui.components
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
+import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -32,15 +35,13 @@ import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightM
 fun MbBookmarkTextFieldView(
     modifier: Modifier,
     isVisible: Boolean = true,
-    textLabel: String = stringResource(id = R.string.bookmark_url),
+    titleLabel: String = stringResource(id = R.string.bookmark_url),
+    subtitleLabel: String? = null,
     searchUrlTextState: MutableState<TextFieldValue>
 ) {
     val focusRequester = remember {
         FocusRequester()
     }
-//    LaunchedEffect(Unit) {
-//        focusRequester.requestFocus()
-//    }
 
     //component
     AnimatedVisibility(
@@ -48,30 +49,46 @@ fun MbBookmarkTextFieldView(
             .wrapContentWidth(),
         visible = isVisible
     ) {
-        OutlinedTextField(
-            modifier = modifier
-                .focusRequester(
-                    focusRequester = focusRequester
-                )
+        Column(
+            modifier = Modifier
                 .fillMaxWidth(),
-            textStyle = mbSubtitleTextStyle(),
-            shape = mbCardRoundedCornerShape(),
-            value = searchUrlTextState.value,
-            placeholder = {
+            verticalArrangement = Arrangement.spacedBy(
+                space = Dimen.paddingMedium16dp
+            )
+        ) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .focusRequester(
+                        focusRequester = focusRequester
+                    )
+                    .fillMaxWidth(),
+                textStyle = mbSubtitleTextStyle(),
+                shape = mbCardRoundedCornerShape(),
+                value = searchUrlTextState.value,
+                placeholder = {
+                    Text(
+                        modifier = Modifier,
+                        style = mbSubtitleTextStyle(),
+                        text = titleLabel
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = mbYellowLemonLightMustardDarkColor(),
+                    unfocusedBorderColor = mbWhiteMustardDarkColor(),
+                ),
+                onValueChange = {
+                    searchUrlTextState.value = it
+                }
+            )
+
+            if (subtitleLabel != null) {
                 Text(
                     modifier = Modifier,
                     style = mbSubtitleTextStyle(),
-                    text = textLabel
+                    text = subtitleLabel
                 )
-            },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = mbYellowLemonLightMustardDarkColor(),
-                unfocusedBorderColor = mbWhiteMustardDarkColor(),
-            ),
-            onValueChange = {
-                searchUrlTextState.value = it
             }
-        )
+        }
     }
 }
 
@@ -85,7 +102,8 @@ fun MbBookmarkTextFieldViewPreview() {
             MbBookmarkTextFieldView(
                 modifier = Modifier,
                 isVisible = true,
-                textLabel = "blalalalla",
+                titleLabel = "blalalalla",
+                subtitleLabel = "hey description",
                 searchUrlTextState = mutableStateOf(
                     TextFieldValue()
                 )

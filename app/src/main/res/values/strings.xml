@@ -47,6 +47,8 @@
     <string name="search_your_bookmark">Just type a Bookmark</string>
     <string name="open_bookmark">Open</string>
     <string name="bookmark_url">Bookmark Url</string>
+    <string name="bookmark_title_label">Title</string>
+    <string name="bookmark_title_description">Just set a title for your Bookmark</string>
     <string name="bookmark_list_type">List</string>
     <string name="bookmark_grid_type">Grid</string>
 
@@ -65,5 +67,5 @@
     <!--    bookmark list item-->
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
-    <string name="add_title_manually">add title manually</string>
+    <string name="add_title_manually">choice your title</string>
 </resources>

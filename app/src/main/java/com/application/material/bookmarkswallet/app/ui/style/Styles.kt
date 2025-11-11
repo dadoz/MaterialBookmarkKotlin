@@ -36,7 +36,7 @@ fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
 @Composable
 fun mbWhiteYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
-    else -> MbColor.White
+    else -> MbColor.DarkMustardYellow
 }
 
 @Composable
@@ -111,7 +111,7 @@ fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
     .copy(
         color = when (isSystemInDarkTheme()) {
             true -> MbColor.Yellow
-            else -> MbColor.White
+            else -> MbColor.DarkMustardYellow
         },
         fontFamily = MbYantramanavRegularFontFamily
     )
@@ -329,6 +329,11 @@ fun mbBasicCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbExtraLightGrayGrayBlueDarkColor()
     )
+@Composable
+fun mbWhiteDarkGreyCardBackgroundColors(): CardColors =
+    CardDefaults.cardColors(
+        containerColor = mbWhiteGrayBlueDarkColor()
+    )
 
 @Composable
 fun mbGrayLightColor2(): Color {
@@ -339,19 +344,26 @@ fun mbGrayLightColor2(): Color {
 }
 
 @Composable
+fun mbWhiteGrayBlueDarkColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.BlueBlackExtraDark
+        else -> MbColor.White
+    }
+}
+@Composable
 fun mbExtraLightGrayGrayBlueDarkColor(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
         else -> MbColor.ExtraLightGray
     }
 }
-//@Composable
-//fun mbExtraLightMustardYellowGrayBlueColor(): Color {
-//    return when (isSystemInDarkTheme()) {
-//        true -> MbColor.GrayBlueDarkNight
-//        else -> MbColor.ExtraLightMustardYellow
-//    }
-//}
+@Composable
+fun mbExtraLightYellowGrayBlueDarkColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.GrayBlueDarkNight
+        else -> MbColor.ExtraLightMustardYellow
+    }
+}
 
 @Composable
 fun mbMustardGrayBlueLightDarkColor(): Color {
@@ -373,7 +385,7 @@ fun mbGrayLightExtraBlueDarkColor(): Color {
 fun mbActionBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.BlueBlackExtraDark
-        else -> MbColor.DarkMustardYellow
+        else -> MbColor.White//MbColor.ExtraLightGray
     }
 }
 @Composable

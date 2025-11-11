@@ -18,15 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MbActionBoxButtonView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
+import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightYellowGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteYellowLemonDarkLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 
@@ -38,6 +39,7 @@ fun MbBoxActionSecondaryButton(
     backgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
     textStyle: TextStyle = mbSubtitleTextAccentStyle(),
     iconTintColor: Color = mbWhiteYellowLemonDarkLightColor(),
+    iconBoxColor: Color = mbExtraLightYellowGrayBlueDarkColor(),
     onClickAction: (() -> Unit)? = null
 ) {
     Box(
@@ -57,13 +59,19 @@ fun MbBoxActionSecondaryButton(
             modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                modifier = Modifier
-                    .size(size = 32.dp),
-                painter = painterResource(id = iconRes),
-                contentDescription = EMPTY,
-                tint = iconTintColor
-            )
+            MbActionBoxButtonView(
+                modifier = Modifier,
+                color = iconBoxColor,
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(size = Dimen.size32dp),
+                    painter = painterResource(id = iconRes),
+                    contentDescription = EMPTY,
+                    tint = iconTintColor
+                )
+            }
+
 
             text
                 ?.let {
@@ -85,7 +93,7 @@ fun MbBoxActionSecondaryButton(
 @Composable
 fun SearchBookmarkView2Preview() {
     MaterialBookmarkMaterialTheme {
-        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+        Box(modifier = Modifier.background(mbYellowLemonLightMustardDarkColor())) {
             MbBoxActionSecondaryButton(
                 modifier = Modifier,
                 iconRes = R.drawable.ic_pin_new_dark,
