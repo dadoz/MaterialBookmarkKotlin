@@ -193,8 +193,14 @@ class SearchBookmarkViewModel @Inject constructor(
                                 .firstOrNull {
                                     it.domain
                                         .equals(
-                                            other = this.url
-                                                .split("www.")[1]
+                                            other = (this.url
+                                                .takeIf {
+                                                    it.contains("www")
+                                                }
+                                                ?.let {
+                                                    it.split("www.")[1]
+                                                }
+                                                ?: this.url)
                                                 .replace(
                                                     oldValue = "/",
                                                     newValue = ""
@@ -204,8 +210,11 @@ class SearchBookmarkViewModel @Inject constructor(
                                 }
                                 ?.logoUrl
                                 ?: it.data
-                                    .first()
-                                    .logoUrl
+                                    .takeIf {
+                                        it.isNotEmpty()
+                                    }
+                                    ?.first()
+                                    ?.logoUrl
                         }
 
                         else -> null

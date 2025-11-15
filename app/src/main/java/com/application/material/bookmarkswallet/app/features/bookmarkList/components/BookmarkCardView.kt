@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
@@ -94,7 +95,11 @@ fun BookmarkCardView(
                     .align(
                         alignment = Alignment.Start
                     )
-                    .padding(bottom = Dimen.paddingMedium16dp),
+                    .padding(
+                        bottom = Dimen.paddingMedium16dp
+                    ),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 4,
                 style = mbSubtitleTextStyle(
                     color =
                         mbMustardDarkWhiteColor()
@@ -129,7 +134,7 @@ fun BookmarkCardPreview() {
             siteName = "Blalallallalala",
             timestamp = Date(),
             iconUrl = "",
-            url = "http://www.google.it",
+            url = "http://www.google.it/bdslfa;sd/sdfsad/sad/f/sdsa/d/fsa.df./as/d/f/asdf//sad/f/sa/df/sa/d/f/asd/f/as/dfsa/df//sa/df/sa/f/sd/f/as/df/a/sd/fa/sd",
             appId = null,
             isLike = false,
         ),

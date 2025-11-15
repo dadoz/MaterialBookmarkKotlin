@@ -189,7 +189,7 @@ fun SearchAndAddBookmarkView(
                 MbCardTextFieldView(
                     modifier = Modifier,
                     textFieldState = searchTitleTextState,
-                    isVisible = true,//isTitleBoxVisible,
+                    isVisible = isTitleBoxVisible,
                     titleLabel = stringResource(id = R.string.bookmark_title_label),
                     outerComponent = {
                         Text(
