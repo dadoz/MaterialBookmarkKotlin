@@ -227,6 +227,11 @@ fun mbCardRoundedCornerShape() =
     RoundedCornerShape(
         size = Dimen.mbCardRoundCornerSize
     )
+@Composable
+fun mbButtonMinRoundedCornerShape() =
+    RoundedCornerShape(
+        size = Dimen.mbButtonMinRoundCornerSize
+    )
 
 @Composable
 fun mbButtonRoundedCornerShape() =
@@ -384,15 +389,24 @@ fun mbGrayLightExtraBlueDarkColor(): Color {
 @Composable
 fun mbActionBookmarkCardBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.BlueBlackExtraDark
-        else -> MbColor.White//MbColor.ExtraLightGray
+        true -> MbColor.GrayBlueDarkNight
+        else -> MbColor.ExtraLightGray
     }
 }
+
 @Composable
 fun mbActionBookmarkCardBackgroundAlternativeColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
-        else -> MbColor.ExtraLightGray
+        else -> MbColor.White
+    }
+}
+
+@Composable
+fun mbActionBookmarkCardBackgroundAlternativeColors2(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.BlueBlackExtraDark
+        else -> MbColor.White
     }
 }
 

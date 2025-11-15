@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -14,21 +15,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MbActionBoxButtonView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
-import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonMinRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightYellowGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import com.application.material.bookmarkswallet.app.utils.NINETY_F
+import com.application.material.bookmarkswallet.app.utils.TWOHUNDRED_SEVENTY_F
 
 
 @Composable
@@ -36,6 +42,8 @@ fun MbBoxActionSecondaryButton(
     modifier: Modifier = Modifier,
     iconRes: Int,
     text: String? = null,
+    isArrowEnabled: Boolean = false,
+    isArrowClicked: Boolean = false,
     backgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
     textStyle: TextStyle = mbSubtitleTextAccentStyle(),
     iconTintColor: Color = mbWhiteYellowLemonDarkLightColor(),
@@ -44,7 +52,9 @@ fun MbBoxActionSecondaryButton(
 ) {
     Box(
         modifier = modifier
-            .clip(shape = mbCardRoundedCornerShape())
+            .clip(
+                shape = mbButtonMinRoundedCornerShape()
+            )
             .background(
                 color = backgroundColor
             )
@@ -52,7 +62,7 @@ fun MbBoxActionSecondaryButton(
                 enabled = onClickAction != null,
                 onClick = onClickAction ?: { }
             )
-            .padding(all = Dimen.paddingMedium16dp)
+            .padding(all = Dimen.paddingExtraSmall2dp)
             .wrapContentWidth(),
     ) {
         Row(
@@ -72,7 +82,6 @@ fun MbBoxActionSecondaryButton(
                 )
             }
 
-
             text
                 ?.let {
                     Text(
@@ -82,6 +91,29 @@ fun MbBoxActionSecondaryButton(
                             ),
                         style = textStyle,
                         text = text
+                    )
+                }
+
+            isArrowEnabled
+                .takeIf { it }
+                ?.let {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_right_dark),
+                        contentDescription = EMPTY,
+                        modifier = Modifier
+                            .padding(
+                                horizontal = Dimen.paddingMedium16dp,
+                            )
+                            .size(Dimen.size20dp)
+                            .rotate(
+                                degrees =
+                                    when {
+                                        isArrowClicked -> TWOHUNDRED_SEVENTY_F
+
+                                        else -> NINETY_F
+                                    }
+                            ),
+                        tint = mbWhiteDarkColor()
                     )
                 }
         }

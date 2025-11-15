@@ -41,7 +41,6 @@ class SearchBookmarkViewModel @Inject constructor(
     val searchResultUIState: StateFlow<SearchResultUIState> =
         searchResultMutableState.asStateFlow()
 
-
     // clear state
     fun clearSearchResultUIState() {
         searchResultMutableState.value = SearchResultUIState(
@@ -138,7 +137,8 @@ class SearchBookmarkViewModel @Inject constructor(
                         }
                         ?.also { bookmark ->
                             saveBookmark(
-                                title = customTitle ?: (bookmark.title ?: EMPTY_BOOKMARK_LABEL),
+                                title = customTitle?.takeIf { it.isNotEmpty() } ?: (bookmark.title
+                                    ?: EMPTY_BOOKMARK_LABEL),
                                 iconUrl = bookmark.icon,
                                 description = bookmark.description,
                                 url = bookmark.url,

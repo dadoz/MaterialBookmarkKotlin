@@ -10,8 +10,13 @@
     <string name="update_label_button">UPDATE</string>
     <string name="save_label_button">SAVE</string>
     <string name="save_ai_label_button">Save and Search AI</string>
+
+    <!--    Search Bookmark-->
     <string name="search_actionbar_string">Search Bookmarks</string>
+    <string name="past_clip_message">Hey you paste clipboard!</string>
     <string name="add_actionbar_string">Add new Bookmark</string>
+
+    <!--    Other actions Bookmark-->
     <string name="delete_fulle_descr_label_text">Sure you want delete your bookmark permanently?</string>
     <string name="settings_actionbar_string">Settings</string>
     <string name="no_bookmark_string">Still no Bookmarks in list,\n seem so sad!</string>
@@ -67,5 +72,5 @@
     <!--    bookmark list item-->
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
-    <string name="add_title_manually">choice your title</string>
+    <string name="add_title_manually">add your title</string>
 </resources>

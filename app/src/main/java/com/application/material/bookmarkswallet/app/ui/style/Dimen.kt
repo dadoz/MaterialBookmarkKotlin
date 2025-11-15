@@ -85,6 +85,7 @@ object Dimen {
     val cardViewElevation = 10.dp
     val mbChipRoundCornerSize = 16.dp
     val mbButtonRoundCornerSize = 22.dp
+    val mbButtonMinRoundCornerSize = 22.dp
     val mbCardRoundCornerSize = 34.dp
 
     //error

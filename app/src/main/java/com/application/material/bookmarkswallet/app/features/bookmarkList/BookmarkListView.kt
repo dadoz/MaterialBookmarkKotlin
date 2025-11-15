@@ -34,6 +34,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -71,6 +72,7 @@ import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_GRID_S
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_LIST_SIZE
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Date
 
 
@@ -263,6 +265,7 @@ fun BookmarkListComponentView(
             searchBookmarkViewModel?.clearSearchResultUIState()
         }
     ) {
+        val context = LocalContext.current
         SearchAndAddBookmarkView(
             modifier = Modifier,
             onSearchBookmarkWithAIAction = { url, title ->

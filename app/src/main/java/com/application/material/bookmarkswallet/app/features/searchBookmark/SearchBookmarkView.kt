@@ -1,15 +1,15 @@
 package com.application.material.bookmarkswallet.app.features.searchBookmark
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,7 +31,6 @@ import androidx.compose.material3.SplitButtonDefaults.leadingButtonShapesFor
 import androidx.compose.material3.SplitButtonLayout
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +38,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -58,13 +56,14 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
-import com.application.material.bookmarkswallet.app.ui.components.MbBookmarkTextFieldView
 import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSecondaryButton
-import com.application.material.bookmarkswallet.app.ui.components.MbCardView
+import com.application.material.bookmarkswallet.app.ui.components.MbCardTextFieldView
 import com.application.material.bookmarkswallet.app.ui.components.MbLoaderView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
+import com.application.material.bookmarkswallet.app.ui.components.MbTextFieldView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundAlternativeColors2
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonYellowColor
@@ -73,16 +72,13 @@ import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCard
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkColor
-import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkGreyCardBackgroundColors
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import com.application.material.bookmarkswallet.app.utils.NINETY_F
-import com.application.material.bookmarkswallet.app.utils.TWOHUNDRED_SEVENTY_F
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import java.util.Date
 
 @Composable
@@ -91,9 +87,21 @@ fun SearchAndAddBookmarkView(
     searchResultUIState: SearchResultUIState,
     onSearchBookmarkWithAIAction: (url: String, title: String?) -> Unit,
 ) {
+    val context = LocalContext.current
+    //clip manager
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    //states
     val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
     val searchTitleTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
-    val context = LocalContext.current
+    //data clip pasted
+    val pasteData: String by remember {
+        mutableStateOf(
+            value = EMPTY
+        )
+    }
+    var isTitleBoxVisible by remember {
+        mutableStateOf(value = false)
+    }
 
     Column(
         modifier = modifier
@@ -143,22 +151,66 @@ fun SearchAndAddBookmarkView(
                     )
                 }
 
-                //search box and text field
-                MbBoxUrlFieldAndTitleSearchView(
+                //search url field
+                MbCardTextFieldView(
+                    modifier = modifier
+                        .padding(
+                            top = Dimen.paddingSmall8dp
+                        ),
+                    hesHorizontalPadding = false,
+                    hasVerticalPadding = false,
+                    textFieldState = searchUrlTextState
+                ) {
+                    //clipboard
+                    MbBoxActionSecondaryButton(
+                        modifier = Modifier
+                            .padding(
+                                top = Dimen.paddingMedium16dp
+                            ),
+                        iconRes = R.drawable.ic_pin_new_dark,
+                        text = stringResource(R.string.paste_clipboard),
+                    ) {
+                        Toast.makeText(
+                            context, R.string.past_clip_message, Toast.LENGTH_LONG
+                        ).show()
+
+                        //take first item from clip and set to value on url todo make utils
+                        searchUrlTextState.value = clipboard.primaryClip
+                            ?.getItemAt(ZERO)
+                            ?.text
+                            ?.toString()
+                            ?.let {
+                                TextFieldValue(it)
+                            } ?: TextFieldValue(EMPTY)
+                    }
+                }
+
+                //title text field
+                MbCardTextFieldView(
                     modifier = Modifier,
-                    searchUrlTextState = searchUrlTextState,
-                    searchTitleTextState = searchTitleTextState,
+                    textFieldState = searchTitleTextState,
+                    isVisible = true,//isTitleBoxVisible,
+                    titleLabel = stringResource(id = R.string.bookmark_title_label),
+                    outerComponent = {
+                        Text(
+                            text = stringResource(
+                                id = R.string.bookmark_title_description
+                            ),
+                            style = mbSubtitleLightTextStyle()
+                        )
+                    },
                 )
 
-                //clipboard
+                //add title manually
                 MbBoxActionSecondaryButton(
                     modifier = Modifier,
-                    iconRes = R.drawable.ic_pin_new_dark,
-                    text = stringResource(R.string.paste_clipboard),
+                    backgroundColor = mbActionBookmarkCardBackgroundAlternativeColors2(),
+                    text = stringResource(R.string.add_title_manually),
+                    iconRes = R.drawable.ic_text_dark,
+                    isArrowClicked = isTitleBoxVisible,
+                    isArrowEnabled = true
                 ) {
-                    Toast.makeText(
-                        context, R.string.search_bookmark, Toast.LENGTH_LONG
-                    ).show()
+                    isTitleBoxVisible = isTitleBoxVisible.not()
                 }
 
                 //Search and Add button
@@ -177,85 +229,6 @@ fun SearchAndAddBookmarkView(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun MbBoxUrlFieldAndTitleSearchView(
-    modifier: Modifier,
-    searchUrlTextState: MutableState<TextFieldValue>,
-    searchTitleTextState: MutableState<TextFieldValue>
-) {
-    val context = LocalContext.current
-    var isTitleBoxVisible by remember {
-        mutableStateOf(value = false)
-    }
-
-    MbCardView(
-        modifier = modifier,
-        colors = mbWhiteDarkGreyCardBackgroundColors()
-    ) {
-        //search text field
-        MbBookmarkTextFieldView(
-            modifier = Modifier
-                .padding(
-                    top = Dimen.paddingSmall8dp
-                ),
-            textFieldState = searchUrlTextState
-        )
-
-        //add title manually
-        Row(
-            modifier = Modifier
-                .clickable {
-                    isTitleBoxVisible = isTitleBoxVisible.not()
-                }
-                .padding(
-                    all = Dimen.paddingMedium16dp
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                modifier = Modifier
-                    .clickable {
-                        Toast.makeText(
-                            context, R.string.search_bookmark, Toast.LENGTH_LONG
-                        ).show()
-                    },
-                style = mbSubtitleTextStyle(),
-                text = stringResource(R.string.add_title_manually)
-            )
-
-            Icon(
-                painter = painterResource(id = R.drawable.ic_arrow_right_dark),
-                contentDescription = EMPTY,
-                modifier = Modifier
-                    .padding(
-                        start = Dimen.paddingMedium16dp,
-                    )
-                    .size(Dimen.size20dp)
-                    .rotate(
-                        degrees =
-                            when {
-                                isTitleBoxVisible -> TWOHUNDRED_SEVENTY_F
-
-                                else -> NINETY_F
-                            }
-                    ),
-                tint = mbWhiteDarkColor()
-            )
-        }
-
-        //title text field
-        MbBookmarkTextFieldView(
-            modifier = Modifier,
-            textFieldState = searchTitleTextState,
-            isVisible = isTitleBoxVisible,
-            titleLabel = stringResource(id = R.string.bookmark_title_label),
-            subtitleLabel = stringResource(id = R.string.bookmark_title_description)
-        )
     }
 }
 
@@ -316,12 +289,12 @@ fun SearchAndAddBookmarkWithFullAIView(
             style = mbTitleBoldTextStyle(),
             text = "New Search"
         )
-        MbBookmarkTextFieldView(
+        MbTextFieldView(
             modifier = Modifier,
             titleLabel = "Title",
             textFieldState = bookmarkTitle
         )
-        MbBookmarkTextFieldView(
+        MbTextFieldView(
             modifier = Modifier,
             titleLabel = "Bookmark Url",
             textFieldState = bookmarkUrl
@@ -545,4 +518,3 @@ fun SearchBookmarkViewPreview() {
         }
     }
 }
-

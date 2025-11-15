@@ -2,7 +2,7 @@
 accompanistSystemuicontroller = "0.36.0"
 generativeai = "0.9.0"
 gsonAdapter = "3.0.0"
-androidGradlePlugin = "8.13.0"
+androidGradlePlugin = "8.13.1"
 coilCompose = "2.7.0"
 kotlin = "2.2.21"
 hilt = "2.57.2"
