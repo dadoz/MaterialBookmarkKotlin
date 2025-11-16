@@ -363,6 +363,13 @@ fun mbExtraLightGrayGrayBlueDarkColor(): Color {
     }
 }
 @Composable
+fun mbExtraLightGrayGrayBlueDarkVariantColor(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.GrayBlueDarkNight
+        else -> MbColor.ExtraLightGray
+    }
+}
+@Composable
 fun mbExtraLightYellowGrayBlueDarkColor(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight

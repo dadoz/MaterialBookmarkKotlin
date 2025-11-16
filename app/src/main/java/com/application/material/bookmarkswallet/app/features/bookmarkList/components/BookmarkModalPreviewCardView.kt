@@ -12,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,11 +48,12 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.SHARE_ACTION
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getTimestampFormatted
-import com.application.material.bookmarkswallet.app.features.searchBookmark.components.WevBaseBottomSheetView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbBaseBottomSheetView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundAlternativeColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
@@ -88,7 +90,7 @@ fun BookmarkModalPreviewCardView(
     val coroutineScope = rememberCoroutineScope()
 
     if (bottomSheetVisible.value) {
-        WevBaseBottomSheetView(
+        MbBaseBottomSheetView(
             modifier = modifier
                 .wrapContentHeight(),
 //                .padding(top = 120.dp),
@@ -102,7 +104,7 @@ fun BookmarkModalPreviewCardView(
             }
         ) {
             BookmarkPreviewCard(
-                modifier = modifier,
+                modifier = Modifier,
                 bookmark = bookmark,
                 isActionMenuVisible = true,
                 onDeleteAction = onDeleteCallback,
@@ -127,8 +129,11 @@ fun BookmarkPreviewCard(
         res = R.drawable.ic_bookmark,
         color = mbYellowLemonDarkLightColor()
     )
-    MbCardView(
+    Column(
         modifier = modifier
+            .padding(
+                all = Dimen.paddingMedium16dp
+            )
     ) {
         AsyncImage(
             model = bookmark.iconUrl,
@@ -151,9 +156,8 @@ fun BookmarkPreviewCard(
                 ),
         )
 
-
         MbCardView(
-            modifier = modifier,
+            modifier = Modifier,
             colors = mbPreviewCardBackgroundColors(),
         ) {
             //title and header

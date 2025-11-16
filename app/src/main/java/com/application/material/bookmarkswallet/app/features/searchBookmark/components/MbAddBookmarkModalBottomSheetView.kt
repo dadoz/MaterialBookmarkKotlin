@@ -24,7 +24,7 @@ fun MbAddBookmarkModalBottomSheetView(
     val coroutineScope = rememberCoroutineScope()
 
     if (bottomSheetVisible.value) {
-        WevBaseBottomSheetView(
+        MbBaseBottomSheetView(
             modifier = modifier
                 .wrapContentHeight()
                 .padding(top = 120.dp),

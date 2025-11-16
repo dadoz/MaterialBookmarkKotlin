@@ -29,7 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.application.material.bookmarkswallet.app.ui.style.expandedBottomSheetState
 import com.application.material.bookmarkswallet.app.ui.style.getResizedDensity
 import com.application.material.bookmarkswallet.app.ui.style.mbBottomSheetRoundedCornerShape
-import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkVariantColor
 import com.application.material.bookmarkswallet.app.utils.ZERO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -43,22 +43,7 @@ fun BookmarkModalBottomSheetView(
     url: String,
     onCloseCallback: () -> Unit
 ) {
-    //show modal webview state
-//    val coroutineScope = rememberCoroutineScope()
-//    var openWebViewSheetState by rememberSaveable { mutableStateOf(false) }
-//    val webViewSheetState = expandedBottomSheetState()
-//    val showSupportWebViewSheet: (hasToShow: Boolean) -> Unit = {
-//        coroutineScope.launch {
-//            openWebViewSheetState = it
-//            //show hide webview
-//            when (openWebViewSheetState) {
-//                true -> webViewSheetState.show()
-//                else -> webViewSheetState.hide()
-//            }
-//        }
-//    }
-//    if (hasToOpen) {
-    WevBaseBottomSheetView(
+    MbBaseBottomSheetView(
         modifier = modifier
             .wrapContentHeight()
             .padding(top = 120.dp),
@@ -72,7 +57,6 @@ fun BookmarkModalBottomSheetView(
             url = url
         )
     }
-//    }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -111,11 +95,11 @@ fun WevWebView(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WevBaseBottomSheetView(
+fun MbBaseBottomSheetView(
     modifier: Modifier = Modifier,
     hasDragHandle: Boolean = false,
     bottomSheetState: SheetState,
-    containerColor: Color = mbExtraLightGrayGrayBlueDarkColor(),
+    containerColor: Color = mbExtraLightGrayGrayBlueDarkVariantColor(),
     onCloseCallback: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {

@@ -55,3 +55,20 @@ data class BookmarkSimple(
     @param:Json(name = "description")
     var description: String
 )
+
+fun BookmarkIconInfo.isUrlInList(url: String): Boolean = this.domain
+    .equals(
+        other = (url
+            .takeIf {
+                it.contains("www")
+            }
+            ?.let {
+                it.split("www.")[1]
+            }
+            ?: url)
+            .replace(
+                oldValue = "/",
+                newValue = ""
+            ),
+        ignoreCase = true
+    )

@@ -9,6 +9,7 @@ import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkSimple
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.isUrlInList
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.google.ai.client.generativeai.type.Content
@@ -59,8 +60,8 @@ class SearchBookmarkViewModel @Inject constructor(
         description: String?,
         iconUrl: String?,
         url: String,
-        onSuccessCallback: (bookmark: Bookmark) -> Unit = { bookmark -> },
-        onErrorCallback: (e: Throwable) -> Unit = { e -> }
+        onSuccessCallback: (bookmark: Bookmark) -> Unit = { _ -> },
+        onErrorCallback: (e: Throwable) -> Unit = { _ -> }
     ) {
         viewModelScope.launch {
             try {
@@ -185,28 +186,16 @@ class SearchBookmarkViewModel @Inject constructor(
         ?.let { siteName ->
             bookmarkListDataRepository.findIconInfoByUrl(
                 url = siteName
-            ).first()
+            )
+                .first()
                 .let {
                     when {
                         it is Response.Success -> {
                             it.data
                                 .firstOrNull {
-                                    it.domain
-                                        .equals(
-                                            other = (this.url
-                                                .takeIf {
-                                                    it.contains("www")
-                                                }
-                                                ?.let {
-                                                    it.split("www.")[1]
-                                                }
-                                                ?: this.url)
-                                                .replace(
-                                                    oldValue = "/",
-                                                    newValue = ""
-                                                ),
-                                            ignoreCase = true
-                                        )
+                                    it.isUrlInList(
+                                        url = this.url
+                                    )
                                 }
                                 ?.logoUrl
                                 ?: it.data

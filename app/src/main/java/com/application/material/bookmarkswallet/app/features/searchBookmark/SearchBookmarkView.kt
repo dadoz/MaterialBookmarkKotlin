@@ -220,6 +220,7 @@ fun SearchAndAddBookmarkView(
                         .padding(bottom = Dimen.paddingMedium16dp),
                     colors = mbButtonYellowColor(),
                     text = stringResource(id = R.string.save_ai_label_button),
+                    textStyle = mbButtonTextDarkStyle(),
                     onClickAction = {
                         onSearchBookmarkWithAIAction.invoke(
                             searchUrlTextState.value.text,
