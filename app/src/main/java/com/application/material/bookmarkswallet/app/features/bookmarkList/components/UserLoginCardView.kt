@@ -53,7 +53,7 @@ fun UserLoginCardView(
         ) {
             //image icon
             AsyncImage(
-                model = user.profilePictureUrl,
+                model = user.photoUrl,
                 error = fallbackIcon,
                 placeholder = fallbackIcon,
                 contentScale = ContentScale.Fit,
@@ -82,7 +82,7 @@ fun UserLoginCardView(
                     ),
                 style = mbTitleMediumBoldYellowLightDarkTextStyle(),
                 maxLines = 2,
-                text = user.name
+                text = user.name.takeIf { it.isNotEmpty() } ?: user.uid
             )
 
         }
@@ -97,10 +97,9 @@ fun UserLoginCardViewPreview() {
         modifier = Modifier,
         user = User(
             name = "Davide",
-            surname = "Rossi",
-            profilePictureUrl = "https://p.kindpng.com/picc/s/727-7271359_philip-j-fry-avatar-hd-png-download.png",
-            username = "@davide.rossi",
-            age = 40
+            photoUrl = "https://p.kindpng.com/picc/s/727-7271359_philip-j-fry-avatar-hd-png-download.png",
+            uid = "11111",
+            email = "blallal@gmail.com"
         ),
     ) {}
 }

@@ -23,11 +23,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
-import com.application.material.bookmarkswallet.app.features.bookmarkList.USER_MOCK
-import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.UserLoginCardView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
+import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
@@ -38,11 +38,12 @@ import com.application.material.bookmarkswallet.app.utils.EMPTY
 
 @Composable
 fun SettingsView(
-    modifier: Modifier
+    modifier: Modifier,
+    settingsViewModel: SettingsViewModel = hiltViewModel<SettingsViewModel>()
 ) {
     val user by remember {
         mutableStateOf(
-            value = USER_MOCK
+            value = settingsViewModel.user
         )
     }
     Column(

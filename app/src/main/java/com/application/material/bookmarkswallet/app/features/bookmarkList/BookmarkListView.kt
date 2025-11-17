@@ -581,11 +581,11 @@ internal val bookmarkListMock = listOf(
 )
 
 val USER_MOCK = User(
+    uid = "1",
     name = "Davide",
-    surname = "bllalal",
-    username = "blla",
-//    profilePictureUrl = "https://images6.alphacoders.com/463/463807.jpg",
-    age = 40
+    photoUrl = "https://www.google.it",
+    email = "https://www.google.it"
+
 )
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
