@@ -25,7 +25,7 @@ val versionCodeTimestamp = SimpleDateFormat("ddMMyyHHmm", Locale.ITALY)
     .let { dateStr ->
         //1299251930 //todo big issue please max resolution 2147483647
         "13" + dateStr
-            .substring(startIndex = 2, endIndex = dateStr.length)
+            .substring(startIndex = 2, endIndex = dateStr.length - 4) + "2330"
     }
     .let {
         Integer.parseInt(it)

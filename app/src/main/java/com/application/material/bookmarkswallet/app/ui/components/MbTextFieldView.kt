@@ -100,7 +100,6 @@ fun MbCardTextFieldView(
             modifier = modifier,
             colors = mbWhiteDarkGreyCardBackgroundColors()
         ) {
-
             OutlinedTextField(
                 modifier = Modifier
                     .focusRequester(

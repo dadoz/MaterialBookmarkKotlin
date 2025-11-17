@@ -22,7 +22,7 @@ object MbColor {
     val UltraLightGray: Color = Color(0xFFEEEEEE)
     val White: Color = Color.White
     val ExtraLightGray: Color = Color(0xFFF8F8F8)
-    val ExtraLightMustardYellow: Color = Color(0xFFE9E3CC)
+    val ExtraLightMustardYellow: Color = Color(0xFFFFFAD2)
     val Black: Color = Color.Black
 
     //new colors
