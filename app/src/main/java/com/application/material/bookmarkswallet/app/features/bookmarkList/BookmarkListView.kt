@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Text
@@ -26,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -33,10 +36,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -132,6 +133,7 @@ fun BookmarkListComponentView(
             FilterHp.SORT_BY_DATE to false
         )
     }
+
     //filter on list type - TODO please clean and compose a component
     val selectedFilterListType = rememberSaveable(
         saver = Saver(
@@ -165,16 +167,13 @@ fun BookmarkListComponentView(
             }
         }
     }
+    val bookmarkLazyGridState = rememberLazyGridState()
 
     //bookmark list empty check
-    var isBookmarkListEmpty by rememberSaveable {
-        mutableStateOf(
-            value = false
-        )
-    }
-
-    LaunchedEffect(key1 = bookmarkListState?.value?.itemList) {
-        isBookmarkListEmpty = bookmarkListState?.value?.itemList.isNullOrEmpty()
+    val isBookmarkListEmpty = remember {
+        derivedStateOf {
+            bookmarkLazyGridState.firstVisibleItemIndex > 0
+        }
     }
 
     //init status
@@ -248,16 +247,17 @@ fun BookmarkListComponentView(
                     .padding(
                         vertical = Dimen.paddingMedium16dp
                     ),
-                isVisible = isBookmarkListEmpty
+                isVisible = isBookmarkListEmpty.value
             )
 
             //main container view of all bookmarks
-            BookmarkListComponentView(
+            BookmarkListInternalComponentView(
                 modifier = Modifier
                     .padding(
                         top = Dimen.paddingMedium16dp
                     )
                     .fillMaxSize(),
+                lazyGridState = bookmarkLazyGridState,
                 bookmarkListType = selectedFilterListType.value.first(),
                 bookmarkItems = bookmarkListState?.value?.itemList ?: listOf(),
                 onOpenAction = { bookmark ->
@@ -312,7 +312,6 @@ fun BookmarkListComponentView(
             searchBookmarkViewModel?.clearSearchResultUIState()
         }
     ) {
-        val context = LocalContext.current
         SearchAndAddBookmarkView(
             modifier = Modifier,
             onSearchBookmarkWithAIAction = { url, title ->
@@ -451,13 +450,15 @@ fun MbFilterBookmarkHpView(
 }
 
 @Composable
-fun BookmarkListComponentView(
+fun BookmarkListInternalComponentView(
     modifier: Modifier = Modifier,
     bookmarkListType: BookmarkListType = GRID,
     bookmarkItems: List<Bookmark> = emptyList(),
-    onOpenAction: (Bookmark) -> Unit = {}
+    onOpenAction: (Bookmark) -> Unit = {},
+    lazyGridState: LazyGridState
 ) {
     LazyVerticalGrid(
+        state = lazyGridState,
         modifier = modifier,
         columns = GridCells.Fixed(
             count = when (bookmarkListType) {
