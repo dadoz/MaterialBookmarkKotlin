@@ -138,7 +138,7 @@ fun MbBoxActionSecondaryButton(
                                         else -> NINETY_F
                                     }
                             ),
-                        tint = mbWhiteDarkColor()
+                        tint = iconTintColor
                     )
                 }
         }

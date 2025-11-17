@@ -8,4 +8,6 @@ internal val filterHpList = listOf(
     SORT_BY_DATE,
     PINNED
 )
-internal val filterDefaultListType = listOf(GRID)
+internal val filterDefaultListType = listOf(
+    GRID
+)

@@ -1,6 +1,7 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList
 
 import android.content.res.Configuration
+import android.os.Bundle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,6 +31,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -71,8 +73,8 @@ import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBol
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_GRID_SIZE
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_LIST_SIZE
 import com.application.material.bookmarkswallet.app.utils.EMPTY
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.Date
 
 
@@ -105,18 +107,63 @@ fun BookmarkListComponentView(
     val searchResultUIState = searchBookmarkViewModel?.searchResultUIState?.collectAsState()
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
-    //filter list on hp
-    val selectedFilterHpMap = remember { //todo rememberSaveable custom saver for map :(
+    //filter list on hp - FilterHp to Bool TODO please clean and compose a component
+    val selectedFilterHpMap = rememberSaveable(
+        saver = Saver(
+            save = {
+                val originalValue = it.toMap()
+//                bookmarkViewModel?.set(
+//                    value = originalValue
+//                )
+                Bundle().also { bundle ->
+                    bundle.putIntegerArrayList("value", ArrayList())
+                }
+            },
+            restore = {
+                mutableStateMapOf(
+                    FilterHp.PINNED to false,
+                    FilterHp.SORT_BY_DATE to false
+                )
+            }
+        )
+    ) {
         mutableStateMapOf(
             FilterHp.PINNED to false,
             FilterHp.SORT_BY_DATE to false
         )
     }
-    //filter on list type
-    val selectedFilterListType = rememberSaveable {
+    //filter on list type - TODO please clean and compose a component
+    val selectedFilterListType = rememberSaveable(
+        saver = Saver(
+            save = {
+                val originalValue = it.value.first()
+                bookmarkViewModel?.setSelectedFilterListType(
+                    value = originalValue
+                )
+                Bundle().also {
+                    it.putString("value", originalValue.name)
+                }
+            },
+            restore = {
+                mutableStateOf(
+                    value = filterDefaultListType
+                ).also {
+                    coroutineScope.launch {
+                        it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
+                            ?.first() ?: filterDefaultListType
+                    }
+                }
+            }
+        )
+    ) {
         mutableStateOf(
             value = filterDefaultListType
-        )
+        ).also {
+            coroutineScope.launch {
+                it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
+                    ?.first() ?: filterDefaultListType
+            }
+        }
     }
 
     //bookmark list empty check
@@ -271,7 +318,7 @@ fun BookmarkListComponentView(
             onSearchBookmarkWithAIAction = { url, title ->
                 searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
                     url = url,
-                    customTitle  = title
+                    customTitle = title
                 )
             },
             searchResultUIState = searchResultUIState.value

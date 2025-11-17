@@ -1,13 +1,18 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels
 
 import android.app.Application
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
+import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultListType
+import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
+import com.application.material.bookmarkswallet.app.storage.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     application: Application,
-    private val bookmarkListDataRepository: BookmarkListDataRepository
+    private val bookmarkListDataRepository: BookmarkListDataRepository,
+    private val dataStoreManager: DataStoreManager
 ) : AndroidViewModel(application = application) {
     //delete status
     private val bookmarkDeletionMutableState: MutableStateFlow<Boolean?> =
@@ -37,6 +43,16 @@ class BookmarkViewModel @Inject constructor(
 
     private val bookmarkListMutableState = MutableStateFlow(BookmarkListUIState())
     val bookmarkListUIState = bookmarkListMutableState.asStateFlow()
+
+    //filter for grid and list
+    val selectedFilterListTypeByStorage by lazy {
+        dataStoreManager.selectedFilterListType
+    }
+
+    //filter for hp with selection with latest or first
+    val selectedFilterHpMap by lazy {
+        dataStoreManager.selectedFilterHpMap ?: filterHpList
+    }
 
     /**
      * retrieve bookmark list version new please refer to retrieveBookmarkList
@@ -150,6 +166,10 @@ class BookmarkViewModel @Inject constructor(
             )
         }
     }
+
+    fun setSelectedFilterListType(value: BookmarkListType) = dataStoreManager.setSelectedFilterListType(
+        value = value.name
+    )
 
     override fun onCleared() {
         super.onCleared()
