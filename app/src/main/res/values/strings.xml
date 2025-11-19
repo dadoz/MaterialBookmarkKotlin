@@ -73,4 +73,5 @@
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
     <string name="add_title_manually">add your title</string>
+    <string name="userid_login">uid user: %s</string>
 </resources>

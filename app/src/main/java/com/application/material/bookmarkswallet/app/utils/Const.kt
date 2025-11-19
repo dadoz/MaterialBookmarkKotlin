@@ -1,6 +1,8 @@
 package com.application.material.bookmarkswallet.app.utils
 
 const val HTTPS_SCHEMA = "https://"
+const val GUEST = "GUEST"
+
 const val EMPTY = ""
 const val DASH = "-"
 const val NO_TIMESTAMP = "No timestamp"

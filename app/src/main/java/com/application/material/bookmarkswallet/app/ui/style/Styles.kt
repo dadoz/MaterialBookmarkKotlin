@@ -94,7 +94,7 @@ fun mbTitleBoldTextStyle() = TextStyle(
 @Composable
 fun mbTitleMediumBoldYellowLightDarkTextStyle() =
     mbTitleMediumBoldTextStyle(
-        color = mbYellowLemonDarkLightColor()
+        color = mbYellowLemonLightMustardDarkColor()
     )
 
 @Composable
