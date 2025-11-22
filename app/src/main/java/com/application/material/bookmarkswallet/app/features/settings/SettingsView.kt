@@ -1,6 +1,7 @@
 package com.application.material.bookmarkswallet.app.features.settings
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,8 +29,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.UserLoginCardView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
-import com.application.material.bookmarkswallet.app.ui.components.MBExtendedFab
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
+import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -41,11 +43,14 @@ fun SettingsView(
     modifier: Modifier,
     settingsViewModel: SettingsViewModel = hiltViewModel<SettingsViewModel>()
 ) {
+    val context = LocalContext.current
+
     val user by remember {
         mutableStateOf(
             value = settingsViewModel.user
         )
     }
+
     Column(
         modifier = modifier
             .verticalScroll(state = rememberScrollState())
@@ -79,7 +84,9 @@ fun SettingsView(
         ) {
             Column(
                 modifier = modifier
-                    .padding(all = Dimen.paddingMedium16dp),
+                    .padding(
+                        all = Dimen.paddingMedium16dp
+                    ),
             ) {
                 //title
                 Text(
@@ -174,13 +181,15 @@ fun SettingsView(
                 style = mbSubtitleTextStyle(),
                 text = "Just donate a coffee for the developer support",
             )
-            MBExtendedFab(
+            MbPrimaryButton(
                 modifier = modifier
                     .weight(1F)
                     .padding(top = Dimen.paddingMedium16dp),
-                title = "Donate",
-                iconRes = R.drawable.ic_tab_user_dark,
+                text = "Donate",
                 onClickAction = {
+                    Toast.makeText(
+                        context, "Donate action", Toast.LENGTH_SHORT
+                    ).show()
                 }
             )
         }

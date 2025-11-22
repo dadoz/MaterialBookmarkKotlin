@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookmarkListDataRepository @Inject constructor(
+class BookmarkRepository @Inject constructor(
     private val bookmarkDataSourceRemote: BookmarkDataSourceRemote,
     private val bookmarkDataSourceLocal: BookmarkDataSourceLocal
 ) {

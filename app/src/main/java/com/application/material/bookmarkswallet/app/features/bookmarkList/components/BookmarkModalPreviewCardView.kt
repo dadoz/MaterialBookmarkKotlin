@@ -6,12 +6,9 @@ import android.graphics.PorterDuffColorFilter
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +34,6 @@ import androidx.compose.ui.graphics.asAndroidColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -54,12 +50,11 @@ import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundAlternativeColors
-import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
-import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightExtraBlueDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkWhiteColor
 import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbRedVermilionLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
@@ -80,6 +75,7 @@ fun BookmarkModalPreviewCardView(
     bookmark: Bookmark,
     onDeleteCallback: (Bookmark) -> Unit,
     onOpenAction: (String) -> Unit,
+    onPinningAction: (Bookmark) -> Unit,
     bottomSheetVisible: MutableState<Boolean>
 ) {
     //bottom sheet modal
@@ -105,6 +101,7 @@ fun BookmarkModalPreviewCardView(
             BookmarkPreviewCard(
                 modifier = Modifier,
                 bookmark = bookmark,
+                onPinningAction = onPinningAction,
                 isActionMenuVisible = true,
                 onDeleteAction = onDeleteCallback,
                 onOpenAction = onOpenAction,
@@ -119,6 +116,7 @@ fun BookmarkPreviewCard(
     bookmark: Bookmark,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
     onOpenAction: ((String) -> Unit)? = null,
+    onPinningAction: ((Bookmark) -> Unit)? = null,
     isActionMenuVisible: Boolean = true,
     isOpenButtonVisible: Boolean = true,
 ) {
@@ -197,6 +195,17 @@ fun BookmarkPreviewCard(
                     )
                 )
             }
+
+            //pinning button
+            MbPinningButtonActionView(
+                modifier = Modifier
+                    .align(
+                        alignment = Alignment.End
+                    ),
+                bookmark = bookmark,
+                isSelected = bookmark.isPinned,
+                onPinningAction = onPinningAction
+            )
         }
 
         MbActionMenuBookmarkPreviewView(
@@ -270,8 +279,6 @@ fun MbActionMenuBookmarkPreviewView(
                             modifier = Modifier
                                 .let {
                                     when (index) {
-                                        ZERO -> it
-
                                         actionPreviewBookmarkList.size - 1 -> it
 
                                         else -> it.padding(
@@ -300,12 +307,11 @@ fun MbActionMenuBookmarkPreviewView(
                                 }
                             },
                         ) {
-                            Image(
+                            Icon(
                                 modifier = Modifier
                                     .size(size = Dimen.sizeLarge32dp),
                                 painter = painterResource(id = actionItem.second),
-                                colorFilter = ColorFilter
-                                    .tint(color = colorResource(R.color.colorPrimary)),
+                                tint = mbMustardDarkWhiteColor(),
                                 contentDescription = ""
                             )
                         }
@@ -339,40 +345,6 @@ fun MbDeleteBookmarkButtonView(
         )
     }
 }
-
-@Composable
-fun MbActionBoxButtonView(
-    modifier: Modifier,
-    hasBackground: Boolean = true,
-    color: Color = mbExtraLightGrayGrayBlueDarkColor(),
-    onClickAction: (() -> Unit)? = null,
-    item: @Composable (BoxScope.() -> Unit),
-) {
-    Box(
-        modifier = modifier
-            .clip(
-                shape = mbButtonRoundedCornerShape()
-            )
-            .let {
-                when {
-                    hasBackground -> it.background(
-                        color = color
-                    )
-
-                    else -> it
-                }
-            }
-            .clickable(
-                enabled = onClickAction != null,
-                onClick = onClickAction ?: {}
-            )
-            .padding(
-                all = Dimen.paddingMedium16dp
-            ),
-        content = item
-    )
-}
-
 
 @Composable
 fun rememberDrawablePainterWithColor(res: Int, colorRes: Int = R.color.colorPrimary): Painter =
@@ -435,7 +407,10 @@ fun MbDeleteBookmarkButtonViewPreview2() {
         ) {
             MbActionMenuBookmarkPreviewView(
                 modifier = Modifier,
-                bookmark = Bookmark("blal", "blal", "", "", "", Date(), false),
+                bookmark = Bookmark(
+                    "blal", "blal", "", "", "", Date(),
+                    isPinned = false
+                ),
                 isActionMenuVisible = true
             )
         }
@@ -457,8 +432,8 @@ fun BookmarkPreviewCardPreview() {
                         timestamp = Date(),
                         iconUrl = "",
                         url = "http://outlook.com.ddd.dddddd.ddddd.sdssd/sdafasd/asdfasdf",
-                        appId = null,
-                        isLike = false,
+                        appId = "1",
+                        isPinned = false
                     ),
                 onDeleteAction = {},
                 {},

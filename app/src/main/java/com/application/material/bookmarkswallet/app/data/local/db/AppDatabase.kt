@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.application.material.bookmarkswallet.app.data.local.BookmarkDao
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 
-@Database(entities = [Bookmark::class], version = 2)
+@Database(entities = [Bookmark::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val bookmarkDao: BookmarkDao

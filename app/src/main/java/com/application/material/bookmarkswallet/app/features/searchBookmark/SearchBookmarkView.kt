@@ -558,7 +558,7 @@ fun BookmarkPreview() {
                             iconUrl = "",
                             appId = "",
                             timestamp = Date(),
-                            isLike = false,
+                            isPinned = false,
                         )
                     )
             )

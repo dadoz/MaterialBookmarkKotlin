@@ -33,6 +33,7 @@ fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkLemonYellow
 }
+
 @Composable
 fun mbWhiteYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
@@ -52,6 +53,11 @@ fun mbRedVermilionLightDarkColor(): Color = when (isSystemInDarkTheme()) {
 }
 
 @Composable
+fun mbLightYellowLemonDarkYellowLemonColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.DarkLemonYellow
+    else -> MbColor.LightLemonYellow
+}
+@Composable
 fun mbYellowLemonLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.Yellow
@@ -62,6 +68,7 @@ fun mbYellowLemonLightMustardDarkColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkMustardYellow//DarkLemonYellow
 }
+
 @Composable
 fun mbWhiteMustardDarkColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.White
@@ -140,6 +147,7 @@ fun mbSubtitleTextColor(isSelected: Boolean) =
                 true -> MbColor.GrayBlueDarkNight
                 else -> MbColor.White
             }
+
         else ->
             when (isSystemInDarkTheme()) {
                 true -> MbColor.White
@@ -227,6 +235,7 @@ fun mbCardRoundedCornerShape() =
     RoundedCornerShape(
         size = Dimen.mbCardRoundCornerSize
     )
+
 @Composable
 fun mbButtonMinRoundedCornerShape() =
     RoundedCornerShape(
@@ -244,6 +253,7 @@ fun mbButtonYellowDarkLightColor() = mbButtonColorStyle(
     lightColor = MbColor.Yellow,
     darkColor = MbColor.DarkMustardYellow,
 )
+
 @Composable
 fun mbButtonYellowColor() = mbButtonColorStyle(
     lightColor = MbColor.Yellow,
@@ -292,6 +302,20 @@ fun mbFilterIconColor(isSelected: Boolean) = when {
         else -> MbColor.DarkMustardYellow
     }
 }
+
+@Composable
+fun mbActionButtonIconColor(isSelected: Boolean) = when {
+    isSystemInDarkTheme() -> when {
+        isSelected -> MbColor.GrayBlueDarkNight
+        else -> MbColor.White
+    }
+
+    else -> when {
+        isSelected -> MbColor.DarkMustardYellow
+        else -> MbColor.DarkMustardYellow
+    }
+}
+
 @Composable
 fun mbTabIconColor(isSelected: Boolean) = when (isSystemInDarkTheme()) {
     true -> when {
@@ -330,10 +354,20 @@ fun mbPreviewCardBackgroundColors(): CardColors =
     )
 
 @Composable
-fun mbBasicCardBackgroundColors(): CardColors =
-    CardDefaults.cardColors(
-        containerColor = mbExtraLightGrayGrayBlueDarkColor()
+fun mbSelectedCardBackgroundColors(isSelected: Boolean = false, isSelectedColor: Color): CardColors =
+    mbBasicCardBackgroundColors(
+        color = when {
+            isSelected -> isSelectedColor
+            else -> mbExtraLightGrayGrayBlueDarkColor()
+        }
     )
+
+@Composable
+fun mbBasicCardBackgroundColors(color: Color = mbExtraLightGrayGrayBlueDarkColor()): CardColors =
+    CardDefaults.cardColors(
+        containerColor = color
+    )
+
 @Composable
 fun mbWhiteDarkGreyCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
@@ -355,6 +389,7 @@ fun mbWhiteGrayBlueDarkColor(): Color {
         else -> MbColor.White
     }
 }
+
 @Composable
 fun mbExtraLightGrayGrayBlueDarkColor(): Color {
     return when (isSystemInDarkTheme()) {
@@ -362,6 +397,7 @@ fun mbExtraLightGrayGrayBlueDarkColor(): Color {
         else -> MbColor.ExtraLightGray
     }
 }
+
 
 @Composable
 fun mbExtraLightGrayGrayBlueDarkVariantColor(): Color {
@@ -407,7 +443,7 @@ fun mbActionBookmarkCardBackgroundColors(): Color {
 fun mbActionBookmarkCardBackgroundAlternativeColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
-        else -> MbColor.White
+        else -> MbColor.ExtraLightGray
     }
 }
 

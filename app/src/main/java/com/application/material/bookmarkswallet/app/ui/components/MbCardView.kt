@@ -1,6 +1,7 @@
 package com.application.material.bookmarkswallet.app.ui.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardBackgroundColors
 
 /**
@@ -24,12 +26,14 @@ fun MbCardView(
     modifier: Modifier,
     roundCornerSize: Dp = Dimen.mbCardRoundCornerSize,
     colors: CardColors = mbBasicCardBackgroundColors(),
+    borderStroke: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(size = roundCornerSize),
-        colors = colors
+        colors = colors,
+        border = borderStroke
     ) {
         Column(
             modifier = Modifier

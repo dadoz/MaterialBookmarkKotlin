@@ -59,6 +59,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
@@ -87,13 +88,20 @@ fun BookmarkListComponentView(
     searchBookmarkViewModel: SearchBookmarkViewModel? = hiltViewModel(),
 ) {
     val coroutineScope = rememberCoroutineScope()
+    //grid state
+    val bookmarkLazyGridState = rememberLazyGridState()
     //local uri handler
     val localUriHandler = LocalUriHandler.current
     //bottom sheet state
     val bottomSheetVisible = remember { mutableStateOf(value = false) }
     val isPreviewModalBottomSheetVisible = remember { mutableStateOf(value = false) }
     //selected bookmark ui state
-    val selectedBookmark = remember { mutableStateOf<Bookmark?>(null) }
+    val selectedBookmark = remember {
+        mutableStateOf<Bookmark?>(
+            value = null
+        )
+    }
+
     //user state
     val user by remember {
         mutableStateOf(
@@ -167,7 +175,6 @@ fun BookmarkListComponentView(
             }
         }
     }
-    val bookmarkLazyGridState = rememberLazyGridState()
 
     //bookmark list empty check
     val isBookmarkListEmpty = remember {
@@ -259,7 +266,7 @@ fun BookmarkListComponentView(
                     .fillMaxSize(),
                 lazyGridState = bookmarkLazyGridState,
                 bookmarkListType = selectedFilterListType.value.first(),
-                bookmarkItems = bookmarkListState?.value?.itemList ?: listOf(),
+                bookmarkListState = bookmarkListState?.value,
                 onOpenAction = { bookmark ->
                     isPreviewModalBottomSheetVisible.value = true
                     selectedBookmark.value = bookmark
@@ -277,6 +284,11 @@ fun BookmarkListComponentView(
                         },
                         onOpenAction = {
                             localUriHandler.openUri(it)
+                        },
+                        onPinningAction = {
+                            bookmarkViewModel?.updateBookmarkByPinning(
+                                bookmark = it
+                            )
                         },
                         bottomSheetVisible = isPreviewModalBottomSheetVisible
                     )
@@ -453,9 +465,9 @@ fun MbFilterBookmarkHpView(
 fun BookmarkListInternalComponentView(
     modifier: Modifier = Modifier,
     bookmarkListType: BookmarkListType = GRID,
-    bookmarkItems: List<Bookmark> = emptyList(),
+    bookmarkListState: BookmarkListUIState?,
     onOpenAction: (Bookmark) -> Unit = {},
-    lazyGridState: LazyGridState
+    lazyGridState: LazyGridState,
 ) {
     LazyVerticalGrid(
         state = lazyGridState,
@@ -469,7 +481,7 @@ fun BookmarkListInternalComponentView(
         verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp),
         horizontalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
     ) {
-        items(items = bookmarkItems) { item ->
+        items(items = bookmarkListState?.itemList ?: listOf()) { item ->
             BookmarkCardView(
                 modifier = Modifier
                     .animateItem(),
@@ -513,7 +525,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.google.it",
         url = "www.google.it",
         timestamp = Date(),//Dates.today,
-        isLike = false
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -522,7 +533,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.google.it",
         url = "www.google.it",
         timestamp = Date(),//Dates.today,
-        isLike = false
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -531,7 +541,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.google.it",
         url = "www.google.it",
         timestamp = Date(),//Dates.today,
-        isLike = false
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -540,7 +549,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.facebook.it",
         url = "www.facebook.it",
         timestamp = Date(),//Dates.today,
-        isLike = true
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -549,7 +557,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.google.it",
         url = "www.google.it",
         timestamp = Date(),//Dates.today,
-        isLike = false
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -558,7 +565,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.facebook.it",
         url = "www.facebook.it",
         timestamp = Date(),//Dates.today,
-        isLike = true
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -567,7 +573,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.google.it",
         url = "www.google.it",
         timestamp = Date(),//Dates.today,
-        isLike = false
     ),
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -576,7 +581,6 @@ internal val bookmarkListMock = listOf(
         iconUrl = "www.facebook.it",
         url = "www.facebook.it",
         timestamp = Date(),//Dates.today,
-        isLike = true
     )
 )
 

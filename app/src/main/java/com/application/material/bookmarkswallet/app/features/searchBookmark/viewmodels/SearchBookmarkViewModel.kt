@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.GenAIManager
-import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
+import com.application.material.bookmarkswallet.app.data.BookmarkRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkSimple
@@ -12,6 +12,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.isUrlInList
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.TextPart
 import com.squareup.moshi.JsonAdapter
@@ -33,7 +34,7 @@ import kotlin.coroutines.CoroutineContext
 @HiltViewModel
 class SearchBookmarkViewModel @Inject constructor(
     val app: Application,
-    private val bookmarkListDataRepository: BookmarkListDataRepository,
+    private val bookmarkRepository: BookmarkRepository,
     private val genAIManager: GenAIManager
 ) : AndroidViewModel(app) {
     //first state :)
@@ -72,11 +73,11 @@ class SearchBookmarkViewModel @Inject constructor(
                     iconUrl = iconUrl,
                     url = url,
                     timestamp = Date(),//Dates.today,
-                    isLike = false
+                    isPinned = false
                 )
                     .also {
                         Timber.e(it.toString())
-                        bookmarkListDataRepository.addBookmark(it)
+                        bookmarkRepository.addBookmark(it)
                         onSuccessCallback.invoke(it)
                     }
             } catch (e: Exception) {
@@ -184,7 +185,7 @@ class SearchBookmarkViewModel @Inject constructor(
 
     private suspend fun BookmarkSimple.filterFirstResultFromFindIconUrl(): String? = this.siteName
         ?.let { siteName ->
-            bookmarkListDataRepository.findIconInfoByUrl(
+            bookmarkRepository.findIconInfoByUrl(
                 url = siteName
             )
                 .first()

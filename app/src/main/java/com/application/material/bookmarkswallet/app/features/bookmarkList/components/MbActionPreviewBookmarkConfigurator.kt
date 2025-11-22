@@ -11,13 +11,15 @@ val actionPreviewBookmarkList = listOf(
         second = R.drawable.ic_edit_dark
     ),
     Pair(
-        first = PIN_ACTION,
-        second =
-            R.drawable.ic_pin_new_dark
-    ),
-    Pair(
         first = SHARE_ACTION,
         second =
             R.drawable.ic_share_dark
     )
 )
+
+val actionPinBookmark =
+    Pair(
+        first = PIN_ACTION,
+        second =
+            R.drawable.ic_pin_new_dark
+    )

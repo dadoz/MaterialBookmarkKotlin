@@ -20,7 +20,6 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbMustardGrayBlueLightDarkColor
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightColor
 
 @Composable

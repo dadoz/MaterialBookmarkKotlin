@@ -1,23 +1,25 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels
 
 import android.app.Application
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.material.bookmarkswallet.app.data.BookmarkListDataRepository
+import com.application.material.bookmarkswallet.app.data.BookmarkRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.storage.DataStoreManager
+import com.application.material.bookmarkswallet.app.utils.ONE
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -26,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     application: Application,
-    private val bookmarkListDataRepository: BookmarkListDataRepository,
+    private val bookmarkRepository: BookmarkRepository,
     private val dataStoreManager: DataStoreManager
 ) : AndroidViewModel(application = application) {
     //delete status
@@ -70,7 +72,7 @@ class BookmarkViewModel @Inject constructor(
         viewModelScope
             .launch {
                 //retrieve items
-                bookmarkListDataRepository.getBookmarks()
+                bookmarkRepository.getBookmarks()
                     .collect { result ->
                         when (result) {
                             is Response.Success -> {
@@ -106,11 +108,66 @@ class BookmarkViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     fun deleteBookmark(bookmark: Bookmark) {
         viewModelScope.launch {
-            bookmarkListDataRepository.deleteBookmark(bookmark = bookmark)
+            bookmarkRepository.deleteBookmark(bookmark = bookmark)
                 .collect {
                     bookmarkDeletionMutableState.value = it
                 }
 
+        }
+    }
+
+
+    /**
+     * add bookamrk on db
+     * handle with state instead of cbs (legacy mode but still like it)
+     */
+    fun updateBookmarkByPinning(
+        bookmark: Bookmark
+    ) {
+        //update bookmark -- TODO THIS is not working
+        //bookmark.isPinned = bookmark.isPinned.not()
+        val bookmarkCopyShared = bookmark.copy(
+            isPinned = bookmark.isPinned.not()
+        )
+
+        //launch update state
+        bookmarkListMutableState.update { state ->
+            state.copy(
+                isLoading = true,
+                itemList = state.itemList
+                    .toMutableList()
+                    .also {
+                        it
+                            .replaceAll {
+                                when {
+                                    it.url == bookmark.url -> bookmarkCopyShared
+
+                                    else -> it
+                                }
+                            }
+                    }
+            )
+        }
+
+        //launch update on state
+        viewModelScope.launch(
+            context = Dispatchers.Main
+        ) {
+            bookmarkRepository.updateBookmark(
+                bookmark = bookmarkCopyShared
+            )
+                .first()
+                .also {
+                    when {
+                        it -> {
+                            Timber.e("updateBookmark -> successs")
+                        }
+
+                        else -> {
+                            Timber.e("updateBookmark -> error")
+                        }
+                    }
+                }
         }
     }
 
@@ -134,7 +191,7 @@ class BookmarkViewModel @Inject constructor(
                                 }
                         }
                     }
-                    //TODO make it exclusive
+                //TODO make it exclusive
 //                    .let { list ->
 //                        //filter sort by NAME
 //                        when {
@@ -167,9 +224,10 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    fun setSelectedFilterListType(value: BookmarkListType) = dataStoreManager.setSelectedFilterListType(
-        value = value.name
-    )
+    fun setSelectedFilterListType(value: BookmarkListType) =
+        dataStoreManager.setSelectedFilterListType(
+            value = value.name
+        )
 
     override fun onCleared() {
         super.onCleared()
@@ -179,4 +237,15 @@ class BookmarkViewModel @Inject constructor(
         bookmarkDeletionMutableState.value = null
     }
 
+    fun cleaBookmarkListState() {
+        bookmarkListMutableState.value = BookmarkListUIState(
+            itemList = emptyList(),
+            isLoading = false
+        )
+    }
+}
+
+private fun Int.not() = when (this) {
+    ZERO -> ONE
+    else -> ZERO
 }

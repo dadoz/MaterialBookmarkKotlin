@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.application.material.bookmarkswallet.app.utils.NO_TIMESTAMP
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.application.material.bookmarkswallet.app.utils.convertToLocalDateTime
 import com.application.material.bookmarkswallet.app.utils.formatZonedDateTime
 import com.google.gson.annotations.SerializedName
@@ -29,8 +30,8 @@ data class Bookmark(
     var url: String,
     @SerializedName("timestamp")
     var timestamp: Date?,
-    @SerializedName("is_star")
-    var isLike: Boolean = false
+    @SerializedName("is_pinned")
+    var isPinned: Boolean = false
 ) : BookmarkType
 
 fun Bookmark?.getTimestampFormatted(context: Context): String = this?.timestamp
