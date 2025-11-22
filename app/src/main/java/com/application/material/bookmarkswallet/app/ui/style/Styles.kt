@@ -24,9 +24,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.sp
 import com.application.material.bookmarkswallet.app.R
+import com.application.material.bookmarkswallet.app.features.bookmarkList.components.rememberDrawablePainterWithColor
 
 const val densityResizeFactor = 1f
 
+@Composable
+fun mbBookmarkFallbackIcon() = rememberDrawablePainterWithColor(
+    res = R.drawable.ic_bookmark,
+    color = mbYellowLemonDarkLightColor()
+)
 
 @Composable
 fun mbYellowLemonDarkLightColor() = when (isSystemInDarkTheme()) {

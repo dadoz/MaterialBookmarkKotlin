@@ -12,7 +12,6 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.isUrlInList
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
-import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.TextPart
 import com.squareup.moshi.JsonAdapter
@@ -214,6 +213,15 @@ class SearchBookmarkViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+    }
+
+    fun updateSearchUIStateInEditMode(bookmark: Bookmark) {
+        searchResultMutableState.update {
+            it.copy(
+                isInEditMode = true,
+                bookmark = bookmark
+            )
+        }
     }
 }
 

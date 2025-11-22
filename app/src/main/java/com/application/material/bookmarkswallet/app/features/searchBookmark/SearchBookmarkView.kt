@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -46,6 +47,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,6 +58,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.BookmarkListButtonContainerHeight
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkPreviewCard
@@ -71,6 +74,7 @@ import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButto
 import com.application.material.bookmarkswallet.app.ui.components.MbTextFieldView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.mbBookmarkFallbackIcon
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextDarkStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonYellowColor
@@ -104,9 +108,30 @@ fun SearchAndAddBookmarkView(
     //states
     val searchUrlTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
     val searchTitleTextState = remember { mutableStateOf(TextFieldValue(EMPTY)) }
-
-    var isTitleBoxVisible = remember {
+    //is title box visible
+    val isTitleBoxVisible = remember {
         mutableStateOf(value = false)
+    }
+    //title to show
+    var title = stringResource(id = R.string.search_bookmark)
+    //is icon box visible
+    val isIconBoxVisible = remember {
+        mutableStateOf(value = false)
+    }
+
+    when {
+        searchResultUIState.isInEditMode -> {
+            //pverriding values
+            title = stringResource(id = R.string.edit_bookmark)
+            //url
+            searchUrlTextState.value = TextFieldValue(searchResultUIState.bookmark?.url ?: EMPTY)
+            //title
+            searchTitleTextState.value =
+                TextFieldValue(searchResultUIState.bookmark?.title ?: EMPTY)
+            isTitleBoxVisible.value = true
+            //icon box
+            isIconBoxVisible.value = true
+        }
     }
 
     Column(
@@ -118,11 +143,12 @@ fun SearchAndAddBookmarkView(
             ),
         verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
     ) {
+
         //title
         Text(
             modifier = Modifier,
             style = mbTitleHExtraBigBoldYellowTextStyle(),
-            text = stringResource(id = R.string.search_bookmark)
+            text = title
         )
 
         when {
@@ -135,7 +161,8 @@ fun SearchAndAddBookmarkView(
             }
 
             //success
-            searchResultUIState.bookmark != null -> {
+            searchResultUIState.bookmark != null
+                    && searchResultUIState.isInEditMode.not() -> {
                 SearchAndAddBookmarkSuccessView(
                     modifier = Modifier,
                     bookmark = searchResultUIState.bookmark,
@@ -154,6 +181,26 @@ fun SearchAndAddBookmarkView(
                         backgroundColor = mbErrorBookmarkCardBackgroundColors(),
                         textStyle = mbErrorSubtitleTextAccentStyle(),
                         iconTintColor = MbColor.RedVermilionLight,
+                    )
+                }
+
+                if (isIconBoxVisible.value) {
+                    AsyncImage(
+                        model = searchResultUIState.bookmark?.iconUrl,
+                        error = mbBookmarkFallbackIcon(),
+                        placeholder = mbBookmarkFallbackIcon(),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(alignment = Alignment.CenterHorizontally)
+                            .padding(
+                                horizontal = Dimen.paddingMedium16dp,
+                            )
+                            .width(Dimen.sizeExtraLarge96dp)
+                            .height(Dimen.sizeExtraLarge96dp)
+                            .clip(
+                                shape = mbCardRoundedCornerShape()
+                            ),
                     )
                 }
 
@@ -198,7 +245,7 @@ fun SearchAndAddBookmarkView(
                     }
                 }
 
-                //add title manually
+                //title
                 MbCustomTitleTextFieldView(
                     modifier = Modifier,
                     searchTitleTextState = searchTitleTextState,
@@ -291,7 +338,8 @@ fun MbCustomTitleTextFieldView(
         ) {
             isTitleBoxVisible.value = isTitleBoxVisible.value.not()
         }
-    }}
+    }
+}
 
 @Composable
 fun SearchAndAddBookmarkSuccessView(
@@ -516,6 +564,19 @@ fun SearchAndAddBookmarkWithFullAIView(
     }
 }
 
+@Composable
+fun EditBookmarkView(
+    modifier: Modifier,
+    searchResultUIState: SearchResultUIState,
+    onSearchBookmarkWithAIAction: (url: String, title: String?) -> Unit
+) {
+    SearchAndAddBookmarkView(
+        modifier = modifier,
+        searchResultUIState = searchResultUIState,
+        onSearchBookmarkWithAIAction = onSearchBookmarkWithAIAction
+    )
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -578,6 +639,25 @@ fun SearchBookmarkViewPreview() {
                 searchResultUIState =
                     SearchResultUIState(
                         isLoading = false
+                    )
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun SearchBookmarkView2Preview() {
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(mbGrayLightColor2())) {
+            SearchAndAddBookmarkView(
+                modifier = Modifier,
+                onSearchBookmarkWithAIAction = { _, _ -> },
+                searchResultUIState =
+                    SearchResultUIState(
+                        isLoading = false,
+                        isInEditMode = true
                     )
             )
         }

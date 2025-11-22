@@ -61,6 +61,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.searchBookmark.EditBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
@@ -93,8 +94,9 @@ fun BookmarkListComponentView(
     //local uri handler
     val localUriHandler = LocalUriHandler.current
     //bottom sheet state
-    val bottomSheetVisible = remember { mutableStateOf(value = false) }
+    val isSearchModalBottomSheetVisible = remember { mutableStateOf(value = false) }
     val isPreviewModalBottomSheetVisible = remember { mutableStateOf(value = false) }
+    val isEditModalBottomSheetVisible = remember { mutableStateOf(value = false) }
     //selected bookmark ui state
     val selectedBookmark = remember {
         mutableStateOf<Bookmark?>(
@@ -290,6 +292,17 @@ fun BookmarkListComponentView(
                                 bookmark = it
                             )
                         },
+                        onEditAction = {
+                            isPreviewModalBottomSheetVisible.value = false
+                            isEditModalBottomSheetVisible.value = true
+                            searchBookmarkViewModel?.updateSearchUIStateInEditMode(
+                                bookmark = it
+                            )
+
+//                            bookmarkViewModel?.updateBookmark(
+//                                bookmark = it
+//                            )
+                        },
                         bottomSheetVisible = isPreviewModalBottomSheetVisible
                     )
                 }
@@ -310,7 +323,7 @@ fun BookmarkListComponentView(
             title = stringResource(R.string.add_new_string),
             iconRes = android.R.drawable.ic_input_add,
             onClickAction = {
-                bottomSheetVisible.value = true
+                isSearchModalBottomSheetVisible.value = true
             }
         )
     }
@@ -318,7 +331,28 @@ fun BookmarkListComponentView(
     //modal to show add new Bookmark
     MbAddBookmarkModalBottomSheetView(
         modifier = Modifier,
-        bottomSheetVisible = bottomSheetVisible,
+        bottomSheetVisible = isEditModalBottomSheetVisible,
+        onDismissCallback = {
+            //clear state
+            searchBookmarkViewModel?.clearSearchResultUIState()
+        }
+    ) {
+        EditBookmarkView(
+            modifier = Modifier,
+            onSearchBookmarkWithAIAction = { url, title ->
+                searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
+                    url = url,
+                    customTitle = title
+                )
+            },
+            searchResultUIState = searchResultUIState.value
+        )
+    }
+
+    //modal to show add new Bookmark
+    MbAddBookmarkModalBottomSheetView(
+        modifier = Modifier,
+        bottomSheetVisible = isSearchModalBottomSheetVisible,
         onDismissCallback = {
             //clear state
             searchBookmarkViewModel?.clearSearchResultUIState()

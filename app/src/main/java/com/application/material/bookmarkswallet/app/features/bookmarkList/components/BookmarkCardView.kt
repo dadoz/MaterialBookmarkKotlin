@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +26,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbBookmarkFallbackIcon
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbLightYellowLemonDarkYellowLemonColor
 import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkWhiteColor
@@ -35,9 +34,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSelectedCardBackg
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
-import com.application.material.bookmarkswallet.app.utils.ZERO
 import java.util.Date
 
 @Composable
@@ -47,11 +44,6 @@ fun BookmarkCardView(
     onOpenAction: ((Bookmark) -> Unit)? = null
 ) {
     val context = LocalContext.current
-    //fallbackIcon
-    val fallbackIcon = rememberDrawablePainterWithColor(
-        res = R.drawable.ic_bookmark,
-        color = mbYellowLemonDarkLightColor()
-    )
     MbCardView(
         modifier = modifier
             .fillMaxWidth()
@@ -78,8 +70,8 @@ fun BookmarkCardView(
                 //image icon
                 AsyncImage(
                     model = bookmark.iconUrl,
-                    error = fallbackIcon,
-                    placeholder = fallbackIcon,
+                    error = mbBookmarkFallbackIcon(),
+                    placeholder = mbBookmarkFallbackIcon(),
                     contentScale = ContentScale.Fit,
                     contentDescription = null,
                     modifier = Modifier

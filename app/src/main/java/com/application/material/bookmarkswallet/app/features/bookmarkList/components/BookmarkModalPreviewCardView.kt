@@ -42,6 +42,7 @@ import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.EDIT_ACTION
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.SHARE_ACTION
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getTimestampFormatted
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbBaseBottomSheetView
@@ -62,7 +63,6 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
-import com.application.material.bookmarkswallet.app.utils.ZERO
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import kotlinx.coroutines.launch
@@ -76,6 +76,7 @@ fun BookmarkModalPreviewCardView(
     onDeleteCallback: (Bookmark) -> Unit,
     onOpenAction: (String) -> Unit,
     onPinningAction: (Bookmark) -> Unit,
+    onEditAction: (Bookmark) -> Unit,
     bottomSheetVisible: MutableState<Boolean>
 ) {
     //bottom sheet modal
@@ -88,7 +89,6 @@ fun BookmarkModalPreviewCardView(
         MbBaseBottomSheetView(
             modifier = modifier
                 .wrapContentHeight(),
-//                .padding(top = 120.dp),
             bottomSheetState = bottomSheetState,
             hasDragHandle = true,
             onCloseCallback = {
@@ -105,6 +105,7 @@ fun BookmarkModalPreviewCardView(
                 isActionMenuVisible = true,
                 onDeleteAction = onDeleteCallback,
                 onOpenAction = onOpenAction,
+                onEditAction = onEditAction
             )
         }
     }
@@ -117,6 +118,7 @@ fun BookmarkPreviewCard(
     onDeleteAction: ((Bookmark) -> Unit)? = null,
     onOpenAction: ((String) -> Unit)? = null,
     onPinningAction: ((Bookmark) -> Unit)? = null,
+    onEditAction: ((Bookmark) -> Unit)? = null,
     isActionMenuVisible: Boolean = true,
     isOpenButtonVisible: Boolean = true,
 ) {
@@ -213,7 +215,8 @@ fun BookmarkPreviewCard(
                 .padding(top = Dimen.paddingMedium16dp),
             isActionMenuVisible = isActionMenuVisible,
             bookmark = bookmark,
-            onDeleteAction = onDeleteAction
+            onDeleteAction = onDeleteAction,
+            onEditAction = onEditAction
         )
 
         //open action
@@ -238,6 +241,7 @@ fun MbActionMenuBookmarkPreviewView(
     backgroundColor: Color = mbGrayLightExtraBlueDarkColor(),
     actionItemBackgroundColor: Color = mbActionBookmarkCardBackgroundAlternativeColors(),
     isActionMenuVisible: Boolean = false,
+    onEditAction: ((Bookmark) -> Unit)? = null,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -295,6 +299,10 @@ fun MbActionMenuBookmarkPreviewView(
                                                 url = bookmark.url
                                             )
                                         )
+                                    }
+
+                                    EDIT_ACTION -> {
+                                        onEditAction?.invoke(bookmark)
                                     }
 
                                     else -> {

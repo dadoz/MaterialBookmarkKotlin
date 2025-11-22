@@ -43,6 +43,7 @@
     <string name="filtering_by">filtering by</string>
     <string name="date">Date</string>
     <string name="title">Title</string>
+    <string name="edit_bookmark">Edit</string>
     <string name="search_bookmark">New Search</string>
     <string name="just_type_a_bookmark">just type a bookmark</string>
     <string name="paste_clipboard">paste\nclipboard</string>

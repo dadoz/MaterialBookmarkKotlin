@@ -5,6 +5,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 
 @Keep
 data class SearchResultUIState(
+    val isInEditMode: Boolean = false,
     val isLoading: Boolean = false,
     val error: Throwable? = null,
     val bookmark: Bookmark? = null

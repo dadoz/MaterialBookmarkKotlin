@@ -20,21 +20,11 @@ class BookmarkDataSourceLocal @Inject constructor(val application: Application) 
             db.execSQL("ALTER TABLE mb_bookmark ADD COLUMN isStar INTEGER NOT NULL DEFAULT 0")
         }
     }
-    val MIGRATION_2_3 = object : Migration(
-        startVersion = 2,
-        endVersion = 3
-    ) {
-        override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("ALTER TABLE mb_bookmark ADD COLUMN isPinned TEXT NULL DEFAULT NULL")
-        }
-    }
     val MIGRATION_3_4 = object : Migration(
-        startVersion = 3,
+        startVersion = 2,
         endVersion = 4
     ) {
         override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("ALTER TABLE mb_bookmark DROP COLUMN isPinned")
-            db.execSQL("ALTER TABLE mb_bookmark DROP COLUMN isLike")
             db.execSQL("ALTER TABLE mb_bookmark ADD COLUMN isPinned INTEGER NOT NULL DEFAULT 0")
         }
     }
@@ -44,7 +34,7 @@ class BookmarkDataSourceLocal @Inject constructor(val application: Application) 
         AppDatabase::class.java,
         "db-bookmarks"
     )
-        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+        .addMigrations(MIGRATION_1_2, MIGRATION_3_4)
         .allowMainThreadQueries()   //Allows room to do operation on main thread
         .build()
 

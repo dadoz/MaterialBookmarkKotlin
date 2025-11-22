@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -121,15 +122,9 @@ class BookmarkViewModel @Inject constructor(
      * add bookamrk on db
      * handle with state instead of cbs (legacy mode but still like it)
      */
-    fun updateBookmarkByPinning(
-        bookmark: Bookmark
+    private fun updateBookmarkByShallowCopy(
+        bookmarkShallowCopy: Bookmark
     ) {
-        //update bookmark -- TODO THIS is not working
-        //bookmark.isPinned = bookmark.isPinned.not()
-        val bookmarkCopyShared = bookmark.copy(
-            isPinned = bookmark.isPinned.not()
-        )
-
         //launch update state
         bookmarkListMutableState.update { state ->
             state.copy(
@@ -140,7 +135,7 @@ class BookmarkViewModel @Inject constructor(
                         it
                             .replaceAll {
                                 when {
-                                    it.url == bookmark.url -> bookmarkCopyShared
+                                    it.url == bookmarkShallowCopy.url -> bookmarkShallowCopy
 
                                     else -> it
                                 }
@@ -154,7 +149,7 @@ class BookmarkViewModel @Inject constructor(
             context = Dispatchers.Main
         ) {
             bookmarkRepository.updateBookmark(
-                bookmark = bookmarkCopyShared
+                bookmark = bookmarkShallowCopy
             )
                 .first()
                 .also {
@@ -169,6 +164,41 @@ class BookmarkViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    /**
+     * add bookamrk on db
+     * handle with state instead of cbs (legacy mode but still like it)
+     */
+    fun updateBookmark(
+        bookmark: Bookmark
+    ) {
+        //update bookmark
+        val bookmarkShallowCopy = bookmark.copy(
+            timestamp = Date() //new timestamp in my opinion
+        )
+        //update by shallow
+        updateBookmarkByShallowCopy(
+            bookmarkShallowCopy = bookmarkShallowCopy
+        )
+    }
+
+    /**
+     * add bookamrk on db
+     * handle with state instead of cbs (legacy mode but still like it)
+     */
+    fun updateBookmarkByPinning(
+        bookmark: Bookmark
+    ) {
+        //update bookmark -- TODO THIS is not working
+        //bookmark.isPinned = bookmark.isPinned.not()
+        val bookmarkShallowCopy = bookmark.copy(
+            isPinned = bookmark.isPinned.not()
+        )
+
+        updateBookmarkByShallowCopy(
+            bookmarkShallowCopy = bookmarkShallowCopy
+        )
     }
 
     //sort and filter and update state
