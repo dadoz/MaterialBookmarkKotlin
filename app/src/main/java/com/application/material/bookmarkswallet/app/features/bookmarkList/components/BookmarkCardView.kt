@@ -30,6 +30,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbBookmarkFallbackI
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbLightYellowLemonDarkYellowLemonColor
 import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkWhiteColor
+import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkYellowColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSelectedCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -95,7 +96,7 @@ fun BookmarkCardView(
                         painter = painterResource(
                             id = R.drawable.ic_pin_new_dark
                         ),
-                        tint = mbMustardDarkWhiteColor(),
+                        tint = mbMustardDarkYellowColor(),
                         contentDescription = null
                     )
                 }
@@ -180,7 +181,7 @@ fun BookmarkCardPreview() {
                     iconUrl = "",
                     url = "http://www.google.it/bdslfa;sd/sdfsad/sad/f/sdsa/d/fsa.df./as/d/f/asdf//sad/f/sa/df/sa/d/f/asd/f/as/dfsa/df//sa/df/sa/f/sd/f/as/df/a/sd/fa/sd",
                     appId = "1",
-                    isPinned = false
+                    isPinned = true
                 )
             )
         }

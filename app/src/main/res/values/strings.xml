@@ -44,6 +44,7 @@
     <string name="date">Date</string>
     <string name="title">Title</string>
     <string name="edit_bookmark">Edit</string>
+    <string name="update_bookmark_label">Update</string>
     <string name="search_bookmark">New Search</string>
     <string name="just_type_a_bookmark">just type a bookmark</string>
     <string name="paste_clipboard">paste\nclipboard</string>
@@ -60,9 +61,9 @@
 
     <!--    hp filters-->
     <string name="filter_hp_list">List</string>
-    <string name="filter_hp_sort_by_date">More Recent</string>
-    <string name="filter_hp_sort_by_name">Sort by name</string>
-    <string name="filter_hp_pinned">Pinned</string>
+    <string name="filter_hp_sort_by_date">more recent</string>
+    <string name="filter_hp_sort_by_name">title</string>
+    <string name="filter_hp_pinned">pinned</string>
 
     <!--    empty bookmark list view-->
     <string name="empty_bookmark_list_label">Still no Bookmarks in your list.</string>

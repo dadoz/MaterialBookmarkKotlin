@@ -210,6 +210,12 @@ fun mbMustardDarkWhiteColor(): Color =
         true -> MbColor.White
         else -> MbColor.DarkMustardYellow
     }
+@Composable
+fun mbMustardDarkYellowColor(): Color =
+    when (isSystemInDarkTheme()) {
+        true -> MbColor.Yellow
+        else -> MbColor.DarkMustardYellow
+    }
 
 @Composable
 fun mbFilterChipColors(): SelectableChipColors =

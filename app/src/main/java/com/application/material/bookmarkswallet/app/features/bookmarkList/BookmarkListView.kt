@@ -1,7 +1,6 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList
 
 import android.content.res.Configuration
-import android.os.Bundle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,8 +33,6 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -59,6 +56,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.bookmarkList.saveable.rememberSaveableMap
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
 import com.application.material.bookmarkswallet.app.features.searchBookmark.EditBookmarkView
@@ -76,7 +74,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBol
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_GRID_SIZE
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_LIST_SIZE
 import com.application.material.bookmarkswallet.app.utils.EMPTY
-import kotlinx.coroutines.flow.first
+import com.application.material.bookmarkswallet.app.utils.ZERO
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -118,70 +116,39 @@ fun BookmarkListComponentView(
     val searchResultUIState = searchBookmarkViewModel?.searchResultUIState?.collectAsState()
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
-    //filter list on hp - FilterHp to Bool TODO please clean and compose a component
-    val selectedFilterHpMap = rememberSaveable(
-        saver = Saver(
-            save = {
-                val originalValue = it.toMap()
-//                bookmarkViewModel?.set(
-//                    value = originalValue
-//                )
-                Bundle().also { bundle ->
-                    bundle.putIntegerArrayList("value", ArrayList())
-                }
-            },
-            restore = {
-                mutableStateMapOf(
-                    FilterHp.PINNED to false,
-                    FilterHp.SORT_BY_DATE to false
-                )
-            }
-        )
-    ) {
+    //filter list on hp - FilterHp to Bool
+    val selectedFilterHpMap = rememberSaveableMap() {
+        //init value
         mutableStateMapOf(
             FilterHp.PINNED to false,
+            FilterHp.SORT_BY_NAME to false,
             FilterHp.SORT_BY_DATE to false
         )
     }
 
-    //filter on list type - TODO please clean and compose a component
-    val selectedFilterListType = rememberSaveable(
-        saver = Saver(
-            save = {
-                val originalValue = it.value.first()
-                bookmarkViewModel?.setSelectedFilterListType(
-                    value = originalValue
-                )
-                Bundle().also {
-                    it.putString("value", originalValue.name)
-                }
-            },
-            restore = {
-                mutableStateOf(
-                    value = filterDefaultListType
-                ).also {
-                    coroutineScope.launch {
-                        it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
-                            ?.first() ?: filterDefaultListType
-                    }
-                }
-            }
-        )
-    ) {
+    val selectedFilterListType = remember {
         mutableStateOf(
             value = filterDefaultListType
-        ).also {
-            coroutineScope.launch {
-                it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
-                    ?.first() ?: filterDefaultListType
-            }
-        }
+        )
     }
+    //filter on list type
+//    val selectedFilterListType = rememberSaveableMap() {
+//        //init value
+//        mutableStateOf(
+//            value = filterDefaultListType
+//        ).also {
+//            coroutineScope.launch {
+//                it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
+//                    ?.first() ?: filterDefaultListType
+//            }
+//        }
+//    }
 
     //bookmark list empty check
     val isBookmarkListEmpty = remember {
         derivedStateOf {
-            bookmarkLazyGridState.firstVisibleItemIndex > 0
+            bookmarkViewModel?.bookmarkListUIState?.value?.itemList?.size?.let { it > ZERO }
+                ?: false
         }
     }
 
@@ -298,10 +265,6 @@ fun BookmarkListComponentView(
                             searchBookmarkViewModel?.updateSearchUIStateInEditMode(
                                 bookmark = it
                             )
-
-//                            bookmarkViewModel?.updateBookmark(
-//                                bookmark = it
-//                            )
                         },
                         bottomSheetVisible = isPreviewModalBottomSheetVisible
                     )
@@ -339,10 +302,9 @@ fun BookmarkListComponentView(
     ) {
         EditBookmarkView(
             modifier = Modifier,
-            onSearchBookmarkWithAIAction = { url, title ->
-                searchBookmarkViewModel?.searchUrlInfoByUrlGenAI(
-                    url = url,
-                    customTitle = title
+            onEditBookmarkAction = { bookmark ->
+                bookmarkViewModel?.updateBookmark(
+                    bookmark = bookmark
                 )
             },
             searchResultUIState = searchResultUIState.value
@@ -482,6 +444,7 @@ fun MbFilterBookmarkHpView(
                         bottom.linkTo(anchor = parent.bottom)
                         end.linkTo(anchor = parent.end)
                     },
+                hasToShowLabel = false,
                 isSelectedOverride = selectedFilterListType.value.first() == GRID, //list is only for generic type
                 filterItems = selectedFilterListType.value,
                 onSelectedFilter = { selectedFilter, newValue ->

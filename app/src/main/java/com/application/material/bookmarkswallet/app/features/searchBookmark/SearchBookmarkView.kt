@@ -100,7 +100,8 @@ import java.util.Date
 fun SearchAndAddBookmarkView(
     modifier: Modifier,
     searchResultUIState: SearchResultUIState,
-    onSearchBookmarkWithAIAction: (url: String, title: String?) -> Unit,
+    onSearchBookmarkWithAIAction: ((url: String, title: String?) -> Unit)? = null,
+    onEditBookmarkAction: ((bookmark: Bookmark) -> Unit)? = null,
 ) {
     val context = LocalContext.current
     //clip manager
@@ -252,21 +253,48 @@ fun SearchAndAddBookmarkView(
                     isTitleBoxVisible = isTitleBoxVisible
                 )
 
-                //Search and Add button
-                MbPrimaryButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = Dimen.paddingMedium16dp),
-                    colors = mbButtonYellowColor(),
-                    text = stringResource(id = R.string.save_ai_label_button),
-                    textStyle = mbButtonTextDarkStyle(),
-                    onClickAction = {
-                        onSearchBookmarkWithAIAction.invoke(
-                            searchUrlTextState.value.text,
-                            searchTitleTextState.value.text
+                when {
+                    searchResultUIState.isInEditMode -> {
+                        //Search and Add button
+                        MbPrimaryButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = Dimen.paddingMedium16dp),
+                            colors = mbButtonYellowColor(),
+                            text = stringResource(id = R.string.update_bookmark_label),
+                            textStyle = mbButtonTextDarkStyle(),
+                            onClickAction = {
+                                searchResultUIState.bookmark
+                                    ?.also {
+                                        //update title - works only cos shallow copy later
+                                        it.title = searchTitleTextState.value.text
+                                        //edit action
+                                        onEditBookmarkAction?.invoke(
+                                            it
+                                        )
+                                    }
+                            }
                         )
                     }
-                )
+
+                    else -> {
+                        //Search and Add button
+                        MbPrimaryButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = Dimen.paddingMedium16dp),
+                            colors = mbButtonYellowColor(),
+                            text = stringResource(id = R.string.save_ai_label_button),
+                            textStyle = mbButtonTextDarkStyle(),
+                            onClickAction = {
+                                onSearchBookmarkWithAIAction?.invoke(
+                                    searchUrlTextState.value.text,
+                                    searchTitleTextState.value.text
+                                )
+                            }
+                        )
+                    }
+                }
             }
         }
     }
@@ -568,12 +596,12 @@ fun SearchAndAddBookmarkWithFullAIView(
 fun EditBookmarkView(
     modifier: Modifier,
     searchResultUIState: SearchResultUIState,
-    onSearchBookmarkWithAIAction: (url: String, title: String?) -> Unit
+    onEditBookmarkAction: (bookmark: Bookmark) -> Unit
 ) {
     SearchAndAddBookmarkView(
         modifier = modifier,
         searchResultUIState = searchResultUIState,
-        onSearchBookmarkWithAIAction = onSearchBookmarkWithAIAction
+        onEditBookmarkAction = onEditBookmarkAction
     )
 }
 

@@ -37,6 +37,7 @@ fun <T : FilterType> BookmarkFilterView(
     modifier: Modifier = Modifier,
     filterItems: List<T>,
     isSelectedOverride: Boolean = false,
+    hasToShowLabel: Boolean = true,
     onSelectedFilter: (T, Boolean) -> Unit
 ) {
     //single state of filter
@@ -66,27 +67,39 @@ fun <T : FilterType> BookmarkFilterView(
             FilterChip(
                 modifier = Modifier,
                 onClick = {
-                    //update map
-                    isSelectedMap[id] = isSelectedMap[id]?.not() ?: false
-                    //callback to handle view
-                    onSelectedFilter.invoke(
-                        item, isSelected
-                    )
+                    (isSelectedMap[id]?.not() ?: false)
+                        .also {
+                            //update map
+                            isSelectedMap[id] = it
+                        }
+                        .also { newValue ->
+                            //callback to handle view
+                            onSelectedFilter.invoke(
+                                item,
+                                isSelectedOverride
+                                    .takeIf { it }
+                                    ?: newValue
+                            )
+                        }
                 },
                 shape = mbChipRoundedCornerShape(),
                 label = {
-                    Text(
-                        modifier = Modifier
-                            .padding(
-                                vertical = Dimen.paddingMedium12dp
-                            ),
-                        text = stringResource(id = item.labelRes),
-                        style = mbSubtitleTextSmallStyle(
-                            color = mbSubtitleTextColor(
-                                isSelected = isSelected
+                    when {
+                        hasToShowLabel -> {
+                            Text(
+                                modifier = Modifier
+                                    .padding(
+                                        vertical = Dimen.paddingMedium12dp
+                                    ),
+                                text = stringResource(id = item.labelRes),
+                                style = mbSubtitleTextSmallStyle(
+                                    color = mbSubtitleTextColor(
+                                        isSelected = isSelected
+                                    )
+                                )
                             )
-                        )
-                    )
+                        }
+                    }
                 },
                 border = null,
                 colors = mbFilterChipColors(),
@@ -145,6 +158,7 @@ fun BookmarkFilterViewPreview2() {
             BookmarkFilterView(
                 modifier = Modifier,
                 isSelectedOverride = true,
+                hasToShowLabel = false,
                 filterItems =
                     BookmarkListType.entries,
                 onSelectedFilter = { _, _ -> },
@@ -152,6 +166,7 @@ fun BookmarkFilterViewPreview2() {
             BookmarkFilterView(
                 modifier = Modifier,
                 isSelectedOverride = false,
+                hasToShowLabel = false,
                 filterItems =
                     BookmarkListType.entries,
                 onSelectedFilter = { _, _ -> },

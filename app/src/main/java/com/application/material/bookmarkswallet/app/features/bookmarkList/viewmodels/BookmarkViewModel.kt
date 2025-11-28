@@ -236,17 +236,18 @@ class BookmarkViewModel @Inject constructor(
 //                                }
 //                        }
 //                    }
+                //TODO make it exclusive
 //                    .let { list ->
 //                        //filter sort by PINNED
 //                        when {
 //                            filterHpMap[FilterHp.PINNED] == true ->
 //                                list.sortedByDescending { bookmark ->
-//                                    bookmark.isLike
+//                                    bookmark.isPinned
 //                                }
 //
 //                            else ->
 //                                list.sortedBy { bookmark ->
-//                                    bookmark.isLike
+//                                    bookmark.isPinned
 //                                }
 //                        }
 //                    }

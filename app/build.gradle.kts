@@ -15,6 +15,8 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.segrets.gradle)
+    alias(libs.plugins.kotlin.parcelize)
+
 //    id("com.google.firebase.appdistribution")
 }
 
