@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
-import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
@@ -48,13 +47,13 @@ class BookmarkViewModel @Inject constructor(
     val bookmarkListUIState = bookmarkListMutableState.asStateFlow()
 
     //filter for grid and list
-    val selectedFilterListTypeByStorage by lazy {
+    val selectedFilterListTypeStored by lazy {
         dataStoreManager.selectedFilterListType
     }
 
     //filter for hp with selection with latest or first
-    val selectedFilterHpMap by lazy {
-        dataStoreManager.selectedFilterHpMap ?: filterHpList
+    val selectedFilterHpMapStored by lazy {
+        dataStoreManager.selectedFilterHpMap
     }
 
     /**
@@ -258,6 +257,11 @@ class BookmarkViewModel @Inject constructor(
     fun setSelectedFilterListType(value: BookmarkListType) =
         dataStoreManager.setSelectedFilterListType(
             value = value.name
+        )
+
+    fun setSelectedFilterHpMap(value: Map<FilterHp, Boolean>) =
+        dataStoreManager.setSelectedFilterHpMap(
+            filterHpMap = value
         )
 
     override fun onCleared() {

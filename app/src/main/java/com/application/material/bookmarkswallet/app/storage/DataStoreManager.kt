@@ -5,8 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -35,16 +35,17 @@ class DataStoreManager @Inject constructor(@ApplicationContext context: Context)
         )
     )
 
-    var selectedFilterListType: Flow<List<BookmarkListType>>? = null
-        get() = weakContext.get()?.dataStorePreferences?.data
+    var selectedFilterListType: Flow<List<BookmarkListType>?>? = null
+        get() = weakContext.get()
+            ?.dataStorePreferences
+            ?.data
             ?.map { preferences ->
-                listOf(
-                    preferences[SELECTED_FILTER_LIST_TYPE]
-                        ?.let {
+                preferences[SELECTED_FILTER_LIST_TYPE]
+                    ?.let {
+                        listOf(
                             BookmarkListType.valueOf(it)
-                        }
-                        ?: filterDefaultListType[0]
-                )
+                        )
+                    }
             }
         private set
 
@@ -57,31 +58,47 @@ class DataStoreManager @Inject constructor(@ApplicationContext context: Context)
                 context = coroutineContext
             )
                 .launch {
-                    weakContext.get()?.dataStorePreferences?.edit { preferences ->
-                        preferences[SELECTED_FILTER_LIST_TYPE] = value
-                    }
+                    weakContext.get()
+                        ?.dataStorePreferences
+                        ?.edit { preferences ->
+                            preferences[SELECTED_FILTER_LIST_TYPE] = value
+                        }
                 }
         }
     }
 
-    var selectedFilterHpMap: Flow<String?>? = null
-        get() = weakContext.get()?.dataStorePreferences?.data
+    var selectedFilterHpMap: Flow<Map<FilterHp, Boolean>?>? = null
+        get() = weakContext.get()
+            ?.dataStorePreferences
+            ?.data
             ?.map { preferences ->
                 preferences[SELECTED_FILTER_HP_MAP_TYPE]
+                    ?.associate {
+                        it.split(":")
+                            .let { item ->
+                                (FilterHp.entries.find { it.name == item[0] }
+                                    ?: FilterHp.entries[0]) to item[1].toBoolean()
+                            }
+                    }
             }
         private set
 
     fun setSelectedFilterHpMap(
-        privacyAndConditionChecked: String,
+        filterHpMap: Map<FilterHp, Boolean>,
         coroutineContext: CoroutineContext = Dispatchers.Main
     ) {
         CoroutineScope(
             context = coroutineContext
         )
             .launch {
-                weakContext.get()?.dataStorePreferences
+                weakContext.get()
+                    ?.dataStorePreferences
                     ?.edit { preferences ->
-                        preferences[SELECTED_FILTER_HP_MAP_TYPE] = privacyAndConditionChecked
+                        preferences[SELECTED_FILTER_HP_MAP_TYPE] = filterHpMap
+                            .map {
+                                it.key.name + ":" + it.value
+                            }
+                            .toSet()
                     }
             }
     }

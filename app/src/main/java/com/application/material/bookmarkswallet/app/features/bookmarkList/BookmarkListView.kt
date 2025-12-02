@@ -46,6 +46,7 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkCardView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkFilterView
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.BookmarkModalPreviewCardView
+import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultHpListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
@@ -118,30 +119,48 @@ fun BookmarkListComponentView(
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
     //filter list on hp - FilterHp to Bool
-    val selectedFilterHpMap = rememberSaveableMap {
-        //init value
-        mutableStateOf(
-            value = mutableMapOf(
-                FilterHp.PINNED to false,
-                FilterHp.SORT_BY_NAME to true,
-                FilterHp.SORT_BY_DATE to false
+    val selectedFilterHpMap = rememberSaveableMap(
+        init = {
+            //init value
+            mutableStateOf(
+                value = filterDefaultHpListType
             )
-        )
-    }
+                .also {
+                    coroutineScope.launch {
+                        it.value = bookmarkViewModel?.selectedFilterHpMapStored
+                            ?.first()
+                            ?: filterDefaultHpListType
+                    }
+                }
+        },
+        onStore = {
+            bookmarkViewModel?.setSelectedFilterHpMap(
+                value = it
+            )
+        }
+    )
 
     //filter on list type
-    val selectedFilterListType = rememberSaveableList {
-        //init value
-        mutableStateOf(
-            value = filterDefaultListType
-        )
-            .also {
-                coroutineScope.launch {
-                    it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
-                        ?.first() ?: filterDefaultListType
+    val selectedFilterListType = rememberSaveableList(
+        init = {
+            //init value
+            mutableStateOf(
+                value = filterDefaultListType
+            )
+                .also {
+                    coroutineScope.launch {
+                        it.value = bookmarkViewModel?.selectedFilterListTypeStored
+                            ?.first()
+                            ?: filterDefaultListType
+                    }
                 }
-            }
-    }
+        },
+        onStore = {
+            bookmarkViewModel?.setSelectedFilterListType(
+                value = it[ZERO]
+            )
+        }
+    )
 
     //bookmark list empty check
     val isBookmarkListEmpty = remember {
