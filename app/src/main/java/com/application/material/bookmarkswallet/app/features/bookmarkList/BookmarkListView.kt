@@ -49,6 +49,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.compon
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultHpListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterDefaultListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.configurator.filterHpList
+import com.application.material.bookmarkswallet.app.features.bookmarkList.extension.resetMapToDefault
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.GRID
@@ -119,29 +120,25 @@ fun BookmarkListComponentView(
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
     //filter list on hp - FilterHp to Bool
-    val selectedFilterHpMap = rememberSaveableMap(
+    val selectedFilterHpMapState = remember {
+        mutableStateOf(
+            value = mapOf<FilterHp, Boolean>()
+        )
+    }
+
+    //filter list on hp - FilterHp to Bool - removing save on store filtering
+    val filterHpMapState = rememberSaveableMap(
         init = {
             //init value
             mutableStateOf(
                 value = filterDefaultHpListType
             )
-                .also {
-                    coroutineScope.launch {
-                        it.value = bookmarkViewModel?.selectedFilterHpMapStored
-                            ?.first()
-                            ?: filterDefaultHpListType
-                    }
-                }
         },
-        onStore = {
-            bookmarkViewModel?.setSelectedFilterHpMap(
-                value = it
-            )
-        }
+        onStore = { }
     )
 
     //filter on list type
-    val selectedFilterListType = rememberSaveableList(
+    val filterListTypeState = rememberSaveableList(
         init = {
             //init value
             mutableStateOf(
@@ -205,11 +202,11 @@ fun BookmarkListComponentView(
     }
 
     //filter update
-    LaunchedEffect(key1 = selectedFilterHpMap.value.toList()) {
+    LaunchedEffect(key1 = filterHpMapState.value.toList()) {
         coroutineScope.launch {
             //update bookmark list
             bookmarkViewModel?.updateListByFilter(
-                filterHpMap = selectedFilterHpMap.value
+                singleFilterHpMap = selectedFilterHpMapState.value
             )
         }
     }
@@ -234,8 +231,9 @@ fun BookmarkListComponentView(
             //filter configuration in HP
             MbFilterBookmarkHpView(
                 modifier = Modifier,
-                selectedFilterHpMap = selectedFilterHpMap,
-                selectedFilterListType = selectedFilterListType
+                filterHpMapState = filterHpMapState,
+                selectedFilterHpMapState = selectedFilterHpMapState,
+                filterListTypeState = filterListTypeState
             )
 
             MbEmptyBookmarkListView(
@@ -254,7 +252,7 @@ fun BookmarkListComponentView(
                     )
                     .fillMaxSize(),
                 lazyGridState = bookmarkLazyGridState,
-                bookmarkListType = selectedFilterListType.value.first(),
+                bookmarkListType = filterListTypeState.value.first(),
                 bookmarkListState = bookmarkListState?.value,
                 onOpenAction = { bookmark ->
                     isPreviewModalBottomSheetVisible.value = true
@@ -421,8 +419,9 @@ fun MbHeaderBookmarkList(modifier: Modifier.Companion) {
 @Composable
 fun MbFilterBookmarkHpView(
     modifier: Modifier,
-    selectedFilterHpMap: MutableState<Map<FilterHp, Boolean>>,
-    selectedFilterListType: MutableState<List<BookmarkListType>>,
+    selectedFilterHpMapState: MutableState<Map<FilterHp, Boolean>>,
+    filterHpMapState: MutableState<Map<FilterHp, Boolean>>,
+    filterListTypeState: MutableState<List<BookmarkListType>>,
     isVisible: Boolean = true
 ) {
     AnimatedVisibility(
@@ -444,10 +443,10 @@ fun MbFilterBookmarkHpView(
                         top.linkTo(anchor = parent.top)
                         end.linkTo(anchor = parent.end)
                     },
-                isSelectedOverride = selectedFilterListType.value.first() == GRID, //list is only for generic type
-                filterItems = selectedFilterListType.value,
+                isSelectedOverride = filterListTypeState.value.first() == GRID, //list is only for generic type
+                filterItems = filterListTypeState.value,
                 onSelectedFilter = { selectedFilter, newValue ->
-                    selectedFilterListType.value = when {
+                    filterListTypeState.value = when {
                         selectedFilter == GRID -> listOf(LIST)
                         else -> listOf(GRID)
                     }
@@ -470,11 +469,15 @@ fun MbFilterBookmarkHpView(
                         width = Dimension.fillToConstraints
                     },
                 filterItems = filterHpList,
-                initValues = selectedFilterHpMap.value,
+                initValues = filterHpMapState.value,
                 onSelectedFilter = { selectedFilter, newValue ->
+                    selectedFilterHpMapState.value = mapOf(
+                        selectedFilter to newValue
+                    )
                     //update state since now is a mutablestate instead of a value
-                    selectedFilterHpMap.value = selectedFilterHpMap.value
+                    filterHpMapState.value = filterHpMapState.value
                         .toMutableMap()
+                        .resetMapToDefault()
                         .also {
                             it[selectedFilter] = newValue
                         }

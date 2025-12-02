@@ -5,13 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkRepository
 import com.application.material.bookmarkswallet.app.di.models.Response
+import com.application.material.bookmarkswallet.app.features.bookmarkList.extension.sortByTimestampDefault
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.storage.DataStoreManager
-import com.application.material.bookmarkswallet.app.utils.ONE
-import com.application.material.bookmarkswallet.app.utils.ZERO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -200,56 +199,43 @@ class BookmarkViewModel @Inject constructor(
         )
     }
 
+    /**
+     * mutual exclusion filter - now we have filter by default and also filter by
+     * DATE
+     * NAME
+     * PINNED
+     */
+    //composition of all filter
     //sort and filter and update state
-    fun updateListByFilter(filterHpMap: Map<FilterHp, Boolean>) {
+    fun updateListByFilter(
+        singleFilterHpMap: Map<FilterHp, Boolean>
+    ) {
         bookmarkListMutableState.update {
             it.copy(
                 itemList = it.itemList
                     .let { list ->
-                        //composition of all filter
                         //filter sort by DATE
                         when {
-                            filterHpMap[FilterHp.SORT_BY_DATE] == true ->
+                            singleFilterHpMap[FilterHp.SORT_BY_DATE] == true ->
                                 list.sortedByDescending { bookmark ->
                                     bookmark.timestamp
                                 }
 
-                            else ->
+                            //filter sort by NAME
+                            singleFilterHpMap[FilterHp.SORT_BY_NAME] == true ->
                                 list.sortedBy { bookmark ->
-                                    bookmark.timestamp
+                                    bookmark.title
                                 }
+
+                            //filter sort by PINNED
+                            singleFilterHpMap[FilterHp.PINNED] == true ->
+                                list.sortedByDescending { bookmark ->
+                                    bookmark.isPinned
+                                }
+
+                            else -> list.sortByTimestampDefault()
                         }
                     }
-                //TODO make it exclusive
-//                    .let { list ->
-//                        //filter sort by NAME
-//                        when {
-//                            filterHpMap[FilterHp.SORT_BY_NAME] == true ->
-//                                list.sortedByDescending { bookmark ->
-//                                    bookmark.title
-//                                }
-//
-//                            else ->
-//                                list.sortedBy { bookmark ->
-//                                    bookmark.title
-//                                }
-//                        }
-//                    }
-                //TODO make it exclusive
-//                    .let { list ->
-//                        //filter sort by PINNED
-//                        when {
-//                            filterHpMap[FilterHp.PINNED] == true ->
-//                                list.sortedByDescending { bookmark ->
-//                                    bookmark.isPinned
-//                                }
-//
-//                            else ->
-//                                list.sortedBy { bookmark ->
-//                                    bookmark.isPinned
-//                                }
-//                        }
-//                    }
             )
         }
     }
@@ -278,9 +264,4 @@ class BookmarkViewModel @Inject constructor(
             isLoading = false
         )
     }
-}
-
-private fun Int.not() = when (this) {
-    ZERO -> ONE
-    else -> ZERO
 }
