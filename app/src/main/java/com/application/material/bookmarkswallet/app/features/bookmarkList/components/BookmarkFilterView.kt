@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -36,41 +36,45 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextSmall
 fun <T : FilterType> BookmarkFilterView(
     modifier: Modifier = Modifier,
     filterItems: List<T>,
+    initValues: Map<T, Boolean> = mapOf(),
     isSelectedOverride: Boolean = false,
     hasToShowLabel: Boolean = true,
     onSelectedFilter: (T, Boolean) -> Unit
 ) {
     //single state of filter
-    val isSelectedMap: MutableMap<Int, Boolean> = remember {
-        mutableStateMapOf<Int, Boolean>() //<3 mutableStateMap remember
-    }.apply {
-        filterItems.forEachIndexed { index, _ ->
-            this[index] = false
-        }
+    val isSelectedMap: MutableMap<T, Boolean> = remember {
+        //<3 mutableStateMap remember
+        mutableStateMapOf<T, Boolean>()
     }
+        .apply {
+            initValues
+                .onEachIndexed { index, item ->
+                    this[item.key] = item.value
+                }
+        }
 
     LazyRow(
         horizontalArrangement = Arrangement
             .spacedBy(space = Dimen.paddingSmall8dp),
         modifier = modifier
     ) {
-        itemsIndexed(
+        items(
             items = filterItems
-        ) { id, item ->
+        ) { item ->
 
             //!!!!!!!important take for each item new value
             val isSelected = isSelectedOverride
                 .takeIf { it }
-                ?: isSelectedMap[id] ?: false
+                ?: isSelectedMap[item] ?: false
 
             //item please clean up this stuff
             FilterChip(
                 modifier = Modifier,
                 onClick = {
-                    (isSelectedMap[id]?.not() ?: false)
+                    (isSelectedMap[item]?.not() ?: false)
                         .also {
                             //update map
-                            isSelectedMap[id] = it
+                            isSelectedMap[item] = it
                         }
                         .also { newValue ->
                             //callback to handle view
@@ -108,12 +112,21 @@ fun <T : FilterType> BookmarkFilterView(
                     item.iconRes
                         ?.let {
                             Icon(
-                                painter = painterResource(id = it),
-                                contentDescription = "Done icon",
                                 modifier = Modifier
+                                    .let {
+                                        when {
+                                            hasToShowLabel -> it
+
+                                            else -> it.padding(
+                                                vertical = Dimen.paddingMedium12dp
+                                            )
+                                        }
+                                    }
                                     .size(
                                         size = FilterChipDefaults.IconSize
                                     ),
+                                painter = painterResource(id = it),
+                                contentDescription = "Done icon",
                                 tint = mbFilterIconColor(
                                     isSelected = isSelected
                                 )

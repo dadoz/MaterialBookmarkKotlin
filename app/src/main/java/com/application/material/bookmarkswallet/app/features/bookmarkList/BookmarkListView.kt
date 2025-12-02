@@ -29,7 +29,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,6 +55,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
+import com.application.material.bookmarkswallet.app.features.bookmarkList.saveable.rememberSaveableList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.saveable.rememberSaveableMap
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
@@ -75,6 +75,7 @@ import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_GRID_S
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_LIST_SIZE
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.ZERO
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -117,37 +118,37 @@ fun BookmarkListComponentView(
         ?: remember { mutableStateOf(SearchResultUIState()) } //todo useless only for preview working
 
     //filter list on hp - FilterHp to Bool
-    val selectedFilterHpMap = rememberSaveableMap() {
+    val selectedFilterHpMap = rememberSaveableMap {
         //init value
-        mutableStateMapOf(
-            FilterHp.PINNED to false,
-            FilterHp.SORT_BY_NAME to false,
-            FilterHp.SORT_BY_DATE to false
+        mutableStateOf(
+            value = mutableMapOf(
+                FilterHp.PINNED to false,
+                FilterHp.SORT_BY_NAME to true,
+                FilterHp.SORT_BY_DATE to false
+            )
         )
     }
 
-    val selectedFilterListType = remember {
+    //filter on list type
+    val selectedFilterListType = rememberSaveableList {
+        //init value
         mutableStateOf(
             value = filterDefaultListType
         )
+            .also {
+                coroutineScope.launch {
+                    it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
+                        ?.first() ?: filterDefaultListType
+                }
+            }
     }
-    //filter on list type
-//    val selectedFilterListType = rememberSaveableMap() {
-//        //init value
-//        mutableStateOf(
-//            value = filterDefaultListType
-//        ).also {
-//            coroutineScope.launch {
-//                it.value = bookmarkViewModel?.selectedFilterListTypeByStorage
-//                    ?.first() ?: filterDefaultListType
-//            }
-//        }
-//    }
 
     //bookmark list empty check
     val isBookmarkListEmpty = remember {
         derivedStateOf {
-            bookmarkViewModel?.bookmarkListUIState?.value?.itemList?.size?.let { it > ZERO }
+            bookmarkViewModel?.bookmarkListUIState?.value
+                ?.itemList?.size
+                ?.let { it > ZERO }
                 ?: false
         }
     }
@@ -185,11 +186,11 @@ fun BookmarkListComponentView(
     }
 
     //filter update
-    LaunchedEffect(key1 = selectedFilterHpMap.values.toList()) {
+    LaunchedEffect(key1 = selectedFilterHpMap.value.toList()) {
         coroutineScope.launch {
             //update bookmark list
             bookmarkViewModel?.updateListByFilter(
-                filterHpMap = selectedFilterHpMap
+                filterHpMap = selectedFilterHpMap.value
             )
         }
     }
@@ -401,7 +402,7 @@ fun MbHeaderBookmarkList(modifier: Modifier.Companion) {
 @Composable
 fun MbFilterBookmarkHpView(
     modifier: Modifier,
-    selectedFilterHpMap: MutableMap<FilterHp, Boolean>,
+    selectedFilterHpMap: MutableState<Map<FilterHp, Boolean>>,
     selectedFilterListType: MutableState<List<BookmarkListType>>,
     isVisible: Boolean = true
 ) {
@@ -417,34 +418,13 @@ fun MbFilterBookmarkHpView(
                 .fillMaxWidth()
         ) {
             val (filterHpRef, filterListTypeRef) = createRefs()
-            //filter fot the bookmark
-            BookmarkFilterView(
-                modifier = Modifier
-                    .constrainAs(ref = filterHpRef) {
-                        top.linkTo(anchor = parent.top)
-                        bottom.linkTo(anchor = parent.bottom)
-                        start.linkTo(anchor = parent.start)
-                        end.linkTo(
-                            anchor = filterListTypeRef.start,
-                            margin = Dimen.paddingMedium16dp
-                        )
-                        width = Dimension.fillToConstraints
-                    },
-                filterItems = filterHpList,
-                onSelectedFilter = { selectedFilter, newValue ->
-                    selectedFilterHpMap[selectedFilter] = newValue
-                }
-            )
-
             //list type
             BookmarkFilterView(
                 modifier = Modifier
                     .constrainAs(ref = filterListTypeRef) {
                         top.linkTo(anchor = parent.top)
-                        bottom.linkTo(anchor = parent.bottom)
                         end.linkTo(anchor = parent.end)
                     },
-                hasToShowLabel = false,
                 isSelectedOverride = selectedFilterListType.value.first() == GRID, //list is only for generic type
                 filterItems = selectedFilterListType.value,
                 onSelectedFilter = { selectedFilter, newValue ->
@@ -454,6 +434,34 @@ fun MbFilterBookmarkHpView(
                     }
                 }
             )
+
+            //filter fot the bookmark
+            BookmarkFilterView(
+                modifier = Modifier
+                    .constrainAs(ref = filterHpRef) {
+                        top.linkTo(
+                            anchor = filterListTypeRef.bottom,
+                            margin = Dimen.paddingSmall8dp
+                        )
+                        start.linkTo(anchor = parent.start)
+                        bottom.linkTo(anchor = parent.bottom)
+                        end.linkTo(
+                            anchor = parent.end
+                        )
+                        width = Dimension.fillToConstraints
+                    },
+                filterItems = filterHpList,
+                initValues = selectedFilterHpMap.value,
+                onSelectedFilter = { selectedFilter, newValue ->
+                    //update state since now is a mutablestate instead of a value
+                    selectedFilterHpMap.value = selectedFilterHpMap.value
+                        .toMutableMap()
+                        .also {
+                            it[selectedFilter] = newValue
+                        }
+                }
+            )
+
         }
     }
 }

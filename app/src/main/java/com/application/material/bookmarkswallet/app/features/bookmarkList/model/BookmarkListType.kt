@@ -18,3 +18,4 @@ enum class BookmarkListType(override val labelRes: Int, override val iconRes: In
 //        iconRes = R.drawable.ic_group_filter_dark,
 //    )
 }
+

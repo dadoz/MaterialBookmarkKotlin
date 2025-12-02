@@ -62,7 +62,7 @@
     <!--    hp filters-->
     <string name="filter_hp_list">List</string>
     <string name="filter_hp_sort_by_date">more recent</string>
-    <string name="filter_hp_sort_by_name">title</string>
+    <string name="filter_hp_sort_by_name">sort by title</string>
     <string name="filter_hp_pinned">pinned</string>
 
     <!--    empty bookmark list view-->
