@@ -56,8 +56,9 @@
     <string name="bookmark_url">Bookmark Url</string>
     <string name="bookmark_title_label">Title</string>
     <string name="bookmark_title_description">Just set a title for your Bookmark</string>
-    <string name="bookmark_list_type">List</string>
-    <string name="bookmark_grid_type">Grid</string>
+    <string name="bookmark_list_type">list</string>
+    <string name="bookmark_grid_type">grid</string>
+    <string name="bookmark_group_type">group</string>
 
     <!--    hp filters-->
     <string name="filter_hp_list">List</string>

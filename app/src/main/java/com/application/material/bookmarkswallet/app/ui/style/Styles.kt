@@ -31,7 +31,7 @@ const val densityResizeFactor = 1f
 @Composable
 fun mbBookmarkFallbackIcon() = rememberDrawablePainterWithColor(
     res = R.drawable.ic_bookmark,
-    color = mbYellowLemonDarkLightColor()
+    color = mbYellowLemonLightMustardDarkColor()
 )
 
 @Composable
@@ -92,7 +92,7 @@ fun mbTitleHExtraBigBoldYellowTextStyle(
 @Composable
 fun mbTitleHExtraBigBoldTextStyle(color: Color = MbColor.GrayBlueAlternativeDark) =
     mbTitleBoldTextStyle().copy(
-        fontSize = 36.sp,
+        fontSize = 28.sp,
         color = color
     )
 

@@ -124,11 +124,14 @@ fun HpScaffoldView() {
             indicator = {
                 Indicator(
                     modifier = Modifier
+                        .padding(
+                            paddingValues = innerPadding
+                        )
                         .align(Alignment.TopCenter),
                     state = pullToRefreshState,
                     isRefreshing = isLoading.value,
-//                    threshold = PositionalThreshold,
-                    color = MbColor.GrayBlueAlternativeDark,
+                    containerColor = MbColor.DarkMustardYellow,
+                    color = MbColor.White,
                 )
             }
         ) {

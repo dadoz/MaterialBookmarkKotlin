@@ -13,9 +13,9 @@ enum class BookmarkListType(override val labelRes: Int, override val iconRes: In
         labelRes = R.string.bookmark_grid_type,
         iconRes = R.drawable.ic_grid_filter_dark,
     ),
-//    GROUP(
-//        labelRes = R.string.bookmark_group_type,
-//        iconRes = R.drawable.ic_group_filter_dark,
-//    )
+    GROUP(
+        labelRes = R.string.bookmark_group_type,
+        iconRes = R.drawable.ic_group_filter_dark,
+    )
 }
 

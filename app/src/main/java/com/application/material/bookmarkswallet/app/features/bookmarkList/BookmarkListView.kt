@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -53,6 +52,7 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.extens
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.GRID
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.GROUP
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.LIST
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
@@ -159,7 +159,7 @@ fun BookmarkListComponentView(
         }
     )
 
-    //bookmark list empty check
+    //bookmark list empty check //todo implement seavable
     val isBookmarkListEmpty = remember {
         derivedStateOf {
             bookmarkViewModel?.bookmarkListUIState?.value
@@ -225,15 +225,16 @@ fun BookmarkListComponentView(
         ) {
             //items on title and subtitle
             MbHeaderBookmarkList(
-                modifier = Modifier
+                modifier = Modifier,
+                filterListTypeState = filterListTypeState
             )
+
 
             //filter configuration in HP
             MbFilterBookmarkHpView(
                 modifier = Modifier,
                 filterHpMapState = filterHpMapState,
-                selectedFilterHpMapState = selectedFilterHpMapState,
-                filterListTypeState = filterListTypeState
+                selectedFilterHpMapState = selectedFilterHpMapState
             )
 
             MbEmptyBookmarkListView(
@@ -401,17 +402,55 @@ fun MbEmptyBookmarkListView(
 }
 
 @Composable
-fun MbHeaderBookmarkList(modifier: Modifier.Companion) {
-    Row(
+fun MbHeaderBookmarkList(
+    modifier: Modifier = Modifier,
+    filterListTypeState: MutableState<List<BookmarkListType>>
+) {
+    ConstraintLayout(
         modifier = modifier
-            .padding(vertical = Dimen.paddingMedium24dp),
-        verticalAlignment = Alignment.CenterVertically
+            .fillMaxWidth()
+            .padding(
+                vertical = Dimen.paddingSmall8dp
+            ),
     ) {
+        val (titleRef, filterRef) = createRefs()
         Text(
             modifier = Modifier
+                .constrainAs(ref = titleRef) {
+                    top.linkTo(anchor = parent.top)
+                    start.linkTo(anchor = parent.start)
+                    end.linkTo(anchor = filterRef.start)
+                    bottom.linkTo(anchor = parent.bottom)
+                    width = Dimension.fillToConstraints
+
+                }
                 .padding(end = Dimen.paddingMedium16dp),
             style = mbTitleHExtraBigBoldYellowTextStyle(),
             text = stringResource(R.string.bookmarks_title),
+        )
+
+        //list type
+        BookmarkFilterView(
+            modifier = Modifier
+                .constrainAs(ref = filterRef) {
+                    top.linkTo(anchor = parent.top)
+                    end.linkTo(anchor = parent.end)
+                    bottom.linkTo(anchor = parent.bottom)
+                },
+            isSelectedOverride = filterListTypeState.value.first() == GRID, //list is only for generic type
+            filterItems = filterListTypeState.value,
+            onSelectedFilter = { selectedFilter, newValue ->
+                filterListTypeState.value = when {
+                    selectedFilter == GRID -> listOf(
+                        LIST,
+                        BookmarkListType.GROUP,
+                        BookmarkListType.GRID
+                    )
+                    else -> listOf(
+                        GRID
+                    )
+                }
+            }
         )
     }
 }
@@ -421,7 +460,6 @@ fun MbFilterBookmarkHpView(
     modifier: Modifier,
     selectedFilterHpMapState: MutableState<Map<FilterHp, Boolean>>,
     filterHpMapState: MutableState<Map<FilterHp, Boolean>>,
-    filterListTypeState: MutableState<List<BookmarkListType>>,
     isVisible: Boolean = true
 ) {
     AnimatedVisibility(
@@ -429,62 +467,24 @@ fun MbFilterBookmarkHpView(
             .wrapContentWidth(),
         visible = isVisible
     ) {
-
-        //filers move in a component small maybe
-        ConstraintLayout(
-            modifier = modifier
-                .fillMaxWidth()
-        ) {
-            val (filterHpRef, filterListTypeRef) = createRefs()
-            //list type
-            BookmarkFilterView(
-                modifier = Modifier
-                    .constrainAs(ref = filterListTypeRef) {
-                        top.linkTo(anchor = parent.top)
-                        end.linkTo(anchor = parent.end)
-                    },
-                isSelectedOverride = filterListTypeState.value.first() == GRID, //list is only for generic type
-                filterItems = filterListTypeState.value,
-                onSelectedFilter = { selectedFilter, newValue ->
-                    filterListTypeState.value = when {
-                        selectedFilter == GRID -> listOf(LIST)
-                        else -> listOf(GRID)
+        //filter fot the bookmark
+        BookmarkFilterView(
+            modifier = Modifier,
+            filterItems = filterHpList,
+            initValues = filterHpMapState.value,
+            onSelectedFilter = { selectedFilter, newValue ->
+                selectedFilterHpMapState.value = mapOf(
+                    selectedFilter to newValue
+                )
+                //update state since now is a mutablestate instead of a value
+                filterHpMapState.value = filterHpMapState.value
+                    .toMutableMap()
+                    .resetMapToDefault()
+                    .also {
+                        it[selectedFilter] = newValue
                     }
-                }
-            )
-
-            //filter fot the bookmark
-            BookmarkFilterView(
-                modifier = Modifier
-                    .constrainAs(ref = filterHpRef) {
-                        top.linkTo(
-                            anchor = filterListTypeRef.bottom,
-                            margin = Dimen.paddingSmall8dp
-                        )
-                        start.linkTo(anchor = parent.start)
-                        bottom.linkTo(anchor = parent.bottom)
-                        end.linkTo(
-                            anchor = parent.end
-                        )
-                        width = Dimension.fillToConstraints
-                    },
-                filterItems = filterHpList,
-                initValues = filterHpMapState.value,
-                onSelectedFilter = { selectedFilter, newValue ->
-                    selectedFilterHpMapState.value = mapOf(
-                        selectedFilter to newValue
-                    )
-                    //update state since now is a mutablestate instead of a value
-                    filterHpMapState.value = filterHpMapState.value
-                        .toMutableMap()
-                        .resetMapToDefault()
-                        .also {
-                            it[selectedFilter] = newValue
-                        }
-                }
-            )
-
-        }
+            }
+        )
     }
 }
 
@@ -503,6 +503,7 @@ fun BookmarkListInternalComponentView(
             count = when (bookmarkListType) {
                 GRID -> BOOKMARK_COLUMN_GRID_SIZE
                 LIST -> BOOKMARK_COLUMN_LIST_SIZE
+                GROUP -> BOOKMARK_COLUMN_LIST_SIZE
             }
         ),
         verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp),
