@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,31 +24,22 @@ import com.application.material.bookmarkswallet.app.ui.style.mbMustardGrayBlueLi
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightColor
 
 @Composable
-fun MbExtendedFab(
+fun MbFab(
     modifier: Modifier = Modifier,
     onClickAction: () -> Unit,
-    title: String,
     iconRes: Int
 ) {
-    ExtendedFloatingActionButton(
+    FloatingActionButton(
         onClick = onClickAction,
         modifier = modifier,
         containerColor = mbYellowLemonLightColor(),
         contentColor = mbMustardGrayBlueLightDarkColor(),
         content = {
             Icon(
-                modifier = Modifier
-                    .size(size = Dimen.size22dp),
+                modifier = Modifier,
+//                    .size(size = Dimen.size20dp),
                 painter = painterResource(id = iconRes),
                 contentDescription = "Add Icon"
-            )
-            Text(
-                modifier = Modifier
-                    .padding(start = Dimen.paddingSmall8dp),
-                text = title,
-                style = mbButtonTextStyle(
-                    color = mbMustardGrayBlueLightDarkColor(),
-                )
             )
         }
     )
@@ -58,7 +50,7 @@ fun MbExtendedFab(
 @Composable
 @Preview
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun MbExtendedFabPreview() {
+fun MbExtendedFabPreview2() {
     MaterialBookmarkMaterialTheme {
         Box(
             modifier = Modifier
@@ -67,10 +59,9 @@ fun MbExtendedFabPreview() {
                     all = Dimen.paddingMedium16dp,
                 )
         ) {
-            MbExtendedFab(
+            MbFab(
                 modifier = Modifier,
-                title = stringResource(R.string.add_new_string),
-                iconRes = android.R.drawable.ic_input_add,
+                iconRes = R.drawable.ic_add_dark,
                 onClickAction = { }
             )
         }

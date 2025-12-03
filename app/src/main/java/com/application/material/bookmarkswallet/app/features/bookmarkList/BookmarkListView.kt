@@ -31,6 +31,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -68,7 +70,7 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.mode
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
-import com.application.material.bookmarkswallet.app.ui.components.MbExtendedFab
+import com.application.material.bookmarkswallet.app.ui.components.MbFab
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -102,13 +104,6 @@ fun BookmarkListComponentView(
     val selectedBookmark = remember {
         mutableStateOf<Bookmark?>(
             value = null
-        )
-    }
-
-    //user state
-    val user by remember {
-        mutableStateOf(
-            value = USER_MOCK
         )
     }
 
@@ -159,8 +154,19 @@ fun BookmarkListComponentView(
         }
     )
 
-    //bookmark list empty check //todo implement seavable
-    val isBookmarkListEmpty = remember {
+    //bookmark list empty check
+    val isBookmarkListEmpty by rememberSaveable(
+        saver = Saver(
+            save = {
+                it.value
+            },
+            restore = {
+                mutableStateOf(
+                    value = it
+                )
+            }
+        )
+    ) {
         derivedStateOf {
             bookmarkViewModel?.bookmarkListUIState?.value
                 ?.itemList?.size
@@ -242,7 +248,7 @@ fun BookmarkListComponentView(
                     .padding(
                         vertical = Dimen.paddingMedium16dp
                     ),
-                isVisible = isBookmarkListEmpty.value
+                isVisible = isBookmarkListEmpty
             )
 
             //main container view of all bookmarks
@@ -291,7 +297,7 @@ fun BookmarkListComponentView(
         }
 
         //fab button
-        MbExtendedFab(
+        MbFab(
             modifier = Modifier
                 .align(
                     alignment = Alignment.BottomEnd
@@ -302,8 +308,7 @@ fun BookmarkListComponentView(
                 .padding(
                     end = Dimen.paddingMedium16dp
                 ),
-            title = stringResource(R.string.add_new_string),
-            iconRes = android.R.drawable.ic_input_add,
+            iconRes = R.drawable.ic_add_dark,
             onClickAction = {
                 isSearchModalBottomSheetVisible.value = true
             }
@@ -442,10 +447,9 @@ fun MbHeaderBookmarkList(
             onSelectedFilter = { selectedFilter, newValue ->
                 filterListTypeState.value = when {
                     selectedFilter == GRID -> listOf(
-                        LIST,
-                        BookmarkListType.GROUP,
-                        BookmarkListType.GRID
+                        LIST
                     )
+
                     else -> listOf(
                         GRID
                     )
