@@ -56,6 +56,7 @@ class SearchBookmarkViewModel @Inject constructor(
      * handle with state instead of cbs (legacy mode but still like it)
      */
     fun saveBookmark(
+        coroutineContext: CoroutineContext = Dispatchers.Main,
         title: String,
         description: String?,
         iconUrl: String?,
@@ -63,7 +64,9 @@ class SearchBookmarkViewModel @Inject constructor(
         onSuccessCallback: (bookmark: Bookmark) -> Unit = { _ -> },
         onErrorCallback: (e: Throwable) -> Unit = { _ -> }
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(
+            context = coroutineContext
+        ) {
             try {
                 Bookmark(
                     appId = getBookmarkId(url),
@@ -92,9 +95,9 @@ class SearchBookmarkViewModel @Inject constructor(
      *
      */
     fun searchUrlInfoByUrlGenAI(
-        url: String,
-        customTitle: String? = null,
         coroutineContext: CoroutineContext = Dispatchers.IO,
+        url: String,
+        customTitle: String? = null
     ) {
         //loading state
         searchResultMutableState.update {
@@ -216,12 +219,13 @@ class SearchBookmarkViewModel @Inject constructor(
     }
 
     fun updateSearchUIStateInEditMode(bookmark: Bookmark) {
-        searchResultMutableState.update {
-            it.copy(
-                isInEditMode = true,
-                bookmark = bookmark
-            )
-        }
+        searchResultMutableState
+            .update {
+                it.copy(
+                    isInEditMode = true,
+                    bookmark = bookmark
+                )
+            }
     }
 }
 
@@ -232,3 +236,4 @@ internal fun List<String>.toContentPrompt() = Content.Builder()
         }
     }
     .build()
+

@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -25,7 +24,6 @@ import com.application.material.bookmarkswallet.app.navigation.HomeNavHost
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
-import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
 import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -44,13 +42,6 @@ fun HpScaffoldView() {
     //nav item selected state
     val navItemSelectedState = remember { mutableStateOf(value = NavRoute.BookmarkList) }
 
-    //search state
-    val textFieldState = rememberTextFieldState()
-    val onSearch: (String) -> Unit = {
-        Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-    }
-    val searchResultList = listOf<String>()
-
     LaunchedEffect(key1 = isLoading.value) {
         if (isLoading.value) {
             launch(Dispatchers.Main) {
@@ -68,25 +59,9 @@ fun HpScaffoldView() {
 //            ),
         topBar = {
             when (navItemSelectedState.value) {
-                NavRoute.BookmarkList ->
-                    SearchBarHeaderView(
-                        modifier = Modifier,
-                        textFieldState = textFieldState,
-                        onSearch = onSearch,
-                        appBarContainerColor = mbAppBarContainerColor(),
-                        searchResults = searchResultList
-                    )
+                NavRoute.BookmarkList -> {}
 
-                else -> {
-                    SearchBarHeaderView(
-                        modifier = Modifier,
-                        textFieldState = textFieldState,
-                        onSearch = onSearch,
-                        appBarContainerColor = mbAppBarContainerColor(),
-                        searchResults = searchResultList
-                    )
-                    //todo please animate otw is horribleeeeee
-                }
+                else -> {}
             }
         },
         bottomBar = {
@@ -113,6 +88,9 @@ fun HpScaffoldView() {
         //todo move in a component
         PullToRefreshBox(
             modifier = Modifier
+                .background(
+                    MbColor.DarkMustardYellow
+                )
                 .fillMaxSize(),
             isRefreshing = isLoading.value,
             state = pullToRefreshState,
@@ -127,7 +105,9 @@ fun HpScaffoldView() {
                         .padding(
                             paddingValues = innerPadding
                         )
-                        .align(Alignment.TopCenter),
+                        .align(
+                            alignment = Alignment.TopCenter
+                        ),
                     state = pullToRefreshState,
                     isRefreshing = isLoading.value,
                     containerColor = MbColor.DarkMustardYellow,
@@ -142,7 +122,7 @@ fun HpScaffoldView() {
                         brush = homeBackgroundBrushColor()
                     )
                     .clipToBounds()
-                    .padding(paddingValues = innerPadding)
+//                    .padding(paddingValues = innerPadding)
                     .fillMaxSize(),
                 navController = navController
             )

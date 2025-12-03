@@ -19,9 +19,13 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -57,12 +61,12 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.GROUP
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkListType.LIST
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.FilterHp
-import com.application.material.bookmarkswallet.app.features.bookmarkList.model.User
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getBookmarkId
 import com.application.material.bookmarkswallet.app.features.bookmarkList.saveable.rememberSaveableList
 import com.application.material.bookmarkswallet.app.features.bookmarkList.saveable.rememberSaveableMap
 import com.application.material.bookmarkswallet.app.features.bookmarkList.state.BookmarkListUIState
 import com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels.BookmarkViewModel
+import com.application.material.bookmarkswallet.app.features.hp.SearchBarHeaderView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.EditBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
@@ -72,6 +76,7 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbFab
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
@@ -84,7 +89,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun BookmarkListComponentView(
     modifier: Modifier = Modifier,
@@ -175,6 +180,28 @@ fun BookmarkListComponentView(
         }
     }
 
+    //search state
+    val textFieldState = rememberTextFieldState()
+    //search state state
+    val searchBarState = rememberSearchBarState()
+
+    LaunchedEffect(key1 = searchBarState.currentValue) {
+        bookmarkViewModel?.setFilterListBySearchState(
+            searchBarState = searchBarState.currentValue
+        )
+    }
+
+    LaunchedEffect(key1 = textFieldState.text) {
+        coroutineScope.launch {
+            textFieldState.text.toString()
+                .let { query ->
+                    bookmarkViewModel?.filterListBySearchQuery(
+                        query = query
+                    )
+                }
+        }
+    }
+
     //init status
     LaunchedEffect(key1 = null) {
         coroutineScope.launch {
@@ -229,6 +256,23 @@ fun BookmarkListComponentView(
                     bottom = Dimen.paddingMedium16dp
                 )
         ) {
+            SearchBarHeaderView(
+                modifier = Modifier,
+                textFieldState = textFieldState,
+                searchBarState = searchBarState,
+                appBarContainerColor = mbAppBarContainerColor(),
+                onSearchCallback = {
+                    bookmarkViewModel?.filterListBySearchQuery(
+                        query = it
+                    )
+                },
+                onClearCallback = {
+                    bookmarkViewModel?.setFilterListBySearchState(
+                        searchBarState = SearchBarValue.Collapsed
+                    )
+                }
+            )
+
             //items on title and subtitle
             MbHeaderBookmarkList(
                 modifier = Modifier,
@@ -274,7 +318,9 @@ fun BookmarkListComponentView(
                         modifier = Modifier,
                         bookmark = it,
                         onDeleteCallback = {
-                            bookmarkViewModel?.deleteBookmark(it)
+                            bookmarkViewModel?.deleteBookmark(
+                                bookmark = it
+                            )
                         },
                         onOpenAction = {
                             localUriHandler.openUri(it)
@@ -549,6 +595,9 @@ fun BookmarkListViewPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+val BookmarkListButtonContainerHeight = ButtonDefaults.MediumContainerHeight
+
 internal val bookmarkListMock = listOf(
     Bookmark(
         appId = getBookmarkId("www.google.it"),
@@ -615,14 +664,3 @@ internal val bookmarkListMock = listOf(
         timestamp = Date(),//Dates.today,
     )
 )
-
-val USER_MOCK = User(
-    uid = "1",
-    name = "Davide",
-    photoUrl = "https://www.google.it",
-    email = "https://www.google.it"
-
-)
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-val BookmarkListButtonContainerHeight = ButtonDefaults.MediumContainerHeight

@@ -1,6 +1,8 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.viewmodels
 
 import android.app.Application
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SearchBarValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.application.material.bookmarkswallet.app.data.BookmarkRepository
@@ -23,6 +25,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
@@ -32,17 +35,16 @@ class BookmarkViewModel @Inject constructor(
 ) : AndroidViewModel(application = application) {
     //delete status
     private val bookmarkDeletionMutableState: MutableStateFlow<Boolean?> =
-        MutableStateFlow(null)
+        MutableStateFlow(
+            value = null
+        )
     var bookmarkDeletionState: StateFlow<Boolean?> =
         this.bookmarkDeletionMutableState.asStateFlow()
 
-    //state to handle
-    private val bookmarkPreviewModalMutableState: MutableStateFlow<Boolean> =
-        MutableStateFlow(false)
-    var bookmarkPreviewModalState: StateFlow<Boolean> =
-        this.bookmarkPreviewModalMutableState.asStateFlow()
-
-    private val bookmarkListMutableState = MutableStateFlow(BookmarkListUIState())
+    //list mutable state UI
+    private val bookmarkListMutableState = MutableStateFlow(
+        value = BookmarkListUIState()
+    )
     val bookmarkListUIState = bookmarkListMutableState.asStateFlow()
 
     //filter for grid and list
@@ -50,16 +52,13 @@ class BookmarkViewModel @Inject constructor(
         dataStoreManager.selectedFilterListType
     }
 
-    //filter for hp with selection with latest or first
-    val selectedFilterHpMapStored by lazy {
-        dataStoreManager.selectedFilterHpMap
-    }
-
     /**
      * retrieve bookmark list version new please refer to retrieveBookmarkList
      *
      */
-    fun getBookmarkList() {
+    fun getBookmarkList(
+        coroutineContext: CoroutineContext = Dispatchers.IO
+    ) {
         Timber.w("[BOOKMARK LIST] - get all bookmark list")
         //loading state
         bookmarkListMutableState.value = BookmarkListUIState(
@@ -69,7 +68,9 @@ class BookmarkViewModel @Inject constructor(
 
         //this is wrong move on VM TODO in right VM please with a collectAsState
         viewModelScope
-            .launch {
+            .launch(
+                context = coroutineContext
+            ) {
                 //retrieve items
                 bookmarkRepository.getBookmarks()
                     .collect { result ->
@@ -101,12 +102,17 @@ class BookmarkViewModel @Inject constructor(
     }
 
     /**
-     * add bookamrk on db
+     * add bookmark on db
      *
      */
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun deleteBookmark(bookmark: Bookmark) {
-        viewModelScope.launch {
+    fun deleteBookmark(
+        coroutineContext: CoroutineContext = Dispatchers.Main,
+        bookmark: Bookmark
+    ) {
+        viewModelScope.launch(
+            context = coroutineContext,
+        ) {
             bookmarkRepository.deleteBookmark(bookmark = bookmark)
                 .collect {
                     bookmarkDeletionMutableState.value = it
@@ -115,12 +121,12 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-
     /**
      * add bookamrk on db
      * handle with state instead of cbs (legacy mode but still like it)
      */
     private fun updateBookmarkByShallowCopy(
+        coroutineContext: CoroutineContext = Dispatchers.Main,
         bookmarkShallowCopy: Bookmark
     ) {
         //launch update state
@@ -144,7 +150,7 @@ class BookmarkViewModel @Inject constructor(
 
         //launch update on state
         viewModelScope.launch(
-            context = Dispatchers.Main
+            context = coroutineContext
         ) {
             bookmarkRepository.updateBookmark(
                 bookmark = bookmarkShallowCopy
@@ -210,44 +216,92 @@ class BookmarkViewModel @Inject constructor(
     fun updateListByFilter(
         singleFilterHpMap: Map<FilterHp, Boolean>
     ) {
-        bookmarkListMutableState.update {
-            it.copy(
-                itemList = it.itemList
-                    .let { list ->
-                        //filter sort by DATE
-                        when {
-                            singleFilterHpMap[FilterHp.SORT_BY_DATE] == true ->
-                                list.sortedByDescending { bookmark ->
-                                    bookmark.timestamp
-                                }
+        bookmarkListMutableState
+            .update {
+                it.copy(
+                    itemList = it.itemList
+                        .let { list ->
+                            //filter sort by DATE
+                            when {
+                                singleFilterHpMap[FilterHp.SORT_BY_DATE] == true ->
+                                    list.sortedByDescending { bookmark ->
+                                        bookmark.timestamp
+                                    }
 
-                            //filter sort by NAME
-                            singleFilterHpMap[FilterHp.SORT_BY_NAME] == true ->
-                                list.sortedBy { bookmark ->
-                                    bookmark.title
-                                }
+                                //filter sort by NAME
+                                singleFilterHpMap[FilterHp.SORT_BY_NAME] == true ->
+                                    list.sortedBy { bookmark ->
+                                        bookmark.title
+                                    }
 
-                            //filter sort by PINNED
-                            singleFilterHpMap[FilterHp.PINNED] == true ->
-                                list.sortedByDescending { bookmark ->
-                                    bookmark.isPinned
-                                }
+                                //filter sort by PINNED
+                                singleFilterHpMap[FilterHp.PINNED] == true ->
+                                    list.sortedByDescending { bookmark ->
+                                        bookmark.isPinned
+                                    }
 
-                            else -> list.sortByTimestampDefault()
+                                else -> list.sortByTimestampDefault()
+                            }
                         }
-                    }
-            )
-        }
+                )
+            }
+    }
+
+    /**
+     * filter by search query
+     */
+    fun filterListBySearchQuery(
+        query: String
+    ) {
+        //update state on ui
+        bookmarkListMutableState
+            .update {
+                it.copy(
+                    itemList = it.preFilteredList
+                        .filter {
+                            it.title?.contains(
+                                other = query,
+                                ignoreCase = true
+                            ) == true
+                                    || it.url.contains(
+                                other = query,
+                                ignoreCase = true
+                            )
+                        }
+                )
+            }
+    }
+
+    /**
+     * set filter by search query
+     * clear filter by search query
+     */
+    @OptIn(ExperimentalMaterial3Api::class)
+    fun setFilterListBySearchState(
+        searchBarState: SearchBarValue
+    ) {
+        bookmarkListMutableState
+            .update {
+                when (searchBarState) {
+                    //store a copy items for the search list
+                    SearchBarValue.Expanded ->
+                        it.copy(
+                            preFilteredList = it.itemList.toMutableList(),
+                        )
+
+                    //clear filter with prev list
+                    //todo THERES A BUG - filter has not been applicable if reset from filter
+                    SearchBarValue.Collapsed ->
+                        it.copy(
+                            itemList = it.preFilteredList.toMutableList(),
+                        )
+                }
+            }
     }
 
     fun setSelectedFilterListType(value: BookmarkListType) =
         dataStoreManager.setSelectedFilterListType(
             value = value.name
-        )
-
-    fun setSelectedFilterHpMap(value: Map<FilterHp, Boolean>) =
-        dataStoreManager.setSelectedFilterHpMap(
-            filterHpMap = value
         )
 
     override fun onCleared() {
@@ -258,6 +312,7 @@ class BookmarkViewModel @Inject constructor(
         bookmarkDeletionMutableState.value = null
     }
 
+    //todo why not using anymore
     fun cleaBookmarkListState() {
         bookmarkListMutableState.value = BookmarkListUIState(
             itemList = emptyList(),
