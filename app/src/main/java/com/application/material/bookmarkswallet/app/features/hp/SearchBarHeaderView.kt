@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.input.TextFieldState
@@ -179,6 +180,10 @@ fun SearchBarHeaderView(
                 .semantics {
                     traversalIndex = ZEROF
                 },
+            windowInsets = WindowInsets(
+                top = Dimen.paddingMedium16dp,
+                bottom = Dimen.paddingMedium16dp
+            ),
             colors = SearchBarDefaults.appBarWithSearchColors(
                 searchBarColors = SearchBarColors(
                     containerColor = mbGrayLightExtraBlueDarkColor(),

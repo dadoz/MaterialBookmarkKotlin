@@ -22,8 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.application.material.bookmarkswallet.app.features.hp.components.MbNavigationBar
 import com.application.material.bookmarkswallet.app.navigation.HomeNavHost
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
+import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
-import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
 import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -88,8 +88,12 @@ fun HpScaffoldView() {
         //todo move in a component
         PullToRefreshBox(
             modifier = Modifier
+                .padding(
+                    paddingValues = innerPadding
+                )
                 .background(
-                    MbColor.DarkMustardYellow
+                    color = MbColor.Yellow
+//                        brush = homeBackgroundBrushColor()
                 )
                 .fillMaxSize(),
             isRefreshing = isLoading.value,
@@ -103,7 +107,7 @@ fun HpScaffoldView() {
                 Indicator(
                     modifier = Modifier
                         .padding(
-                            paddingValues = innerPadding
+                            top = Dimen.indicatorPaddingTop
                         )
                         .align(
                             alignment = Alignment.TopCenter
@@ -118,11 +122,7 @@ fun HpScaffoldView() {
             //pull to refresh content
             HomeNavHost(
                 modifier = Modifier
-                    .background(
-                        brush = homeBackgroundBrushColor()
-                    )
                     .clipToBounds()
-//                    .padding(paddingValues = innerPadding)
                     .fillMaxSize(),
                 navController = navController
             )
