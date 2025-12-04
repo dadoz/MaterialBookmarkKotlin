@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults.Indicator
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -24,6 +27,9 @@ import com.application.material.bookmarkswallet.app.navigation.HomeNavHost
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.MbColor
+import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundBrushColor
+import com.application.material.bookmarkswallet.app.ui.style.homeBackgroundColor
+import com.application.material.bookmarkswallet.app.ui.style.mbMustardBlueBlackExtraDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbNavBarBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -54,15 +60,14 @@ fun HpScaffoldView() {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-//            .windowInsetsPadding(
-//                insets = WindowInsets.systemBars
-//            ),
         topBar = {
-            when (navItemSelectedState.value) {
-                NavRoute.BookmarkList -> {}
-
-                else -> {}
-            }
+            TopAppBar(
+                colors = topAppBarColors(
+                    containerColor = homeBackgroundColor()
+                ),
+                expandedHeight = Dimen.zeroDp,
+                title = {}
+            )
         },
         bottomBar = {
             MbNavigationBar(
@@ -83,7 +88,7 @@ fun HpScaffoldView() {
             }
         },
         floatingActionButton = { },
-        floatingActionButtonPosition = androidx.compose.material3.FabPosition.End,
+        floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         //todo move in a component
         PullToRefreshBox(
@@ -92,8 +97,7 @@ fun HpScaffoldView() {
                     paddingValues = innerPadding
                 )
                 .background(
-                    color = MbColor.Yellow
-//                        brush = homeBackgroundBrushColor()
+                    brush = homeBackgroundBrushColor()
                 )
                 .fillMaxSize(),
             isRefreshing = isLoading.value,
@@ -114,7 +118,7 @@ fun HpScaffoldView() {
                         ),
                     state = pullToRefreshState,
                     isRefreshing = isLoading.value,
-                    containerColor = MbColor.DarkMustardYellow,
+                    containerColor = mbMustardBlueBlackExtraDarkColor(),
                     color = MbColor.White,
                 )
             }

@@ -253,9 +253,6 @@ fun BookmarkListComponentView(
                 .padding(
                     horizontal = Dimen.paddingMedium16dp
                 )
-                .padding(
-                    bottom = Dimen.paddingMedium16dp
-                )
         ) {
             SearchBarHeaderView(
                 modifier = Modifier,
@@ -548,8 +545,8 @@ fun BookmarkListInternalComponentView(
     lazyGridState: LazyGridState,
 ) {
     LazyVerticalGrid(
-        state = lazyGridState,
         modifier = modifier,
+        state = lazyGridState,
         columns = GridCells.Fixed(
             count = when (bookmarkListType) {
                 GRID -> BOOKMARK_COLUMN_GRID_SIZE

@@ -181,8 +181,7 @@ fun SearchBarHeaderView(
                     traversalIndex = ZEROF
                 },
             windowInsets = WindowInsets(
-                top = Dimen.paddingMedium16dp,
-                bottom = Dimen.paddingMedium16dp
+                top = Dimen.paddingMedium16dp
             ),
             colors = SearchBarDefaults.appBarWithSearchColors(
                 searchBarColors = SearchBarColors(

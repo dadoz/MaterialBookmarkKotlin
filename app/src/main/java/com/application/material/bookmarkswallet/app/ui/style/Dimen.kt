@@ -50,7 +50,7 @@ object Dimen {
     val sizeMediumLarge140dp = 140.dp
 
     //pull to refresh
-    val indicatorPaddingTop: Dp = 120.dp
+    val indicatorPaddingTop: Dp = 80.dp
 
     val sizeExtraLarge256 = 256.dp
     val paddingExtraLarge330dp = 330.dp

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.LifecycleOwner
 import com.application.material.bookmarkswallet.app.features.hp.HpScaffoldView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
@@ -18,11 +19,15 @@ class BookmarksMainActivity : ComponentActivity(),
     LifecycleOwner {
     private lateinit var auth: FirebaseAuth
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //todo remove this
         auth = Firebase.auth
         authAnonymousWithFirebase()
+
+        //content
         setContent {
             MaterialBookmarkMaterialTheme {
                 //init hp view
@@ -45,14 +50,14 @@ class BookmarksMainActivity : ComponentActivity(),
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Timber.e( "signInAnonymously:success")
+                    Timber.e("signInAnonymously:success")
                     val user = auth.currentUser
                     Timber.e(
                         user?.email + " - " + user?.uid
                     )
                 } else {
                     // If sign in fails, display a message to the user.
-                    Timber.e( "signInAnonymously:failure", task.exception)
+                    Timber.e("signInAnonymously:failure", task.exception)
                     Toast.makeText(
                         baseContext,
                         "Authentication failed.",

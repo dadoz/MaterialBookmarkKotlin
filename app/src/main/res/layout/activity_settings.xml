@@ -20,12 +20,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/mbSettingsTitleTextViewId"
-            style="@style/MBMaterialTextHeaderViolet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_16"
@@ -45,7 +43,6 @@
 
         <TextView
             android:id="@+id/mbSettingsDescriptionTextViewId"
-            style="@style/MBMaterialTextSubtitleViolet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
@@ -56,7 +53,6 @@
 
         <TextView
             android:id="@+id/mbSettingsSubDescriptionTextViewId"
-            style="@style/MBMaterialTextDescrSmallViolet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_32"
