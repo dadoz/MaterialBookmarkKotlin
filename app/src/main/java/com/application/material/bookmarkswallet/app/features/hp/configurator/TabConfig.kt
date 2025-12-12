@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.navigation.NavRoute
 
-fun getTabMenuItemList(context: Context) = listOf<TabItem>(
+fun getTabMenuItemList(context: Context) = listOf(
     TabItem(
         label = context.getString(R.string.menu_tab_bookmark_list),
         icon = R.drawable.ic_tab_bookmark_dark,

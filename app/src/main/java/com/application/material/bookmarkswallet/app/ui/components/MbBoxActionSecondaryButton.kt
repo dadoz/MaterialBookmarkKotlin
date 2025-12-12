@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MbActionBoxButtonView
@@ -24,13 +25,13 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonMinRoundedCornerShape
-import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightYellowBlueBlackExtraDarkColor
+import com.application.material.bookmarkswallet.app.ui.style.mbIconBoxButtonBackgroundColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.NINETY_F
+import com.application.material.bookmarkswallet.app.utils.TWO
 import com.application.material.bookmarkswallet.app.utils.TWOHUNDRED_SEVENTY_F
 
 
@@ -47,7 +48,7 @@ fun MbBoxActionSecondaryButton(
     backgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
     textStyle: TextStyle = mbSubtitleTextAccentStyle(),
     iconTintColor: Color = mbWhiteYellowLemonDarkLightColor(),
-    iconBoxColor: Color = mbExtraLightYellowBlueBlackExtraDarkColor(),
+    iconBoxColor: Color = mbIconBoxButtonBackgroundColor(),
     onClickAction: (() -> Unit)? = null
 ) {
     Box(
@@ -63,11 +64,20 @@ fun MbBoxActionSecondaryButton(
                 onClick = onClickAction ?: { }
             )
             .padding(
-                all = Dimen.paddingExtraSmall2dp
+                all = Dimen.paddingExtraSmall4dp
             )
     ) {
         Row(
             modifier = Modifier
+                .let {
+                    when {
+                        isArrowEnabled -> it.padding(
+                            end = Dimen.paddingSmall8dp
+                        )
+
+                        else -> it
+                    }
+                }
                 .align(
                     alignment = Alignment.CenterStart
                 ),
@@ -112,6 +122,8 @@ fun MbBoxActionSecondaryButton(
                             .padding(
                                 horizontal = Dimen.paddingMedium16dp
                             ),
+                        maxLines = TWO,
+                        overflow = TextOverflow.Ellipsis,
                         style = textStyle,
                         text = text
                     )
@@ -126,9 +138,6 @@ fun MbBoxActionSecondaryButton(
                         ),
                         contentDescription = EMPTY,
                         modifier = Modifier
-                            .padding(
-                                horizontal = Dimen.paddingMedium16dp,
-                            )
                             .size(size = Dimen.size20dp)
                             .rotate(
                                 degrees =

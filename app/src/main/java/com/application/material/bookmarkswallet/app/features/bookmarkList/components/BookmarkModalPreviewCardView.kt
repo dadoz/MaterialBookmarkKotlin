@@ -62,6 +62,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightText
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
+import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
@@ -126,7 +127,7 @@ fun BookmarkPreviewCard(
     //fallbackIcon
     val fallbackIcon = rememberDrawablePainterWithColor(
         res = R.drawable.ic_bookmark,
-        color = mbYellowLemonDarkLightColor()
+        color = mbYellowLemonLightMustardDarkColor()
     )
     Column(
         modifier = modifier
@@ -179,6 +180,16 @@ fun BookmarkPreviewCard(
                 style = mbSubtitleTextStyle(),
                 text = bookmark.url
             )
+            //pinning button
+            MbPinningButtonActionView(
+                modifier = Modifier
+                    .align(
+                        alignment = Alignment.End
+                    ),
+                bookmark = bookmark,
+                isSelected = bookmark.isPinned,
+                onPinningAction = onPinningAction
+            )
             //timestamp
             Row(
                 modifier = modifier
@@ -197,17 +208,6 @@ fun BookmarkPreviewCard(
                     )
                 )
             }
-
-            //pinning button
-            MbPinningButtonActionView(
-                modifier = Modifier
-                    .align(
-                        alignment = Alignment.End
-                    ),
-                bookmark = bookmark,
-                isSelected = bookmark.isPinned,
-                onPinningAction = onPinningAction
-            )
         }
 
         MbActionMenuBookmarkPreviewView(
@@ -251,19 +251,11 @@ fun MbActionMenuBookmarkPreviewView(
             .wrapContentWidth(),
         visible = isActionMenuVisible
     ) {
+        //action item row
         Row(
             modifier = Modifier
-                .clip(
-                    shape = mbCardRoundedCornerShape()
-                )
-                .background(
-                    color = backgroundColor
-                )
-                .padding(
-                    all = Dimen.paddingMedium16dp
-                )
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
+            horizontalArrangement = Arrangement.End,
         ) {
             //delete cta
             MbDeleteBookmarkButtonView(
@@ -271,60 +263,53 @@ fun MbActionMenuBookmarkPreviewView(
                 bookmark = bookmark,
                 onDeleteCallback = onDeleteAction
             )
-            //action item row
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-            ) {
-                actionPreviewBookmarkList
-                    .onEachIndexed { index, actionItem ->
-                        MbActionBoxButtonView(
-                            modifier = Modifier
-                                .let {
-                                    when (index) {
-                                        actionPreviewBookmarkList.size - 1 -> it
+            actionPreviewBookmarkList
+                .onEachIndexed { index, actionItem ->
+                    MbActionBoxButtonView(
+                        modifier = Modifier
+                            .let {
+                                when (index) {
+                                    actionPreviewBookmarkList.size - 1 -> it
 
-                                        else -> it.padding(
-                                            horizontal = Dimen.paddingMedium16dp
-                                        )
-                                    }
-                                },
-                            color = actionItemBackgroundColor,
-                            onClickAction = {
-                                when (actionItem.first) {
-                                    SHARE_ACTION -> {
-                                        context.startActivity(
-                                            shareContentIntentBuilder(
-                                                url = bookmark.url
-                                            )
-                                        )
-                                    }
-
-                                    EDIT_ACTION -> {
-                                        onEditAction?.invoke(bookmark)
-                                    }
-
-                                    else -> {
-                                        Toast.makeText(
-                                            context,
-                                            "hey you tap -> ${actionItem.first.name}",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                    else -> it.padding(
+                                        horizontal = Dimen.paddingMedium16dp
+                                    )
                                 }
                             },
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(size = Dimen.sizeLarge32dp),
-                                painter = painterResource(id = actionItem.second),
-                                tint = mbMustardDarkWhiteColor(),
-                                contentDescription = ""
-                            )
-                        }
+                        color = actionItemBackgroundColor,
+                        onClickAction = {
+                            when (actionItem.first) {
+                                SHARE_ACTION -> {
+                                    context.startActivity(
+                                        shareContentIntentBuilder(
+                                            url = bookmark.url
+                                        )
+                                    )
+                                }
+
+                                EDIT_ACTION -> {
+                                    onEditAction?.invoke(bookmark)
+                                }
+
+                                else -> {
+                                    Toast.makeText(
+                                        context,
+                                        "hey you tap -> ${actionItem.first.name}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        },
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .size(size = Dimen.sizeLarge32dp),
+                            painter = painterResource(id = actionItem.second),
+                            tint = mbMustardDarkWhiteColor(),
+                            contentDescription = ""
+                        )
                     }
-            }
+                }
         }
     }
 }

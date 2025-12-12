@@ -44,6 +44,7 @@ const val SPACE = " "
 const val THIRTY = 30
 const val TIMEZONE_T = "T"
 const val TIMEZONE_Z = "Z"
+const val TWO = 2
 const val TWO_L = 2L
 const val ZEROL = 0L
 

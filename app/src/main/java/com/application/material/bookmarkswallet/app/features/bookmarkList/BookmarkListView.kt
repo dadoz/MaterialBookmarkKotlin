@@ -76,7 +76,6 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbFab
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
@@ -459,7 +458,7 @@ fun MbHeaderBookmarkList(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = Dimen.paddingSmall8dp
+                vertical = Dimen.paddingMedium16dp
             ),
     ) {
         val (titleRef, filterRef) = createRefs()

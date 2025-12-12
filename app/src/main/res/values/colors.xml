@@ -3,12 +3,6 @@
     <color name="colorAccent">#EED500</color>
     <color name="colorAccentLight">#FFF6ED</color>
     <color name="colorPrimary">#2E3341</color>
-    <color name="colorPrimaryDark">#0066FF</color>
-    <color name="colorLight">#F6F6F6</color>
-    <color name="colorPrimaryLight">#FFFFFF</color>
-    <color name="colorError">#ff7272</color>
-    <color name="colorErrorSecondary">#A13532</color>
-    <color name="colorSuccess">#3ED48F</color>
-    <color name="colorGrey">#F3F3F3</color>
-    <color name="colorPurple">#d7385e</color>
+    <color name="colorPrimaryDark">#F8F8F8</color>
+    <color name="colorBackground">#EED500</color>
  </resources>

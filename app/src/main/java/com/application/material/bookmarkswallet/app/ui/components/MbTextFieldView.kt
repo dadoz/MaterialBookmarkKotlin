@@ -28,6 +28,7 @@ import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkGreyCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteMustardDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
@@ -82,6 +83,7 @@ fun MbCardTextFieldView(
     textFieldState: MutableState<TextFieldValue>,
     hesHorizontalPadding: Boolean = true,
     hasVerticalPadding: Boolean = true,
+    hasEditTextEnabled: Boolean = true,
     isVisible: Boolean = true,
     titleLabel: String = stringResource(id = R.string.bookmark_url),
     outerComponent: @Composable (BoxScope.() -> Unit),
@@ -100,30 +102,41 @@ fun MbCardTextFieldView(
             modifier = modifier,
             colors = mbWhiteDarkGreyCardBackgroundColors()
         ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .focusRequester(
-                        focusRequester = focusRequester
-                    )
-                    .fillMaxWidth(),
-                textStyle = mbSubtitleTextStyle(),
-                shape = mbCardRoundedCornerShape(),
-                value = textFieldState.value,
-                placeholder = {
-                    Text(
-                        modifier = Modifier,
-                        style = mbSubtitleTextStyle(),
-                        text = titleLabel
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = mbYellowLemonLightMustardDarkColor(),
-                    unfocusedBorderColor = mbWhiteMustardDarkColor(),
-                ),
-                onValueChange = {
-                    textFieldState.value = it
-                }
-            )
+            when {
+                hasEditTextEnabled -> OutlinedTextField(
+                    modifier = Modifier
+                        .focusRequester(
+                            focusRequester = focusRequester
+                        )
+                        .fillMaxWidth(),
+                    textStyle = mbSubtitleTextStyle(),
+                    shape = mbCardRoundedCornerShape(),
+                    value = textFieldState.value,
+                    placeholder = {
+                        Text(
+                            modifier = Modifier,
+                            style = mbSubtitleTextStyle(),
+                            text = titleLabel
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = mbYellowLemonLightMustardDarkColor(),
+                        unfocusedBorderColor = mbWhiteMustardDarkColor(),
+                    ),
+                    onValueChange = {
+                        textFieldState.value = it
+                    }
+                )
+
+                else -> Text(
+                    modifier = Modifier
+                        .padding(
+                            all = Dimen.paddingMedium16dp
+                        ),
+                    text = textFieldState.value.text,
+                    style = mbTitleMediumBoldYellowLightDarkTextStyle(),
+                )
+            }
 
             Box(
                 modifier = Modifier
@@ -195,7 +208,7 @@ fun MbTextCardFieldViewPreview() {
                         style = mbSubtitleTextStyle(),
                         text = "blalalalla"
                     )
-                },
+                }
             )
         }
     }

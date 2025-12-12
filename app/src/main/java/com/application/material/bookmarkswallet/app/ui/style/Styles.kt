@@ -312,7 +312,7 @@ fun mbSubtitleLightTextStyle(color: Color = MbColor.DarkMustardYellow) = mbSubti
             true -> MbColor.White
             else -> color
         },
-        fontSize = 14.sp,
+        fontSize = Dimen.fontSizeSmall14sp,
         fontFamily = MbYantramanavThinFontFamily
     )
 
@@ -444,9 +444,9 @@ fun mbExtraLightGrayGrayBlueDarkVariantColor(): Color {
 }
 
 @Composable
-fun mbExtraLightYellowBlueBlackExtraDarkColor(): Color {
+fun mbIconBoxButtonBackgroundColor(): Color {
     return when (isSystemInDarkTheme()) {
-        true -> MbColor.BlueBlackExtraDark
+        true -> MbColor.DarkLemonYellow
         else -> MbColor.ExtraLightMustardYellow
     }
 }
@@ -487,14 +487,6 @@ fun mbActionBookmarkCardBackgroundColors(): Color {
 fun mbActionBookmarkCardBackgroundAlternativeColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
-        else -> MbColor.ExtraLightGray
-    }
-}
-
-@Composable
-fun mbActionBookmarkCardBackgroundAlternativeColors2(): Color {
-    return when (isSystemInDarkTheme()) {
-        true -> MbColor.BlueBlackExtraDark
         else -> MbColor.White
     }
 }

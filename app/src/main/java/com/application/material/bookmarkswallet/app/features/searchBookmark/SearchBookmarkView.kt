@@ -68,7 +68,6 @@ import com.application.material.bookmarkswallet.app.features.searchBookmark.view
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSecondaryButton
 import com.application.material.bookmarkswallet.app.ui.components.MbCardTextFieldView
-import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbLoaderView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.components.MbTextFieldView
@@ -83,13 +82,12 @@ import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCard
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
-import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleLightTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbSuccessSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleBoldTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
-import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkGreyCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteMustardDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
@@ -201,7 +199,7 @@ fun SearchAndAddBookmarkView(
                             .height(Dimen.sizeExtraLarge96dp)
                             .clip(
                                 shape = mbCardRoundedCornerShape()
-                            ),
+                            )
                     )
                 }
 
@@ -213,45 +211,60 @@ fun SearchAndAddBookmarkView(
                         ),
                     hesHorizontalPadding = false,
                     hasVerticalPadding = false,
+                    hasEditTextEnabled = searchResultUIState.isInEditMode.not(),
                     textFieldState = searchUrlTextState
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
+                    Column(
+                        modifier = Modifier,
                     ) {
-                        //clipboard
-                        MbBoxActionSecondaryButton(
+                        //title
+                        MbCustomTitleTextFieldView(
+                            modifier = Modifier,
+                            searchTitleTextState = searchTitleTextState,
+                            isTitleBoxVisible = isTitleBoxVisible
+                        )
+
+                        Row(
                             modifier = Modifier
                                 .padding(
                                     top = Dimen.paddingMedium16dp
-                                ),
-                            iconRes = R.drawable.ic_pin_new_dark,
-                            text = stringResource(R.string.paste_clipboard),
-                            onClickAction = {
-                                Toast.makeText(
-                                    context, R.string.past_clip_message, Toast.LENGTH_LONG
-                                ).show()
+                                )
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            MbBoxActionSecondaryButton(
+                                modifier = Modifier,
+                                text = stringResource(R.string.add_title_manually),
+                                iconRes = R.drawable.ic_text_dark,
+                                isArrowClicked = isTitleBoxVisible.value,
+                                isArrowEnabled = true
+                            ) {
+                                isTitleBoxVisible.value = isTitleBoxVisible.value.not()
+                            }
+                            //clipboard
+                            MbBoxActionSecondaryButton(
+                                modifier = Modifier,
+                                iconRes = R.drawable.ic_pin_new_dark,
+                                text = stringResource(R.string.paste_clipboard),
+                                onClickAction = {
+                                    Toast.makeText(
+                                        context, R.string.past_clip_message, Toast.LENGTH_LONG
+                                    ).show()
 
-                                //take first item from clip and set to value on url todo make utils
-                                searchUrlTextState.value = clipboard.primaryClip
-                                    ?.getItemAt(ZERO)
-                                    ?.text
-                                    ?.toString()
-                                    ?.let {
-                                        TextFieldValue(it)
-                                    } ?: TextFieldValue(EMPTY)
-                            },
-                        )
+                                    //take first item from clip and set to value on url todo make utils
+                                    searchUrlTextState.value = clipboard.primaryClip
+                                        ?.getItemAt(ZERO)
+                                        ?.text
+                                        ?.toString()
+                                        ?.let {
+                                            TextFieldValue(it)
+                                        } ?: TextFieldValue(EMPTY)
+                                }
+                            )
+                        }
                     }
                 }
 
-                //title
-                MbCustomTitleTextFieldView(
-                    modifier = Modifier,
-                    searchTitleTextState = searchTitleTextState,
-                    isTitleBoxVisible = isTitleBoxVisible
-                )
 
                 when {
                     searchResultUIState.isInEditMode -> {
@@ -306,65 +319,50 @@ fun MbCustomTitleTextFieldView(
     searchTitleTextState: MutableState<TextFieldValue>,
     isTitleBoxVisible: MutableState<Boolean>,
 ) {
-    MbCardView(
+    AnimatedVisibility(
         modifier = modifier,
-        colors = mbWhiteDarkGreyCardBackgroundColors()
+        visible = isTitleBoxVisible.value
     ) {
-        AnimatedVisibility(
-            modifier = Modifier,
-            visible = isTitleBoxVisible.value
-        ) {
-            Column(
-                modifier = Modifier,
-                verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
-            ) {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .focusRequester(
-                            focusRequester = FocusRequester()
-                        )
-                        .fillMaxWidth(),
-                    textStyle = mbSubtitleTextStyle(),
-                    shape = mbCardRoundedCornerShape(),
-                    value = searchTitleTextState.value,
-                    placeholder = {
-                        Text(
-                            modifier = Modifier,
-                            style = mbSubtitleTextStyle(),
-                            text = stringResource(id = R.string.bookmark_title_label)
-                        )
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = mbYellowLemonLightMustardDarkColor(),
-                        unfocusedBorderColor = mbWhiteMustardDarkColor(),
-                    ),
-                    onValueChange = {
-                        searchTitleTextState.value = it
-                    }
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(
-                            bottom = Dimen.paddingMedium16dp
-                        ),
-                    text = stringResource(
-                        id = R.string.bookmark_title_description
-                    ),
-                    style = mbSubtitleLightTextStyle()
-                )
-            }
-        }
-
-        MbBoxActionSecondaryButton(
+        Column(
             modifier = Modifier
-                .fillMaxWidth(),
-            text = stringResource(R.string.add_title_manually),
-            iconRes = R.drawable.ic_text_dark,
-            isArrowClicked = isTitleBoxVisible.value,
-            isArrowEnabled = true,
-            hasFillMaxWidth = true
+                .padding(
+                    top = Dimen.paddingMedium16dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
         ) {
-            isTitleBoxVisible.value = isTitleBoxVisible.value.not()
+            Text(
+                modifier = Modifier
+                    .padding(
+                        horizontal = Dimen.paddingMedium16dp
+                    ),
+                text = stringResource(
+                    id = R.string.bookmark_title_description
+                ),
+                style = mbSubtitleTextAccentStyle()
+            )
+            OutlinedTextField(
+                modifier = Modifier
+                    .focusRequester(
+                        focusRequester = FocusRequester()
+                    ),
+                textStyle = mbSubtitleTextStyle(),
+                shape = mbCardRoundedCornerShape(),
+                value = searchTitleTextState.value,
+                placeholder = {
+                    Text(
+                        modifier = Modifier,
+                        style = mbSubtitleTextStyle(),
+                        text = stringResource(id = R.string.bookmark_title_label)
+                    )
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = mbYellowLemonLightMustardDarkColor(),
+                    unfocusedBorderColor = mbWhiteMustardDarkColor(),
+                ),
+                onValueChange = {
+                    searchTitleTextState.value = it
+                }
+            )
         }
     }
 }
@@ -685,7 +683,16 @@ fun SearchBookmarkView2Preview() {
                 searchResultUIState =
                     SearchResultUIState(
                         isLoading = false,
-                        isInEditMode = true
+                        isInEditMode = true,
+                        bookmark = Bookmark(
+                            title = "Dribble blal bll al balalbalalb",
+                            url = "www.dribble.com",
+                            siteName = "",
+                            iconUrl = "",
+                            appId = "",
+                            timestamp = Date(),
+                            isPinned = false,
+                        )
                     )
             )
         }
