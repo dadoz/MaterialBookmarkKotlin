@@ -30,7 +30,6 @@ import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCar
 import com.application.material.bookmarkswallet.app.ui.style.mbActionDeleteBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbActionSelectedBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonMinRoundedCornerShape
-import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbIconBoxButtonBackgroundColor
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleErrorTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle

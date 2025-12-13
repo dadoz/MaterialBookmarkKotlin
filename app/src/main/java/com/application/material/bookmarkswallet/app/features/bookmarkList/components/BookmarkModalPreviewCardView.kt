@@ -125,6 +125,7 @@ fun BookmarkModalPreviewCardView(
 fun BookmarkPreviewCard(
     modifier: Modifier,
     bookmark: Bookmark,
+    hasPadding: Boolean = true,
     onDeleteAction: ((Bookmark) -> Unit)? = null,
     onOpenAction: ((String) -> Unit)? = null,
     onPinningAction: ((Bookmark) -> Unit)? = null,
@@ -148,9 +149,15 @@ fun BookmarkPreviewCard(
 
     Column(
         modifier = modifier
-            .padding(
-                all = Dimen.paddingMedium16dp
-            )
+            .let {
+                when {
+                    hasPadding -> it.padding(
+                        all = Dimen.paddingMedium16dp
+                    )
+
+                    else -> it
+                }
+            },
     ) {
         AsyncImage(
             model = bookmark.iconUrl,
@@ -260,9 +267,15 @@ fun BookmarkPreviewCard(
             Row(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(
-                        top = Dimen.paddingLarge32dp
-                    ),
+                    .let {
+                        when {
+                            isActionMenuVisible -> it.padding(
+                                top = Dimen.paddingLarge32dp
+                            )
+
+                            else -> it
+                        }
+                    },
             ) {
                 Text(
                     modifier = Modifier
@@ -484,8 +497,8 @@ fun BookmarkPreviewCardPreview() {
                         appId = "1",
                         isPinned = false
                     ),
+                isActionMenuVisible = true,
                 onDeleteAction = {},
-                {},
             )
         }
     }

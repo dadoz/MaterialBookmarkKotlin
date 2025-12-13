@@ -135,7 +135,9 @@ fun SearchAndAddBookmarkView(
 
     Column(
         modifier = modifier
-            .padding(Dimen.sizeMedium16dp)
+            .padding(
+                all = Dimen.sizeMedium16dp
+            )
             .verticalScroll(
                 state = rememberScrollState(),
                 enabled = true
@@ -403,17 +405,17 @@ fun SearchAndAddBookmarkSuccessView(
     isActionMenuVisible: Boolean = true
 ) {
     Column(
-        modifier = modifier
-            .padding(
-                all = Dimen.sizeMedium16dp
-            ),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingSmall8dp)
     ) {
         MbBoxActionSecondaryButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    bottom = Dimen.paddingSmall8dp
+                    horizontal = Dimen.paddingLarge32dp
+                )
+                .padding(
+                    bottom = Dimen.paddingMedium16dp
                 ),
             iconRes = R.drawable.ic_star,
             text = stringResource(R.string.add_bookmark_with_success),
@@ -426,6 +428,7 @@ fun SearchAndAddBookmarkSuccessView(
         BookmarkPreviewCard(
             modifier = Modifier,
             bookmark = bookmark,
+            hasPadding = false,
             isActionMenuVisible = isActionMenuVisible,
             isOpenButtonVisible = false
         )
