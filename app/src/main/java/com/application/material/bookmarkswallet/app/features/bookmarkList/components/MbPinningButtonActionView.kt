@@ -17,7 +17,6 @@ import com.application.material.bookmarkswallet.app.features.bookmarkList.model.
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionButtonIconColor
-import com.application.material.bookmarkswallet.app.utils.ZERO
 import java.util.Date
 
 @Composable
@@ -51,7 +50,7 @@ fun MbPinningButtonActionView(
 
                 else -> {}
             }
-        },
+        }
     ) {
         Icon(
             modifier = Modifier

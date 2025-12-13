@@ -4,5 +4,5 @@ import androidx.annotation.Keep
 
 @Keep
 enum class BookmarkActionTypeEnum {
-    EDIT_ACTION, SHARE_ACTION, PIN_ACTION
+    EDIT_ACTION, SHARE_ACTION, PIN_ACTION, DELETE_ACTION
 }

@@ -14,7 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.mbActionBoxSelectedBackgroundColor
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCornerShape
+import com.application.material.bookmarkswallet.app.ui.style.mbErrorBookmarkCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbExtraLightGrayGrayBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightColor
 
@@ -23,13 +26,18 @@ fun MbActionBoxButtonView(
     modifier: Modifier,
     hasBackground: Boolean = true,
     isSelected: Boolean = false,
+    isDeleteAction: Boolean = false,
     color: Color = mbExtraLightGrayGrayBlueDarkColor(),
-    selectedColor: Color = mbYellowLemonLightColor(),
+    selectedColor: Color = mbActionBoxSelectedBackgroundColor(),
+    deletedColor: Color = mbErrorBookmarkCardBackgroundColors(),
     onClickAction: (() -> Unit)? = null,
     item: @Composable (BoxScope.() -> Unit),
 ) {
     val colorBySelected = when {
+        isDeleteAction -> deletedColor
+
         isSelected -> selectedColor
+
         else -> color
     }
 

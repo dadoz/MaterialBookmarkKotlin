@@ -70,16 +70,20 @@ import com.application.material.bookmarkswallet.app.features.hp.SearchBarHeaderV
 import com.application.material.bookmarkswallet.app.features.searchBookmark.EditBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.SearchAndAddBookmarkView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbAddBookmarkModalBottomSheetView
+import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbDeleteBookmarkModalBottomSheetView
 import com.application.material.bookmarkswallet.app.features.searchBookmark.model.SearchResultUIState
 import com.application.material.bookmarkswallet.app.features.searchBookmark.viewmodels.SearchBookmarkViewModel
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbFab
+import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbAppBarContainerColor
+import com.application.material.bookmarkswallet.app.ui.style.mbButtonRedVermillionColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleHExtraBigBoldYellowTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_GRID_SIZE
 import com.application.material.bookmarkswallet.app.utils.BOOKMARK_COLUMN_LIST_SIZE
 import com.application.material.bookmarkswallet.app.utils.EMPTY
@@ -102,9 +106,18 @@ fun BookmarkListComponentView(
     //local uri handler
     val localUriHandler = LocalUriHandler.current
     //bottom sheet state
-    val isSearchModalBottomSheetVisible = remember { mutableStateOf(value = false) }
-    val isPreviewModalBottomSheetVisible = remember { mutableStateOf(value = false) }
-    val isEditModalBottomSheetVisible = remember { mutableStateOf(value = false) }
+    val isSearchModalBottomSheetVisible = remember {
+        mutableStateOf(value = false)
+    }
+    val isPreviewModalBottomSheetVisible = remember {
+        mutableStateOf(value = false)
+    }
+    val isDeleteModalBottomSheetVisible = remember {
+        mutableStateOf(value = false)
+    }
+    val isEditModalBottomSheetVisible = remember {
+        mutableStateOf(value = false)
+    }
     //selected bookmark ui state
     val selectedBookmark = remember {
         mutableStateOf<Bookmark?>(
@@ -315,9 +328,7 @@ fun BookmarkListComponentView(
                         modifier = Modifier,
                         bookmark = it,
                         onDeleteCallback = {
-                            bookmarkViewModel?.deleteBookmark(
-                                bookmark = it
-                            )
+                            isDeleteModalBottomSheetVisible.value = true
                         },
                         onOpenAction = {
                             localUriHandler.openUri(it)
@@ -397,6 +408,53 @@ fun BookmarkListComponentView(
             },
             searchResultUIState = searchResultUIState.value
         )
+    }
+
+    //modal to show dlete new Bookmark
+    MbDeleteBookmarkModalBottomSheetView(
+        modifier = Modifier,
+        bottomSheetVisible = isDeleteModalBottomSheetVisible,
+        onDismissCallback = {
+            //todo make som clean
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    horizontal = Dimen.paddingLarge32dp
+                ),
+            verticalArrangement = Arrangement.spacedBy(space = Dimen.paddingMedium16dp)
+        ) {
+            Text(
+                modifier = Modifier,
+                text = "Delete Bookmark",
+                style = mbTitleMediumBoldYellowLightDarkTextStyle(),
+            )
+            Text(
+                modifier = Modifier,
+                text = "Hey are you sure to delete?",
+                style = mbSubtitleTextStyle(),
+            )
+            MbPrimaryButton(
+                modifier = Modifier
+                    .padding(
+                        top = Dimen.paddingMedium16dp
+                    ),
+                colors = mbButtonRedVermillionColor(),
+                text = stringResource(id = R.string.delete_button_label),
+                onClickAction = {
+                    selectedBookmark.value
+                        ?.let {
+                            bookmarkViewModel?.deleteBookmark(
+                                bookmark = it
+                            )
+                            //dismiss
+                            isDeleteModalBottomSheetVisible.value = false
+                            isPreviewModalBottomSheetVisible.value = false
+                        }
+                }
+            )
+        }
     }
 }
 
@@ -575,7 +633,6 @@ fun BookmarkListInternalComponentView(
         }
     }
 }
-
 
 @Composable
 @Preview

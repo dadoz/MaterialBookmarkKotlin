@@ -18,12 +18,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,19 +47,22 @@ import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.Bookmark
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.DELETE_ACTION
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.EDIT_ACTION
+import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.PIN_ACTION
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.BookmarkActionTypeEnum.SHARE_ACTION
 import com.application.material.bookmarkswallet.app.features.bookmarkList.model.getTimestampFormatted
 import com.application.material.bookmarkswallet.app.features.searchBookmark.components.MbBaseBottomSheetView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
+import com.application.material.bookmarkswallet.app.ui.components.MbBoxActionSecondaryButton
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundAlternativeColors
+import com.application.material.bookmarkswallet.app.ui.style.mbBasicCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightColor2
-import com.application.material.bookmarkswallet.app.ui.style.mbGrayLightExtraBlueDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbMustardDarkWhiteColor
 import com.application.material.bookmarkswallet.app.ui.style.mbPreviewCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbRedVermilionLightDarkColor
@@ -64,6 +72,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYe
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY_BOOKMARK_LABEL
+import com.application.material.bookmarkswallet.app.utils.TWO
 import com.application.material.bookmarkswallet.app.utils.shareContentIntentBuilder
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import kotlinx.coroutines.launch
@@ -129,6 +138,14 @@ fun BookmarkPreviewCard(
         res = R.drawable.ic_bookmark,
         color = mbYellowLemonLightMustardDarkColor()
     )
+
+    //ui state
+    val isSelectedState = remember {
+        mutableStateOf(
+            value = bookmark.isPinned
+        )
+    }
+
     Column(
         modifier = modifier
             .padding(
@@ -160,36 +177,85 @@ fun BookmarkPreviewCard(
             modifier = Modifier,
             colors = mbPreviewCardBackgroundColors(),
         ) {
-            //title and header
-            Text(
+            MbCardView(
                 modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(horizontal = Dimen.paddingMedium16dp)
                     .padding(
-                        top = Dimen.paddingMedium16dp,
-                        bottom = Dimen.paddingSmall8dp
+                        bottom = Dimen.paddingMedium16dp
                     ),
-                textAlign = TextAlign.Center,
-                style = mbTitleMediumBoldYellowLightDarkTextStyle(),
-                text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
-            )
-            Text(
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = Dimen.paddingExtraSmall4dp),
-                style = mbSubtitleTextStyle(),
-                text = bookmark.url
-            )
-            //pinning button
-            MbPinningButtonActionView(
-                modifier = Modifier
-                    .align(
-                        alignment = Alignment.End
+                colors = mbBasicCardBackgroundColors(),
+            ) {
+                //title and header
+                Text(
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .padding(horizontal = Dimen.paddingMedium16dp)
+                        .padding(
+                            top = Dimen.paddingMedium16dp,
+                            bottom = Dimen.paddingSmall8dp
+                        ),
+                    textAlign = TextAlign.Center,
+                    style = mbTitleMediumBoldYellowLightDarkTextStyle(),
+                    text = bookmark.title ?: EMPTY_BOOKMARK_LABEL
+                )
+                Text(
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .padding(bottom = Dimen.paddingExtraSmall4dp),
+                    style = mbSubtitleTextStyle(),
+                    text = bookmark.url
+                )
+            }
+
+            if (isActionMenuVisible) {
+                LazyVerticalGrid(
+                    modifier = Modifier,
+                    columns = GridCells.Fixed(TWO),
+                    verticalArrangement = Arrangement.spacedBy(
+                        Dimen.paddingMedium16dp
                     ),
-                bookmark = bookmark,
-                isSelected = bookmark.isPinned,
-                onPinningAction = onPinningAction
-            )
+                ) {
+                    // on below line we are displaying our
+                    // items upto the size of the list.
+                    items(items = actionPreviewBookmarkList) { actionItem ->
+                        MbBoxActionSecondaryButton(
+                            modifier = Modifier,
+                            text = stringResource(id = actionItem.third),
+                            isSelected = when {
+                                actionItem.first == PIN_ACTION -> isSelectedState.value
+
+                                else -> false
+                            },
+                            isDeleteAction = actionItem.first == DELETE_ACTION,
+                            iconRes = actionItem.second,
+                            onClickAction = {
+                                when (actionItem.first) {
+                                    SHARE_ACTION -> {
+                                        context.startActivity(
+                                            shareContentIntentBuilder(
+                                                url = bookmark.url
+                                            )
+                                        )
+                                    }
+
+                                    EDIT_ACTION -> {
+                                        onEditAction?.invoke(bookmark)
+                                    }
+
+                                    PIN_ACTION -> {
+                                        isSelectedState.value = isSelectedState.value.not()
+                                        onPinningAction?.invoke(bookmark)
+                                    }
+
+                                    DELETE_ACTION -> {
+                                        onDeleteAction?.invoke(bookmark)
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+
             //timestamp
             Row(
                 modifier = modifier
@@ -210,15 +276,6 @@ fun BookmarkPreviewCard(
             }
         }
 
-        MbActionMenuBookmarkPreviewView(
-            modifier = Modifier
-                .padding(top = Dimen.paddingMedium16dp),
-            isActionMenuVisible = isActionMenuVisible,
-            bookmark = bookmark,
-            onDeleteAction = onDeleteAction,
-            onEditAction = onEditAction
-        )
-
         //open action
         if (isOpenButtonVisible) {
             MbPrimaryButton(
@@ -238,7 +295,6 @@ fun BookmarkPreviewCard(
 fun MbActionMenuBookmarkPreviewView(
     modifier: Modifier,
     bookmark: Bookmark,
-    backgroundColor: Color = mbGrayLightExtraBlueDarkColor(),
     actionItemBackgroundColor: Color = mbActionBookmarkCardBackgroundAlternativeColors(),
     isActionMenuVisible: Boolean = false,
     onEditAction: ((Bookmark) -> Unit)? = null,

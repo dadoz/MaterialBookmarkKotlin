@@ -3,7 +3,9 @@ package com.application.material.bookmarkswallet.app.ui.components
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,9 +25,14 @@ import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.features.bookmarkList.components.MbActionBoxButtonView
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
+import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbActionBookmarkCardBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbActionDeleteBackgroundColors
+import com.application.material.bookmarkswallet.app.ui.style.mbActionSelectedBookmarkCardBackgroundColors
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonMinRoundedCornerShape
+import com.application.material.bookmarkswallet.app.ui.style.mbErrorWhiteRedLightDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbIconBoxButtonBackgroundColor
+import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleErrorTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextAccentStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbWhiteYellowLemonDarkLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
@@ -41,15 +48,20 @@ fun MbBoxActionSecondaryButton(
     iconRes: Int,
     text: String? = null,
     isArrowEnabled: Boolean = false,
+    isSelected: Boolean = false,
+    isDeleteAction: Boolean = false,
     isArrowClicked: Boolean = false,
     hasButtonBackground: Boolean = true,
     hasVerticalPadding: Boolean = false,
     hasFillMaxWidth: Boolean = false,
     backgroundColor: Color = mbActionBookmarkCardBackgroundColors(),
+    selectedBackgroundColor: Color = mbActionSelectedBookmarkCardBackgroundColors(),
     textStyle: TextStyle = mbSubtitleTextAccentStyle(),
+    deletedTextStyle: TextStyle = mbSubtitleErrorTextAccentStyle(),
     iconTintColor: Color = mbWhiteYellowLemonDarkLightColor(),
+    deletedIconTintColor: Color = MbColor.White,
     iconBoxColor: Color = mbIconBoxButtonBackgroundColor(),
-    onClickAction: (() -> Unit)? = null
+    onClickAction: (() -> Unit)? = null,
 ) {
     Box(
         modifier = modifier
@@ -57,7 +69,13 @@ fun MbBoxActionSecondaryButton(
                 shape = mbButtonMinRoundedCornerShape()
             )
             .background(
-                color = backgroundColor
+                color = when {
+                    isDeleteAction -> mbActionDeleteBackgroundColors()
+
+                    isSelected -> selectedBackgroundColor
+
+                    else -> backgroundColor
+                }
             )
             .clickable(
                 enabled = onClickAction != null,
@@ -85,6 +103,8 @@ fun MbBoxActionSecondaryButton(
         ) {
             MbActionBoxButtonView(
                 modifier = Modifier,
+                isSelected = isSelected,
+                isDeleteAction = isDeleteAction,
                 hasBackground = hasButtonBackground,
                 color = iconBoxColor,
             ) {
@@ -93,7 +113,11 @@ fun MbBoxActionSecondaryButton(
                         .size(size = Dimen.size32dp),
                     painter = painterResource(id = iconRes),
                     contentDescription = EMPTY,
-                    tint = iconTintColor
+                    tint = when {
+                        isDeleteAction -> deletedIconTintColor
+
+                        else -> iconTintColor
+                    }
                 )
             }
 
@@ -122,10 +146,14 @@ fun MbBoxActionSecondaryButton(
                             .padding(
                                 horizontal = Dimen.paddingMedium16dp
                             ),
+                        text = text,
+                        style = when {
+                            isDeleteAction -> deletedTextStyle
+
+                            else -> textStyle
+                        },
                         maxLines = TWO,
                         overflow = TextOverflow.Ellipsis,
-                        style = textStyle,
-                        text = text
                     )
                 }
 
@@ -147,7 +175,11 @@ fun MbBoxActionSecondaryButton(
                                         else -> NINETY_F
                                     }
                             ),
-                        tint = iconTintColor
+                        tint = when {
+                            isDeleteAction -> deletedIconTintColor
+
+                            else -> iconTintColor
+                        }
                     )
                 }
         }
@@ -174,13 +206,34 @@ fun SearchBookmarkView2Preview() {
 @Composable
 fun SearchBookmarkView3Preview() {
     MaterialBookmarkMaterialTheme {
-        Box(modifier = Modifier.background(mbYellowLemonLightMustardDarkColor())) {
+        Column(
+            modifier = Modifier.background(mbYellowLemonLightMustardDarkColor()),
+            verticalArrangement = Arrangement.spacedBy(Dimen.paddingMedium16dp)
+        ) {
             MbBoxActionSecondaryButton(
                 iconRes = R.drawable.ic_pin_new_dark,
                 text = "Add  \nmanually",
                 isArrowEnabled = true,
+                isSelected = false,
                 isArrowClicked = true,
                 hasFillMaxWidth = true,
+                onClickAction = {},
+            )
+            MbBoxActionSecondaryButton(
+                iconRes = R.drawable.ic_pin_new_dark,
+                text = "Add  \nmanually",
+                isArrowEnabled = true,
+                isSelected = true,
+                isArrowClicked = true,
+                onClickAction = {},
+            )
+            MbBoxActionSecondaryButton(
+                iconRes = R.drawable.ic_pin_new_dark,
+                text = "Delete",
+                isDeleteAction = true,
+                isArrowEnabled = true,
+                isSelected = false,
+                isArrowClicked = true,
                 onClickAction = {},
             )
         }

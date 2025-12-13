@@ -223,7 +223,7 @@ fun SearchAndAddBookmarkView(
                             searchTitleTextState = searchTitleTextState,
                             isTitleBoxVisible = isTitleBoxVisible
                         )
-
+                        //cta for all action
                         Row(
                             modifier = Modifier
                                 .padding(
@@ -233,19 +233,18 @@ fun SearchAndAddBookmarkView(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             MbBoxActionSecondaryButton(
-                                modifier = Modifier,
-                                text = stringResource(R.string.add_title_manually),
                                 iconRes = R.drawable.ic_text_dark,
+                                text = stringResource(R.string.add_title_manually),
+                                isArrowEnabled = true,
                                 isArrowClicked = isTitleBoxVisible.value,
-                                isArrowEnabled = true
-                            ) {
-                                isTitleBoxVisible.value = isTitleBoxVisible.value.not()
-                            }
+                                onClickAction = {
+                                    isTitleBoxVisible.value = isTitleBoxVisible.value.not()
+                                },
+                            )
                             //clipboard
                             MbBoxActionSecondaryButton(
-                                modifier = Modifier,
                                 iconRes = R.drawable.ic_pin_new_dark,
-                                text = stringResource(R.string.paste_clipboard),
+                                text = stringResource(id = R.string.paste_clipboard),
                                 onClickAction = {
                                     Toast.makeText(
                                         context, R.string.past_clip_message, Toast.LENGTH_LONG
@@ -259,9 +258,39 @@ fun SearchAndAddBookmarkView(
                                         ?.let {
                                             TextFieldValue(it)
                                         } ?: TextFieldValue(EMPTY)
-                                }
+                                },
                             )
                         }
+                        //cta for all action
+//                        Row(
+//                            modifier = Modifier
+//                                .padding(
+//                                    top = Dimen.paddingMedium16dp
+//                                )
+//                                .fillMaxWidth(),
+//                            horizontalArrangement = Arrangement.SpaceBetween
+//                        ) {
+//                            //clipboard
+//                            MbBoxActionSecondaryButton(
+//                                modifier = Modifier,
+//                                iconRes = R.drawable.ic_leaf_dark,
+//                                text = stringResource(R.string.ecosia_label_button),
+//                                onClickAction = {
+//                                    Toast.makeText(
+//                                        context, R.string.past_clip_message, Toast.LENGTH_LONG
+//                                    ).show()
+//
+//                                    //take first item from clip and set to value on url todo make utils
+//                                    searchUrlTextState.value = clipboard.primaryClip
+//                                        ?.getItemAt(ZERO)
+//                                        ?.text
+//                                        ?.toString()
+//                                        ?.let {
+//                                            TextFieldValue(it)
+//                                        } ?: TextFieldValue(EMPTY)
+//                                }
+//                            )
+//                        }
                     }
                 }
 

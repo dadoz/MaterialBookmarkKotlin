@@ -71,6 +71,12 @@ fun mbYellowLemonLightColor() = when (isSystemInDarkTheme()) {
 }
 
 @Composable
+fun mbActionBoxSelectedBackgroundColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.DarkLemonYellow
+    else -> MbColor.ExtraLightMustardYellow
+}
+
+@Composable
 fun mbYellowLemonLightMustardDarkColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.DarkMustardYellow//DarkLemonYellow
@@ -127,6 +133,13 @@ fun mbSubtitleTextAccentStyle() = mbSubtitleTextStyle()
             true -> MbColor.Yellow
             else -> MbColor.DarkMustardYellow
         },
+        fontFamily = MbYantramanavRegularFontFamily
+    )
+
+@Composable
+fun mbSubtitleErrorTextAccentStyle() = mbSubtitleTextStyle()
+    .copy(
+        color = mbErrorWhiteRedLightDarkColor(),
         fontFamily = MbYantramanavRegularFontFamily
     )
 
@@ -278,6 +291,12 @@ fun mbButtonRoundedCornerShape() =
 fun mbButtonYellowDarkLightColor() = mbButtonColorStyle(
     lightColor = MbColor.Yellow,
     darkColor = MbColor.DarkMustardYellow,
+)
+
+@Composable
+fun mbButtonRedVermillionColor() = mbButtonColorStyle(
+    lightColor = MbColor.RedVermilion,
+    darkColor = MbColor.RedVermilion,
 )
 
 @Composable
@@ -484,6 +503,14 @@ fun mbActionBookmarkCardBackgroundColors(): Color {
 }
 
 @Composable
+fun mbActionSelectedBookmarkCardBackgroundColors(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.GrayBlueAlternativeDark
+        else -> MbColor.Yellow
+    }
+}
+
+@Composable
 fun mbActionBookmarkCardBackgroundAlternativeColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.GrayBlueDarkNight
@@ -492,9 +519,18 @@ fun mbActionBookmarkCardBackgroundAlternativeColors(): Color {
 }
 
 @Composable
-fun mbErrorBookmarkCardBackgroundColors(): Color {
+fun mbActionDeleteBackgroundColors(): Color {
     return when (isSystemInDarkTheme()) {
         true -> MbColor.RedVermilion
+        else -> MbColor.RedVermilionLight
+    }
+
+}
+
+@Composable
+fun mbErrorBookmarkCardBackgroundColors(): Color {
+    return when (isSystemInDarkTheme()) {
+        true -> MbColor.DarkRedVermilion
         else -> MbColor.RedVermilion
     }
 }
