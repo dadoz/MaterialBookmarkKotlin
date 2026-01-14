@@ -9,6 +9,7 @@ const val NO_TIMESTAMP = "No timestamp"
 const val ZERO = 0
 const val ZEROF = 0.0f
 const val ONE = 1
+const val ONEF = 1.0f
 const val EMPTY_BOOKMARK_LABEL: String = "Bookmark"
 const val N_COUNT_GRID_BOOKMARKS = 2
 const val BOOKMARK_COLUMN_LIST_SIZE = 1

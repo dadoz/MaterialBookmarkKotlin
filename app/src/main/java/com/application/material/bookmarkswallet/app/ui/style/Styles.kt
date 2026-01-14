@@ -10,6 +10,7 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SelectableChipColors
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -69,6 +70,11 @@ fun mbYellowLemonLightColor() = when (isSystemInDarkTheme()) {
     true -> MbColor.Yellow
     else -> MbColor.Yellow
 }
+@Composable
+fun mbYellowLemonAlternateColor() = when (isSystemInDarkTheme()) {
+    true -> MbColor.BlueBlackExtraDark
+    else -> MbColor.Yellow
+}
 
 @Composable
 fun mbActionBoxSelectedBackgroundColor() = when (isSystemInDarkTheme()) {
@@ -112,9 +118,13 @@ fun mbTitleBoldTextStyle() = TextStyle(
 )
 
 @Composable
-fun mbTitleMediumBoldYellowLightDarkTextStyle() =
+fun mbTitleMediumBoldYellowLightDarkTextStyle(isHighlighted: Boolean = false) =
     mbTitleMediumBoldTextStyle(
-        color = mbYellowLemonLightMustardDarkColor()
+        color = when {
+            isHighlighted -> mbGrayLightExtraBlueDarkColor()
+
+            else -> mbYellowLemonLightMustardDarkColor()
+        }
     )
 
 @Composable
@@ -290,7 +300,13 @@ fun mbButtonRoundedCornerShape() =
 @Composable
 fun mbButtonYellowDarkLightColor() = mbButtonColorStyle(
     lightColor = MbColor.Yellow,
-    darkColor = MbColor.DarkMustardYellow,
+    darkColor = MbColor.Yellow,
+)
+
+@Composable
+fun mbAlternateYellowDarkLightColor() = mbButtonColorStyle(
+    lightColor = MbColor.White,
+    darkColor = MbColor.Yellow,
 )
 
 @Composable
@@ -383,6 +399,22 @@ fun mbButtonTextStyle(color: Color = mbWhiteDarkColor()) = TextStyle(
 )
 
 @Composable
+fun mbButtonCookieTextStyle(color: Color = mbWhiteDarkColor()) = TextStyle(
+    color = color,
+    fontSize = 32.sp,
+    fontFamily = MbCookieRgFontFamily,
+    fontWeight = FontWeight.Bold
+)
+
+@Composable
+fun mbSwitchColors() = SwitchDefaults.colors(
+    checkedThumbColor = mbWhiteGrayBlueDarkColor(),
+    uncheckedThumbColor = mbWhiteGrayBlueDarkColor(),
+    checkedTrackColor = mbYellowLemonLightColor(),
+    uncheckedTrackColor = mbMustardGrayBlueLightDarkColor(),
+)
+
+@Composable
 fun mbButtonTextDarkStyle(
     color: Color = MbColor.DarkGray,
 ) = TextStyle(
@@ -396,6 +428,12 @@ fun mbButtonTextDarkStyle(
 fun mbPreviewCardBackgroundColors(): CardColors =
     CardDefaults.cardColors(
         containerColor = mbGrayLightExtraBlueDarkColor()
+    )
+
+@Composable
+fun mbSettingsProFeatCardBackgroundColor(): CardColors =
+    CardDefaults.cardColors(
+        containerColor = mbYellowLemonLightMustardDarkColor()
     )
 
 @Composable
@@ -591,6 +629,9 @@ val MbYantramanavLightFontFamily = FontFamily(
 )
 val MbYantramanavThinFontFamily = FontFamily(
     Font(R.font.comfortaa_light)//yantramanav_thin)
+)
+val MbCookieRgFontFamily = FontFamily(
+    Font(R.font.cookie)
 )
 //---------------------FONT FAMILY
 

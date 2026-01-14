@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.application.material.bookmarkswallet.app.R
 import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialTheme
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
@@ -27,6 +29,7 @@ import com.application.material.bookmarkswallet.app.ui.style.mbButtonRoundedCorn
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbButtonYellowDarkLightColor
 import com.application.material.bookmarkswallet.app.ui.style.mbEnableAlpha
+import com.application.material.bookmarkswallet.app.utils.ONE
 
 @Composable
 fun MbPrimaryButton(
@@ -34,6 +37,7 @@ fun MbPrimaryButton(
     textStyle: TextStyle = mbButtonTextStyle(),
     colors: ButtonColors = mbButtonYellowDarkLightColor(),
     shape: Shape = mbButtonRoundedCornerShape(),
+    horizontalPadding: Dp? = null,
     hasMaxWidthEnable: Boolean = true,
     modifier: Modifier,
     isEnabled: Boolean = true,
@@ -71,9 +75,13 @@ fun MbPrimaryButton(
             }
     ) {
         Text(
+            modifier = Modifier
+                .padding(
+                    horizontal = horizontalPadding ?: Dimen.zeroDp
+                ),
             text = text,
             style = textStyle,
-            maxLines = 1
+            maxLines = ONE
         )
     }
 }

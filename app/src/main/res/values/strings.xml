@@ -77,9 +77,45 @@
     <!--    bookmark card-->
     <string name="at_label">at</string>
 
+    <!--    bookmark settings-->
+    <string name="buy_me_a_coffee_label">Buy me a Coffee</string>
+    <string name="buy_me_a_coffee_descr">Just buy me a coffee.\n\nFor developer support and continuing having new functionality in app.</string>
+    <string name="in_app_pay_feat_label">AI and Search Feat</string>
+    <string name="skin_color_label">Skin Color</string>
+    <string name="sync_on_google_label">Sync on Google</string>
+    <string name="contact_label">Contacts</string>
+    <string name="contact_descr">check to send us an email</string>
+    <string name="rate_label">Rate on Playstore</string>
+    <string name="rate_descr">rate us and leave a feedback</string>
+    <string name="app_version_label">App Version</string>
+    <string name="app_version_desc">version 2.2.0\nbuild number 123456789</string>
+    <string name="user_info_label">User Info</string>
+    <string name="connect_google_user_label">Connect Google User</string>
+
+    <!--    settings children pay inapp-->
+    <string name="ecosia_preview_title">Ecosia Preview</string>
+    <string name="ecosia_enable_preview">Enable Ecosia link previews</string>
+    <string name="ecosia_preview_description">See a summary of search results while planting trees.</string>
+
+    <string name="search_fine_tune_title">Refine search with AI</string>
+    <string name="search_ai_suggested_title">AI Suggested: %1$s</string>
+    <string name="search_ai_improve_query">Improve my search title</string>
+
+    <!--    settings children pay inapp-->
+    <string name="pro_label">Pro</string>
+    <string name="sync_google_enabled">sync google enabled</string>
+    <string name="sync_bookmark">sync bookmarks</string>
+
+    <!--    settings children pay inapp-->
+    <string name="search_with_ai_label">search with AI support</string>
+    <string name="enable_preview_with_ecosia">enable preview with Ecosia</string>
+    <string name="fine_search_with_ai">fine search title with AI</string>
+    <string name="download_bookmark">download bookmarks</string>
+    <string name="inapp_purchase_config">in app purchase configurations</string>
+
     <!--    bookmark list item-->
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
     <string name="add_title_manually">add\ntitle</string>
-    <string name="userid_login">uid user: %s</string>
+    <string name="userid_login">uid user</string>
 </resources>

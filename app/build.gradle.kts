@@ -182,8 +182,8 @@ dependencies {
 
     //hilt
     implementation(libs.bundles.hilt)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
     //room
     implementation(libs.room.core)
@@ -212,6 +212,7 @@ dependencies {
     implementation(libs.lottie)
 
     //firebase auth
+    implementation(libs.firebase.ui.auth)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
 

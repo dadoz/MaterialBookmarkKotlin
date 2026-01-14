@@ -1,4 +1,4 @@
-package com.application.material.bookmarkswallet.app.features.settings
+package com.application.material.bookmarkswallet.app.features.settings.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -21,11 +21,11 @@ class SettingsViewModel @Inject constructor(application: Application) : AndroidV
                     photoUrl = it.photoUrl.toString()
                 )
             } ?: User(
-                name = "GUEST",
-                uid = "-",
-                email = null,
-                photoUrl = null
-            )
+            name = "GUEST",
+            uid = "-",
+            email = null,
+            photoUrl = null
+        )
     }
 
 //    fun signIn(email: String, password: String) {
