@@ -138,7 +138,6 @@ fun SettingItemCardView(
     setting: SettingsItem
 ) {
     val localUriHandler = LocalUriHandler.current
-    val url = "https://www.buymeacoffee.com/tunnusandra"
 
     val isChecked = remember {
         mutableStateOf(true)
@@ -342,15 +341,14 @@ fun SettingItemCardView(
                     text = stringResource(id = it),
                     onClickAction = {
                         when {
-                            setting.type == SettingsItemType.SETTING_BUY_ME_A_COFFEE -> localUriHandler.openUri(
-                                url
+                            setting.url != null -> localUriHandler.openUri(
+                                setting.url
                             )
 
                             else -> {
+                                setting.ctaAction?.invoke()
                             }
                         }
-                        //todo
-                        setting.ctaAction?.invoke()
                     }
                 )
             }

@@ -35,8 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -91,7 +89,6 @@ import com.application.material.bookmarkswallet.app.utils.ZERO
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Date
-
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -173,25 +170,31 @@ fun BookmarkListComponentView(
     )
 
     //bookmark list empty check
-    val isBookmarkListEmpty by rememberSaveable(
-        saver = Saver(
-            save = {
-                it.value
-            },
-            restore = {
-                mutableStateOf(
-                    value = it
-                )
-            }
-        )
-    ) {
+    val isBookmarkListEmpty by remember {
         derivedStateOf {
-            bookmarkViewModel?.bookmarkListUIState?.value
-                ?.itemList?.size
-                ?.let { it > ZERO }
-                ?: false
+            bookmarkListState?.value?.itemList?.isEmpty() ?: true
         }
     }
+
+//    by rememberSaveable(
+//            saver = Saver(
+//                save = {
+//                    it.value
+//                },
+//                restore = {
+//                    mutableStateOf(
+//                        value = it
+//                    )
+//                }
+//            )
+//            ) {
+//        derivedStateOf {
+//            bookmarkViewModel?.bookmarkListUIState?.value
+//                ?.itemList?.size
+//                ?.let { it > ZERO }
+//                ?: false
+//        }
+//    }
 
     //search state
     val textFieldState = rememberTextFieldState()
@@ -288,7 +291,6 @@ fun BookmarkListComponentView(
                 modifier = Modifier,
                 filterListTypeState = filterListTypeState
             )
-
 
             //filter configuration in HP
             MbFilterBookmarkHpView(

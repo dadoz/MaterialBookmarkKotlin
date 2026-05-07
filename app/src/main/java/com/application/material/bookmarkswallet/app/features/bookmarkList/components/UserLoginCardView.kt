@@ -1,10 +1,6 @@
 package com.application.material.bookmarkswallet.app.features.bookmarkList.components
 
-import android.app.Activity.RESULT_OK
 import android.content.res.Configuration
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.LocalActivity
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,7 +16,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,32 +35,31 @@ import com.application.material.bookmarkswallet.app.ui.MaterialBookmarkMaterialT
 import com.application.material.bookmarkswallet.app.ui.components.MbCardView
 import com.application.material.bookmarkswallet.app.ui.components.MbPrimaryButton
 import com.application.material.bookmarkswallet.app.ui.style.Dimen
-import com.application.material.bookmarkswallet.app.ui.style.MbColor
 import com.application.material.bookmarkswallet.app.ui.style.mbCardRoundedCornerShape
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextSmallStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbSubtitleTextStyle
 import com.application.material.bookmarkswallet.app.ui.style.mbTitleMediumBoldYellowLightDarkTextStyle
+import com.application.material.bookmarkswallet.app.ui.style.mbWhiteDarkColor
 import com.application.material.bookmarkswallet.app.ui.style.mbYellowLemonLightMustardDarkColor
 import com.application.material.bookmarkswallet.app.utils.EMPTY
 import com.application.material.bookmarkswallet.app.utils.GUEST
 import com.application.material.bookmarkswallet.app.utils.NINETY_F
+import com.application.material.bookmarkswallet.app.utils.NO_TIMESTAMP
 import com.application.material.bookmarkswallet.app.utils.ONE
 import com.application.material.bookmarkswallet.app.utils.ONEF
 import com.application.material.bookmarkswallet.app.utils.TWOHUNDRED_SEVENTY_F
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun UserLoginCardView(
     modifier: Modifier = Modifier,
-    user: User,
+    user: User? = null,
+    isCollapsed: Boolean = true,
     onOpenAction: ((User) -> Unit)? = null,
 ) {
-    val activity = LocalActivity.current
-    val providers = arrayListOf(
-        AuthUI.IdpConfig.GoogleBuilder().build()
-    )
+//    val activity = LocalActivity.current
+//    val providers = arrayListOf(
+//        AuthUI.IdpConfig.GoogleBuilder().build()
+//    )
 //    // See: https://developer.android.com/training/basics/intents/result
 //    val signInLauncher = (activity as ComponentActivity).registerForActivityResult(
 //        FirebaseAuthUIActivityResultContract(),
@@ -85,7 +79,7 @@ fun UserLoginCardView(
 
     val isCollapsed = remember {
         mutableStateOf(
-            value = true
+            value = isCollapsed
         )
     }
 
@@ -94,97 +88,80 @@ fun UserLoginCardView(
         res = R.drawable.ic_user,
         colorRes = R.color.colorAccent
     )
-    Column(
-        modifier = Modifier
+
+    MbCardView(
+        modifier = modifier
+            .wrapContentHeight()
+            .wrapContentWidth()
     ) {
         Row(
             modifier = Modifier
-                .padding(
-                    all = Dimen.paddingMedium16dp
-                )
-                .wrapContentWidth()
-                .clickable {
-                    onOpenAction?.invoke(user)
-                },
-            horizontalArrangement = Arrangement.Center
-        ) {
-            //image icon
-            AsyncImage(
-                model = user.photoUrl,
-                error = fallbackIcon,
-                placeholder = fallbackIcon,
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(
-                    color = mbYellowLemonLightMustardDarkColor()
-                ),
-                contentDescription = null,
-                modifier = Modifier
-                    .align(
-                        alignment = Alignment.CenterVertically
-                    )
-                    .size(size = 38.dp)
-                    .clip(
-                        shape = mbCardRoundedCornerShape()
-                    )
-            )
-
-            //Name
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(
-                        weight = ONEF
-                    )
-                    .align(
-                        alignment = Alignment.CenterVertically
-                    )
-                    .padding(
-                        start = Dimen.paddingSmall8dp
-                    ),
-                style = mbTitleMediumBoldYellowLightDarkTextStyle(),
-                maxLines = 2,
-                text = user.name
-                    .takeIf {
-                        it.isNotEmpty()
-                    }
-                    ?: GUEST
-            )
-
-            //edit
-            Icon(
-                modifier = Modifier,
-                painter = painterResource(
-                    id = R.drawable.ic_edit_dark
-                ),
-                contentDescription = "item",
-                tint = mbYellowLemonLightMustardDarkColor()
-            )
-        }
-        MbCardView(
-            modifier = modifier
-                .wrapContentHeight()
-                .wrapContentWidth()
+                .fillMaxWidth()
         ) {
             Row(
                 modifier = Modifier
                     .padding(
                         all = Dimen.paddingMedium16dp
                     )
-                    .fillMaxWidth()
+                    .wrapContentWidth()
+                    .clickable {
+                        user
+                            ?.let {
+                                onOpenAction?.invoke(user)
+                            }
+                    },
+                horizontalArrangement = Arrangement.Center
             ) {
-                //title
-                Text(
+                //image icon
+                AsyncImage(
+                    model = user?.photoUrl,
+                    error = fallbackIcon,
+                    placeholder = fallbackIcon,
+                    contentScale = ContentScale.Fit,
+                    colorFilter = ColorFilter.tint(
+                        color = mbYellowLemonLightMustardDarkColor()
+                    ),
+                    contentDescription = null,
                     modifier = Modifier
                         .align(
                             alignment = Alignment.CenterVertically
                         )
+                        .size(size = 38.dp)
+                        .clip(
+                            shape = mbCardRoundedCornerShape()
+                        )
+                )
+
+                //Name
+                Text(
+                    modifier = Modifier
                         .fillMaxWidth()
                         .weight(
                             weight = ONEF
+                        )
+                        .align(
+                            alignment = Alignment.CenterVertically
+                        )
+                        .padding(
+                            start = Dimen.paddingSmall8dp
                         ),
                     style = mbTitleMediumBoldYellowLightDarkTextStyle(),
-                    maxLines = ONE,
-                    text = stringResource(id = R.string.user_info_label)
+                    maxLines = 2,
+                    text = user?.name
+                        ?.takeIf {
+                            it.isNotEmpty()
+                        }
+                        ?: GUEST
+                )
+
+                //edit
+                Icon(
+                    modifier = Modifier,
+                    painter = painterResource(
+                        id = R.drawable.ic_edit_dark
+                    ),
+                    contentDescription = "item",
+                    tint = mbYellowLemonLightMustardDarkColor()
                 )
                 //icon collapse
                 Icon(
@@ -212,59 +189,59 @@ fun UserLoginCardView(
                     tint = mbYellowLemonLightMustardDarkColor()
                 )
             }
+        }
 
-            AnimatedVisibility(
-                modifier = Modifier,
-                visible = isCollapsed.value.not()
+        AnimatedVisibility(
+            modifier = Modifier,
+            visible = isCollapsed.value.not()
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(
+                        top = Dimen.paddingMedium16dp
+                    )
+                    .padding(
+                        horizontal = Dimen.paddingMedium16dp
+                    )
             ) {
-                Column(
+                //userId
+                Text(
                     modifier = Modifier
                         .padding(
-                            top = Dimen.paddingMedium16dp
+                            top = Dimen.paddingSmall8dp
+                        ),
+                    style = mbSubtitleTextStyle(),
+                    maxLines = ONE,
+                    text = stringResource(id = R.string.userid_login)
+                )
+                //userId
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            top = Dimen.paddingSmall8dp
+                        ),
+                    style = mbSubtitleTextSmallStyle(),
+                    maxLines = ONE,
+                    text = user?.uid ?: "NO_USER_ID"
+                )
+                MbPrimaryButton(
+                    modifier = Modifier
+                        .align(
+                            alignment = Alignment.CenterHorizontally
                         )
                         .padding(
-                            horizontal = Dimen.paddingMedium16dp
-                        )
-                ) {
-                    //userId
-                    Text(
-                        modifier = Modifier
-                            .padding(
-                                top = Dimen.paddingSmall8dp
-                            ),
-                        style = mbSubtitleTextStyle(),
-                        maxLines = ONE,
-                        text = stringResource(id = R.string.userid_login)
-                    )
-                    //userId
-                    Text(
-                        modifier = Modifier
-                            .padding(
-                                top = Dimen.paddingSmall8dp
-                            ),
-                        style = mbSubtitleTextSmallStyle(),
-                        maxLines = ONE,
-                        text = user.uid
-                    )
-                    MbPrimaryButton(
-                        modifier = Modifier
-                            .align(
-                                alignment = Alignment.CenterHorizontally
-                            )
-                            .padding(
-                                top = Dimen.paddingMedium16dp
-                            ),
-                        text = stringResource(id = R.string.connect_google_user_label),
-                        onClickAction = {
-                            // Create and launch sign-in intent
-                            val signInIntent = AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build()
+                            top = Dimen.paddingMedium16dp
+                        ),
+                    text = stringResource(id = R.string.connect_google_user_label),
+                    onClickAction = {
+                        // Create and launch sign-in intent
+//                            val signInIntent = AuthUI.getInstance()
+//                                .createSignInIntentBuilder()
+//                                .setAvailableProviders(providers)
+//                                .build()
 //                            signInLauncher.launch(signInIntent)
-                        }
-                    )
-                }
+                    }
+                )
             }
         }
     }
@@ -275,14 +252,29 @@ fun UserLoginCardView(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun UserLoginCardViewPreview() {
     MaterialBookmarkMaterialTheme {
-        Box(modifier = Modifier.background(color = MbColor.White)) {
+        Box(modifier = Modifier.background(color = mbWhiteDarkColor())) {
             UserLoginCardView(
+                isCollapsed = false,
                 user = User(
                     name = "Davide",
                     photoUrl = "https://p.kindpng.com/picc/s/727-7271359_philip-j-fry-avatar-hd-png-download.png",
                     uid = "3xfcd11120334cdeffacl123eeeddd11222244",
                     email = "blallal@gmail.com"
                 ),
+                onOpenAction = {}
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun UserLoginCardViewPreview2() {
+    MaterialBookmarkMaterialTheme {
+        Box(modifier = Modifier.background(color = mbWhiteDarkColor())) {
+            UserLoginCardView(
+                isCollapsed = false,
                 onOpenAction = {}
             )
         }

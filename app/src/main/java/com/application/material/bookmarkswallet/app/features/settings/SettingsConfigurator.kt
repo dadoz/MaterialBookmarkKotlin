@@ -57,6 +57,7 @@ data class SettingsItem(
     val childrenItem: List<ChildrenItem>? = null,
     val descriptionRes: Int? = null,
     val isProFeat: Boolean = false,
+    val url: String? = null,
     val ctaLabel: Int? = null,
     val ctaAction: (() -> Unit)? = null
 )
@@ -70,6 +71,7 @@ val settingsComponentItems: List<SettingsItem> = listOf(
         nameRes = R.string.buy_me_a_coffee_label,
         descriptionRes = R.string.buy_me_a_coffee_descr,
         iconRes = R.drawable.ic_buymeacoffee_light,
+        url= "https://www.buymeacoffee.com/tunnusandra",
         ctaLabel = R.string.buy_me_a_coffee_label,
         ctaAction = {
             Timber.e("buy me a coffeee")

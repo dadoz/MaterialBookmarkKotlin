@@ -47,7 +47,7 @@
     <string name="update_bookmark_label">Update</string>
     <string name="search_bookmark">New Search</string>
     <string name="just_type_a_bookmark">just type a bookmark</string>
-    <string name="paste_clipboard">paste\nclip</string>
+    <string name="paste_clipboard">clip</string>
     <string name="description">Description</string>
     <string name="value">value</string>
     <string name="title_insert">Title insert…</string>
@@ -59,10 +59,10 @@
     <string name="bookmark_list_type">list</string>
     <string name="bookmark_grid_type">grid</string>
     <string name="bookmark_group_type">group</string>
-    <string name="edit_bookmark_label">edit your bookmark</string>
-    <string name="pin_bookmark_label">pin as preferred</string>
-    <string name="share_bookmark_label">share your bookmark</string>
-    <string name="delete_bookmark_label">delete from list</string>
+    <string name="edit_bookmark_label">edit</string>
+    <string name="pin_bookmark_label">pin</string>
+    <string name="share_bookmark_label">share</string>
+    <string name="delete_bookmark_label">delete</string>
     <string name="delete_button_label">Delete</string>
 
     <!--    hp filters-->
@@ -116,6 +116,6 @@
     <!--    bookmark list item-->
     <string name="menu_tab_bookmark_list">Bookmarks</string>
     <string name="menu_tab_settings">Profile Settings</string>
-    <string name="add_title_manually">add\ntitle</string>
+    <string name="add_title_manually">title</string>
     <string name="userid_login">uid user</string>
 </resources>

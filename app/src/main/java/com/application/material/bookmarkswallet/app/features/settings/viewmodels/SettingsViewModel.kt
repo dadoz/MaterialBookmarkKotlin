@@ -9,8 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(application: Application) : AndroidViewModel(application = application) {
-
-
     val user by lazy {
         FirebaseAuth.getInstance().currentUser
             ?.let {

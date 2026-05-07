@@ -39,8 +39,7 @@ val keystoreProperties = Properties().apply {
 }
 
 android {
-    compileSdk = 36
-    buildToolsVersion = "36.0.0"
+    compileSdk = 37
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -49,8 +48,8 @@ android {
 
     defaultConfig {
         applicationId = "com.application.material.bookmarkswallet.app"
-        targetSdk = 36
-        minSdk = 30
+        targetSdk = 37
+        minSdk = 32
         versionCode = versionCodeTimestamp
         versionName = appVersionName
 
