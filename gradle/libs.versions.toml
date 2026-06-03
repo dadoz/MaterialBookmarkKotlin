@@ -18,7 +18,7 @@ secretsGradlePluginVersion = "2.0.1"
 
 #libraries version
 compose = "2026.05.01"
-firebase = "34.13.0"
+firebase = "34.14.0"
 firebaseUIAuth = "9.1.1"
 activityCompose = "1.13.0"
 retrofit = "3.0.0"
