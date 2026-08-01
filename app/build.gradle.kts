@@ -125,6 +125,9 @@ dependencies {
     //android
     implementation(libs.core.ktx)
 
+    //kotlin metadata
+    implementation(libs.kotlin.metadata.jvm)
+
     //lifecycle
     implementation(libs.lifecycle.runtime.ktx)
 
