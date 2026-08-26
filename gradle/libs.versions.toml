@@ -2,24 +2,24 @@
 accompanistSystemuicontroller = "0.36.0"
 generativeai = "0.9.0"
 gsonAdapter = "3.0.0"
-androidGradlePlugin = "9.2.1"
+androidGradlePlugin = "9.3.2"
 coilCompose = "2.7.0"
 kotlin = "2.4.10"
 kotlinMetadataJvm = "2.4.0"
 hilt = "2.60.1"
-mapsCompose = "8.4.0"
-material3Android = "1.5.0-alpha25"
+mapsCompose = "8.5.0"
+material3Android = "1.5.0-alpha26"
 materialIconsExtended = "1.7.8"
 navigationCompose = "2.9.8"
 room = "2.8.4"
 googleServicePlugin = "4.5.0"
-firebaseCrashlyticsPlugin = "3.0.7"
-ksp = "2.3.4"
+firebaseCrashlyticsPlugin = "3.0.8"
+ksp = "2.3.6"
 secretsGradlePluginVersion = "2.0.1"
 
 #libraries version
-compose = "2026.06.01"
-firebase = "34.17.0"
+compose = "2026.08.00"
+firebase = "34.18.0"
 firebaseUIAuth = "9.1.1"
 activityCompose = "1.13.0"
 retrofit = "3.0.0"
@@ -33,14 +33,14 @@ kotlinxDatetime = "0.8.0"
 junit = "4.13.2"
 junitExt = "1.3.0"
 espresso = "3.7.0"
-composeUi = "1.11.4"
+composeUi = "1.12.0"
 coreKtx = "1.19.0"
 lifecycleRuntime = "2.11.0"
 constraintlayoutCompose = "1.1.2"
 viewpager2 = "1.1.0"
 workRuntime = "2.11.2"
 timber = "5.0.1"
-okhttp = "5.4.0"
+okhttp = "5.5.0"
 kotlinxSerialization = "1.11.0"
 lottie = "6.7.1"
 material = "1.14.0"
@@ -234,7 +234,6 @@ androidTest = [
 ]
 
 [plugins]
-
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
